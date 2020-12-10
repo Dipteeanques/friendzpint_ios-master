@@ -179,6 +179,8 @@ class GeneralSettingsViewController: UIViewController {
                 self.txtLastName.text = res?.name
                 self.txtAbout.text = res?.about
                 self.txtEmail.text = res?.email
+                loggdenUser.setValue(res?.email, forKey: EMAIL)
+                
                 self.txtDate.text = res?.birthday
                 self.txtCountry.text = res?.country
                 self.txtCity.text = res?.city

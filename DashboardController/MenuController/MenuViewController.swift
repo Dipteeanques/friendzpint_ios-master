@@ -11,6 +11,7 @@ import Alamofire
 import Photos
 import DKPhotoGallery
 import DKImagePickerController
+import SJSegmentedScrollView
 
 class MenuViewController: UIViewController {
     class func instance()->UIViewController{
@@ -37,6 +38,8 @@ class MenuViewController: UIViewController {
     
     //MARK: - Variable
     var arrMenulist = [["img":#imageLiteral(resourceName: "MoreShape"),"name":"Liked pages"],["img":#imageLiteral(resourceName: "groupred"),"name":"Joined groups"],["img":#imageLiteral(resourceName: "groupred"),"name":"Joined pages"],["img":#imageLiteral(resourceName: "MoreGreenfeed"),"name":"My pages"],["img":#imageLiteral(resourceName: "groupBlue"),"name":"My groups"],["img":#imageLiteral(resourceName: "FriendPurpal"),"name":"Followers"],["img":#imageLiteral(resourceName: "FriendPurpal"),"name":"Following"],["img":#imageLiteral(resourceName: "Browse"),"name":"Browse"],["img":#imageLiteral(resourceName: "Event"),"name":"Event"],["img":#imageLiteral(resourceName: "changepwd"),"name":"Change Password"],["img":#imageLiteral(resourceName: "MoreSetting"),"name":"Settings"],["img":#imageLiteral(resourceName: "policy"),"name":"Privacy Policy"],["img":#imageLiteral(resourceName: "terms"),"name":"Terms and condition"],["img":#imageLiteral(resourceName: "RoundShap"),"name":"Help & Support"],["img":#imageLiteral(resourceName: "BusinessProfile"),"name":"Business Profile"],["img":#imageLiteral(resourceName: "wallet"),"name":"Tellzme Wallet"],["img":#imageLiteral(resourceName: "Logout"),"name":"Logout"]]//["img":#imageLiteral(resourceName: "BusinessProfile"),"name":"Business Profile"],["img":#imageLiteral(resourceName: "wallet"),"name":"Tellzme Wallet"],["img":#imageLiteral(resourceName: "cart"),"name":"Ad Manager"],
+    
+    //,["img":#imageLiteral(resourceName: "wallet"),"name":"Tellzme Wallet"],
     
     let appDel = UIApplication.shared.delegate as! AppDelegate
     var strCurruntPwd = String()
@@ -396,8 +399,20 @@ extension MenuViewController: UITableViewDelegate,UITableViewDataSource {
             }
         }
         else if indexPath.row == 15 {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "TellzmeWalletVC")as! TellzmeWalletVC//TellzmeWalletViewController
-            self.navigationController?.pushViewController(obj, animated: true)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "TellzmeWalletVC")as! TellzmeWalletVC//TellzmeWalletViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+
+            let isLogin = loggdenUser.bool(forKey: walletLoginTellz)
+            print(isLogin)
+
+
+            if isLogin {
+                NavigateWallet()
+            }
+            else {
+                let obj = self.storyboard?.instantiateViewController(withIdentifier: "TellzwalletupdateVC")as! TellzwalletupdateVC//TellzmeWalletViewController
+                self.navigationController?.pushViewController(obj, animated: true)
+            }
         }
         else if indexPath.row == 16 {
             let alert = UIAlertController(title: "Friendzpoint", message: "Are you sure to logout?", preferredStyle: .alert)
@@ -437,3 +452,31 @@ extension MenuViewController: UITableViewDelegate,UITableViewDataSource {
     
 }
 
+
+extension UIViewController{
+    func NavigateWallet()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "HeaderViewController1")
+
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "RedeemController")
+            firstViewController.title = "REDEEM COINS"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "WithdrawController")
+            secondViewController.title = "WITHDRAW HISTORY"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController]
+            segmentController.headerViewHeight = 350
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = .black
+            navigationController?.pushViewController(segmentController, animated: true)
+        }
+    }
+}

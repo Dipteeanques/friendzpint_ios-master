@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7735A1257DE678002B67C6 /* HeaderViewController.swift */; };
+		8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */; };
 		8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */; };
 		C3D0A2F0B04695B4D7EFA4E9 /* Pods_FriendzPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */; };
 		DA021A7622855A5500D4BEDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA021A7522855A5500D4BEDE /* AppDelegate.swift */; };
@@ -224,6 +226,8 @@
 /* Begin PBXFileReference section */
 		02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendzPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		562D34F0158BFBB32BB65842 /* Pods-FriendzPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendzPoint.release.xcconfig"; path = "Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint.release.xcconfig"; sourceTree = "<group>"; };
+		8F7735A1257DE678002B67C6 /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
+		8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzwalletupdateVC.swift; sourceTree = "<group>"; };
 		8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzmeWalletVC.swift; sourceTree = "<group>"; };
 		DA021A7222855A5500D4BEDE /* FriendzPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendzPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA021A7522855A5500D4BEDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -455,6 +459,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F7735A0257DE612002B67C6 /* Tellzwallet */ = {
+			isa = PBXGroup;
+			children = (
+				8F7735A1257DE678002B67C6 /* HeaderViewController.swift */,
+			);
+			path = Tellzwallet;
+			sourceTree = "<group>";
+		};
 		B62E558E69B3A5547FCC4F15 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,6 +788,7 @@
 		DAEA9444229B973E00B78F7D /* MenuController */ = {
 			isa = PBXGroup;
 			children = (
+				8F7735A0257DE612002B67C6 /* Tellzwallet */,
 				DAF6F2D2228947DB00431097 /* MenuViewController.swift */,
 				DAEBDFD422D857FC0069984A /* LikedPageviewController.swift */,
 				DAEBDFD622D858650069984A /* JoinedMeGroupViewController.swift */,
@@ -791,6 +804,7 @@
 				DAEF59DF230FB80800C43E39 /* MygroupsViewControllerList.swift */,
 				DAE046D9231D129C007EC12A /* CommingsoonController.swift */,
 				DA8E6B53231D3D7300F972E0 /* BrowseallpostController.swift */,
+				8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */,
 				DAF3774524A18799000D33B4 /* TellzmeWalletViewController.swift */,
 				8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */,
 				DAEFCB1524B61A530008D487 /* RedeemController.swift */,
@@ -1049,18 +1063,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1113,74 +1120,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AJMessage/AJMessage.framework",
-				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/DKCamera/DKCamera.framework",
-				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
-				"${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework",
-				"${BUILT_PRODUCTS_DIR}/Emojimap/Emojimap.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Kanna/Kanna.framework",
-				"${BUILT_PRODUCTS_DIR}/MXPagerView/MXPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/MXParallaxHeader/MXParallaxHeader.framework",
-				"${BUILT_PRODUCTS_DIR}/MXSegmentedControl/MXSegmentedControl.framework",
-				"${BUILT_PRODUCTS_DIR}/MXSegmentedPager/MXSegmentedPager.framework",
-				"${BUILT_PRODUCTS_DIR}/PSHTMLView/PSHTMLView.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SquareFlowLayout/SquareFlowLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
-				"${BUILT_PRODUCTS_DIR}/TKImageShowing/TKImageShowing.framework",
-				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/emojidataios/emojidataios.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper-swift/youtube_ios_player_helper_swift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AJMessage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActiveLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKCamera.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKPhotoGallery.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Emojimap.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kanna.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXParallaxHeader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXSegmentedControl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXSegmentedPager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PSHTMLView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SquareFlowLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TKImageShowing.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/emojidataios.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper_swift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1309,6 +1253,7 @@
 				DA66EE19229283BF003EFAF4 /* BrowserCallViewcontroller.swift in Sources */,
 				DAEA47D8229FD6D500D5CFD3 /* tblNotiCell.swift in Sources */,
 				DAEEA2672306AC6900AC4BDA /* PrivateEventController.swift in Sources */,
+				8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */,
 				DAE7D7B122DC594D00B3E3EA /* GeneralResponseModel.swift in Sources */,
 				DAEF59E0230FB80800C43E39 /* MygroupsViewControllerList.swift in Sources */,
 				DAEDAD7D2293C26C004443A2 /* GrouptblCell.swift in Sources */,
@@ -1320,6 +1265,7 @@
 				DAEA47F0229FFC8000D5CFD3 /* SWComboxTextSelection.swift in Sources */,
 				DAEFCB1C24B62AC70008D487 /* RedeemwalletResponsModel.swift in Sources */,
 				DAE77EE822FC1E6C00479E1B /* CreateAlbumViewcontroller.swift in Sources */,
+				8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */,
 				DABD1E0122D75FE200A82B37 /* FriendsProfileViewController.swift in Sources */,
 				DAEA566522D9AC6900910C59 /* ProfileGuestEventController.swift in Sources */,
 				DAE613382295205800BFB474 /* GroupsettingViewController.swift in Sources */,
@@ -1542,7 +1488,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1550,7 +1496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1567,7 +1513,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1575,7 +1521,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

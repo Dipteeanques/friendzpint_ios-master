@@ -184,6 +184,7 @@ let mywallet = tellWallet + "/mywallet"
 let myredeems = tellWallet + "/myredeems"
 let withdraw_history = tellWallet + "/withdraw_history"
 let withdraw_money = tellWallet + "/withdraw_money"
+let convert_coin_money = tellWallet + "/convert_coin_money"
 
 
 let Advertise = Domain + "/advertisementPlans"
@@ -219,6 +220,7 @@ let ADlikepage         =           "ADlikepage"
 let ADjoingroup        =           "ADjoingroup"
 let ADbio              =           "ADbio"
 let UPDATEPROFILE      =           "UPDATEPROFILE"
+let EMAIL              =           "EMAIL"
 
 let walletLoginTellz = "walletLoginTellz"
 let walletToken = "walletToken"

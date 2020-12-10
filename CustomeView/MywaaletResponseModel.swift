@@ -32,7 +32,7 @@ public struct DataMywalletClass: Codable {
     public let mobileNumber: String
     public let totalCoin: Int
     public let redeemCoin: Int
-    public let balance: Int
+    public let balance: Double
     public let totalWithdrawBalance: Int
 
     enum CodingKeys: String, CodingKey {
@@ -43,11 +43,30 @@ public struct DataMywalletClass: Codable {
         case totalWithdrawBalance = "total_withdraw_balance"
     }
 
-    public init(mobileNumber: String, totalCoin: Int, redeemCoin: Int, balance: Int, totalWithdrawBalance: Int) {
+    public init(mobileNumber: String, totalCoin: Int, redeemCoin: Int, balance: Double, totalWithdrawBalance: Int) {
         self.mobileNumber = mobileNumber
         self.totalCoin = totalCoin
         self.redeemCoin = redeemCoin
         self.balance = balance
         self.totalWithdrawBalance = totalWithdrawBalance
     }
+}
+
+
+
+public struct RootClassWallet: Codable {
+
+    public let success: Bool
+    public let message: String
+    
+    enum CodingKeys: String, CodingKey {
+        case success = "success"
+        case message = "message"
+    }
+    
+    public init(success: Bool, message: String) {
+        self.success = success
+        self.message = message
+    }
+
 }

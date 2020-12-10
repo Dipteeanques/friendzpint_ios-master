@@ -504,7 +504,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Bio data", "Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"
+        return ["Bio data", "Timeline", "Liked pages","Joined groups","Gallery","Friendz"][index]//
         
     }
     

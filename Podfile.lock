@@ -148,12 +148,14 @@ PODS:
   - SDWebImage (4.4.8):
     - SDWebImage/Core (= 4.4.8)
   - SDWebImage/Core (4.4.8)
+  - SJSegmentedScrollView (1.5.0)
   - SquareFlowLayout (0.0.1)
   - Starscream (3.1.1)
   - SwiftyGif (5.3.0)
   - TKImageShowing (1.0.9):
     - SDWebImage (~> 4.4.6)
   - TTTAttributedLabel (2.0.0)
+  - UIDropDown (1.1.1)
   - youtube-ios-player-helper-swift (1.1)
 
 DEPENDENCIES:
@@ -176,13 +178,15 @@ DEPENDENCIES:
   - PSHTMLView
   - PusherSwift
   - SDWebImage
+  - SJSegmentedScrollView
   - SquareFlowLayout
   - TKImageShowing
   - TTTAttributedLabel
+  - UIDropDown
   - youtube-ios-player-helper-swift
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - ActiveLabel
     - AJMessage
     - Alamofire
@@ -219,25 +223,27 @@ SPEC REPOS:
     - PusherSwift
     - ReachabilitySwift
     - SDWebImage
+    - SJSegmentedScrollView
     - SquareFlowLayout
     - Starscream
     - SwiftyGif
     - TKImageShowing
     - TTTAttributedLabel
+    - UIDropDown
     - youtube-ios-player-helper-swift
 
 SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   AJMessage: d6f1920c02224a117d0d5079ff8648f70deecfb1
   Alamofire: 2ef6d6c984c5d21c366e9b41a9ae7dfee2b67a44
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   CropViewController: 980df34ffc499db89755b2f307f20eca00cd40c6
   DKCamera: a902b66921fca14b7a75266feb8c7568aa7caa71
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   emojidataios: efa99e6c6c588c2fa82f8d86421c4c7c29d384e8
   Emojimap: 18b89be727fe5e718272026b140622a7d5ed099d
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: ed042590caa0029392257529a8003c25ee82bc18
   FirebaseAuth: 06feef26ff3a98323677c76c4102146b872cd6b7
   FirebaseCore: 687b8e6a0a4337b898a6326d68254c2f80c143af
@@ -263,13 +269,15 @@ SPEC CHECKSUMS:
   PusherSwift: 8f18b7beaf383e0475607ab6a3f89f477637fb21
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
+  SJSegmentedScrollView: 67ca97389a9c3a409d3b54c88781f031f5091c61
   SquareFlowLayout: cde3486d3086fb7f95b303d9b90bb86aa9dd98b5
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   TKImageShowing: a9c18c82070d1fe8aec59fd29533e2c5c29ca1e2
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  UIDropDown: 22e6e3e22d419884c8f21d95ea9be36aac905ed4
   youtube-ios-player-helper-swift: 51a3c5325317c8271d0c7985c1bbe5a252ffb2fd
 
-PODFILE CHECKSUM: a39bd1cbec4b01f0e34d2dcf9a31850b50baa264
+PODFILE CHECKSUM: c9eb30aeb439bf9087707fe095fdf44548699d30
 
-COCOAPODS: 1.6.2
+COCOAPODS: 1.10.0

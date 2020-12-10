@@ -27,4 +27,6 @@ target 'FriendzPoint' do
  pod 'emojidataios'
  pod 'SDWebImage'
  pod 'DKPhotoGallery'
+ pod 'SJSegmentedScrollView'
+ pod 'UIDropDown'
 end

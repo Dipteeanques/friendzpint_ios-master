@@ -2194,7 +2194,8 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                lastIndex_id = arrFeed[lastIndexPath.row].id
                timeline_last_first_id = lastIndex_id
                timeline_Type_top_bottom = "Bottom"
-//               getFeed(strPage: "\(pageCount)")
+//             self.tblFeed.beginUpdates()
+               getFeed(strPage: "\(pageCount)")
                self.tblFeed.tableFooterView = spinner
                self.tblFeed.tableFooterView?.isHidden = false
                isNewDataLoading = true
@@ -3105,7 +3106,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
             // couldn't load file :(
         }
         if let indexPath = self.tblFeed.indexPathForView(sender) {
-            let cellfeed = tblFeed.cellForRow(at: indexPath) as! TxtcellTimeline
+            let cellfeed = tblFeed.cellForRow(at: indexPath) as? TxtcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let like_count = arrFeed[indexPath.row].users_liked_count
             let parameters = ["post_id":post_Id] as [String : Any]
@@ -3130,7 +3131,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
-                                cellfeed.btnLikeCount.setTitle(strLikeTotal, for: .normal)
+                                cellfeed?.btnLikeCount.setTitle(strLikeTotal, for: .normal)
                                 self.tblFeed.beginUpdates()
                                 self.tblFeed.endUpdates()
                             }
@@ -3145,7 +3146,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
-                                cellfeed.btnLikeCount.setTitle(strLikeTotal, for: .normal)
+                                cellfeed?.btnLikeCount.setTitle(strLikeTotal, for: .normal)
                                 self.tblFeed.beginUpdates()
                                 self.tblFeed.endUpdates()
                             }
@@ -3168,7 +3169,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
-                                cellfeed.btnLikeCount.setTitle(strLikeTotal, for: .normal)
+                                cellfeed?.btnLikeCount.setTitle(strLikeTotal, for: .normal)
                                 self.tblFeed.beginUpdates()
                                 self.tblFeed.endUpdates()
                             }
@@ -3183,7 +3184,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
-                                cellfeed.btnLikeCount.setTitle(strLikeTotal, for: .normal)
+                                cellfeed?.btnLikeCount.setTitle(strLikeTotal, for: .normal)
                                 self.tblFeed.beginUpdates()
                                 self.tblFeed.endUpdates()
                             }

@@ -16,29 +16,36 @@ class TellzmeWalletVC: MXSegmentedPagerController {
     @IBOutlet var headerview: UIView!
     @IBOutlet weak var gridentView: UIView!
     
+    @IBOutlet weak var transperentview: UIView!
+    @IBOutlet weak var lblRedeemcoin: UILabel!
+    @IBOutlet weak var lblWithdraw: UILabel!
+    @IBOutlet weak var lblBalance: UILabel!
+    @IBOutlet weak var lblCoin: UILabel!
+
     @IBOutlet weak var btnWithdraw: UIButton!
     @IBOutlet weak var lbltitle: UILabel!
     @IBOutlet weak var btnback: UIButton!
+    var wc = Webservice.init()
     
-    @IBOutlet weak var viewInner: UIView!{
-        didSet{
-            viewInner.layer.cornerRadius = 5
-            viewInner.clipsToBounds = true
-            viewInner.layer.borderWidth = 1
-            viewInner.layer.borderColor = UIColor.gray.cgColor
-        }
-    }
-    
-    @IBOutlet weak var btnUpdate: UIButton!{
-        didSet {
-            btnUpdate.layer.cornerRadius = 5
-            btnUpdate.clipsToBounds = true
-        }
-    }
+//    @IBOutlet weak var viewInner: UIView!{
+//        didSet{
+//            viewInner.layer.cornerRadius = 5
+//            viewInner.clipsToBounds = true
+//            viewInner.layer.borderWidth = 1
+//            viewInner.layer.borderColor = UIColor.gray.cgColor
+//        }
+//    }
+//    
+//    @IBOutlet weak var btnUpdate: UIButton!{
+//        didSet {
+//            btnUpdate.layer.cornerRadius = 5
+//            btnUpdate.clipsToBounds = true
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Getwallet()
         setDefault()
     }
     
@@ -52,7 +59,7 @@ class TellzmeWalletVC: MXSegmentedPagerController {
         // Parallax Header
         segmentedPager.parallaxHeader.view = headerview
         segmentedPager.parallaxHeader.mode = .fill
-        segmentedPager.parallaxHeader.height = 200
+        segmentedPager.parallaxHeader.height = 300
         segmentedPager.parallaxHeader.minimumHeight = 0
         
         // Segmented Control customization
@@ -83,15 +90,57 @@ class TellzmeWalletVC: MXSegmentedPagerController {
 //            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
 //        }
 //        else {
-//            segmentedPager.parallaxHeader.height = 200
+//            segmentedPager.parallaxHeader.height = 300
 //            segmentedPager.parallaxHeader.minimumHeight = 90
-//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: self.view.width, height: gridentView.bounds.size.height)
 //        }
+//        Getwallet()
       
     }
+    
+    
+    @IBAction func btnConvertCoinAction(_ sender: Any) {
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "TellzwalletupdateVC")as! TellzwalletupdateVC//TellzmeWalletViewController
+        obj.checkwithdraw = "convert"
+        self.navigationController?.pushViewController(obj, animated: true)
+    }
+    
 
+    func Getwallet() {
+        let token = loggdenUser.value(forKey: walletToken)as! String
+        let BEARERTOKEN = BEARER + token
+        
+        let headers: HTTPHeaders = ["Accept" : ACCEPT,
+        "Authorization":BEARERTOKEN]
+        wc.callGETSimplewebservice(url: mywallet, parameters: [:], headers: headers, fromView: self.view, isLoading: true) { (success, response: MywalletResponsModel?) in
+            print(response)
+            if success {
+                let suc = response?.success
+                if suc == true {
+                    let data = response?.data
+                    let COINSTOTAL = data?.totalCoin
+                    self.lblCoin.text = "COINS TOTAL  \n" + String(COINSTOTAL!)
+                    let redeem = data?.redeemCoin
+                    let balance = data?.balance
+                    let withdraw = data?.totalWithdrawBalance
+                    self.lblRedeemcoin.text = "COINS TOTAL  \n" + String(redeem!)
+                    self.lblBalance.text = "COINS TOTAL  \n" + String(balance!)
+                    self.lblWithdraw.text = "COINS TOTAL  \n" + String(withdraw!)
+                }
+            }
+        }
+    }
+    
     @IBAction func btnbackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    @IBAction func btnWthrawAction(_ sender: Any) {
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "TellzwalletupdateVC")as! TellzwalletupdateVC//TellzmeWalletViewController
+        obj.checkwithdraw = "true"
+        self.navigationController?.pushViewController(obj, animated: true)
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
