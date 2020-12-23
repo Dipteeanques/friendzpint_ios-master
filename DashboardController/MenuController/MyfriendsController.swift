@@ -215,7 +215,8 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
         btnRemove.clipsToBounds = true
         let strimg = arrFollow[indexPath.row].avatar
         url = URL(string: strimg)
-        img.sd_setImage(with: url, completed: nil)
+//        img.sd_setImage(with: url, completed: nil)//user
+        img.sd_setImage(with: url, placeholderImage: UIImage(named: "user"), options: [], completed: nil)
         lblname.text = arrFollow[indexPath.row].name
         btnRemove.addTarget(self, action: #selector(MyfriendsController.btnfriendsRemoveAction), for: UIControl.Event.touchUpInside)
         return cell

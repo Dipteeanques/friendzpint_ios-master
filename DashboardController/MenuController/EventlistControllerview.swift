@@ -195,7 +195,8 @@ extension EventlistControllerview: UITableViewDelegate,UITableViewDataSource,UIS
         lblname.text = arrLiked[indexPath.row].name
         let strImg = arrLiked[indexPath.row].avatar_url
         url = URL(string: strImg)
-        img.sd_setImage(with: url, completed: nil)
+//        img.sd_setImage(with: url, completed: nil)
+        img.sd_setImage(with: url, placeholderImage: UIImage(named: "user"), options: [], completed: nil)
         img.layer.cornerRadius = 5
         img.clipsToBounds = true
         //        btnUnliked.layer.cornerRadius = 5

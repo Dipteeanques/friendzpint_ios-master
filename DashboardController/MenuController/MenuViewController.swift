@@ -35,6 +35,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
     @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var img_logo: UIImageView!
     
     //MARK: - Variable
     var arrMenulist = [["img":#imageLiteral(resourceName: "MoreShape"),"name":"Liked pages"],["img":#imageLiteral(resourceName: "groupred"),"name":"Joined groups"],["img":#imageLiteral(resourceName: "groupred"),"name":"Joined pages"],["img":#imageLiteral(resourceName: "MoreGreenfeed"),"name":"My pages"],["img":#imageLiteral(resourceName: "groupBlue"),"name":"My groups"],["img":#imageLiteral(resourceName: "FriendPurpal"),"name":"Followers"],["img":#imageLiteral(resourceName: "FriendPurpal"),"name":"Following"],["img":#imageLiteral(resourceName: "Browse"),"name":"Browse"],["img":#imageLiteral(resourceName: "Event"),"name":"Event"],["img":#imageLiteral(resourceName: "changepwd"),"name":"Change Password"],["img":#imageLiteral(resourceName: "MoreSetting"),"name":"Settings"],["img":#imageLiteral(resourceName: "policy"),"name":"Privacy Policy"],["img":#imageLiteral(resourceName: "terms"),"name":"Terms and condition"],["img":#imageLiteral(resourceName: "RoundShap"),"name":"Help & Support"],["img":#imageLiteral(resourceName: "BusinessProfile"),"name":"Business Profile"],["img":#imageLiteral(resourceName: "wallet"),"name":"Tellzme Wallet"],["img":#imageLiteral(resourceName: "Logout"),"name":"Logout"]]//["img":#imageLiteral(resourceName: "BusinessProfile"),"name":"Business Profile"],["img":#imageLiteral(resourceName: "wallet"),"name":"Tellzme Wallet"],["img":#imageLiteral(resourceName: "cart"),"name":"Ad Manager"],
@@ -93,6 +94,7 @@ class MenuViewController: UIViewController {
         gridentView.addSubview(lblSearch)
         gridentView.addSubview(btnSearch)
         gridentView.addSubview(lblbadge)
+        gridentView.addSubview(img_logo)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
@@ -197,6 +199,11 @@ extension MenuViewController: UITableViewDelegate,UITableViewDataSource {
         let lblName = cell.viewWithTag(102)as! UILabel
         img.image = (self.arrMenulist[indexPath.row]as AnyObject).value(forKey: "img") as? UIImage
         lblName.text = (self.arrMenulist[indexPath.row]as AnyObject).value(forKey: "name") as? String
+        if (self.arrMenulist[indexPath.row]as AnyObject).value(forKey: "name") as? String == "Business Profile"{
+            img.image = img.image?.withRenderingMode(.alwaysTemplate)
+            img.tintColor = UIColor.blue
+        }
+
         return cell
     }
     

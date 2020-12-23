@@ -34,6 +34,8 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
     @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var img_logo: UIImageView!
+    
     
      var arrFriends = ["Mayur Godhani","Jekil Dabhoya","Dipak kukadiya","Maulik Bhuva","Manna kathiriya","Piyush Prajapati","Mayur Godhani","Jekil Dabhoya","Dipak kukadiya","Maulik Bhuva","Manna kathiriya","Piyush Prajapati"]
     var assets: [DKAsset]?
@@ -68,6 +70,7 @@ class ChatViewController: UIViewController {
         gridentView.addSubview(lblSearch)
         gridentView.addSubview(btnSearch)
         gridentView.addSubview(lblbadge)
+        gridentView.addSubview(img_logo)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int

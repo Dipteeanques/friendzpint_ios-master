@@ -126,6 +126,9 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - IQKeyboardManagerSwift (6.5.5)
   - Kanna (4.0.3)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
   - MXPagerView (0.2.1)
   - MXParallaxHeader (1.1.0)
   - MXSegmentedControl (1.1.0)
@@ -144,6 +147,7 @@ PODS:
   - PusherSwift (8.0.0):
     - ReachabilitySwift (~> 5.0)
     - Starscream (~> 3.1)
+  - RBBAnimation (0.4.0)
   - ReachabilitySwift (5.0.0)
   - SDWebImage (4.4.8):
     - SDWebImage/Core (= 4.4.8)
@@ -174,9 +178,11 @@ DEPENDENCIES:
   - GooglePlaces
   - IQKeyboardManagerSwift
   - Kanna (~> 4.0.0)
+  - Kingfisher
   - MXSegmentedPager
   - PSHTMLView
   - PusherSwift
+  - RBBAnimation
   - SDWebImage
   - SJSegmentedScrollView
   - SquareFlowLayout
@@ -212,6 +218,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
     - Kanna
+    - Kingfisher
     - MXPagerView
     - MXParallaxHeader
     - MXSegmentedControl
@@ -221,6 +228,7 @@ SPEC REPOS:
     - Protobuf
     - PSHTMLView
     - PusherSwift
+    - RBBAnimation
     - ReachabilitySwift
     - SDWebImage
     - SJSegmentedScrollView
@@ -258,6 +266,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   Kanna: 0ebbdd0e7e3308f0aafbd569e79c8cadc5eb877c
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   MXPagerView: ede184b5191b2ed689ccf05a750a9978cce42414
   MXParallaxHeader: de3c867e10ba46e8f6e20c8ee1f2a910372b3b94
   MXSegmentedControl: f39e46199a52cbc03b1c845e150215119f2542f5
@@ -267,6 +276,7 @@ SPEC CHECKSUMS:
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   PSHTMLView: 069acdc2b3953a0242920cd0f799fc16acc79cf0
   PusherSwift: 8f18b7beaf383e0475607ab6a3f89f477637fb21
+  RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SJSegmentedScrollView: 67ca97389a9c3a409d3b54c88781f031f5091c61
@@ -278,6 +288,6 @@ SPEC CHECKSUMS:
   UIDropDown: 22e6e3e22d419884c8f21d95ea9be36aac905ed4
   youtube-ios-player-helper-swift: 51a3c5325317c8271d0c7985c1bbe5a252ffb2fd
 
-PODFILE CHECKSUM: c9eb30aeb439bf9087707fe095fdf44548699d30
+PODFILE CHECKSUM: fe30f63490fd10dc308808b072afe36b79ffe558
 
 COCOAPODS: 1.10.0

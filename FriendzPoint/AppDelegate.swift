@@ -32,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
+        
         FirebaseApp.configure()
         setNotification(application)
         Messaging.messaging().isAutoInitEnabled = true
@@ -40,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Thread.sleep(forTimeInterval: 0.1)
         IQKeyboardManager.shared.enable = true
         
-        application.statusBarStyle = .lightContent
+//        application.statusBarStyle = .lightContent
         let isLogin = loggdenUser.bool(forKey: Islogin)
         if isLogin{
            

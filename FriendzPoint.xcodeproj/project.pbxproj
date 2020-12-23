@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */; };
+		8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */; };
 		8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7735A1257DE678002B67C6 /* HeaderViewController.swift */; };
 		8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */; };
 		8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */; };
@@ -226,6 +228,8 @@
 /* Begin PBXFileReference section */
 		02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendzPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		562D34F0158BFBB32BB65842 /* Pods-FriendzPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendzPoint.release.xcconfig"; path = "Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint.release.xcconfig"; sourceTree = "<group>"; };
+		8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCellTimeline1.swift; sourceTree = "<group>"; };
+		8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImgCellTimeline1.xib; sourceTree = "<group>"; };
 		8F7735A1257DE678002B67C6 /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzwalletupdateVC.swift; sourceTree = "<group>"; };
 		8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzmeWalletVC.swift; sourceTree = "<group>"; };
@@ -612,6 +616,8 @@
 				DAEC289B230BC1F4000B9870 /* YoutubeVideoPlaycell.xib */,
 				DAEC704E2314022B00EEA43C /* AdtblCell.swift */,
 				DAEC704F2314022B00EEA43C /* AdtblCell.xib */,
+				8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */,
+				8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */,
 			);
 			path = TimelineCellDesign;
 			sourceTree = "<group>";
@@ -1016,6 +1022,7 @@
 			files = (
 				DAEA47F1229FFC8000D5CFD3 /* SWComboxTextSelection.xib in Resources */,
 				DAE91FB722C4A1F6003E676E /* blop.mp3 in Resources */,
+				8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */,
 				DA70054022EC1F0C0002A685 /* VideocellTimeline.xib in Resources */,
 				DAEA47F4229FFC8000D5CFD3 /* SWComboxView.xib in Resources */,
 				DA120EF322EB1BE2000F0EB2 /* ImgcellTimeline.xib in Resources */,
@@ -1265,6 +1272,7 @@
 				DAEA47F0229FFC8000D5CFD3 /* SWComboxTextSelection.swift in Sources */,
 				DAEFCB1C24B62AC70008D487 /* RedeemwalletResponsModel.swift in Sources */,
 				DAE77EE822FC1E6C00479E1B /* CreateAlbumViewcontroller.swift in Sources */,
+				8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */,
 				8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */,
 				DABD1E0122D75FE200A82B37 /* FriendsProfileViewController.swift in Sources */,
 				DAEA566522D9AC6900910C59 /* ProfileGuestEventController.swift in Sources */,
@@ -1488,7 +1496,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1496,7 +1504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1513,7 +1521,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1521,7 +1529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

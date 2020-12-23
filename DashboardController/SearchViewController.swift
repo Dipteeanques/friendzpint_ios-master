@@ -17,11 +17,23 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
     var strSearchTxt = String()
     var arrResults = [SearchDataResoponseModel]()
     var wc = Webservice.init()
-    
+    let jobCategory = "arrResults"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        if loggdenUser.value(forKey: self.jobCategory) != nil{
+           
+            if let savedPerson = loggdenUser.object(forKey:self.jobCategory) as? Data {
+                let decoder = JSONDecoder()
+                if let loadedPerson = try? decoder.decode([SearchDataResoponseModel].self, from: savedPerson) {
+                    self.arrResults = loadedPerson //loggdenUser.value(forKey: self.jobCategory) as! [SearchDataResoponseModel]
+                }
+            }
+            self.tblView.reloadData()
+        }
+        
+        
     }
     
    
@@ -56,6 +68,14 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
          wc.callSimplewebservice(url: HOMESEARCH, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: HomesearchResponseModel?) in
             if sucess {
                 self.arrResults = response!.data
+                print("response:",response)
+//                loggdenUser.set(self.arrResults, forKey:self.jobCategory)
+//
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.arrResults) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: self.jobCategory)
+                }
                 self.tblView.reloadData()
             }
         }

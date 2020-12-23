@@ -9,9 +9,20 @@
 import UIKit
 import ActiveLabel
 import TTTAttributedLabel
+import RBBAnimation
+import Kingfisher
 
 class ImgcellTimeline: UITableViewCell {
 
+    @IBOutlet weak var animatedview: UIView!{
+        didSet{
+            animatedview.layer.cornerRadius = animatedview.layer.frame.height/2
+            animatedview.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var lbl_coininfo: UILabel!
+    @IBOutlet weak var topconstraintview: NSLayoutConstraint!
     @IBOutlet weak var imgtopconstraint: NSLayoutConstraint!
     @IBOutlet weak var lbltop: NSLayoutConstraint!
     @IBOutlet weak var btnProImgClick: UIButton!
@@ -27,6 +38,18 @@ class ImgcellTimeline: UITableViewCell {
     @IBOutlet weak var lblDetails: ActiveLabel!
     @IBOutlet weak var btnSingaleImg: UIButton!
     @IBOutlet weak var imgpostHeight: NSLayoutConstraint!
+//    {
+//        didSet {
+//            if oldValue != nil {
+//                imgPost.removeConstraint(oldValue!)
+//            }
+//            if imgpostHeight != nil {
+//                imgpostHeight?.priority = UILayoutPriority(rawValue: 999)  //add this
+//                imgPost.addConstraint(imgpostHeight!)
+//            }
+//        }
+//    }
+    
     @IBOutlet weak var btnComment: UIButton!
     @IBOutlet weak var btnImgLike: UIButton!
     @IBOutlet weak var btnSingaleImageMenu: UIButton!
@@ -45,9 +68,22 @@ class ImgcellTimeline: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
+//        self.imgpostHeight.constant = 400
         // Initialization code
        // imgPost.translatesAutoresizingMaskIntoConstraints = false
        // lblSingaleTitle.font = UIFont.systemFont(ofSize: 15)
+//        if arrSingaleImage?.images != nil{
+//            arrImages = arrSingaleImage!.images
+//        for item in arrImages {
+//        let source_url = item
+//            setImagestring(strImg: source_url)
+//        }
+//        }
+//        else{
+//            imgPost.image = UIImage(named: "Placeholder")
+//            self.imgpostHeight.constant = 200
+//        }
         
     }
 
@@ -76,17 +112,63 @@ class ImgcellTimeline: UITableViewCell {
        // aspectConstraint = nil
         lblDetails.text = nil
         lblLocation.text = nil
+//        imgpostHeight = nil
         //imgPost.image = nil
-        imgPost.image = UIImage(named: "Placeholder")
-        imgpostHeight.constant = 333
+        
+//        imgpostHeight.constant = 0//333
+//        imgPost.image = UIImage(named: "Placeholder")
+//        let cellFrame = contentView.frame.size
+//        self.imgpostHeight.constant = 200//self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: imgPost.image!)
+//        self.contentView.layoutIfNeeded()
+        
+    }
+    
+    
+    func setPostedImage(image : UIImage,tblview: UITableView,indexpath:IndexPath) {
+
+        let aspect = image.size.width / image.size.height
+
+        imgpostHeight = NSLayoutConstraint(item: imgPost, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: imgPost, attribute: NSLayoutConstraint.Attribute.height, multiplier: aspect, constant: 0.0)
+
+        
+        imgPost.image = image
+//        tblview.beginUpdates()
+//        tblview.reloadRows(
+//            at: [indexpath],
+//            with: .fade)
+//        tblview.endUpdates()
     }
     
     func setImagestring(strImg: String){
         let cellFrame = contentView.frame.size
         url = URL(string: strImg)
-        imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
-            self.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+        imgPost.sd_setImage(with: url, placeholderImage: UIImage(named: "Placeholder"), options: [], completed: { (theImage, error, cache, url) in
+            self.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (theImage ?? UIImage(named: "Placeholder"))!)
+//           let height = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (theImage ?? UIImage(named: "Placeholder"))!)
+//            print("Callheight: ",height)
+//            if (height <= 210){
+//                self.imgpostHeight.constant = 200
+//
+//            }
+//            else if height <= 250{
+//                self.imgpostHeight.constant = 250
+//            }
+//            else if height <= 375{
+//                self.imgpostHeight.constant = 300
+//            }
+//            else if height <= 565{
+//                self.imgpostHeight.constant = 500
+//            }
+//            else{
+//                self.imgpostHeight.constant = 400
+//
+//            }
         })
+        
+
+//        imgPost.kf.setImage(with: url, placeholder: UIImage(named: "Placeholder"))
+//        self.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (imgPost.image ?? UIImage(named: "Placeholder"))!)
+
     }
     
 //    func setCustomImage(image : UIImage) {
@@ -103,6 +185,7 @@ class ImgcellTimeline: UITableViewCell {
         let widthOffsetPercentage = (widthOffset*100)/downloadedImage.size.width
         let heightOffset = (widthOffsetPercentage * downloadedImage.size.height)/100
         let effectiveHeight = downloadedImage.size.height - heightOffset
+        print("callSize:",effectiveHeight)
         return(effectiveHeight)
     }
     // MARK: Optional function for resize of image
@@ -124,13 +207,13 @@ class ImgcellTimeline: UITableViewCell {
             url = URL(string: avatar)
             imageProfile.sd_setImage(with: url, completed: nil)
             
-//            //MARK: - ImagePost
+////            //MARK: - ImagePost
 //            arrImages = arrSingaleImage!.images
 //            for item in arrImages {
 //            let source_url = item
 //                setImagestring(strImg: source_url)
 //            }
-            
+//            
             //MARK: - Like
             let is_liked = arrSingaleImage!.is_liked
             if is_liked == 1 {
@@ -197,3 +280,5 @@ class ImgcellTimeline: UITableViewCell {
         }
     }
 }
+
+

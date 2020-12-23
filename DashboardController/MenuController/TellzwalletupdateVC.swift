@@ -78,7 +78,8 @@ class TellzwalletupdateVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
+       
         setDefault()
         if checkwithdraw == "true"{
 
@@ -106,6 +107,14 @@ class TellzwalletupdateVC: UIViewController {
         gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        if #available(iOS 13, *){
+            
+        }
+        else{
+//            UIApplication.shared.statusBarView?.backgroundColor = UIColor.red
+            UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
+        }
+       
         gridentView.layer.addSublayer(gradientLayer)
         gridentView.addSubview(btnback)
         gridentView.addSubview(btnWithdraw)
@@ -395,5 +404,15 @@ extension UIViewController{
         let alert = UIAlertController(title:tlt, message: msg, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+
+extension UIApplication {
+    var statusBarView: UIView? {
+        if responds(to: Selector(("statusBar"))) {
+            return value(forKey: "statusBar") as? UIView
+        }
+        return nil
     }
 }

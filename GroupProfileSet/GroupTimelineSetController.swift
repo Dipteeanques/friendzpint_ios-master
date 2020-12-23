@@ -195,7 +195,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         let headers: HTTPHeaders = ["Xapi": XAPI,
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
-        wc.callSimplewebservice(url: MYTIMELINELIST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
+        wc.callSimplewebservice(url: MYTIMELINELIST + "?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
             if sucess {
                 let sucessMy = response?.success
                 if sucessMy! {
@@ -255,7 +255,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
             let headers: HTTPHeaders = ["Xapi": XAPI,
                                         "Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
-            wc.callSimplewebservice(url: MYTIMELINELIST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
+            wc.callSimplewebservice(url: MYTIMELINELIST + "?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
                 if sucess {
                     let sucessMy = response?.success
                     if sucessMy! {
@@ -317,7 +317,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
             let headers: HTTPHeaders = ["Xapi": XAPI,
                                         "Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
-            wc.callSimplewebservice(url: MYTIMELINELIST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
+            wc.callSimplewebservice(url: MYTIMELINELIST + "?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
                 if sucess {
                     let sucessMy = response?.success
                     if sucessMy! {
@@ -406,7 +406,7 @@ extension GroupTimelineSetController: UITableViewDelegate,UITableViewDataSource,
                 cell.imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
                     
                     cell.setNeedsLayout()
-                    cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+                    cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
                     UIView.performWithoutAnimation {
                         self.tblFeed.beginUpdates()
                         self.tblFeed.endUpdates()

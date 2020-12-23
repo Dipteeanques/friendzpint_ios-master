@@ -29,4 +29,6 @@ target 'FriendzPoint' do
  pod 'DKPhotoGallery'
  pod 'SJSegmentedScrollView'
  pod 'UIDropDown'
+ pod 'RBBAnimation'
+ pod 'Kingfisher'
 end

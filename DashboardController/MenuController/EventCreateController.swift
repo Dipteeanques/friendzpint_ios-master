@@ -44,6 +44,12 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
         txtLocation.delegate = self
         txtStartDate.delegate = self
         setDeafult()
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+            datePickerEnd.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -147,6 +153,8 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
         //Formate Date
        // datePickerEnd.datePickerMode = .date
         datePickerEnd.datePickerMode = .dateAndTime
+
+        
         //ToolBar
         let toolbar = UIToolbar();
         toolbar.sizeToFit()

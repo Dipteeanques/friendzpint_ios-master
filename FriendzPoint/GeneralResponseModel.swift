@@ -446,59 +446,18 @@ struct MyTimelineList: Decodable, Encodable {
 }
 
 
-//test
-struct MyTimelineList1: Decodable, Encodable {
-    let id: Int
-    let timeline_id: Int
-    var description: String
-    let user_id: Int
-    let active: Int
-    let location: String
-    let type: String
-    let created_at: String
-    var is_liked: Int
-    var is_saved: Int
-    var is_notification: Int
-    var is_users_shared: Int
-    let shared_post_id: Int
-    var users_liked_count: Int
-    var comments_count: Int
-    let users_avatar: String
-    let users_name: String
-    let username: String
-    let users_type: String
-    let soundcloud_title: String
-    let soundcloud_id: Int
-    let youtube_title: String
-    let youtube_video_id: String
-    let images: [String]
-    let users_liked: [LikesetRespons]
-    let users_tagged: [userTagpeopelListResponse]
-    let is_my_post: Int
-    let user_page: String//TimelineUnotherResoponseModel?
-    let user_group: String//TimelineUnotherResoponseModel?
-    var users_disliked_count: Int
-    var users_disliked: [LikesetRespons]
-    var is_disliked: Int
-    var shared_person_name: String
-    var shared_username: String
-    var is_hide: Int
-    var is_report: Int
-    var video_poster: String
-}
-
 struct TimelineUnotherResoponseModel: Decodable,Encodable {
-    let id: Int
-    let name: String
-    let username: String
-    let type: String
-    let groups_type: String
-    let groups_status: String
-    let is_page_admin: Int
-    let event_type: String
-    let invite_privacy: String
-    let post_privacy: String
-    let member_privacy: String
+    let id: Int?
+    let name: String?
+    let username: String?
+    let type: String?
+    let groups_type: String?
+    let groups_status: String?
+    let is_page_admin: Int?
+    let event_type: String?
+    let invite_privacy: String?
+    let post_privacy: String?
+    let member_privacy: String?
 }
 
 
@@ -543,6 +502,7 @@ struct PostLikeResponseModel: Decodable {
     let liked: Bool
     let message: String
     let likecount: String
+    let coin: String
 }
 
 
@@ -698,26 +658,138 @@ struct ReportDataResponse: Decodable {
 
 
 //MARK: - Homesearch Response Model
-struct HomesearchResponseModel: Decodable {
+//struct HomesearchResponseModel: Decodable {
+//    let success: Bool
+//    let message: String
+//    let data: [SearchDataResoponseModel]
+//
+//}
+
+struct HomesearchResponseModel: Codable {
+
     let success: Bool
-    let message: String
     let data: [SearchDataResoponseModel]
+    let message: String
+
+    private enum CodingKeys: String, CodingKey {
+        case success = "success"
+        case data = "data"
+        case message = "message"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        success = try values.decode(Bool.self, forKey: .success)
+        data = try values.decode([SearchDataResoponseModel].self, forKey: .data)
+        message = try values.decode(String.self, forKey: .message)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(success, forKey: .success)
+        try container.encode(data, forKey: .data)
+        try container.encode(message, forKey: .message)
+    }
+
 }
 
-struct SearchDataResoponseModel: Decodable {
+struct SearchDataResoponseModel: Codable {
+
     let id: Int
     let name: String
     let username: String
     let type: String
-    let groups_type: String
-    let groups_status: String
-    let is_page_admin: Int
-    let event_type: String
     let invite_privacy: String
-    let post_privacy: String
     let member_privacy: String
+    let post_privacy: String
+    let groups_status: String
     let is_guest: Int
+    let is_page_admin: Int
+    let groups_type: String
+    let event_type: String
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case username = "username"
+        case type = "type"
+        case invite_privacy = "invite_privacy"
+        case member_privacy = "member_privacy"
+        case post_privacy = "post_privacy"
+        case groups_status = "groups_status"
+        case is_guest = "is_guest"
+        case is_page_admin = "is_page_admin"
+        case groups_type = "groups_type"
+        case event_type = "event_type"
+    }
+
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        name = try values.decode(String.self, forKey: .name)
+        username = try values.decode(String.self, forKey: .username)
+        type = try values.decode(String.self, forKey: .type)
+        invite_privacy = try values.decode(String.self, forKey: .invite_privacy)
+        member_privacy = try values.decode(String.self, forKey: .member_privacy)
+        post_privacy = try values.decode(String.self, forKey: .post_privacy)
+        groups_status = try values.decode(String.self, forKey: .groups_status)
+        is_guest = try values.decode(Int.self, forKey: .is_guest)
+        is_page_admin = try values.decode(Int.self, forKey: .is_page_admin)
+        groups_type = try values.decode(String.self, forKey: .groups_type)
+        event_type = try values.decode(String.self, forKey: .event_type)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(username, forKey: .username)
+        try container.encode(type, forKey: .type)
+        try container.encode(invite_privacy, forKey: .invite_privacy)
+        try container.encode(member_privacy, forKey: .member_privacy)
+        try container.encode(post_privacy, forKey: .post_privacy)
+        try container.encode(groups_status, forKey: .groups_status)
+        try container.encode(is_guest, forKey: .is_guest)
+        try container.encode(is_page_admin, forKey: .is_page_admin)
+        try container.encode(groups_type, forKey: .groups_type)
+        try container.encode(event_type, forKey: .event_type)
+    }
+
 }
+
+//struct SearchDataResoponseModel: Decodable {
+//    let id: Int
+//    let name: String
+//    let username: String
+//    let type: String
+//    let groups_type: String
+//    let groups_status: String
+//    let is_page_admin: Int
+//    let event_type: String
+//    let invite_privacy: String
+//    let post_privacy: String
+//    let member_privacy: String
+//    let is_guest: Int
+//
+//
+//
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode(id, forKey: .id)
+//        try container.encode(name, forKey: .name)
+//        try container.encode(username, forKey: .username)
+//        try container.encode(type, forKey: .type)
+//        try container.encode(groups_type, forKey: .groups_type)
+//        try container.encode(groups_status, forKey: .groups_status)
+//        try container.encode(is_page_admin, forKey: .is_page_admin)
+//        try container.encode(event_type, forKey: .event_type)
+//        try container.encode(invite_privacy, forKey: .invite_privacy)
+//        try container.encode(post_privacy, forKey: .post_privacy)
+//        try container.encode(member_privacy, forKey: .member_privacy)
+//        try container.encode(is_guest, forKey: .is_guest)
+//    }
+//}
 
 
 //MARK: MygroupList Response
@@ -1600,13 +1672,6 @@ struct selectedPostDetails: Decodable,Encodable {
     let data: MyTimelineList
     let message: String
 }
-
-struct selectedPostDetails1: Decodable,Encodable {
-    let success: Bool
-    let data: MyTimelineList1
-    let message: String
-}
-
 
 
 //MARK: - postlikeresponsemodelall

@@ -12,6 +12,8 @@ import TTTAttributedLabel
 
 class MultiImgcellTimeline: UITableViewCell {
     
+  
+    @IBOutlet weak var imgPost: UIImageView!
     @IBOutlet weak var imgtopconstraint: NSLayoutConstraint!
     @IBOutlet weak var lbltop: NSLayoutConstraint!
     @IBOutlet weak var btnMultiimgProfile: UIButton!

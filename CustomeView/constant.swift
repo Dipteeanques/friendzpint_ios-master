@@ -10,7 +10,7 @@
 import Foundation
 
 
-let Domain                      =             "https://www.friendzpoint.com/api/v1"
+let Domain                      =             "http://www.friendzpoint.com/api/v1"
 //let Domain                      =             "http://164.68.113.35/~beta/frp/api/v1"
 //let Domain                      =             "192.168.0.70/friendzpoint_web/login"
 

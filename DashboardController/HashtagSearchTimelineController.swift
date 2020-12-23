@@ -47,6 +47,7 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
     @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var img_logo: UIImageView!
     
     
     private let layoutValues: [CellType] = [
@@ -164,6 +165,7 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
         gridentView.addSubview(lblSearch)
         gridentView.addSubview(btnSearch)
         gridentView.addSubview(lblbadge)
+        gridentView.addSubview(img_logo)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
@@ -301,7 +303,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
                 cell.imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
                     
                     cell.setNeedsLayout()
-                    cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+                    cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
                     UIView.performWithoutAnimation {
                         self.tblFeed.beginUpdates()
                         self.tblFeed.endUpdates()

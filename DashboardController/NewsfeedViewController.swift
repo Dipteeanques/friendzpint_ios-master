@@ -22,6 +22,8 @@ import MessageUI
 import PSHTMLView
 import AJMessage
 import MediaPlayer
+import RBBAnimation
+import Kingfisher
 
 class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDelegate,TTTAttributedLabelDelegate,PSHTMLViewDelegate {//UIWebViewDelegate,
     func presentAlert(_ alertController: UIAlertController) {
@@ -95,7 +97,8 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
     @IBOutlet weak var gridentView: UIView!
     @IBOutlet weak var btncamera: UIButton!
     
-     var moviePlayer:MPMoviePlayerController!
+    @IBOutlet weak var img_logo: UIImageView!
+    var moviePlayer:MPMoviePlayerController!
     private let layoutValues: [CellType] = [
         .expanded, .expanded, .normal,
         .normal, .normal,.normal, .normal, .normal,
@@ -154,6 +157,7 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
     var isNewDataLoading = false
     var limit = 0
     var totalEntries = Int()
+    var imgview = UIImageView()
     
     
     override func viewDidLoad() {
@@ -169,7 +173,7 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
          NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.CommentCountSet), name: NSNotification.Name(rawValue: "CommentCount"), object: nil)
         
         tblFeed.rowHeight = UITableView.automaticDimension;
-        tblFeed.estimatedRowHeight = 0;
+        tblFeed.estimatedRowHeight = 0//UITableView.automaticDimension//100;
         
         print("Bundle version : \(Bundle.main.appName) v \(Bundle.main.versionNumber) (Build \(Bundle.main.buildNumber))")
         versionNumber = "\(Bundle.main.versionNumber)"
@@ -255,6 +259,7 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
             tblFeed.beginUpdates()
             tblFeed.endUpdates()
         }
+        tblFeed.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -263,9 +268,14 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
             tblFeed.beginUpdates()
             tblFeed.endUpdates()
         }
+        tblFeed.reloadData()
     }
     
-    
+//    override func viewDidAppear(_ animated: Bool) {
+//        tblFeed.reloadData()
+//    }
+//
+
     func getVersion() {
         let parameters = ["app_version_android":"1.0.0",
                           "app_version_ios":versionNumber]
@@ -375,6 +385,9 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
             gridentView.addSubview(lblSearch)
             gridentView.addSubview(btnSearch)
             gridentView.addSubview(lblbadge)
+        gridentView.addSubview(img_logo)
+        
+        
             
             if UIScreen.main.bounds.width == 320 {
                 
@@ -472,6 +485,7 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         pausePlayeVideos()
+        tblFeed.reloadData()
         
         
     }
@@ -719,16 +733,50 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
         return arrFeed.count
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layoutIfNeeded()
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+//        arrImages = arrFeed[indexPath.row].images
+//        for item in arrImages {
+//            let source_url = item
+//
+//            url = URL(string: source_url)
+//        imgview.sd_setImage(with: url, placeholderImage: UIImage(named: "Placeholder"), completed: nil)
+////                cell.setImagestring(strImg: source_url)
+//
+////                cell.layoutIfNeeded()
+////                cell.updateConstraints()
+//            let cellFrame = view.frame.size
+//            let height = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame, downloadedImage: imgview.image!)
+//            return height + 200
+//            break
+//        }
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let typeFeed = arrFeed[indexPath.row].type
         switch typeFeed {
         case "image":
             let cell = tblFeed.dequeueReusableCell(withIdentifier: "ImgcellTimeline", for: indexPath) as! ImgcellTimeline
             arrImages = arrFeed[indexPath.row].images
-//            cell.imgpostHeight.constant = 333
+
             for item in arrImages {
                 let source_url = item
                 imageChangedAtCell(cell, image: source_url)
+                url = URL(string: source_url)
+                cell.imgPost.sd_setImage(with: url, placeholderImage: UIImage(named: "Placeholder"), completed: nil)
+//                cell.setImagestring(strImg: source_url)
+                
+//                cell.layoutIfNeeded()
+//                cell.updateConstraints()
                 break
             }
             cell.arrSingaleImage = arrFeed[indexPath.row]
@@ -896,7 +944,29 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblSingaleTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblSingaleTitle.textColor = UIColor.black;
                 cell.lblSingaleTitle.delegate = self;
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+                
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblSingaleTitle.attributedText = boldString
             }
+//            for item in arrImages {
+//                let source_url = item
+//                url = URL(string: source_url)
+////                ChangedAtCell(cell, image: source_url)
+//                cell.imgPost.kf.setImage(with: url, placeholder: UIImage(named: "Placeholder"))
+//                cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cell.imgPost.frame.size,downloadedImage: (cell.imgPost.image ?? UIImage(named: "Placeholder"))!)
+//                break
+//            }
+            cell.layoutIfNeeded()
             return cell
         case "multi_image" :
             let cell = tblFeed.dequeueReusableCell(withIdentifier: "MultiImgcellTimeline", for: indexPath) as! MultiImgcellTimeline
@@ -1060,6 +1130,21 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblTitle.textColor = UIColor.black;
                 cell.lblTitle.delegate = self;
+                
+               
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblTitle.attributedText = boldString
             }
             arrMultiImage = arrFeed[indexPath.row].images
             if arrMultiImage.count == 2 {
@@ -1230,6 +1315,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
             cell.setNeedsUpdateConstraints()
             cell.updateConstraintsIfNeeded()
             cell.sizeToFit()
+            
             return cell
         case "video":
             let cell = tblFeed.dequeueReusableCell(withIdentifier: "VideocellTimeline", for: indexPath) as! VideocellTimeline
@@ -1396,6 +1482,19 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblTitle.textColor = UIColor.black;
                 cell.lblTitle.delegate = self;
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblTitle.attributedText = boldString
             }
 
             cell.layoutMargins = UIEdgeInsets.zero
@@ -1757,6 +1856,19 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblTitle.textColor = UIColor.black;
                 cell.lblTitle.delegate = self;
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblTitle.attributedText = boldString
              }
              
             cell.layoutMargins = UIEdgeInsets.zero
@@ -1934,6 +2046,19 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblTitle.textColor = UIColor.black;
                 cell.lblTitle.delegate = self;
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblTitle.attributedText = boldString
             }
             
             cell.btnLikeCount.addTarget(self, action: #selector(NewsfeedViewController.btnAllLikeVideoCellAction), for: UIControl.Event.touchUpInside)
@@ -2106,6 +2231,19 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
                 cell.lblTitle.textColor = UIColor.black;
                 cell.lblTitle.delegate = self;
+                
+                let normalText =  " shared \(shared_person_name) 's post"
+
+                let boldText  = name
+
+                let attrs1 = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
+                let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+                boldString.append(attributedString)
+                cell.lblTitle.attributedText = boldString
             }
             
             cell.btnLikeCount.addTarget(self, action: #selector(NewsfeedViewController.btnAllLikeMetaCellAction), for: UIControl.Event.touchUpInside)
@@ -2129,14 +2267,31 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
         }
          return UITableViewCell() 
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let typeFeed = arrFeed[indexPath.row].type
+//        switch typeFeed {
+//        case "image":
+//            let cell = tblFeed.dequeueReusableCell(withIdentifier: "ImgcellTimeline", for: indexPath) as! ImgcellTimeline
+////            arrImages = arrFeed[indexPath.row].images
+//            if ((cell.imgPost.frame.height ?? 200) <= 250){
+//                cell.imgpostHeight.constant = 200
+//                return 372
+//            }
+//            else{
+//                cell.imgpostHeight.constant = 400
+//                return 572
+//            }
+//            
+//        default:
+//            break
+//        }
+//        return 400//UITableView.automaticDimension
+//    }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let videoCell = cell as? ASAutoPlayVideoLayerContainer, let _ = videoCell.videoURL {
@@ -2166,20 +2321,43 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
     func imageChangedAtCell(_ cell: ImgcellTimeline, image: String?) {
         let cellFrame = cell.frame.size
         url = URL(string: image!)
+
         cell.imgPost.sd_setImage(with: url, placeholderImage:UIImage(named: "Placeholder") , options: [], completed: { (theImage, error, cache, url) in
             UIView.performWithoutAnimation {
                 if self.FirstTime == ""{
                     self.FirstTime = "ok"
                     self.tblFeed.beginUpdates()
-                    cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+                    cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (theImage ?? UIImage(named: "Placeholder"))!)
                     self.tblFeed.endUpdates()
+                    
                 }
                 else{
-                    cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+                    cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (theImage ?? UIImage(named: "Placeholder"))!)
                 }
-                
+//                self.tblFeed.beginUpdates()
+//                let height = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: (theImage ?? UIImage(named: "Placeholder"))!)
+//                 print("Callheight: ",height)
+//                 if (height <= 210){
+//                    cell.imgpostHeight.constant = 200
+//
+//                 }
+//                 else if height <= 250{
+//                    cell.imgpostHeight.constant = 250
+//                 }
+//                 else if height <= 375{
+//                    cell.imgpostHeight.constant = 300
+//                 }
+//                 else if height <= 565{
+//                    cell.imgpostHeight.constant = 500
+//                 }
+//                 else{
+//                    cell.imgpostHeight.constant = 400
+//
+//                 }
+//                self.tblFeed.endUpdates()
             }
         })
+       
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -2194,12 +2372,14 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                lastIndex_id = arrFeed[lastIndexPath.row].id
                timeline_last_first_id = lastIndex_id
                timeline_Type_top_bottom = "Bottom"
-//             self.tblFeed.beginUpdates()
+            
                getFeed(strPage: "\(pageCount)")
                self.tblFeed.tableFooterView = spinner
                self.tblFeed.tableFooterView?.isHidden = false
                isNewDataLoading = true
+
            }
+
         }
     }
 
@@ -2237,6 +2417,8 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
         let widthOffsetPercentage = (widthOffset*100)/downloadedImage.size.width
         let heightOffset = (widthOffsetPercentage * downloadedImage.size.height)/100
         let effectiveHeight = downloadedImage.size.height - heightOffset
+
+        print("callsize:",effectiveHeight)
         return(effectiveHeight)
     }
     // MARK: Optional function for resize of image
@@ -2442,9 +2624,20 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                self.tblFeed.beginUpdates()
-                                self.tblFeed.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-                                self.tblFeed.endUpdates()
+
+//                                self.tblFeed.beginUpdates()
+                               
+//                                self.tblFeed.endUpdates()
+                                cellfeed.animatedview.isHidden = false
+                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    cellfeed.animatedview.isHidden = true
+                                    self.tblFeed.beginUpdates()
+                                    self.tblFeed.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                                    self.tblFeed.endUpdates()
+                                    
+                                    
+                                }
                             }
                             else {
                                 self.arrFeed = self.arrFeed.map{
@@ -2458,9 +2651,22 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                self.tblFeed.beginUpdates()
-                                self.tblFeed.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-                                self.tblFeed.endUpdates()
+
+
+//                                self.tblFeed.beginUpdates()
+                               
+                            
+//                                self.tblFeed.endUpdates()
+                                
+                                cellfeed.animatedview.isHidden = false
+                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    cellfeed.animatedview.isHidden = true
+                                    self.tblFeed.beginUpdates()
+                                    self.tblFeed.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                                    self.tblFeed.endUpdates()
+                                }
                             }
                         }
                     }
@@ -2479,9 +2685,17 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
+                                cellfeed.animatedview.isHidden = false
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                self.tblFeed.beginUpdates()
-                                self.tblFeed.endUpdates()
+                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
+
+//                                self.tblFeed.beginUpdates()
+//                                self.tblFeed.endUpdates()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    cellfeed.animatedview.isHidden = true
+                                    self.tblFeed.beginUpdates()
+                                    self.tblFeed.endUpdates()
+                                }
                             }
                             else {
                                 self.arrFeed = self.arrFeed.map{
@@ -2494,16 +2708,40 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 }
                                 let likeCount = response?.likecount
                                 let strLikeTotal = likeCount! + " Like"
+                                cellfeed.animatedview.isHidden = false
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                self.tblFeed.beginUpdates()
-                                self.tblFeed.endUpdates()
+                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
+
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    cellfeed.animatedview.isHidden = true
+                                    self.tblFeed.beginUpdates()
+                                    self.tblFeed.endUpdates()
+                                }
                             }
+
                         }
                     }
                 }
+                
+
             }
         }
     }
+    
+//    func animateTo(frame: CGRect, view:UIView ,withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
+//
+//
+//        let xScale = view.frame.size.width / view.frame.size.width
+//        let yScale = view.frame.size.height / view.frame.size.height
+//        let x = view.frame.origin.x + (view.frame.width * xScale) * view.layer.anchorPoint.x
+//        let y = view.frame.origin.y + (view.frame.height * yScale) * view.layer.anchorPoint.y
+//
+//      UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: {
+//        view.layer.position = CGPoint(x: x, y: y)
+//        view.transform = view.transform.scaledBy(x: xScale, y: yScale)
+//      }, completion: completion)
+//    }
+//
     
     @objc func btnshareImgAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
@@ -4324,7 +4562,8 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                         }
                                         return mutableBook
                                     }
-                                    AJMessage.show(title: "FriendzPoint", message: message!,position:.top).onHide {_ in
+                                    print(response)
+                                    AJMessage.show(title: "", message: "post is successfully shared",position:.top).onHide {_ in
                                         print("did dissmiss")
                                     }
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PostCreat"), object: nil)
@@ -4620,3 +4859,23 @@ class ImageLoader {
 //else {
 //    getfirstTime()
 //}
+
+
+
+extension UIView {
+  func animateTo(frame: CGRect, withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
+    guard let _ = superview else {
+      return
+    }
+    
+    let xScale = frame.size.width / self.frame.size.width
+    let yScale = frame.size.height / self.frame.size.height
+    let x = frame.origin.x + (self.frame.width * xScale) * self.layer.anchorPoint.x
+    let y = frame.origin.y + (self.frame.height * yScale) * self.layer.anchorPoint.y
+   
+    UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: {
+      self.layer.position = CGPoint(x: x, y: y)
+      self.transform = self.transform.scaledBy(x: xScale, y: yScale)
+    }, completion: completion)
+  }
+}

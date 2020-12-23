@@ -642,7 +642,7 @@ extension BrowseallpostController: UITableViewDelegate,UITableViewDataSource,UIS
                 cell.imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
                     
                     cell.setNeedsLayout()
-                    cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+                    cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
                     UIView.performWithoutAnimation {
                         self.tblFeed.beginUpdates()
                         self.tblFeed.endUpdates()

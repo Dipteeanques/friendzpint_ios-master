@@ -38,6 +38,13 @@ class HeaderViewController: UIViewController {
             gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
             gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
             gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+            if #available(iOS 13, *){
+                
+            }
+            else{
+    //            UIApplication.shared.statusBarView?.backgroundColor = UIColor.red
+                UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
+            }
             gridentView.layer.addSublayer(gradientLayer)
             gridentView.addSubview(btnback)
             gridentView.addSubview(btnWithdraw)
@@ -79,13 +86,13 @@ class HeaderViewController: UIViewController {
                 if suc == true {
                     let data = response?.data
                     let COINSTOTAL = data?.totalCoin
-                    self.lblCoin.text = "COINS TOTAL" + String(COINSTOTAL!)
+                    self.lblCoin.text =  String(COINSTOTAL!)//"COINS TOTAL" +
                     let redeem = data?.redeemCoin
                     let balance = data?.balance
                     let withdraw = data?.totalWithdrawBalance
-                    self.lblRedeemcoin.text = "COINS REDEEMED " + String(redeem!)
-                    self.lblBalance.text = "BALANCE " + String(balance!)
-                    self.lblWithdraw.text = "WITHDRAW BALANCE " + String(withdraw!)
+                    self.lblRedeemcoin.text =  String(redeem!)//"COINS REDEEMED " +
+                    self.lblBalance.text =  String(balance!) //"BALANCE " +
+                    self.lblWithdraw.text =  String(withdraw!) //"WITHDRAW BALANCE " +
                 }
             }
         }
