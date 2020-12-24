@@ -276,6 +276,11 @@
                             <constraint firstItem="Lg1-cm-BeC" firstAttribute="top" secondItem="GZ9-xq-Ccc" secondAttribute="bottom" constant="7" id="yR6-xm-7mz"/>
                             <constraint firstItem="cwj-9L-eJ3" firstAttribute="leading" secondItem="bkZ-Jf-ETd" secondAttribute="leading" constant="8" id="zqB-uv-5au"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JrX-pe-LBA"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <constraints>
@@ -316,7 +321,9 @@
         <designable name="3nT-9u-tcX">
             <size key="intrinsicContentSize" width="63" height="18"/>
         </designable>
-        <designable name="GZ9-xq-Ccc"/>
+        <designable name="GZ9-xq-Ccc">
+            <size key="intrinsicContentSize" width="0.0" height="14"/>
+        </designable>
     </designables>
     <resources>
         <image name="Clock" width="12" height="12"/>

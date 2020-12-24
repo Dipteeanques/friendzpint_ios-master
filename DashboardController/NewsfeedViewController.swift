@@ -772,7 +772,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                 let source_url = item
                 imageChangedAtCell(cell, image: source_url)
                 url = URL(string: source_url)
-                cell.imgPost.sd_setImage(with: url, placeholderImage: UIImage(named: "Placeholder"), completed: nil)
+//                cell.imgPost.sd_setImage(with: url, placeholderImage: UIImage(named: "Placeholder"), completed: nil)
 //                cell.setImagestring(strImg: source_url)
                 
 //                cell.layoutIfNeeded()
@@ -966,7 +966,10 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
 //                cell.imgpostHeight.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cell.imgPost.frame.size,downloadedImage: (cell.imgPost.image ?? UIImage(named: "Placeholder"))!)
 //                break
 //            }
-            cell.layoutIfNeeded()
+//            cell.layoutIfNeeded()
+            cell.setNeedsUpdateConstraints()
+            cell.updateConstraintsIfNeeded()
+            cell.sizeToFit()
             return cell
         case "multi_image" :
             let cell = tblFeed.dequeueReusableCell(withIdentifier: "MultiImgcellTimeline", for: indexPath) as! MultiImgcellTimeline

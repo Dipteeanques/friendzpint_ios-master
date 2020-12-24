@@ -115,7 +115,7 @@ class ImgcellTimeline: UITableViewCell {
 //        imgpostHeight = nil
         //imgPost.image = nil
         
-//        imgpostHeight.constant = 0//333
+        imgpostHeight.constant = 200//333
 //        imgPost.image = UIImage(named: "Placeholder")
 //        let cellFrame = contentView.frame.size
 //        self.imgpostHeight.constant = 200//self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: imgPost.image!)
