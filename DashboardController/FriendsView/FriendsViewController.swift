@@ -110,15 +110,24 @@ class FriendsViewController: UIViewController {
         let headers: HTTPHeaders = ["Xapi": XAPI,
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
+        print(headers)
         
         wc.callGETSimplewebservice(url: FINDSUGGESTEDUSERS, parameters: [:], headers: headers, fromView: self.view, isLoading: false) { (sucess, response: suggestedFriendResponsMode?) in
             if sucess {
+                print("response:",response)
                 let sucessMy = response?.success
                 if sucessMy! {
                     let data = response?.data
                     let arr_dict = data?.data
                     self.arrSuggeted = arr_dict!
+                    if self.arrSuggeted.count == 0 {
+                        self.foundView.isHidden = false
+                    }
+                    else {
+                        self.foundView.isHidden = true
+                    }
                     self.collectionSuggested.reloadData()
+                    
                 }
             }
         }

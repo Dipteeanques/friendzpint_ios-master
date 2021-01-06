@@ -49,7 +49,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-308" y="10"/>
+            <point key="canvasLocation" x="-514" y="-54"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="3Km-nH-LWz">
@@ -12539,7 +12539,7 @@
                                         <constraint firstAttribute="width" constant="125" id="CdG-Vs-3AZ"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                    <state key="normal" title="Add Friends">
+                                    <state key="normal" title="Follow">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
@@ -12564,7 +12564,7 @@
                                         <constraint firstAttribute="width" constant="125" id="q7p-bm-fwz"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                    <state key="normal" title="Add Friends">
+                                    <state key="normal" title="Follow">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
@@ -17477,7 +17477,7 @@
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="KYu-nR-GvD"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="  Add Friends  ">
+                                                            <state key="normal" title="Follow">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
                                                         </button>
@@ -22137,10 +22137,10 @@
         <segue reference="X5a-x0-iAf"/>
         <segue reference="9ko-hA-3YM"/>
         <segue reference="MiD-NO-6ea"/>
-        <segue reference="4Dm-n3-8Yf"/>
-        <segue reference="OUw-dk-nRE"/>
-        <segue reference="xxp-sR-GOe"/>
-        <segue reference="ICg-nh-vtk"/>
+        <segue reference="41A-TW-Jdh"/>
+        <segue reference="pnT-oA-EW2"/>
+        <segue reference="DQa-9s-N7a"/>
+        <segue reference="Wlp-Ph-WWR"/>
         <segue reference="7Pz-Bw-GCy"/>
         <segue reference="Bdf-T6-ZgN"/>
         <segue reference="gSP-7G-eES"/>

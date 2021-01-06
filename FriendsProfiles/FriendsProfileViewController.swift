@@ -185,51 +185,55 @@ class FriendsProfileViewController: MXSegmentedPagerController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FriendsprofileTimeline"), object: self.strUserName)
                 self.send_request = dic!.sendRequested
                 self.message_priva = dic!.messagePrivacy
-                if self.send_request == "approved" {
-                    self.btnFriends.setTitle("Friends", for: UIControl.State.normal)
-//                    if self.message_priva == "everyone" {
-//                        self.btnMessage.isHidden = false
-//                    }
-                    self.btnFriends.isHidden = false
-                    self.btnMessage.isHidden = false
-                    self.btnaddfriends.isHidden = true
-//                    else if self.message_priva == "only_follow" {
-//                        self.btnMessage.isHidden = false
-//                    }
-//                    else {
-//                        self.btnMessage.isHidden = true
-//                    }
-                }
-                else if self.send_request == "addfriend" {
-                    self.btnFriends.setTitle("Add Friends", for: UIControl.State.normal)
-//                    if self.message_priva == "everyone" {
-//                        self.btnMessage.isHidden = false
-//                    }
-                    self.btnFriends.isHidden = true
-                    self.btnMessage.isHidden = true
-                    self.btnaddfriends.isHidden = false
-//                    else if self.message_priva == "only_follow" {
-//                        self.btnMessage.isHidden = false
-//                    }
-//                    else {
-//                        self.btnMessage.isHidden = true
-//                    }
-                }
-                else {
-                    self.btnFriends.setTitle("Requested", for: UIControl.State.normal)
-//                    if self.message_priva == "everyone" {
-//                        self.btnMessage.isHidden = false
-//                    }
-                    self.btnFriends.isHidden = true
-                    self.btnMessage.isHidden = true
-                    self.btnaddfriends.isHidden = false
-//                    else if self.message_priva == "only_follow" {
-//                        self.btnMessage.isHidden = false
-//                    }
-//                    else {
-//                        self.btnMessage.isHidden = true
-//                    }
-                }
+                self.btnFriends.isHidden = false
+                self.btnMessage.isHidden = false
+                self.btnaddfriends.isHidden = true
+//                if self.send_request == "approved" {
+//                    self.btnFriends.setTitle("Friends", for: UIControl.State.normal)
+////                    if self.message_priva == "everyone" {
+////                        self.btnMessage.isHidden = false
+////                    }
+//                    self.btnFriends.isHidden = false
+//                    self.btnMessage.isHidden = false
+//                    self.btnaddfriends.isHidden = true
+////                    else if self.message_priva == "only_follow" {
+////                        self.btnMessage.isHidden = false
+////                    }
+////                    else {
+////                        self.btnMessage.isHidden = true
+////                    }
+//                }
+//                else if self.send_request == "addfriend" {
+////                    self.btnFriends.setTitle("Add Friends", for: UIControl.State.normal)
+//                    self.btnFriends.setTitle("Follow", for: .normal)
+////                    if self.message_priva == "everyone" {
+////                        self.btnMessage.isHidden = false
+////                    }
+//                    self.btnFriends.isHidden = true
+//                    self.btnMessage.isHidden = true
+//                    self.btnaddfriends.isHidden = false
+////                    else if self.message_priva == "only_follow" {
+////                        self.btnMessage.isHidden = false
+////                    }
+////                    else {
+////                        self.btnMessage.isHidden = true
+////                    }
+//                }
+//                else {
+//                    self.btnFriends.setTitle("Requested", for: UIControl.State.normal)
+////                    if self.message_priva == "everyone" {
+////                        self.btnMessage.isHidden = false
+////                    }
+//                    self.btnFriends.isHidden = true
+//                    self.btnMessage.isHidden = true
+//                    self.btnaddfriends.isHidden = false
+////                    else if self.message_priva == "only_follow" {
+////                        self.btnMessage.isHidden = false
+////                    }
+////                    else {
+////                        self.btnMessage.isHidden = true
+////                    }
+//                }
             }
         }
     }
@@ -252,7 +256,8 @@ class FriendsProfileViewController: MXSegmentedPagerController {
                         self.btnFriends.setTitle("Requested", for: .normal)
                     }
                     else {
-                        self.btnFriends.setTitle("Add Friends", for: .normal)
+//                        self.btnFriends.setTitle("Add Friends", for: .normal)
+                        self.btnFriends.setTitle("Follow", for: .normal)
                     }
                 }
             }
@@ -271,7 +276,8 @@ class FriendsProfileViewController: MXSegmentedPagerController {
             if sucess {
                 let status = response?.status
                 if status == "200" {
-                    self.btnFriends.setTitle("Add Friends", for: .normal)
+//                    self.btnFriends.setTitle("Add Friends", for: .normal)
+                    self.btnFriends.setTitle("Follow", for: .normal)
                 }
             }
         }

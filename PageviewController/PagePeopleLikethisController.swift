@@ -255,7 +255,8 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
                                 btnFriends.setTitle("Requested", for: .normal)
                             }
                             else {
-                                btnFriends.setTitle("Add Friends", for: .normal)
+//                                btnFriends.setTitle("Add Friends", for: .normal)
+                                btnFriends.setTitle("Follow", for: .normal)
                             }
                         }
                     }
