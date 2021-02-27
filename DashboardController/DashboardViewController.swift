@@ -31,8 +31,8 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
     @IBOutlet weak var btncamera: UIButton!
     
     //MARK: - Variable
-    var arrtab = [#imageLiteral(resourceName: "Feed"),#imageLiteral(resourceName: "Friend"),#imageLiteral(resourceName: "Group"),#imageLiteral(resourceName: "chat"),#imageLiteral(resourceName: "Profile"),#imageLiteral(resourceName: "menu")]
-    var arrtabBlue = [#imageLiteral(resourceName: "FeedBlue"),#imageLiteral(resourceName: "FriendBlue"),#imageLiteral(resourceName: "GroupBlue"),#imageLiteral(resourceName: "ChatBlue"),#imageLiteral(resourceName: "ProfileBlue"),#imageLiteral(resourceName: "MenuBlue")]
+//    var arrtab = [#imageLiteral(resourceName: "Feed"),#imageLiteral(resourceName: "Friend"),#imageLiteral(resourceName: "Group"),#imageLiteral(resourceName: "chat"),#imageLiteral(resourceName: "Profile"),#imageLiteral(resourceName: "menu")]
+//    var arrtabBlue = [#imageLiteral(resourceName: "FeedBlue"),#imageLiteral(resourceName: "FriendBlue"),#imageLiteral(resourceName: "GroupBlue"),#imageLiteral(resourceName: "ChatBlue"),#imageLiteral(resourceName: "ProfileBlue"),#imageLiteral(resourceName: "MenuBlue")]
     var selectedIndex = Int()
     
     override func viewDidLoad() {
@@ -50,26 +50,29 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
         icons.append(#imageLiteral(resourceName: "Feed"))
         icons.append(#imageLiteral(resourceName: "Friend"))
         icons.append(#imageLiteral(resourceName: "Group"))
-        icons.append(#imageLiteral(resourceName: "chat"))
+        icons.append(#imageLiteral(resourceName: "notification"))
         icons.append(#imageLiteral(resourceName: "Profile"))
-        icons.append(#imageLiteral(resourceName: "menu"))
+//        icons.append(#imageLiteral(resourceName: "menu"))
         
         var sIcons = [UIImage]()
-        sIcons.append(#imageLiteral(resourceName: "FeedBlue"))
-        sIcons.append(#imageLiteral(resourceName: "FriendBlue"))
-        sIcons.append(#imageLiteral(resourceName: "GroupBlue"))
-        sIcons.append(#imageLiteral(resourceName: "ChatBlue"))
-        sIcons.append(#imageLiteral(resourceName: "ProfileBlue"))
-        sIcons.append(#imageLiteral(resourceName: "MenuBlue"))
+        sIcons.append(#imageLiteral(resourceName: "SFeed"))
+        sIcons.append(#imageLiteral(resourceName: "Friend"))
+        sIcons.append(#imageLiteral(resourceName: "Group"))
+        sIcons.append(#imageLiteral(resourceName: "Snotification"))
+        sIcons.append(#imageLiteral(resourceName: "SProfile"))
+//        sIcons.append(#imageLiteral(resourceName: "Smenu"))
         
         tabController = .insert(into: self, withTabIcons: icons, andSelectedIcons: sIcons)
         tabController.delegate = self
-        tabController.setViewController(NewsfeedViewController.instance(), atIndex: 0)
-        tabController.setViewController(FriendsViewController.instance(), atIndex: 1)
-        tabController.setViewController(GroupsViewController.instance(), atIndex: 2)
-        tabController.setViewController(ChatViewController.instance(), atIndex: 3)
-        tabController.setViewController(ProfileViewController.instance(), atIndex: 4)
-        tabController.setViewController(MenuViewController.instance(), atIndex: 5)
+        tabController.setViewController(HomeVC.instance(), atIndex: 0)//HomeViewController
+        tabController.setViewController(SearchViewController.instance(), atIndex: 1)
+        tabController.setViewController(NewPostVC.instance(), atIndex: 2)
+        tabController.setViewController(NotificationController.instance(), atIndex: 3)//ChatViewController//MenuViewController
+        tabController.setViewController(SettingVC.instance(), atIndex: 4)
+        tabController.currentTab?.hidesBottomBarWhenPushed = true
+//        tabController.setViewController(ProfileViewController.instance(), atIndex: 4)
+//        tabController.setViewController(MenuViewController.instance(), atIndex: 5)
+        
     }
     
     func tabBar(_ tabBar: AZTabBarController, statusBarStyleForIndex index: Int) -> UIStatusBarStyle {

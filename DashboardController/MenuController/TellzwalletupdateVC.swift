@@ -78,7 +78,7 @@ class TellzwalletupdateVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        currentTabBar?.setBar(hidden: true, animated: false)
        
         setDefault()
         if checkwithdraw == "true"{
@@ -102,23 +102,23 @@ class TellzwalletupdateVC: UIViewController {
     
     func setDefault() {
         transperentview.isHidden = true
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.gridentView.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        if #available(iOS 13, *){
-            
-        }
-        else{
-//            UIApplication.shared.statusBarView?.backgroundColor = UIColor.red
-            UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
-        }
-       
-        gridentView.layer.addSublayer(gradientLayer)
-        gridentView.addSubview(btnback)
-        gridentView.addSubview(btnWithdraw)
-        gridentView.addSubview(lbltitle)
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.gridentView.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        if #available(iOS 13, *){
+//
+//        }
+//        else{
+////            UIApplication.shared.statusBarView?.backgroundColor = UIColor.red
+//            UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
+//        }
+//
+//        gridentView.layer.addSublayer(gradientLayer)
+//        gridentView.addSubview(btnback)
+//        gridentView.addSubview(btnWithdraw)
+//        gridentView.addSubview(lbltitle)
         txt_selecttype.isHidden = true
         print("width123:", txt_selecttype.frame.size.width)
         drop1 = UIDropDown(frame: CGRect(x: txt_selecttype.frame.origin.x, y: txt_selecttype.frame.origin.y, width:315, height: txt_selecttype.frame.size.height))
@@ -408,11 +408,3 @@ extension UIViewController{
 }
 
 
-extension UIApplication {
-    var statusBarView: UIView? {
-        if responds(to: Selector(("statusBar"))) {
-            return value(forKey: "statusBar") as? UIView
-        }
-        return nil
-    }
-}

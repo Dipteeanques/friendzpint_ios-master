@@ -36,7 +36,7 @@ class PagelikedViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(PagelikedViewController.Likedpages), name: NSNotification.Name(rawValue: "Likedpages"), object: nil)
         
-        pagelikedGet()
+//        pagelikedGet()
         pageCount = 1
         if (loggdenUser.value(forKey: ADlikepage) != nil) {
             decodedData = loggdenUser.value(forKey: ADlikepage) as! [Data]
@@ -56,7 +56,17 @@ class PagelikedViewController: UIViewController {
                 }
             }
         }
+        
+        setDefault()
     }
+    
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        pagelikedGet()
+        pageCount = 1
+    }
+    
     
     @objc func Likedpages(_ notification: NSNotification) {
         loaderView.isHidden = false
@@ -218,12 +228,20 @@ extension PagelikedViewController: UITableViewDelegate,UITableViewDataSource,UIS
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+            print(username)
+            loggdenUser.setValue(username, forKey: UNAME)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

@@ -24,19 +24,20 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var loaderView: UIView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var tblChatlist: UITableView!
-    @IBOutlet weak var lblbadge: BadgeLabel!
+//    @IBOutlet weak var lblbadge: BadgeLabel!
     @IBOutlet weak var btnSearch: UIButton!
     @IBOutlet weak var lblSearch: UILabel!
-    @IBOutlet weak var iconSearch: UIImageView!
+//    @IBOutlet weak var iconSearch: UIImageView!
     @IBOutlet weak var btnCameraleading: NSLayoutConstraint!
-    @IBOutlet weak var btnnotitrailing: NSLayoutConstraint!
-    @IBOutlet weak var lineView: UIView!
-    @IBOutlet weak var btnNotification: UIButton!
+//    @IBOutlet weak var btnnotitrailing: NSLayoutConstraint!
+//    @IBOutlet weak var lineView: UIView!
+//    @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
-    @IBOutlet weak var img_logo: UIImageView!
+//    @IBOutlet weak var btncamera: UIButton!
+//    @IBOutlet weak var img_logo: UIImageView!
+    @IBOutlet weak var btn_back: UIButton!
     
-    
+
      var arrFriends = ["Mayur Godhani","Jekil Dabhoya","Dipak kukadiya","Maulik Bhuva","Manna kathiriya","Piyush Prajapati","Mayur Godhani","Jekil Dabhoya","Dipak kukadiya","Maulik Bhuva","Manna kathiriya","Piyush Prajapati"]
     var assets: [DKAsset]?
     var arrChatList = NSArray()
@@ -52,41 +53,59 @@ class ChatViewController: UIViewController {
         setDefault()
     }
     
+    @IBAction func btnBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     func setDefault() {
         chatList()
+        setStatusBar1(backgroundColor: .black)
+//        currentTabBar?.setBar(hidden: true, animated: false)
         self.navigationController?.navigationBar.isHidden = true
-        let gradientLayer = CAGradientLayer()
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.gridentView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        gridentView.layer.addSublayer(gradientLayer)
+//        gridentView.addSubview(btncamera)
+//        gridentView.addSubview(btnNotification)
+//        gridentView.addSubview(lineView)
+//        gridentView.addSubview(iconSearch)
+//        gridentView.addSubview(lblSearch)
+//        gridentView.addSubview(btnSearch)
+//        gridentView.addSubview(lblbadge)
+//        gridentView.addSubview(img_logo)
         
-        gradientLayer.frame = self.gridentView.bounds
+        //MARK: My
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            self.lblbadge.badge(text: String(count))
+//        }
         
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gridentView.layer.addSublayer(gradientLayer)
-        gridentView.addSubview(btncamera)
-        gridentView.addSubview(btnNotification)
-        gridentView.addSubview(lineView)
-        gridentView.addSubview(iconSearch)
-        gridentView.addSubview(lblSearch)
-        gridentView.addSubview(btnSearch)
-        gridentView.addSubview(lblbadge)
-        gridentView.addSubview(img_logo)
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
+//        }
         
-        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
-            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            self.lblbadge.badge(text: String(count))
-        }
-        
-        if UIScreen.main.bounds.width == 320 {
-            
-        } else if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
-        }
+//        if UIScreen.main.bounds.width == 320 {
+//            
+//        } else if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//        }
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.BadgeCleare), name: NSNotification.Name(rawValue: "BadgeCleare"), object: nil)
     }
     
     @objc func BadgeCleare(_ notification: NSNotification) {
-        self.lblbadge.badge(text: nil)
+//        self.lblbadge.badge(text: nil)
     }
     
     func chatList() {
@@ -145,7 +164,8 @@ class ChatViewController: UIViewController {
 //        self.navigationController?.pushViewController(obj, animated: false)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
-        self.navigationController?.pushViewController(obj, animated: false)
+       // self.navigationController?.pushViewController(obj, animated: false)
+        self.present(obj, animated: false, completion: nil)
         
     }
     

@@ -69,7 +69,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
         getPageDetails()
         self.navigationController?.navigationBar.isHidden = true
         segmentedPager.backgroundColor = .white
-        
+        setStatusBar1(backgroundColor: .black)
         // Parallax Header
         segmentedPager.parallaxHeader.view = headerView
         segmentedPager.parallaxHeader.mode = .fill
@@ -103,37 +103,47 @@ class FriendPageProfileController: MXSegmentedPagerController {
         btnJoined.clipsToBounds = true
        
         
-        let gradientLayer = CAGradientLayer()
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.gridentView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        gridentView.layer.addSublayer(gradientLayer)
+//        gridentView.addSubview(btncamera)
+//        gridentView.addSubview(btnNotification)
+//        gridentView.addSubview(lineView)
+//        gridentView.addSubview(iconSearch)
+//        gridentView.addSubview(lblSearch)
+//        gridentView.addSubview(btnSearch)
+//        gridentView.addSubview(lblbadge)
+//
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            self.lblbadge.badge(text: String(count))
+//        }
         
-        gradientLayer.frame = self.gridentView.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gridentView.layer.addSublayer(gradientLayer)
-        gridentView.addSubview(btncamera)
-        gridentView.addSubview(btnNotification)
-        gridentView.addSubview(lineView)
-        gridentView.addSubview(iconSearch)
-        gridentView.addSubview(lblSearch)
-        gridentView.addSubview(btnSearch)
-        gridentView.addSubview(lblbadge)
-        
-        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
-            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            self.lblbadge.badge(text: String(count))
-        }
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
+//        }
         
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 370
             segmentedPager.parallaxHeader.minimumHeight = 66
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
         }
         else {
             segmentedPager.parallaxHeader.height = 400
             segmentedPager.parallaxHeader.minimumHeight = 90
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
         }
         
         if passBackvala == "passBackvala" {
@@ -386,6 +396,8 @@ class FriendPageProfileController: MXSegmentedPagerController {
         else {
             self.navigationController?.popViewController(animated: true)
         }
+        self.navigationController?.popViewController(animated: false)
+        self.dismiss(animated: false, completion: nil)
     }
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)

@@ -91,12 +91,12 @@ class EventPostController: UIViewController,TTTAttributedLabelDelegate {
     
     
     func setDefault() {
-        refreshControl.addTarget(self, action: #selector(PageTimelineController.refresh), for: UIControl.Event.valueChanged)
+//        refreshControl.addTarget(self, action: #selector(PageTimelineController.refresh), for: UIControl.Event.valueChanged)
         tblFeed.addSubview(refreshControl)
         NotificationCenter.default.addObserver(self, selector: #selector(self.appEnteredFromBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.notificationSingaleDashboardTimeline), name: NSNotification.Name(rawValue: "notificationSingaleDashboardTimeline"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.notificationMyTimelineBackSingale), name: NSNotification.Name(rawValue: "notificationMyTimelineBackSingale"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.notificationSingaleDashboardTimeline), name: NSNotification.Name(rawValue: "notificationSingaleDashboardTimeline"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.notificationMyTimelineBackSingale), name: NSNotification.Name(rawValue: "notificationMyTimelineBackSingale"), object: nil)
         
         tblFeed.register(UINib(nibName: "ImgcellTimeline", bundle: nil), forCellReuseIdentifier: "ImgcellTimeline")
         tblFeed.register(UINib(nibName: "MultiImgcellTimeline", bundle: nil), forCellReuseIdentifier: "MultiImgcellTimeline")

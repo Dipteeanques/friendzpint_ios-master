@@ -172,6 +172,16 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
             self.lblbadge.badge(text: String(count))
         }
         
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+                currentTabBar!.setBadgeText(nil, atIndex: 3)
+            }
+            else{
+                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+            }
+        }
+        
         if UIScreen.main.bounds.width == 320 {
             
         } else if UIScreen.main.bounds.width == 414 {

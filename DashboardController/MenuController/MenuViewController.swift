@@ -101,6 +101,15 @@ class MenuViewController: UIViewController {
             self.lblbadge.badge(text: String(count))
         }
         
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+                currentTabBar!.setBadgeText(nil, atIndex: 3)
+            }
+            else{
+                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+            }
+        }
         
         if UIScreen.main.bounds.width == 320 {
             
@@ -479,10 +488,103 @@ extension UIViewController{
             segmentController.headerViewController = headerViewController
             segmentController.segmentControllers = [firstViewController,
                                                     secondViewController]
-            segmentController.headerViewHeight = 350
+            segmentController.headerViewHeight = 465
             segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
             segmentController.segmentTitleColor = .lightGray
-            segmentController.segmentSelectedTitleColor = .black
+            segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
+            navigationController?.pushViewController(segmentController, animated: true)
+        }
+    }
+    
+    func NavigateWalletMain()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "TellzmeHeaderVC")
+            
+    
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "RedeemController")
+            firstViewController.title = "Redeem Coins"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "WithdrawController")
+            secondViewController.title = "Withdraw History"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController]
+            segmentController.headerViewHeight = 435
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
+            segmentController.segmentTitleFont = UIFont(name: "SFUIText-Medium", size: 15)!
+            self.modalPresentationStyle = .fullScreen
+            self.present(segmentController, animated: false, completion: nil)//pushViewController(segmentController, animated: true)
+        }
+    }
+    
+    func NavigatePages()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "HeaderVC")
+
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "LikedPageviewController")
+            firstViewController.title = "Liked Pages"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "PagejoinedlistController")
+            secondViewController.title = "Joined Pages"
+            
+            let thirdViewController = storyboard
+                .instantiateViewController(withIdentifier: "MypagesViewController")
+            thirdViewController.title = "My Pages"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController,thirdViewController]
+            segmentController.headerViewHeight = 55
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
+            navigationController?.pushViewController(segmentController, animated: true)
+        }
+    }
+    
+    func NavigateGroups()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "HeaderVC")
+
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "JoinedMeGroupViewController")
+            firstViewController.title = "Joined Groups"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "MygroupsViewControllerList")
+            secondViewController.title = "My Groups"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController]
+            segmentController.headerViewHeight = 55
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
             navigationController?.pushViewController(segmentController, animated: true)
         }
     }

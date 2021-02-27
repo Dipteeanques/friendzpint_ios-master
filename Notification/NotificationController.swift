@@ -11,6 +11,12 @@ import Alamofire
 
 class NotificationController: UIViewController {
 
+    class func instance()->UIViewController{
+        let colorController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationController")
+        let nav = UINavigationController(rootViewController: colorController)
+        nav.navigationBar.isTranslucent = false
+        return nav
+    }
     
     @IBOutlet weak var foundView: Foundview!
     @IBOutlet weak var tblView: UITableView!
@@ -28,32 +34,38 @@ class NotificationController: UIViewController {
     var spinner = UIActivityIndicatorView()
     var pageCount = Int()
     var wc = Webservice.init()
-    
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setStatusBar(backgroundColor: .black)
         loaderView.isHidden = false
         activity.startAnimating()
         setDeafult()
+        
+//        tabBarItem.badgeValue = "1"
+        currentTabBar!.setBadgeText(nil, atIndex: 3)
+        
+        loggdenUser.set(nil, forKey: BADGECOUNT)
     }
     
     func setDeafult() {
         getNotification(strPage: "1")
          pageCount = 1
         self.navigationController?.navigationBar.isHidden = true
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.headerView.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerView.layer.addSublayer(gradientLayer)
-        headerView.addSubview(btnBack)
-        headerView.addSubview(lblTitle)
-        headerView.addSubview(btnMark)
-        
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
-        }
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.headerView.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerView.layer.addSublayer(gradientLayer)
+//        headerView.addSubview(btnBack)
+//        headerView.addSubview(lblTitle)
+//        headerView.addSubview(btnMark)
+//
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
+//        }
     }
     func getNotification(strPage : String) {
         let parameters = ["page" : strPage]
@@ -259,6 +271,8 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
             }
             else {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
+                print(username)
+                loggdenUser.setValue(username, forKey: UNAME)
                 obj.strUserName = username
                 obj.onlyPost = post_privacy
                 obj.onlyInvaite = invite_privacy
@@ -710,3 +724,5 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
         }
     }
 }
+
+

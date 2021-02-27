@@ -53,7 +53,17 @@ class FriendsJoinedgroupController: UIViewController {
                 }
             }
         }
+        
+        setDefault()
     }
+    
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        getGroup()
+        pageCount = 1
+    }
+    
     @objc func Joinedgroups(_ notification: NSNotification) {
         loaderView.isHidden = false
         activity.startAnimating()
@@ -207,7 +217,10 @@ extension FriendsJoinedgroupController: UITableViewDelegate,UITableViewDataSourc
         print(username)
         loggdenUser.set(username, forKey: GROUPUSERNAME)
         obj.strUserName = username
-        self.navigationController?.pushViewController(obj, animated: true)
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.modalPresentationStyle = .fullScreen
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.present(obj, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

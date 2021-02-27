@@ -196,6 +196,9 @@ extension MypagesViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
         obj.strUserName = arrMypage[indexPath.row].username
+        print(arrMypage[indexPath.row].username)
+       
+        loggdenUser.setValue(arrMypage[indexPath.row].username, forKey: UNAME)
         self.navigationController?.pushViewController(obj, animated: true)
     }
     

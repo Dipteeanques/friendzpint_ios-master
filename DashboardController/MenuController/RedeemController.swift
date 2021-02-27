@@ -87,14 +87,23 @@ extension RedeemController: UITableViewDelegate,UITableViewDataSource {
         let coin = data.coin
         
         if type == "credit" {
-            cell.lblPrice.text = "+" + String(coin) + "Pts"
-            cell.lblPrice.textColor = UIColor.green
-            cell.img.image = #imageLiteral(resourceName: "W2")
+            cell.lblPrice.text = "+" + String(coin) + " Pts"
+            cell.lblPrice.textColor = UIColor(red: 0.00, green: 0.50, blue: 0.00, alpha: 1.00)//UIColor.green
+//            cell.img.image = #imageLiteral(resourceName: "W2")
+            //gradientGreen(profileImageView: cell, shanghaiImage: cell.img)
+            cell.img.isHidden = false
+            cell.img2.isHidden = true
+            cell.imgCash.image = UIImage(named: "cash1")
         }
         else {
-            cell.lblPrice.text = "-" + String(coin) + "Pts"
-            cell.lblPrice.textColor = UIColor.red
-            cell.img.image = #imageLiteral(resourceName: "W1")
+            cell.lblPrice.text = "-" + String(coin) + " Pts"
+            cell.lblPrice.textColor = UIColor(red: 0.95, green: 0.07, blue: 0.07, alpha: 1.00)//UIColor.red
+//            cell.img.image = #imageLiteral(resourceName: "W1")
+//            gradientRed(profileImageView: cell, shanghaiImage: cell.img)
+           // gradientGreen(profileImageView: cell, shanghaiImage: cell.img)
+            cell.img.isHidden = true
+            cell.img2.isHidden = false
+            cell.imgCash.image = UIImage(named: "cash2")
         }
         
         cell.lblDic.text = data.date
@@ -106,13 +115,61 @@ extension RedeemController: UITableViewDelegate,UITableViewDataSource {
         return 78
     }
     
+    func gradientGreen(profileImageView: UIView, shanghaiImage: UIImageView){
+        let view = UIView(frame: profileImageView.frame)
+
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+
+        gradient.colors = [UIColor(red: 0.11, green: 0.59, blue: 0.42, alpha: 1.00).cgColor, UIColor(red: 0.58, green: 0.98, blue: 0.73, alpha: 1.00).cgColor]
+
+        gradient.locations = [0.0, 1.0]
+
+        view.layer.insertSublayer(gradient, at: 0)
+
+        shanghaiImage.addSubview(view)
+
+        shanghaiImage.bringSubviewToFront(view)
+    }
+    
+    func gradientRed(profileImageView: UIView, shanghaiImage: UIImageView){
+        let view = UIView(frame: profileImageView.frame)
+
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+
+        gradient.colors = [UIColor(red: 0.59, green: 0.11, blue: 0.11, alpha: 1.00).cgColor, UIColor(red: 0.98, green: 0.58, blue: 0.58, alpha: 1.00).cgColor]
+
+        gradient.locations = [0.0, 1.0]
+
+        view.layer.insertSublayer(gradient, at: 0)
+
+        shanghaiImage.addSubview(view)
+
+        shanghaiImage.bringSubviewToFront(view)
+    }
+    
 }
 
 
 class redeemCell: UITableViewCell {
     
+    @IBOutlet weak var imgCash: UIImageView!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblDic: UILabel!
     @IBOutlet weak var lbltitle: UILabel!
-    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var img: UIImageView!{
+        didSet{
+            img.layer.cornerRadius = img.layer.frame.height/2
+            img.clipsToBounds = true
+        }
+    }
+    @IBOutlet weak var img2: GradientView2!{
+        didSet{
+            img2.layer.cornerRadius = img.layer.frame.height/2
+            img2.clipsToBounds = true
+        }
+    }
 }

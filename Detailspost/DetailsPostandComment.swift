@@ -151,18 +151,29 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     var getChaild: ParentCommentList?
      var numSections = 0
     
+    
+    @IBOutlet weak var viewText: UIView!{
+        didSet{
+            viewText.backgroundColor = .white
+            viewText.layer.cornerRadius = 10.0
+            viewText.clipsToBounds = true
+            viewText.layer.borderWidth = 1.0
+            viewText.layer.borderColor = UIColor.gray.cgColor
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tblFeed.sectionHeaderHeight = UITableView.automaticDimension;
         tblFeed.estimatedSectionHeaderHeight = 100;
-        
-        getfirstTime()
+        currentTabBar?.setBar(hidden: true, animated: false)
+//        getfirstTime()
         getComment()
         loaderView.isHidden = false
         activity.startAnimating()
         setDefault()
         self.navigationController?.navigationBar.isHidden = true
-        
+        navigationController?.setStatusBar(backgroundColor: .black)
         let avatar = loggdenUser.value(forKey: PROFILE)as! String
         url = URL(string: avatar)
         imgProfileComment.sd_setImage(with: url, completed: nil)
@@ -186,27 +197,37 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
         
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.notificationMyFeedBackSingale), name: NSNotification.Name(rawValue: "notificationMyFeedBackSingale"), object: nil)
         
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.gridentView.bounds
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.gridentView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        gridentView.layer.addSublayer(gradientLayer)
+//        gridentView.addSubview(btncamera)
+//        gridentView.addSubview(btnNotification)
+//        gridentView.addSubview(lblSearch)
+//        gridentView.addSubview(lblbadge)
+//
+//        if UIScreen.main.bounds.width == 320 {
+//
+//        } else if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//        }
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            self.lblbadge.badge(text: String(count))
+//        }
         
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gridentView.layer.addSublayer(gradientLayer)
-        gridentView.addSubview(btncamera)
-        gridentView.addSubview(btnNotification)
-        gridentView.addSubview(lblSearch)
-        gridentView.addSubview(lblbadge)
-        
-        if UIScreen.main.bounds.width == 320 {
-            
-        } else if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
-        }
-        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
-            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            self.lblbadge.badge(text: String(count))
-        }
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            if count == 0{
+//                currentTabBar?.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
+//        }
     }
     
     @objc func notificationSingaleDashboard(_ notification: NSNotification) {
@@ -247,8 +268,23 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
                     let data = response?.data
                     let arr_dict = data?.data
                     self.arrCommented = arr_dict!
+                    self.tblFeed.isHidden = false
                     self.tblFeed.reloadData()
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
                 }
+                else{
+                    self.tblFeed.isHidden = true
+                    self.foundView.isHidden = false
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+            }
+            else{
+                self.tblFeed.isHidden = true
+                self.foundView.isHidden = false
+                self.loaderView.isHidden = true
+                self.activity.stopAnimating()
             }
         }
     }
@@ -313,14 +349,15 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
-        if passappDel == "passappDel" {
-            self.dismiss(animated: true, completion: nil)
-        }
-        else {
-            loggdenUser.removeObject(forKey: POSTDETAILS)
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.navigationController?.popViewController(animated: true)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        if passappDel == "passappDel" {
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//        else {
+//            loggdenUser.removeObject(forKey: POSTDETAILS)
+//            self.navigationController?.popViewController(animated: true)
+//        }
     }
     @IBAction func btnSendAction(_ sender: UIButton) {
         sendComment()
@@ -457,1068 +494,1069 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         
         switch indexPath.section {
         case 0:
-            let allPostset = arrFeed[indexPath.section]
-            let typeFeed = allPostset.type
-            switch typeFeed {
-            case "image":
-                let cell = tblFeed.dequeueReusableCell(withIdentifier: "ImgcellTimeline", for: indexPath) as! ImgcellTimeline
-                cell.arrSingaleImage = arrFeed[indexPath.row]
-                let cellFrame = cell.frame.size
-                arrImages = arrFeed[indexPath.row].images
-                for item in arrImages {
-                    let source_url = item
-                    url = URL(string: source_url)
-                    cell.imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
-                        
-                        cell.setNeedsLayout()
-                        cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
-                        UIView.performWithoutAnimation {
-                            self.tblFeed.beginUpdates()
-                            self.tblFeed.endUpdates()
-                        }
-                    })
-                    break
-                }
-                let name = arrFeed[indexPath.row].users_name
-                cell.lblDetails.handleHashtagTap { hashtag in
-                    self.hashtagpost = hashtag
-                    self.getHashtagPost()
-                }
-                
-                let selectedUsername = arrFeed[indexPath.row].username
-                
-                cell.layoutMargins = UIEdgeInsets.zero
-                cell.separatorInset = UIEdgeInsets.zero
-                cell.setNeedsUpdateConstraints()
-                cell.updateConstraintsIfNeeded()
-                cell.sizeToFit()
-                cell.btnSingaleImg.addTarget(self, action: #selector(DetailsPostandComment.openAction), for: UIControl.Event.touchUpInside)
-                cell.btnSingaleImageMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
-                cell.btnImgLike.addTarget(self, action: #selector(DetailsPostandComment.btnImgLikeAction), for: UIControl.Event.touchUpInside)
-                cell.btnComment.addTarget(self, action: #selector(DetailsPostandComment.btnCommentAction), for: UIControl.Event.touchUpInside)
-                cell.btnpostComment.addTarget(self, action: #selector(DetailsPostandComment.btnCommentPostAction), for: UIControl.Event.touchUpInside)
-                cell.btnLikeImgCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeImgcellAction), for: UIControl.Event.touchUpInside)
-                cell.btnProImgClick.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
-                cell.dislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeAction), for: UIControl.Event.touchUpInside)
-                cell.dislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
-                let shared_person_name = arrFeed[indexPath.row].shared_person_name
-                let shared_username = arrFeed[indexPath.row].shared_username
-                if shared_person_name.count == 0 {
-                    arrUserTag = arrFeed[indexPath.row].users_tagged
-                    if arrUserTag.count == 1 {
-                        let strName = arrUserTag[0].name
-                        tagFirstUsername = arrUserTag[0].username
-                        
-                        let string = "\(name) with \(strName)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblSingaleTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strName)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
-                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblSingaleTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblSingaleTitle.textColor = UIColor.black;
-                        cell.lblSingaleTitle.delegate = self;
-                    }
-                    else if arrUserTag.count >= 2 {
-                        for strNamegat in arrUserTag {
-                            let name = strNamegat.name
-                            let tagUsername = strNamegat.username
-                            nameTag.append(name)
-                            userTag.append(tagUsername)
-                            self.strTageName = nameTag.joined(separator: ",")
-                            strName = nameTag[0]
-                            tagFirstUsername = userTag[0]
-                        }
-                        
-                        let countOther = arrUserTag.count - 1
-                        let strCount = String(countOther)
-                        let FinalCount = strCount + " others."
-                        
-                        let strTC = strName
-                        let strPP = FinalCount
-                        
-                        let string = "\(name) with \(strTC) and \(strPP)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblSingaleTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strTC)
-                        let rangePP = nsString.range(of: strPP)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        let ppActiveLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblSingaleTitle.activeLinkAttributes = ppActiveLinkAttributes
-                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
-                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblSingaleTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblSingaleTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
-                        cell.lblSingaleTitle.textColor = UIColor.black;
-                        cell.lblSingaleTitle.delegate = self;
-                    }
-                    else {
-                        let string = "\(name)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblSingaleTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
-                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblSingaleTitle.textColor = UIColor.black;
-                        cell.lblSingaleTitle.delegate = self;
-                    }
-                }
-                else {
-                    let string = "\(name) shared \(shared_person_name) 's post"
-                    let nsString = string as NSString
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    
-                    let fullAttributedString = NSAttributedString(string:string, attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                        ])
-                    cell.lblSingaleTitle.attributedText = fullAttributedString;
-                    
-                    let rangeMY = nsString.range(of: name)
-                    let rangeTC = nsString.range(of: shared_person_name)
-                    
-                    let MyLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    
-                    let ppLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
-                    cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
-                    cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                    cell.lblSingaleTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
-                    cell.lblSingaleTitle.textColor = UIColor.black;
-                    cell.lblSingaleTitle.delegate = self;
-                }
-               
-                return cell
-            case "multi_image" :
-                let cell = tblFeed.dequeueReusableCell(withIdentifier: "MultiImgcellTimeline", for: indexPath) as! MultiImgcellTimeline
-                cell.arrMultiImage = arrFeed[indexPath.row]
-                cell.collectionImage.register(UINib(nibName: "PhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCollectionViewCell")
-                cell.collectionImage.delegate = self
-                cell.collectionImage.dataSource = self
-                cell.collectionImage.tag = 1001
-                cell.collectionImage.layoutIfNeeded()
-                cell.collectionImage.reloadData()
-                self.arrMultiVala.add(self.arrFeed[indexPath.row])
-                let name = arrFeed[indexPath.row].users_name
-                let selectedUsername = arrFeed[indexPath.row].username
-                let shared_username = arrFeed[indexPath.row].shared_username
-                let shared_person_name = arrFeed[indexPath.row].shared_person_name
-                arrUserTag = arrFeed[indexPath.row].users_tagged
-                if shared_person_name.count == 0 {
-                    if arrUserTag.count == 1 {
-                        let strName = arrUserTag[0].name
-                        tagFirstUsername = arrUserTag[0].username
-                        
-                        let string = "\(name) with \(strName)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strName)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else if arrUserTag.count >= 2 {
-                        for strNamegat in arrUserTag {
-                            let name = strNamegat.name
-                            let tagUsername = strNamegat.username
-                            nameTag.append(name)
-                            userTag.append(tagUsername)
-                            self.strTageName = nameTag.joined(separator: ",")
-                            strName = nameTag[0]
-                            tagFirstUsername = userTag[0]
-                        }
-                        
-                        let countOther = arrUserTag.count - 1
-                        let strCount = String(countOther)
-                        let FinalCount = strCount + " others."
-                        
-                        let strTC = strName
-                        let strPP = FinalCount
-                        
-                        let string = "\(name) with \(strTC) and \(strPP)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strTC)
-                        let rangePP = nsString.range(of: strPP)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        let ppActiveLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else {
-                        let string = "\(name)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                }
-                else {
-                    let string = "\(name) shared \(shared_person_name) 's post"
-                    let nsString = string as NSString
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    
-                    let fullAttributedString = NSAttributedString(string:string, attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                        ])
-                    cell.lblTitle.attributedText = fullAttributedString;
-                    
-                    let rangeMY = nsString.range(of: name)
-                    let rangeTC = nsString.range(of: shared_person_name)
-                    
-                    let MyLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    
-                    let ppLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                    cell.lblTitle.linkAttributes = ppLinkAttributes
-                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
-                    cell.lblTitle.textColor = UIColor.black;
-                    cell.lblTitle.delegate = self;
-                }
-                arrMultiImage = arrFeed[indexPath.row].images
-                if arrMultiImage.count == 2 {
-                    if UIScreen.main.bounds.width == 320
-                    {
-                        cell.collectionHeight.constant = 160
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                    else if UIScreen.main.bounds.width == 414
-                    {
-                        cell.collectionHeight.constant = 210
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                    else
-                    {
-                        cell.collectionHeight.constant = 190
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                }
-                else if arrMultiImage.count == 3
-                {
-                    if UIScreen.main.bounds.width == 320
-                    {
-                        cell.collectionHeight.constant = 230
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else if UIScreen.main.bounds.width == 414
-                    {
-                        cell.collectionHeight.constant = 280
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else
-                    {
-                        cell.collectionHeight.constant = 255
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                }
-                else if arrMultiImage.count == 4 {
-                    if UIScreen.main.bounds.width == 320
-                    {
-                        cell.collectionHeight.constant = 320
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                    else if UIScreen.main.bounds.width == 414
-                    {
-                        cell.collectionHeight.constant = 420
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                    else
-                    {
-                        cell.collectionHeight.constant = 375
-                        let padding: CGFloat = 1
-                        let screenWidth = UIScreen.main.bounds.width - padding
-                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
-                        layout.minimumInteritemSpacing = 0
-                        layout.minimumLineSpacing = 0
-                        cell.collectionImage.collectionViewLayout = layout
-                    }
-                }
-                else if arrMultiImage.count == 5
-                {
-                    if UIScreen.main.bounds.width == 320
-                    {
-                        cell.collectionHeight.constant = 320
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else if UIScreen.main.bounds.width == 414
-                    {
-                        cell.collectionHeight.constant = 415
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else
-                    {
-                        cell.collectionHeight.constant = 375
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                }
-                    
-                else if arrMultiImage.count >= 6
-                {
-                    if UIScreen.main.bounds.width == 320
-                    {
-                        selectedIndex = 5
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else if UIScreen.main.bounds.width == 414
-                    {
-                        selectedIndex = 5
-                        cell.collectionHeight.constant = 415
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                    else
-                    {
-                        selectedIndex = 5
-                        cell.collectionHeight.constant = 375
-                        let flowLayout = SquareFlowLayout()
-                        flowLayout.flowDelegate = self
-                        cell.collectionImage.collectionViewLayout = flowLayout
-                    }
-                }
-                cell.lblDescrip.handleHashtagTap { hashtag in
-                    self.hashtagpost = hashtag
-                    self.getHashtagPost()
-                }
-                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeMultiCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentMultiCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentMulticell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentMultiCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnLikeMulticell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeMulticellAction), for: UIControl.Event.touchUpInside)
-                cell.btnMultiImgmenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
-                cell.btnMultiImagePass.addTarget(self, action: #selector(DetailsPostandComment.btnImgPassAction), for: UIControl.Event.touchUpInside)
-                cell.btnMultiimgProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
-                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeMultiAction), for: UIControl.Event.touchUpInside)
-                cell.btnDislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
-                
-                cell.setNeedsUpdateConstraints()
-                cell.updateConstraintsIfNeeded()
-                cell.sizeToFit()
-                return cell
-                
-            case "text":
-                let cell = tblFeed.dequeueReusableCell(withIdentifier: "TxtcellTimeline", for: indexPath) as! TxtcellTimeline
-                cell.arrText = arrFeed[indexPath.row]
-                let name = arrFeed[indexPath.row].users_name
-                let selectedUsername = arrFeed[indexPath.row].username
-                cell.lblDesc.handleHashtagTap { hashtag in
-                    self.hashtagpost = hashtag
-                    self.getHashtagPost()
-                }
-                
-                arrUserTag = arrFeed[indexPath.row].users_tagged
-                let shared_username = arrFeed[indexPath.row].shared_username
-                let shared_person_name = arrFeed[indexPath.row].shared_person_name
-                if shared_person_name.count == 0 {
-                    if arrUserTag.count == 1 {
-                        let strName = arrUserTag[0].name
-                        tagFirstUsername = arrUserTag[0].username
-                        
-                        let string = "\(name) with \(strName)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strName)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else if arrUserTag.count >= 2 {
-                        for strNamegat in arrUserTag {
-                            let name = strNamegat.name
-                            let tagUsername = strNamegat.username
-                            nameTag.append(name)
-                            userTag.append(tagUsername)
-                            self.strTageName = nameTag.joined(separator: ",")
-                            strName = nameTag[0]
-                            tagFirstUsername = userTag[0]
-                        }
-                        
-                        let countOther = arrUserTag.count - 1
-                        let strCount = String(countOther)
-                        let FinalCount = strCount + " others."
-                        
-                        let strTC = strName
-                        let strPP = FinalCount
-                        
-                        let string = "\(name) with \(strTC) and \(strPP)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strTC)
-                        let rangePP = nsString.range(of: strPP)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        let ppActiveLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else {
-                        let string = "\(name)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                }
-                else {
-                    let string = "\(name) shared \(shared_person_name) 's post"
-                    let nsString = string as NSString
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    
-                    let fullAttributedString = NSAttributedString(string:string, attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                        ])
-                    cell.lblTitle.attributedText = fullAttributedString;
-                    
-                    let rangeMY = nsString.range(of: name)
-                    let rangeTC = nsString.range(of: shared_person_name)
-                    
-                    let MyLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    
-                    let ppLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                    cell.lblTitle.linkAttributes = ppLinkAttributes
-                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
-                    cell.lblTitle.textColor = UIColor.black;
-                    cell.lblTitle.delegate = self;
-                }
-                
-                cell.layoutMargins = UIEdgeInsets.zero
-                cell.separatorInset = UIEdgeInsets.zero
-                cell.setNeedsUpdateConstraints()
-                cell.updateConstraintsIfNeeded()
-                cell.sizeToFit()
-                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeTxtCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommenttxtCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommenttxtCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommenttxtCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnLiketxtCell.addTarget(self, action: #selector(DetailsPostandComment.btnLiketxtcellAction), for: UIControl.Event.touchUpInside)
-                cell.btntxtMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
-                cell.btntxtProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
-                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeTxtAction), for: UIControl.Event.touchUpInside)
-                cell.btnDislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
-                
-               
-                return cell
-            case "url":
-                let cell = tblFeed.dequeueReusableCell(withIdentifier: "YoutubeVideoPlaycell", for: indexPath) as! YoutubeVideoPlaycell
-                cell.arrYoutube = arrFeed[indexPath.row]
-                let name = arrFeed[indexPath.row].users_name
-                let selectedUsername = arrFeed[indexPath.row].username
-                cell.lblDesc.handleHashtagTap { hashtag in
-                    self.hashtagpost = hashtag
-                    self.getHashtagPost()
-                }
-                
-                arrUserTag = arrFeed[indexPath.row].users_tagged
-                let shared_username = arrFeed[indexPath.row].shared_username
-                let shared_person_name = arrFeed[indexPath.row].shared_person_name
-                if shared_person_name.count == 0 {
-                    if arrUserTag.count == 1 {
-                        let strName = arrUserTag[0].name
-                        tagFirstUsername = arrUserTag[0].username
-                        
-                        let string = "\(name) with \(strName)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strName)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else if arrUserTag.count >= 2 {
-                        for strNamegat in arrUserTag {
-                            let name = strNamegat.name
-                            let tagUsername = strNamegat.username
-                            nameTag.append(name)
-                            userTag.append(tagUsername)
-                            self.strTageName = nameTag.joined(separator: ",")
-                            strName = nameTag[0]
-                            tagFirstUsername = userTag[0]
-                        }
-                        
-                        let countOther = arrUserTag.count - 1
-                        let strCount = String(countOther)
-                        let FinalCount = strCount + " others."
-                        
-                        let strTC = strName
-                        let strPP = FinalCount
-                        
-                        let string = "\(name) with \(strTC) and \(strPP)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strTC)
-                        let rangePP = nsString.range(of: strPP)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        let ppActiveLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else {
-                        let string = "\(name)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                }
-                else {
-                    let string = "\(name) shared \(shared_person_name) 's post"
-                    let nsString = string as NSString
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    
-                    let fullAttributedString = NSAttributedString(string:string, attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                        ])
-                    cell.lblTitle.attributedText = fullAttributedString;
-                    
-                    let rangeMY = nsString.range(of: name)
-                    let rangeTC = nsString.range(of: shared_person_name)
-                    
-                    let MyLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    
-                    let ppLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                    cell.lblTitle.linkAttributes = ppLinkAttributes
-                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
-                    cell.lblTitle.textColor = UIColor.black;
-                    cell.lblTitle.delegate = self;
-                }
-                
-                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeVideoCellAction), for: UIControl.Event.touchUpInside)
-                cell.btncommentcount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentVideoCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentVideoCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentVideoCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnLikeVideoCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikevideocellAction), for: UIControl.Event.touchUpInside)
-                cell.btnVideoMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
-                cell.btnVideoprofile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
-                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeVideoAction), for: UIControl.Event.touchUpInside)
-                cell.btndislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
-                
-               
-                cell.setNeedsUpdateConstraints()
-                cell.updateConstraintsIfNeeded()
-                cell.sizeToFit()
-                return cell
-            case "meta":
-                let cell = tblFeed.dequeueReusableCell(withIdentifier: "MetacellTimeline", for: indexPath) as! MetacellTimeline
-                cell.arrMeta = arrFeed[indexPath.row]
-                cell.viewMeta.layer.cornerRadius = 5
-                cell.viewTop.constant = 0
-                cell.lbltop.constant = 0
-                let name = arrFeed[indexPath.row].users_name
-                let selectedUsername = arrFeed[indexPath.row].username
-                arrUserTag = arrFeed[indexPath.row].users_tagged
-                let shared_username = arrFeed[indexPath.row].shared_username
-                let shared_person_name = arrFeed[indexPath.row].shared_person_name
-                if shared_person_name.count == 0 {
-                    if arrUserTag.count == 1 {
-                        let strName = arrUserTag[0].name
-                        tagFirstUsername = arrUserTag[0].username
-                        
-                        let string = "\(name) with \(strName)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strName)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else if arrUserTag.count >= 2 {
-                        for strNamegat in arrUserTag {
-                            let name = strNamegat.name
-                            let tagUsername = strNamegat.username
-                            nameTag.append(name)
-                            userTag.append(tagUsername)
-                            self.strTageName = nameTag.joined(separator: ",")
-                            strName = nameTag[0]
-                            tagFirstUsername = userTag[0]
-                        }
-                        
-                        let countOther = arrUserTag.count - 1
-                        let strCount = String(countOther)
-                        let FinalCount = strCount + " others."
-                        let strTC = strName
-                        let strPP = FinalCount
-                        
-                        let string = "\(name) with \(strTC) and \(strPP)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        let rangeTC = nsString.range(of: strTC)
-                        let rangePP = nsString.range(of: strPP)
-                        
-                        let MyLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        let ppActiveLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
-                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                    else {
-                        let string = "\(name)"
-                        let nsString = string as NSString
-                        
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        
-                        let fullAttributedString = NSAttributedString(string:string, attributes: [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                            ])
-                        cell.lblTitle.attributedText = fullAttributedString;
-                        
-                        let rangeMY = nsString.range(of: name)
-                        
-                        let ppLinkAttributes: [String: Any] = [
-                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                            NSAttributedString.Key.underlineStyle.rawValue: false,
-                        ]
-                        
-                        cell.lblTitle.linkAttributes = ppLinkAttributes
-                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                        cell.lblTitle.textColor = UIColor.black;
-                        cell.lblTitle.delegate = self;
-                    }
-                }
-                else {
-                    let string = "\(name) shared \(shared_person_name) 's post"
-                    let nsString = string as NSString
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    
-                    let fullAttributedString = NSAttributedString(string:string, attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
-                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
-                        ])
-                    cell.lblTitle.attributedText = fullAttributedString;
-                    
-                    let rangeMY = nsString.range(of: name)
-                    let rangeTC = nsString.range(of: shared_person_name)
-                    
-                    let MyLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    
-                    let ppLinkAttributes: [String: Any] = [
-                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
-                        NSAttributedString.Key.underlineStyle.rawValue: false,
-                    ]
-                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
-                    cell.lblTitle.linkAttributes = ppLinkAttributes
-                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
-                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
-                    cell.lblTitle.textColor = UIColor.black;
-                    cell.lblTitle.delegate = self;
-                }
-                
-                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeMetaCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentMetaCellAction), for: UIControl.Event.touchUpInside)
-                cell.btnCommentMetaCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentMetaCellAction), for: UIControl.Event.touchUpInside)
-                cell.viewMeta.clipsToBounds = true
-                cell.btnMetaClick.addTarget(self, action: #selector(DetailsPostandComment.btnMetaAction), for: .touchUpInside)
-                cell.btnMetaMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
-                cell.btnLikeMetaCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeMetacellAction), for: UIControl.Event.touchUpInside)
-                cell.btnMetaProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
-                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeMetaAction), for: UIControl.Event.touchUpInside)
-                cell.btndislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
-                
-                cell.setNeedsUpdateConstraints()
-                cell.updateConstraintsIfNeeded()
-                cell.sizeToFit()
-                return cell
-            default:
-                print("hello")
-            }
+            return UITableViewCell()
+//            let allPostset = arrFeed[indexPath.section]
+//            let typeFeed = allPostset.type
+//            switch typeFeed {
+//            case "image":
+//                let cell = tblFeed.dequeueReusableCell(withIdentifier: "ImgcellTimeline", for: indexPath) as! ImgcellTimeline
+//                cell.arrSingaleImage = arrFeed[indexPath.row]
+//                let cellFrame = cell.frame.size
+//                arrImages = arrFeed[indexPath.row].images
+//                for item in arrImages {
+//                    let source_url = item
+//                    url = URL(string: source_url)
+//                    cell.imgPost.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
+//
+//                        cell.setNeedsLayout()
+//                        cell.imgpostHeight?.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+//                        UIView.performWithoutAnimation {
+//                            self.tblFeed.beginUpdates()
+//                            self.tblFeed.endUpdates()
+//                        }
+//                    })
+//                    break
+//                }
+//                let name = arrFeed[indexPath.row].users_name
+//                cell.lblDetails.handleHashtagTap { hashtag in
+//                    self.hashtagpost = hashtag
+//                    self.getHashtagPost()
+//                }
+//
+//                let selectedUsername = arrFeed[indexPath.row].username
+//
+//                cell.layoutMargins = UIEdgeInsets.zero
+//                cell.separatorInset = UIEdgeInsets.zero
+//                cell.setNeedsUpdateConstraints()
+//                cell.updateConstraintsIfNeeded()
+//                cell.sizeToFit()
+//                cell.btnSingaleImg.addTarget(self, action: #selector(DetailsPostandComment.openAction), for: UIControl.Event.touchUpInside)
+//                cell.btnSingaleImageMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
+//                cell.btnImgLike.addTarget(self, action: #selector(DetailsPostandComment.btnImgLikeAction), for: UIControl.Event.touchUpInside)
+//                cell.btnComment.addTarget(self, action: #selector(DetailsPostandComment.btnCommentAction), for: UIControl.Event.touchUpInside)
+//                cell.btnpostComment.addTarget(self, action: #selector(DetailsPostandComment.btnCommentPostAction), for: UIControl.Event.touchUpInside)
+//                cell.btnLikeImgCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeImgcellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnProImgClick.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
+//                cell.dislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeAction), for: UIControl.Event.touchUpInside)
+//                cell.dislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
+//                let shared_person_name = arrFeed[indexPath.row].shared_person_name
+//                let shared_username = arrFeed[indexPath.row].shared_username
+//                if shared_person_name.count == 0 {
+//                    arrUserTag = arrFeed[indexPath.row].users_tagged
+//                    if arrUserTag.count == 1 {
+//                        let strName = arrUserTag[0].name
+//                        tagFirstUsername = arrUserTag[0].username
+//
+//                        let string = "\(name) with \(strName)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblSingaleTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strName)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblSingaleTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblSingaleTitle.textColor = UIColor.black;
+//                        cell.lblSingaleTitle.delegate = self;
+//                    }
+//                    else if arrUserTag.count >= 2 {
+//                        for strNamegat in arrUserTag {
+//                            let name = strNamegat.name
+//                            let tagUsername = strNamegat.username
+//                            nameTag.append(name)
+//                            userTag.append(tagUsername)
+//                            self.strTageName = nameTag.joined(separator: ",")
+//                            strName = nameTag[0]
+//                            tagFirstUsername = userTag[0]
+//                        }
+//
+//                        let countOther = arrUserTag.count - 1
+//                        let strCount = String(countOther)
+//                        let FinalCount = strCount + " others."
+//
+//                        let strTC = strName
+//                        let strPP = FinalCount
+//
+//                        let string = "\(name) with \(strTC) and \(strPP)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblSingaleTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strTC)
+//                        let rangePP = nsString.range(of: strPP)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//                        let ppActiveLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblSingaleTitle.activeLinkAttributes = ppActiveLinkAttributes
+//                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblSingaleTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblSingaleTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
+//                        cell.lblSingaleTitle.textColor = UIColor.black;
+//                        cell.lblSingaleTitle.delegate = self;
+//                    }
+//                    else {
+//                        let string = "\(name)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblSingaleTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblSingaleTitle.textColor = UIColor.black;
+//                        cell.lblSingaleTitle.delegate = self;
+//                    }
+//                }
+//                else {
+//                    let string = "\(name) shared \(shared_person_name) 's post"
+//                    let nsString = string as NSString
+//
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//
+//                    let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                        ])
+//                    cell.lblSingaleTitle.attributedText = fullAttributedString;
+//
+//                    let rangeMY = nsString.range(of: name)
+//                    let rangeTC = nsString.range(of: shared_person_name)
+//
+//                    let MyLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//
+//                    let ppLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//                    cell.lblSingaleTitle.activeLinkAttributes = MyLinkAttributes
+//                    cell.lblSingaleTitle.linkAttributes = ppLinkAttributes
+//                    cell.lblSingaleTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                    cell.lblSingaleTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//                    cell.lblSingaleTitle.textColor = UIColor.black;
+//                    cell.lblSingaleTitle.delegate = self;
+//                }
+//
+//                return cell
+//            case "multi_image" :
+//                let cell = tblFeed.dequeueReusableCell(withIdentifier: "MultiImgcellTimeline", for: indexPath) as! MultiImgcellTimeline
+//                cell.arrMultiImage = arrFeed[indexPath.row]
+//                cell.collectionImage.register(UINib(nibName: "PhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCollectionViewCell")
+//                cell.collectionImage.delegate = self
+//                cell.collectionImage.dataSource = self
+//                cell.collectionImage.tag = 1001
+//                cell.collectionImage.layoutIfNeeded()
+//                cell.collectionImage.reloadData()
+//                self.arrMultiVala.add(self.arrFeed[indexPath.row])
+//                let name = arrFeed[indexPath.row].users_name
+//                let selectedUsername = arrFeed[indexPath.row].username
+//                let shared_username = arrFeed[indexPath.row].shared_username
+//                let shared_person_name = arrFeed[indexPath.row].shared_person_name
+//                arrUserTag = arrFeed[indexPath.row].users_tagged
+//                if shared_person_name.count == 0 {
+//                    if arrUserTag.count == 1 {
+//                        let strName = arrUserTag[0].name
+//                        tagFirstUsername = arrUserTag[0].username
+//
+//                        let string = "\(name) with \(strName)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strName)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else if arrUserTag.count >= 2 {
+//                        for strNamegat in arrUserTag {
+//                            let name = strNamegat.name
+//                            let tagUsername = strNamegat.username
+//                            nameTag.append(name)
+//                            userTag.append(tagUsername)
+//                            self.strTageName = nameTag.joined(separator: ",")
+//                            strName = nameTag[0]
+//                            tagFirstUsername = userTag[0]
+//                        }
+//
+//                        let countOther = arrUserTag.count - 1
+//                        let strCount = String(countOther)
+//                        let FinalCount = strCount + " others."
+//
+//                        let strTC = strName
+//                        let strPP = FinalCount
+//
+//                        let string = "\(name) with \(strTC) and \(strPP)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strTC)
+//                        let rangePP = nsString.range(of: strPP)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//                        let ppActiveLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else {
+//                        let string = "\(name)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                }
+//                else {
+//                    let string = "\(name) shared \(shared_person_name) 's post"
+//                    let nsString = string as NSString
+//
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//
+//                    let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                        ])
+//                    cell.lblTitle.attributedText = fullAttributedString;
+//
+//                    let rangeMY = nsString.range(of: name)
+//                    let rangeTC = nsString.range(of: shared_person_name)
+//
+//                    let MyLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//
+//                    let ppLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                    cell.lblTitle.linkAttributes = ppLinkAttributes
+//                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//                    cell.lblTitle.textColor = UIColor.black;
+//                    cell.lblTitle.delegate = self;
+//                }
+//                arrMultiImage = arrFeed[indexPath.row].images
+//                if arrMultiImage.count == 2 {
+//                    if UIScreen.main.bounds.width == 320
+//                    {
+//                        cell.collectionHeight.constant = 160
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                    else if UIScreen.main.bounds.width == 414
+//                    {
+//                        cell.collectionHeight.constant = 210
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                    else
+//                    {
+//                        cell.collectionHeight.constant = 190
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                }
+//                else if arrMultiImage.count == 3
+//                {
+//                    if UIScreen.main.bounds.width == 320
+//                    {
+//                        cell.collectionHeight.constant = 230
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else if UIScreen.main.bounds.width == 414
+//                    {
+//                        cell.collectionHeight.constant = 280
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else
+//                    {
+//                        cell.collectionHeight.constant = 255
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                }
+//                else if arrMultiImage.count == 4 {
+//                    if UIScreen.main.bounds.width == 320
+//                    {
+//                        cell.collectionHeight.constant = 320
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                    else if UIScreen.main.bounds.width == 414
+//                    {
+//                        cell.collectionHeight.constant = 420
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                    else
+//                    {
+//                        cell.collectionHeight.constant = 375
+//                        let padding: CGFloat = 1
+//                        let screenWidth = UIScreen.main.bounds.width - padding
+//                        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//                        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//                        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+//                        layout.minimumInteritemSpacing = 0
+//                        layout.minimumLineSpacing = 0
+//                        cell.collectionImage.collectionViewLayout = layout
+//                    }
+//                }
+//                else if arrMultiImage.count == 5
+//                {
+//                    if UIScreen.main.bounds.width == 320
+//                    {
+//                        cell.collectionHeight.constant = 320
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else if UIScreen.main.bounds.width == 414
+//                    {
+//                        cell.collectionHeight.constant = 415
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else
+//                    {
+//                        cell.collectionHeight.constant = 375
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                }
+//
+//                else if arrMultiImage.count >= 6
+//                {
+//                    if UIScreen.main.bounds.width == 320
+//                    {
+//                        selectedIndex = 5
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else if UIScreen.main.bounds.width == 414
+//                    {
+//                        selectedIndex = 5
+//                        cell.collectionHeight.constant = 415
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                    else
+//                    {
+//                        selectedIndex = 5
+//                        cell.collectionHeight.constant = 375
+//                        let flowLayout = SquareFlowLayout()
+//                        flowLayout.flowDelegate = self
+//                        cell.collectionImage.collectionViewLayout = flowLayout
+//                    }
+//                }
+//                cell.lblDescrip.handleHashtagTap { hashtag in
+//                    self.hashtagpost = hashtag
+//                    self.getHashtagPost()
+//                }
+//                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeMultiCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentMultiCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentMulticell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentMultiCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnLikeMulticell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeMulticellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnMultiImgmenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
+//                cell.btnMultiImagePass.addTarget(self, action: #selector(DetailsPostandComment.btnImgPassAction), for: UIControl.Event.touchUpInside)
+//                cell.btnMultiimgProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeMultiAction), for: UIControl.Event.touchUpInside)
+//                cell.btnDislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
+//
+//                cell.setNeedsUpdateConstraints()
+//                cell.updateConstraintsIfNeeded()
+//                cell.sizeToFit()
+//                return cell
+//
+//            case "text":
+//                let cell = tblFeed.dequeueReusableCell(withIdentifier: "TxtcellTimeline", for: indexPath) as! TxtcellTimeline
+//                cell.arrText = arrFeed[indexPath.row]
+//                let name = arrFeed[indexPath.row].users_name
+//                let selectedUsername = arrFeed[indexPath.row].username
+//                cell.lblDesc.handleHashtagTap { hashtag in
+//                    self.hashtagpost = hashtag
+//                    self.getHashtagPost()
+//                }
+//
+//                arrUserTag = arrFeed[indexPath.row].users_tagged
+//                let shared_username = arrFeed[indexPath.row].shared_username
+//                let shared_person_name = arrFeed[indexPath.row].shared_person_name
+//                if shared_person_name.count == 0 {
+//                    if arrUserTag.count == 1 {
+//                        let strName = arrUserTag[0].name
+//                        tagFirstUsername = arrUserTag[0].username
+//
+//                        let string = "\(name) with \(strName)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strName)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else if arrUserTag.count >= 2 {
+//                        for strNamegat in arrUserTag {
+//                            let name = strNamegat.name
+//                            let tagUsername = strNamegat.username
+//                            nameTag.append(name)
+//                            userTag.append(tagUsername)
+//                            self.strTageName = nameTag.joined(separator: ",")
+//                            strName = nameTag[0]
+//                            tagFirstUsername = userTag[0]
+//                        }
+//
+//                        let countOther = arrUserTag.count - 1
+//                        let strCount = String(countOther)
+//                        let FinalCount = strCount + " others."
+//
+//                        let strTC = strName
+//                        let strPP = FinalCount
+//
+//                        let string = "\(name) with \(strTC) and \(strPP)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strTC)
+//                        let rangePP = nsString.range(of: strPP)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//                        let ppActiveLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else {
+//                        let string = "\(name)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                }
+//                else {
+//                    let string = "\(name) shared \(shared_person_name) 's post"
+//                    let nsString = string as NSString
+//
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//
+//                    let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                        ])
+//                    cell.lblTitle.attributedText = fullAttributedString;
+//
+//                    let rangeMY = nsString.range(of: name)
+//                    let rangeTC = nsString.range(of: shared_person_name)
+//
+//                    let MyLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//
+//                    let ppLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                    cell.lblTitle.linkAttributes = ppLinkAttributes
+//                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//                    cell.lblTitle.textColor = UIColor.black;
+//                    cell.lblTitle.delegate = self;
+//                }
+//
+//                cell.layoutMargins = UIEdgeInsets.zero
+//                cell.separatorInset = UIEdgeInsets.zero
+//                cell.setNeedsUpdateConstraints()
+//                cell.updateConstraintsIfNeeded()
+//                cell.sizeToFit()
+//                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeTxtCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommenttxtCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommenttxtCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommenttxtCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnLiketxtCell.addTarget(self, action: #selector(DetailsPostandComment.btnLiketxtcellAction), for: UIControl.Event.touchUpInside)
+//                cell.btntxtMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
+//                cell.btntxtProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeTxtAction), for: UIControl.Event.touchUpInside)
+//                cell.btnDislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
+//
+//
+//                return cell
+//            case "url":
+//                let cell = tblFeed.dequeueReusableCell(withIdentifier: "YoutubeVideoPlaycell", for: indexPath) as! YoutubeVideoPlaycell
+//                cell.arrYoutube = arrFeed[indexPath.row]
+//                let name = arrFeed[indexPath.row].users_name
+//                let selectedUsername = arrFeed[indexPath.row].username
+//                cell.lblDesc.handleHashtagTap { hashtag in
+//                    self.hashtagpost = hashtag
+//                    self.getHashtagPost()
+//                }
+//
+//                arrUserTag = arrFeed[indexPath.row].users_tagged
+//                let shared_username = arrFeed[indexPath.row].shared_username
+//                let shared_person_name = arrFeed[indexPath.row].shared_person_name
+//                if shared_person_name.count == 0 {
+//                    if arrUserTag.count == 1 {
+//                        let strName = arrUserTag[0].name
+//                        tagFirstUsername = arrUserTag[0].username
+//
+//                        let string = "\(name) with \(strName)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strName)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else if arrUserTag.count >= 2 {
+//                        for strNamegat in arrUserTag {
+//                            let name = strNamegat.name
+//                            let tagUsername = strNamegat.username
+//                            nameTag.append(name)
+//                            userTag.append(tagUsername)
+//                            self.strTageName = nameTag.joined(separator: ",")
+//                            strName = nameTag[0]
+//                            tagFirstUsername = userTag[0]
+//                        }
+//
+//                        let countOther = arrUserTag.count - 1
+//                        let strCount = String(countOther)
+//                        let FinalCount = strCount + " others."
+//
+//                        let strTC = strName
+//                        let strPP = FinalCount
+//
+//                        let string = "\(name) with \(strTC) and \(strPP)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strTC)
+//                        let rangePP = nsString.range(of: strPP)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//                        let ppActiveLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else {
+//                        let string = "\(name)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                }
+//                else {
+//                    let string = "\(name) shared \(shared_person_name) 's post"
+//                    let nsString = string as NSString
+//
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//
+//                    let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                        ])
+//                    cell.lblTitle.attributedText = fullAttributedString;
+//
+//                    let rangeMY = nsString.range(of: name)
+//                    let rangeTC = nsString.range(of: shared_person_name)
+//
+//                    let MyLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//
+//                    let ppLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                    cell.lblTitle.linkAttributes = ppLinkAttributes
+//                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//                    cell.lblTitle.textColor = UIColor.black;
+//                    cell.lblTitle.delegate = self;
+//                }
+//
+//                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeVideoCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btncommentcount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentVideoCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentVideoCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentVideoCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnLikeVideoCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikevideocellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnVideoMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
+//                cell.btnVideoprofile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeVideoAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
+//
+//
+//                cell.setNeedsUpdateConstraints()
+//                cell.updateConstraintsIfNeeded()
+//                cell.sizeToFit()
+//                return cell
+//            case "meta":
+//                let cell = tblFeed.dequeueReusableCell(withIdentifier: "MetacellTimeline", for: indexPath) as! MetacellTimeline
+//                cell.arrMeta = arrFeed[indexPath.row]
+//                cell.viewMeta.layer.cornerRadius = 5
+//                cell.viewTop.constant = 0
+//                cell.lbltop.constant = 0
+//                let name = arrFeed[indexPath.row].users_name
+//                let selectedUsername = arrFeed[indexPath.row].username
+//                arrUserTag = arrFeed[indexPath.row].users_tagged
+//                let shared_username = arrFeed[indexPath.row].shared_username
+//                let shared_person_name = arrFeed[indexPath.row].shared_person_name
+//                if shared_person_name.count == 0 {
+//                    if arrUserTag.count == 1 {
+//                        let strName = arrUserTag[0].name
+//                        tagFirstUsername = arrUserTag[0].username
+//
+//                        let string = "\(name) with \(strName)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strName)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else if arrUserTag.count >= 2 {
+//                        for strNamegat in arrUserTag {
+//                            let name = strNamegat.name
+//                            let tagUsername = strNamegat.username
+//                            nameTag.append(name)
+//                            userTag.append(tagUsername)
+//                            self.strTageName = nameTag.joined(separator: ",")
+//                            strName = nameTag[0]
+//                            tagFirstUsername = userTag[0]
+//                        }
+//
+//                        let countOther = arrUserTag.count - 1
+//                        let strCount = String(countOther)
+//                        let FinalCount = strCount + " others."
+//                        let strTC = strName
+//                        let strPP = FinalCount
+//
+//                        let string = "\(name) with \(strTC) and \(strPP)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//                        let rangeTC = nsString.range(of: strTC)
+//                        let rangePP = nsString.range(of: strPP)
+//
+//                        let MyLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//                        let ppActiveLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                        cell.lblTitle.activeLinkAttributes = ppActiveLinkAttributes
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.addLink(toPhoneNumber: tagFirstUsername, with: rangeTC)
+//                        cell.lblTitle.addLink(toAddress: ["Others":arrUserTag], with: rangePP)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                    else {
+//                        let string = "\(name)"
+//                        let nsString = string as NSString
+//
+//                        let paragraphStyle = NSMutableParagraphStyle()
+//
+//                        let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                            NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                            NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                            ])
+//                        cell.lblTitle.attributedText = fullAttributedString;
+//
+//                        let rangeMY = nsString.range(of: name)
+//
+//                        let ppLinkAttributes: [String: Any] = [
+//                            NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                            NSAttributedString.Key.underlineStyle.rawValue: false,
+//                        ]
+//
+//                        cell.lblTitle.linkAttributes = ppLinkAttributes
+//                        cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                        cell.lblTitle.textColor = UIColor.black;
+//                        cell.lblTitle.delegate = self;
+//                    }
+//                }
+//                else {
+//                    let string = "\(name) shared \(shared_person_name) 's post"
+//                    let nsString = string as NSString
+//
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//
+//                    let fullAttributedString = NSAttributedString(string:string, attributes: [
+//                        NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+//                        NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor,
+//                        ])
+//                    cell.lblTitle.attributedText = fullAttributedString;
+//
+//                    let rangeMY = nsString.range(of: name)
+//                    let rangeTC = nsString.range(of: shared_person_name)
+//
+//                    let MyLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//
+//                    let ppLinkAttributes: [String: Any] = [
+//                        NSAttributedString.Key.foregroundColor.rawValue: UIColor(red: 42/255, green: 61/255, blue: 85/255, alpha: 1).cgColor,
+//                        NSAttributedString.Key.underlineStyle.rawValue: false,
+//                    ]
+//                    cell.lblTitle.activeLinkAttributes = MyLinkAttributes
+//                    cell.lblTitle.linkAttributes = ppLinkAttributes
+//                    cell.lblTitle.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//                    cell.lblTitle.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//                    cell.lblTitle.textColor = UIColor.black;
+//                    cell.lblTitle.delegate = self;
+//                }
+//
+//                cell.btnLikeCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllLikeMetaCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentCount.addTarget(self, action: #selector(DetailsPostandComment.btnAllCommentMetaCellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnCommentMetaCell.addTarget(self, action: #selector(DetailsPostandComment.btnCommentMetaCellAction), for: UIControl.Event.touchUpInside)
+//                cell.viewMeta.clipsToBounds = true
+//                cell.btnMetaClick.addTarget(self, action: #selector(DetailsPostandComment.btnMetaAction), for: .touchUpInside)
+//                cell.btnMetaMenu.addTarget(self, action: #selector(DetailsPostandComment.btnMenuAction), for: UIControl.Event.touchUpInside)
+//                cell.btnLikeMetaCell.addTarget(self, action: #selector(DetailsPostandComment.btnLikeMetacellAction), for: UIControl.Event.touchUpInside)
+//                cell.btnMetaProfile.addTarget(self, action: #selector(DetailsPostandComment.btnImgProfileClickAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislike.addTarget(self, action: #selector(DetailsPostandComment.btndislikeMetaAction), for: UIControl.Event.touchUpInside)
+//                cell.btndislikeCount.addTarget(self, action: #selector(DetailsPostandComment.btndislikeCountAction), for: UIControl.Event.touchUpInside)
+//
+//                cell.setNeedsUpdateConstraints()
+//                cell.updateConstraintsIfNeeded()
+//                cell.sizeToFit()
+//                return cell
+//            default:
+//                print("hello")
+//            }
         default:
                 let cell = tblFeed.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)as! detailsCommentCell
                 cell.imgreplyprofile.layer.cornerRadius = 15
@@ -1556,10 +1594,14 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {          return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func reloadData(){

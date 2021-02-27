@@ -81,23 +81,23 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
             type = "private"
             getEditEvent()
         }
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.headerView.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerView.layer.addSublayer(gradientLayer)
-        headerView.addSubview(btnBack)
-        headerView.addSubview(lblTitle)
-        headerView.addSubview(btnCreate)
-        headerView.addSubview(activity)
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.headerView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerView.layer.addSublayer(gradientLayer)
+//        headerView.addSubview(btnBack)
+//        headerView.addSubview(lblTitle)
+//        headerView.addSubview(btnCreate)
+//        headerView.addSubview(activity)
         activity.isHidden = true
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
-        }
-        
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
+//        }
+//        
         txtAbout.layer.borderWidth = 0.5
         txtAbout.layer.borderColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1).cgColor
         txtAbout.layer.cornerRadius = 5

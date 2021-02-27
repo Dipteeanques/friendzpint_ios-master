@@ -34,6 +34,8 @@ class FriendsLikedPageController: UIViewController {
         super.viewDidLoad()
        
         NotificationCenter.default.addObserver(self, selector: #selector(FriendsLikedPageController.Likedpages), name: NSNotification.Name(rawValue: "Likedpages"), object: nil)
+        
+        
        
         if (loggdenUser.value(forKey: ADlikepage) != nil) {
             decodedData = loggdenUser.value(forKey: ADlikepage) as! [Data]
@@ -53,8 +55,17 @@ class FriendsLikedPageController: UIViewController {
                 }
             }
         }
+        
+        setDefault()
     }
     
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        print("likeed")
+        getLikedPage()
+        pageCount = 1
+    }
     
     @objc func Likedpages(_ notification: NSNotification) {
         loaderView.isHidden = false
@@ -216,12 +227,21 @@ extension FriendsLikedPageController: UITableViewDelegate,UITableViewDataSource,
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+            loggdenUser.setValue(username, forKey: UNAME)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
+            print(username)
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+            loggdenUser.setValue(username, forKey: UNAME)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

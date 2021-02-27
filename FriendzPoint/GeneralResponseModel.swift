@@ -375,6 +375,53 @@ struct UserEventList: Decodable {
     let active: Int
 }
 
+struct AllTimelineResponseModel1: Decodable,Encodable {
+    let success: Bool
+    let message: String
+    let data: [MyTimelineList1]?
+}
+
+
+//MARK: - MyTimelineList
+struct MyTimelineList1: Decodable, Encodable {
+    let id: Int
+    let timeline_id: Int
+    var description: String
+    let user_id: Int
+    let active: Int
+    let location: String
+    let type: String
+    let created_at: String
+    var is_liked: Int
+    var is_saved: Int
+    var is_notification: Int
+    var is_users_shared: Int
+    let shared_post_id: Int
+    var users_liked_count: Int
+    var comments_count: Int
+    let users_avatar: String
+    let users_name: String
+    let username: String
+    let users_type: String
+    let soundcloud_title: String
+    let soundcloud_id: Int
+    let youtube_title: String
+    let youtube_video_id: String
+    let images: [String]
+    let users_liked: [LikesetRespons]
+    let users_tagged: [userTagpeopelListResponse]
+    let is_my_post: Int
+    let user_page: TimelineUnotherResoponseModel?
+    let user_group: TimelineUnotherResoponseModel?
+    var users_disliked_count: Int
+    var users_disliked: [LikesetRespons]
+    var is_disliked: Int
+    var shared_person_name: String
+    var shared_username: String
+    var is_hide: Int
+    var is_report: Int
+    var video_poster: String
+}
 
 struct AllTimelineResponseModel: Decodable,Encodable {
     let success: Bool
@@ -416,6 +463,7 @@ struct MyTimelineList: Decodable, Encodable {
     let created_at: String
     var is_liked: Int
     var is_saved: Int
+    var is_follow: Int
     var is_notification: Int
     var is_users_shared: Int
     let shared_post_id: Int
@@ -1189,6 +1237,13 @@ struct FriendsRequestSentResponsModel: Decodable {
     
 }
 
+struct FriendsResponsModel: Decodable {
+    let success: Bool
+    let followed: Bool
+    let message: String
+    
+}
+
 struct followRequestData: Decodable {
     let followrequest: Bool
 }
@@ -1277,7 +1332,7 @@ struct imagePaginationrespons: Decodable {
 struct imagelist: Decodable {
     let id: Int
     let media_id: Int
-    let image: String
+    let avatar_img: String
 }
 
 //MARK: - PhotosDeleteResponsModel

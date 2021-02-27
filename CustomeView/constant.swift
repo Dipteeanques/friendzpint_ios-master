@@ -36,7 +36,7 @@ let LOGIN                       =             Domain + "/login"
 let LOGOUT                      =             Domain + "/logout"
 let CHANGE_PASSWORD             =             Domain + "/userChangepassword"
 let PASSWORD_EMAIL              =             Domain + "/password/email"
-let BROWSE                      =             Domain + "/browse"
+let BROWSE                      =             Domain + "/browse?type=ios"
 
 
 //MARK: - Timeline
@@ -70,8 +70,9 @@ let FOLLOWREQUEST               =             Domain + "/followRequest"
 let FOLLOW_ACCEPT               =             Domain + "/follow-accept"
 let FOLLOW_REJECT               =             Domain + "/follow-reject"
 let MYFRIENDS                   =             Domain + "/myFriends"
-let following               =             Domain + "/following"
-let followers               =          Domain + "/followers"
+let following                   =             Domain + "/following"
+let followers                   =             Domain + "/followers"
+let FOLLOW                      =             Domain + "/follow"
 
 let REMOVEFRIENDS               =             Domain + "/RemoveFriends"
 let USER_SEARCH_TAG             =             Domain + "/user_search_tag"
@@ -221,6 +222,7 @@ let ADjoingroup        =           "ADjoingroup"
 let ADbio              =           "ADbio"
 let UPDATEPROFILE      =           "UPDATEPROFILE"
 let EMAIL              =           "EMAIL"
+let UNAME              =            "UNAME"
 
 let walletLoginTellz = "walletLoginTellz"
 let walletToken = "walletToken"

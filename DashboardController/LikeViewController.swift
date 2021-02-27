@@ -26,10 +26,25 @@ class LikeViewController: UIViewController {
     var pageCount = Int()
     var post_id = Int()
     
+    let arrGroupIcon = [
+        "https://i.pinimg.com/originals/52/c6/65/52c665df0515dd447eb92544374cf543.jpg",
+        "https://wallpapercave.com/wp/wp2153319.jpg",
+        "https://wallpapercave.com/wp/wp1812462.jpg",
+        "https://i.pinimg.com/236x/b7/87/a0/b787a04ff0379708d5af03c4bf4edc69.jpg",
+        "https://www.hdwallpapersfreedownload.com/uploads/large/cartoons/doraemon-nobita-wallpaper-hd.jpg",
+        "https://images-na.ssl-images-amazon.com/images/I/81agPMtdIlL._AC_SL1500_.jpg"]
+    
+    let arrGroupName = [
+        "Tom and Jerry",
+        "Doraemon",
+        "Sinchan",
+        "Nobita",
+        "Doraemon and its Friends",
+        "Pikachu"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.loaderView.isHidden = true
        setDeafult()
     }
     
@@ -38,24 +53,24 @@ class LikeViewController: UIViewController {
         self.activity.startAnimating()
         likelist(strPage : "1")
         pageCount = 1
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.headerview.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerview.layer.addSublayer(gradientLayer)
-        headerview.addSubview(btnback)
-        headerview.addSubview(lblTitle)
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.headerview.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerview.layer.addSublayer(gradientLayer)
+//        headerview.addSubview(btnback)
+//        headerview.addSubview(lblTitle)
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
-        }
-        else if UIScreen.main.bounds.height == 812 {
-            // txtviewHeightConstraint.constant = 400
-        }
-        else if UIScreen.main.bounds.width == 320 {
-            //txtviewHeightConstraint.constant = 190
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
+//        }
+//        else if UIScreen.main.bounds.height == 812 {
+//            // txtviewHeightConstraint.constant = 400
+//        }
+//        else if UIScreen.main.bounds.width == 320 {
+//            //txtviewHeightConstraint.constant = 190
+//        }
     }
 
     
@@ -146,6 +161,7 @@ class LikeViewController: UIViewController {
 extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrLiked.count
+//        return arrGroupIcon.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,11 +169,11 @@ extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
         let lblname = cell.viewWithTag(102)as! UILabel
         let strName = arrLiked[indexPath.row].name
         let strImg = arrLiked[indexPath.row].source
-        lblname.text = strName
+        lblname.text = strName //arrGroupName[indexPath.row]
         let img = cell.viewWithTag(101)as! UIImageView
         img.layer.cornerRadius = 20
         img.clipsToBounds = true
-        url = URL(string: strImg)
+        url = URL(string:strImg) //arrGroupIcon[indexPath.row]
         img.sd_setImage(with: url, completed: nil)
         return cell
     }
@@ -166,12 +182,22 @@ extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
         let username = loggdenUser.value(forKey: USERNAME)as! String
         let selectedUsername = arrLiked[indexPath.row].username
         if selectedUsername == username {
-           currentTabBar?.setIndex(4)
+//           currentTabBar?.setIndex(4)
+            
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
             obj.strUserName = selectedUsername
-            self.navigationController?.pushViewController(obj, animated: true)
+            loggdenUser.setValue(selectedUsername, forKey: UNAME)
+//            self.navigationController?.pushViewController(obj, animated: true)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     
@@ -179,21 +205,21 @@ extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
         return 60
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
-        if scrollView == tblViewlike {
-            
-            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
-            {
-                spinner = UIActivityIndicatorView(style: .gray)
-                spinner.startAnimating()
-                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tblViewlike.bounds.width, height: CGFloat(44))
-                pageCount += 1
-                print(pageCount)
-                likelist(strPage: "\(pageCount)")
-                self.tblViewlike.tableFooterView = spinner
-                self.tblViewlike.tableFooterView?.isHidden = false
-            }
-        }
-    }
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//
+//        if scrollView == tblViewlike {
+//
+//            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
+//            {
+//                spinner = UIActivityIndicatorView(style: .gray)
+//                spinner.startAnimating()
+//                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tblViewlike.bounds.width, height: CGFloat(44))
+//                pageCount += 1
+//                print(pageCount)
+//                likelist(strPage: "\(pageCount)")
+//                self.tblViewlike.tableFooterView = spinner
+//                self.tblViewlike.tableFooterView?.isHidden = false
+//            }
+//        }
+//    }
 }

@@ -12,7 +12,7 @@ class tblMultiCellphoto: UITableViewCell {
 
     @IBOutlet weak var btnOpen: UIButton!
     @IBOutlet weak var imgMulti: UIImageView!
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

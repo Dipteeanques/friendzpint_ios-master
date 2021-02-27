@@ -27,6 +27,12 @@ class ChatConversionController: UIViewController,PusherDelegate {
     var arrAllMessage: NSMutableArray = []
     var wc = Webservice.init()
     var refreshControl = UIRefreshControl()
+    @IBOutlet weak var viewMsg: UIView!{
+        didSet{
+            viewMsg.layer.cornerRadius = viewMsg.frame.height/2
+            viewMsg.clipsToBounds = true
+        }
+    }
     
     @IBAction func onSendClicked(_ sender: Any) {
         sendMessage()
@@ -44,6 +50,8 @@ class ChatConversionController: UIViewController,PusherDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.setStatusBar(backgroundColor: .black)
         
          NotificationCenter.default.addObserver(self, selector: #selector(ChatConversionController.chatnotification), name: NSNotification.Name(rawValue: "Chatnotification"), object: nil)
         
@@ -158,25 +166,25 @@ class ChatConversionController: UIViewController,PusherDelegate {
         chat()
         tblChat.rowHeight = UITableView.automaticDimension;
         tblChat.estimatedRowHeight = 44;
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.header.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        header.layer.addSublayer(gradientLayer)
-        header.addSubview(btnBack)
-        header.addSubview(lblUserName)
-        header.addSubview(imgProfile)
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.header.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        header.layer.addSublayer(gradientLayer)
+//        header.addSubview(btnBack)
+//        header.addSubview(lblUserName)
+//        header.addSubview(imgProfile)
         lblUserName.text = receiverUsername
         url = URL(string: avatar)
         imgProfile.sd_setImage(with: url, completed: nil)
         imgProfile.layer.cornerRadius = 17.5
         imgProfile.clipsToBounds = true
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: header.bounds.origin.x, y: header.bounds.origin.y, width: 414, height: header.bounds.size.height)
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: header.bounds.origin.x, y: header.bounds.origin.y, width: 414, height: header.bounds.size.height)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

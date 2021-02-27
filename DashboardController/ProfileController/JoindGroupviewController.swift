@@ -36,8 +36,8 @@ class JoindGroupviewController: UIViewController {
     
         NotificationCenter.default.addObserver(self, selector: #selector(JoindGroupviewController.Joinedgroups), name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
         
-        getJoinedGroup()
-        pageCount = 1
+        
+//        pageCount = 1
         if (loggdenUser.value(forKey: ADjoingroup) != nil) {
             decodedData = loggdenUser.value(forKey: ADjoingroup) as! [Data]
             for i in 0..<decodedData.count
@@ -56,6 +56,14 @@ class JoindGroupviewController: UIViewController {
                 }
             }
         }
+        setDefault()
+    }
+    
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        getJoinedGroup()
+        pageCount = 1
     }
     
     @objc func Joinedgroups(_ notification: NSNotification) {
@@ -213,7 +221,9 @@ extension JoindGroupviewController: UITableViewDelegate,UITableViewDataSource,UI
         print(username)
         loggdenUser.set(username, forKey: GROUPUSERNAME)
         obj.strUserName = username
-        self.navigationController?.pushViewController(obj, animated: true)
+        self.modalPresentationStyle = .fullScreen
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.present(obj, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

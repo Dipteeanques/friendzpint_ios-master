@@ -166,6 +166,16 @@ class BrowseallpostController: UIViewController,UIPopoverPresentationControllerD
             self.lblbadge.badge(text: String(count))
         }
         
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+                currentTabBar!.setBadgeText(nil, atIndex: 3)
+            }
+            else{
+                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+            }
+        }
+        
         //        if (loggdenUser.value(forKey: AD) != nil) {
         //            self.decodedData = loggdenUser.value(forKey: AD) as! [Data]
         //            print(self.decodedData)
@@ -224,7 +234,7 @@ class BrowseallpostController: UIViewController,UIPopoverPresentationControllerD
         tblFeed.register(UINib(nibName: "MultiImgcellTimeline", bundle: nil), forCellReuseIdentifier: "MultiImgcellTimeline")
         tblFeed.register(UINib(nibName: "TxtcellTimeline", bundle: nil), forCellReuseIdentifier: "TxtcellTimeline")
         tblFeed.register(UINib(nibName: "YoutubeVideoPlaycell", bundle: nil), forCellReuseIdentifier: "YoutubeVideoPlaycell")
-        tblFeed.register(UINib(nibName: "MetacellTimeline", bundle: nil), forCellReuseIdentifier: "MetacellTimeline")
+        tblFeed.register(UINib(nibName: "MetacellTimeline", bundle: nil), forCellReuseIdentifier: "MetacellTimeline")//HomeTableViewCell
         if UIScreen.main.bounds.width == 320 {
             bottomConstraint.constant = -5
             trailingconstraint.constant = 10

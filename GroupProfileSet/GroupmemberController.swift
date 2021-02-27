@@ -26,9 +26,16 @@ class GroupmemberController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(GroupmemberController.getMemberAction), name: NSNotification.Name(rawValue: "Members"), object: nil)
+        setDefault()
     }
 
-   
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        getMember()
+        pageCount = 1
+    }
+    
     @objc func getMemberAction(_ notification: NSNotification) {
         loaderView.isHidden = false
         activity.startAnimating()

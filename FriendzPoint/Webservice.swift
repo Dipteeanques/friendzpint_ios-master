@@ -29,7 +29,7 @@ class Webservice: NSObject {
         }
         let mutable = NSMutableDictionary()
         mutable.addEntries(from: parameters as [String : Any])
-        print(mutable)
+//        print(mutable)
         var header = HTTPHeaders()
         header = headers
         AF.request(url, method: .post, parameters: mutable as? Parameters, encoding: URLEncoding.default, headers: header).responseDecodable { (response: DataResponse<T>) in

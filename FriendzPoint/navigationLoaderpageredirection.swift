@@ -113,6 +113,8 @@ class navigationLoaderpageredirection: UIViewController {
                     }
                     else {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
+                        loggdenUser.setValue(username, forKey: UNAME)
+                        print(username)
                         obj.strUserName = username
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy

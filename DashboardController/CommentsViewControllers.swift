@@ -65,36 +65,40 @@ class CommentsViewControllers: UIViewController {
     }
     
     func setDeafult() {
+        currentTabBar?.setBar(hidden: true, animated: false)
         let profile = loggdenUser.value(forKey: PROFILE)as! String
         url = URL(string: profile)
         imgProfile.sd_setImage(with: url, completed: nil)
         getComment()
         pageCount = 1
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.headerview.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerview.layer.addSublayer(gradientLayer)
-        headerview.addSubview(btnback)
-        headerview.addSubview(lblTitle)
-        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.headerview.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerview.layer.addSublayer(gradientLayer)
+//        headerview.addSubview(btnback)
+//        headerview.addSubview(lblTitle)
+//
         tbComment.sectionHeaderHeight = UITableView.automaticDimension;
         tbComment.estimatedSectionHeaderHeight = 100;
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
-        }
-        else if UIScreen.main.bounds.height == 812 {
-            // txtviewHeightConstraint.constant = 400
-        }
-        else if UIScreen.main.bounds.width == 320 {
-            //txtviewHeightConstraint.constant = 190
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
+//        }
+//        else if UIScreen.main.bounds.height == 812 {
+//            // txtviewHeightConstraint.constant = 400
+//        }
+//        else if UIScreen.main.bounds.width == 320 {
+//            //txtviewHeightConstraint.constant = 190
+//        }
         footerBoxView.layer.cornerRadius = 5
         footerBoxView.clipsToBounds = true
+        footerBoxView.layer.borderWidth = 1.0
+        footerBoxView.layer.borderColor = UIColor.gray.cgColor
         
-        imgProfile.layer.cornerRadius = 20
+        
+        imgProfile.layer.cornerRadius = imgProfile.frame.height/2
         imgProfile.clipsToBounds = true
     }
     
@@ -123,16 +127,26 @@ class CommentsViewControllers: UIViewController {
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
                 }
+                else{
+                    self.foundView.isHidden = false
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
             }
-            if self.arrCommented.count == 0 {
+            else{
                 self.foundView.isHidden = false
+                self.loaderView.isHidden = true
+                self.activity.stopAnimating()
             }
-            else {
-                self.foundView.isHidden = true
-                self.tbComment.reloadData()
-            }
-            self.loaderView.isHidden = true
-            self.activity.stopAnimating()
+//            if self.arrCommented.count == 0 {
+//                self.foundView.isHidden = false
+//            }
+//            else {
+//                self.foundView.isHidden = true
+//                self.tbComment.reloadData()
+//            }
+//            self.loaderView.isHidden = true
+//            self.activity.stopAnimating()
         }
     }
 
@@ -207,6 +221,7 @@ class CommentsViewControllers: UIViewController {
                         self.getChaild = response?.data
                         self.tbComment.reloadData()
                         self.txtCommentBox.text = nil
+                        self.getComment()
                     }
                 }
             }
@@ -229,6 +244,7 @@ class CommentsViewControllers: UIViewController {
                         self.arrCommented.append(self.sendParent!)
                         self.tbComment.reloadData()
                         self.txtCommentBox.text = nil
+                        self.getComment()
                     }
                 }
             }
@@ -266,6 +282,8 @@ class CommentsViewControllers: UIViewController {
         else {
             self.dismiss(animated: true, completion: nil)
         }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     /*
     // MARK: - Navigation
@@ -412,7 +430,7 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
         let tag = sender.tag
         let indexPath = IndexPath(row: tag, section: 0)
             parent_ID = arrCommented[indexPath.row].id
-            let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
+//            let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
             let parameters = ["comment_id": parent_ID] as [String : Any]
             let token = loggdenUser.value(forKey: TOKEN)as! String
             let BEARERTOKEN = BEARER + token
@@ -424,13 +442,15 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
                 if sucess {
                     if response!.liked {
                         let strLikeTotal = "Unlike"
-                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+//                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+                        sender.setTitle(strLikeTotal, for: .normal)
                         self.tbComment.beginUpdates()
                         self.tbComment.endUpdates()
                 }
                     else {
                         let strLikeTotal = "Like"
-                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+//                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+                        sender.setTitle(strLikeTotal, for: .normal)
                         self.tbComment.beginUpdates()
                         self.tbComment.endUpdates()
                     }

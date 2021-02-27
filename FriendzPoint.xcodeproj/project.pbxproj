@@ -7,11 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0EEDB825D652900090AFF5 /* SFUIText-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAC25D652660090AFF5 /* SFUIText-BoldItalic.ttf */; };
+		8F0EEDB925D652900090AFF5 /* SFUIText-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAD25D6526C0090AFF5 /* SFUIText-Heavy.ttf */; };
+		8F0EEDBA25D652900090AFF5 /* SFUIText-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAE25D652710090AFF5 /* SFUIText-Semibold.ttf */; };
+		8F0EEDBB25D652900090AFF5 /* SFUIText-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAF25D652740090AFF5 /* SFUIText-SemiboldItalic.ttf */; };
+		8F0EEDBC25D652900090AFF5 /* SFUIText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB025D652770090AFF5 /* SFUIText-Bold.ttf */; };
+		8F0EEDBD25D652900090AFF5 /* SFUIText-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB125D6527A0090AFF5 /* SFUIText-HeavyItalic.ttf */; };
+		8F0EEDBE25D652900090AFF5 /* SFUIText-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB225D6527D0090AFF5 /* SFUIText-MediumItalic.ttf */; };
+		8F0EEDBF25D652900090AFF5 /* SFUIText-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB325D652800090AFF5 /* SFUIText-RegularItalic.ttf */; };
+		8F0EEDC025D652900090AFF5 /* SFUIText-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB425D652840090AFF5 /* SFUIText-Light.ttf */; };
+		8F0EEDC125D652900090AFF5 /* SFUIText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB525D652870090AFF5 /* SFUIText-Medium.ttf */; };
+		8F0EEDC225D652900090AFF5 /* SFUIText-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB625D6528C0090AFF5 /* SFUIText-LightItalic.ttf */; };
+		8F0EEDC325D652900090AFF5 /* SFUIText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDB725D652900090AFF5 /* SFUIText-Regular.ttf */; };
+		8F0EEDC825D669640090AFF5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDC725D669640090AFF5 /* HomeVC.swift */; };
+		8F0EEDCE25D66B1B0090AFF5 /* HomeVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDCC25D66B1B0090AFF5 /* HomeVCCell.swift */; };
+		8F0EEDCF25D66B1B0090AFF5 /* HomeVCCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */; };
 		8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */; };
 		8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */; };
+		8F22361925E387DF007F3AC3 /* MobileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22361825E387DF007F3AC3 /* MobileVC.swift */; };
+		8F22361E25E38A9A007F3AC3 /* OtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22361D25E38A9A007F3AC3 /* OtpVC.swift */; };
+		8F22362325E38B77007F3AC3 /* VerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22362225E38B77007F3AC3 /* VerifyVC.swift */; };
+		8F22366825E3A687007F3AC3 /* WithdrawVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22366725E3A687007F3AC3 /* WithdrawVC.swift */; };
+		8F22367225E3A81F007F3AC3 /* TellzmeHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22367125E3A81F007F3AC3 /* TellzmeHeaderVC.swift */; };
+		8F2BECC625BA92350009ABAD /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2BECC525BA92350009ABAD /* SettingVC.swift */; };
+		8F2E90E025CBBD1D00ED83C4 /* BrowseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90DF25CBBD1D00ED83C4 /* BrowseVC.swift */; };
+		8F2E90E525CBBDD300ED83C4 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90E425CBBDD300ED83C4 /* CommentVC.swift */; };
+		8F2E90EF25CC01CE00ED83C4 /* HeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90EE25CC01CE00ED83C4 /* HeaderVC.swift */; };
+		8F38CB5425BFE9FB00848D2C /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F38CB5325BFE9FB00848D2C /* PostVC.swift */; };
+		8F39BA0F25D7AD9400512A93 /* PreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39BA0E25D7AD9400512A93 /* PreviewVC.swift */; };
+		8F5955C125E8C808002A75A6 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5955C025E8C808002A75A6 /* LoadingButton.swift */; };
+		8F5955CC25E8C82F002A75A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5955CB25E8C82F002A75A6 /* Extensions.swift */; };
+		8F5955D225E8CA0B002A75A6 /* IndicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5955D125E8CA0B002A75A6 /* IndicatorProtocol.swift */; };
+		8F59561725E8DB52002A75A6 /* LineSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59561625E8DB52002A75A6 /* LineSpinFadeLoader.swift */; };
+		8F59561C25E8DBBD002A75A6 /* LBIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59561B25E8DBBD002A75A6 /* LBIndicator.swift */; };
+		8F59562125E8DC82002A75A6 /* NVActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59562025E8DC82002A75A6 /* NVActivityIndicatorShape.swift */; };
+		8F5B67F025AD5AC000C16326 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B67EE25AD5AC000C16326 /* CommentTableViewCell.swift */; };
+		8F5B67F125AD5AC000C16326 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F5B67EF25AD5AC000C16326 /* CommentTableViewCell.xib */; };
+		8F5B67F825AD916F00C16326 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B67F725AD916F00C16326 /* VideoPlayerView.swift */; };
+		8F5B67FD25AD91BC00C16326 /* VideoCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B67FC25AD91BC00C16326 /* VideoCacheManager.swift */; };
+		8F5B680225AD921300C16326 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B680125AD921300C16326 /* URL.swift */; };
+		8F5B680725AD927E00C16326 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B680625AD927D00C16326 /* String.swift */; };
+		8F7281D725A9A07E008B0ECB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281D625A9A07E008B0ECB /* Colors.swift */; };
+		8F7281DE25A9A42F008B0ECB /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281DC25A9A42F008B0ECB /* HomeTableViewCell.swift */; };
+		8F7281DF25A9A42F008B0ECB /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7281DD25A9A42F008B0ECB /* HomeTableViewCell.xib */; };
+		8F7281E825A9A56C008B0ECB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281E725A9A56C008B0ECB /* BaseViewController.swift */; };
+		8F7281EE25A9A5C8008B0ECB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281ED25A9A5C8008B0ECB /* HomeViewController.swift */; };
 		8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7735A1257DE678002B67C6 /* HeaderViewController.swift */; };
 		8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */; };
+		8F8429A325C127210065A795 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8429A225C127210065A795 /* NewPostVC.swift */; };
+		8F8429A825C12A6F0065A795 /* NewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8429A725C12A6E0065A795 /* NewPostCell.swift */; };
+		8FD6704B25AEF3920023F013 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD6704925AEF3920023F013 /* DisplayView.swift */; };
+		8FD6704C25AEF3920023F013 /* DisplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6704A25AEF3920023F013 /* DisplayView.xib */; };
+		8FE6650425BAB3F7002265A4 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6650325BAB3F7002265A4 /* SettingsCell.swift */; };
+		8FE6650925BAE3A3002265A4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6650825BAE3A3002265A4 /* SettingsTableViewCell.swift */; };
+		8FE68BFC25DBC72000378855 /* GroupCollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE68BFB25DBC72000378855 /* GroupCollCell.swift */; };
 		8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */; };
+		8FFF50B725C5375A00988D78 /* MyGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFF50B625C5375A00988D78 /* MyGroupVC.swift */; };
+		8FFF50BC25C5378900988D78 /* MyGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFF50BB25C5378900988D78 /* MyGroupCell.swift */; };
 		C3D0A2F0B04695B4D7EFA4E9 /* Pods_FriendzPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */; };
 		DA021A7622855A5500D4BEDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA021A7522855A5500D4BEDE /* AppDelegate.swift */; };
 		DA021A7B22855A5500D4BEDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA021A7922855A5500D4BEDE /* Main.storyboard */; };
@@ -228,11 +280,63 @@
 /* Begin PBXFileReference section */
 		02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendzPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		562D34F0158BFBB32BB65842 /* Pods-FriendzPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendzPoint.release.xcconfig"; path = "Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint.release.xcconfig"; sourceTree = "<group>"; };
+		8F0EEDAC25D652660090AFF5 /* SFUIText-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-BoldItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDAD25D6526C0090AFF5 /* SFUIText-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Heavy.ttf"; sourceTree = "<group>"; };
+		8F0EEDAE25D652710090AFF5 /* SFUIText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Semibold.ttf"; sourceTree = "<group>"; };
+		8F0EEDAF25D652740090AFF5 /* SFUIText-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDB025D652770090AFF5 /* SFUIText-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Bold.ttf"; sourceTree = "<group>"; };
+		8F0EEDB125D6527A0090AFF5 /* SFUIText-HeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-HeavyItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDB225D6527D0090AFF5 /* SFUIText-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-MediumItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDB325D652800090AFF5 /* SFUIText-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-RegularItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDB425D652840090AFF5 /* SFUIText-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Light.ttf"; sourceTree = "<group>"; };
+		8F0EEDB525D652870090AFF5 /* SFUIText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Medium.ttf"; sourceTree = "<group>"; };
+		8F0EEDB625D6528C0090AFF5 /* SFUIText-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-LightItalic.ttf"; sourceTree = "<group>"; };
+		8F0EEDB725D652900090AFF5 /* SFUIText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Regular.ttf"; sourceTree = "<group>"; };
+		8F0EEDC725D669640090AFF5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		8F0EEDCC25D66B1B0090AFF5 /* HomeVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCCell.swift; sourceTree = "<group>"; };
+		8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeVCCell.xib; sourceTree = "<group>"; };
 		8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCellTimeline1.swift; sourceTree = "<group>"; };
 		8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImgCellTimeline1.xib; sourceTree = "<group>"; };
+		8F22361825E387DF007F3AC3 /* MobileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileVC.swift; sourceTree = "<group>"; };
+		8F22361D25E38A9A007F3AC3 /* OtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVC.swift; sourceTree = "<group>"; };
+		8F22362225E38B77007F3AC3 /* VerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyVC.swift; sourceTree = "<group>"; };
+		8F22366725E3A687007F3AC3 /* WithdrawVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawVC.swift; sourceTree = "<group>"; };
+		8F22367125E3A81F007F3AC3 /* TellzmeHeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzmeHeaderVC.swift; sourceTree = "<group>"; };
+		8F2BECC525BA92350009ABAD /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		8F2E90DF25CBBD1D00ED83C4 /* BrowseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseVC.swift; sourceTree = "<group>"; };
+		8F2E90E425CBBDD300ED83C4 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
+		8F2E90EE25CC01CE00ED83C4 /* HeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVC.swift; sourceTree = "<group>"; };
+		8F38CB5325BFE9FB00848D2C /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		8F39BA0E25D7AD9400512A93 /* PreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewVC.swift; sourceTree = "<group>"; };
+		8F5955C025E8C808002A75A6 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingButton.swift; path = "../../bizzbrain_ios-master_school/ViewController/Database/LoadingButton.swift"; sourceTree = "<group>"; };
+		8F5955CB25E8C82F002A75A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8F5955D125E8CA0B002A75A6 /* IndicatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorProtocol.swift; sourceTree = "<group>"; };
+		8F59561625E8DB52002A75A6 /* LineSpinFadeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpinFadeLoader.swift; sourceTree = "<group>"; };
+		8F59561B25E8DBBD002A75A6 /* LBIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBIndicator.swift; sourceTree = "<group>"; };
+		8F59562025E8DC82002A75A6 /* NVActivityIndicatorShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorShape.swift; sourceTree = "<group>"; };
+		8F5B67EE25AD5AC000C16326 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		8F5B67EF25AD5AC000C16326 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		8F5B67F725AD916F00C16326 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		8F5B67FC25AD91BC00C16326 /* VideoCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCacheManager.swift; sourceTree = "<group>"; };
+		8F5B680125AD921300C16326 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		8F5B680625AD927D00C16326 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		8F7281D625A9A07E008B0ECB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		8F7281DC25A9A42F008B0ECB /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		8F7281DD25A9A42F008B0ECB /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
+		8F7281E725A9A56C008B0ECB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8F7281ED25A9A5C8008B0ECB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8F7735A1257DE678002B67C6 /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzwalletupdateVC.swift; sourceTree = "<group>"; };
+		8F8429A225C127210065A795 /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
+		8F8429A725C12A6E0065A795 /* NewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostCell.swift; sourceTree = "<group>"; };
+		8FD6704925AEF3920023F013 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		8FD6704A25AEF3920023F013 /* DisplayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisplayView.xib; sourceTree = "<group>"; };
+		8FE6650325BAB3F7002265A4 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		8FE6650825BAE3A3002265A4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		8FE68BFB25DBC72000378855 /* GroupCollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollCell.swift; sourceTree = "<group>"; };
 		8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzmeWalletVC.swift; sourceTree = "<group>"; };
+		8FFF50B625C5375A00988D78 /* MyGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupVC.swift; sourceTree = "<group>"; };
+		8FFF50BB25C5378900988D78 /* MyGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupCell.swift; sourceTree = "<group>"; };
 		DA021A7222855A5500D4BEDE /* FriendzPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendzPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA021A7522855A5500D4BEDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA021A7A22855A5500D4BEDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -463,6 +567,108 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F0EEDAB25D652350090AFF5 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				8F0EEDB025D652770090AFF5 /* SFUIText-Bold.ttf */,
+				8F0EEDAC25D652660090AFF5 /* SFUIText-BoldItalic.ttf */,
+				8F0EEDAD25D6526C0090AFF5 /* SFUIText-Heavy.ttf */,
+				8F0EEDB125D6527A0090AFF5 /* SFUIText-HeavyItalic.ttf */,
+				8F0EEDB425D652840090AFF5 /* SFUIText-Light.ttf */,
+				8F0EEDB625D6528C0090AFF5 /* SFUIText-LightItalic.ttf */,
+				8F0EEDB525D652870090AFF5 /* SFUIText-Medium.ttf */,
+				8F0EEDB225D6527D0090AFF5 /* SFUIText-MediumItalic.ttf */,
+				8F0EEDB725D652900090AFF5 /* SFUIText-Regular.ttf */,
+				8F0EEDB325D652800090AFF5 /* SFUIText-RegularItalic.ttf */,
+				8F0EEDAE25D652710090AFF5 /* SFUIText-Semibold.ttf */,
+				8F0EEDAF25D652740090AFF5 /* SFUIText-SemiboldItalic.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		8F5955BF25E8C7E6002A75A6 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				8F5955D025E8C9F1002A75A6 /* Indicators */,
+				8F5955C025E8C808002A75A6 /* LoadingButton.swift */,
+				8F5955CB25E8C82F002A75A6 /* Extensions.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		8F5955D025E8C9F1002A75A6 /* Indicators */ = {
+			isa = PBXGroup;
+			children = (
+				8F5955D125E8CA0B002A75A6 /* IndicatorProtocol.swift */,
+				8F59561625E8DB52002A75A6 /* LineSpinFadeLoader.swift */,
+				8F59561B25E8DBBD002A75A6 /* LBIndicator.swift */,
+				8F59562025E8DC82002A75A6 /* NVActivityIndicatorShape.swift */,
+			);
+			path = Indicators;
+			sourceTree = "<group>";
+		};
+		8F7281D525A9A061008B0ECB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8F7281D625A9A07E008B0ECB /* Colors.swift */,
+				8F5B680125AD921300C16326 /* URL.swift */,
+				8F5B680625AD927D00C16326 /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8F7281DB25A9A3E7008B0ECB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8F7281DC25A9A42F008B0ECB /* HomeTableViewCell.swift */,
+				8F7281DD25A9A42F008B0ECB /* HomeTableViewCell.xib */,
+				8F5B67EF25AD5AC000C16326 /* CommentTableViewCell.xib */,
+				8F5B67EE25AD5AC000C16326 /* CommentTableViewCell.swift */,
+				8FE6650325BAB3F7002265A4 /* SettingsCell.swift */,
+				8FE6650825BAE3A3002265A4 /* SettingsTableViewCell.swift */,
+				8F8429A725C12A6E0065A795 /* NewPostCell.swift */,
+				8FFF50BB25C5378900988D78 /* MyGroupCell.swift */,
+				8F0EEDCC25D66B1B0090AFF5 /* HomeVCCell.swift */,
+				8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */,
+				8FE68BFB25DBC72000378855 /* GroupCollCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		8F7281E625A9A539008B0ECB /* MainApplication */ = {
+			isa = PBXGroup;
+			children = (
+				8F7281E725A9A56C008B0ECB /* BaseViewController.swift */,
+			);
+			path = MainApplication;
+			sourceTree = "<group>";
+		};
+		8F7281EC25A9A5AC008B0ECB /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				8F7281ED25A9A5C8008B0ECB /* HomeViewController.swift */,
+				8F5B67F725AD916F00C16326 /* VideoPlayerView.swift */,
+				8F5B67FC25AD91BC00C16326 /* VideoCacheManager.swift */,
+				8FD6704925AEF3920023F013 /* DisplayView.swift */,
+				8FD6704A25AEF3920023F013 /* DisplayView.xib */,
+				8F2BECC525BA92350009ABAD /* SettingVC.swift */,
+				8F38CB5325BFE9FB00848D2C /* PostVC.swift */,
+				8F8429A225C127210065A795 /* NewPostVC.swift */,
+				8FFF50B625C5375A00988D78 /* MyGroupVC.swift */,
+				8F2E90DF25CBBD1D00ED83C4 /* BrowseVC.swift */,
+				8F2E90E425CBBDD300ED83C4 /* CommentVC.swift */,
+				8F2E90EE25CC01CE00ED83C4 /* HeaderVC.swift */,
+				8F0EEDC725D669640090AFF5 /* HomeVC.swift */,
+				8F39BA0E25D7AD9400512A93 /* PreviewVC.swift */,
+				8F22361825E387DF007F3AC3 /* MobileVC.swift */,
+				8F22361D25E38A9A007F3AC3 /* OtpVC.swift */,
+				8F22362225E38B77007F3AC3 /* VerifyVC.swift */,
+				8F22366725E3A687007F3AC3 /* WithdrawVC.swift */,
+				8F22367125E3A81F007F3AC3 /* TellzmeHeaderVC.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		8F7735A0257DE612002B67C6 /* Tellzwallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +698,11 @@
 		DA021A6922855A5500D4BEDE = {
 			isa = PBXGroup;
 			children = (
+				8F5955BF25E8C7E6002A75A6 /* Button */,
+				8F0EEDAB25D652350090AFF5 /* Font */,
+				8F7281EC25A9A5AC008B0ECB /* Home */,
+				8F7281E625A9A539008B0ECB /* MainApplication */,
+				8F7281D525A9A061008B0ECB /* Extensions */,
 				DAEBCCEB2303EFB3008B904A /* EventController */,
 				DAE9E3DE22FD690F00A4E7D0 /* PageviewController */,
 				DAEACE3A22D5DC94006870BA /* GroupProfileSet */,
@@ -602,6 +813,7 @@
 		DA120EEF22EB1B85000F0EB2 /* TimelineCellDesign */ = {
 			isa = PBXGroup;
 			children = (
+				8F7281DB25A9A3E7008B0ECB /* Cell */,
 				DA120EF022EB1BE2000F0EB2 /* ImgcellTimeline.swift */,
 				DA120EF122EB1BE2000F0EB2 /* ImgcellTimeline.xib */,
 				DAEBB59222EC0D5100907988 /* MultiImgcellTimeline.swift */,
@@ -1021,6 +1233,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEA47F1229FFC8000D5CFD3 /* SWComboxTextSelection.xib in Resources */,
+				8F0EEDBE25D652900090AFF5 /* SFUIText-MediumItalic.ttf in Resources */,
+				8FD6704C25AEF3920023F013 /* DisplayView.xib in Resources */,
 				DAE91FB722C4A1F6003E676E /* blop.mp3 in Resources */,
 				8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */,
 				DA70054022EC1F0C0002A685 /* VideocellTimeline.xib in Resources */,
@@ -1030,19 +1244,33 @@
 				DAEC2893230BA2DD000B9870 /* Foundview.xib in Resources */,
 				DAE9C55C233DD37C008E4CA1 /* img_8179-path-to-beach-q100-500x200.jpg in Resources */,
 				DAEA944A229BA3D200B78F7D /* LikedView.xib in Resources */,
+				8F0EEDC325D652900090AFF5 /* SFUIText-Regular.ttf in Resources */,
 				DAEEF152230D7061001ED1E1 /* Tab.mp3 in Resources */,
 				DAEC289D230BC1F4000B9870 /* YoutubeVideoPlaycell.xib in Resources */,
 				DA021A8022855A5600D4BEDE /* LaunchScreen.storyboard in Resources */,
 				DA70053C22EC17E50002A685 /* TxtcellTimeline.xib in Resources */,
+				8F0EEDCF25D66B1B0090AFF5 /* HomeVCCell.xib in Resources */,
 				DAEC2897230BAD42000B9870 /* LargeFound.xib in Resources */,
+				8F0EEDB925D652900090AFF5 /* SFUIText-Heavy.ttf in Resources */,
 				DAE6C8C9228BE73400821C63 /* PhotoCollectionViewCell.xib in Resources */,
+				8F0EEDC025D652900090AFF5 /* SFUIText-Light.ttf in Resources */,
+				8F0EEDBD25D652900090AFF5 /* SFUIText-HeavyItalic.ttf in Resources */,
 				DA021AAA2285750100D4BEDE /* LoaderView.xib in Resources */,
+				8F0EEDC125D652900090AFF5 /* SFUIText-Medium.ttf in Resources */,
+				8F5B67F125AD5AC000C16326 /* CommentTableViewCell.xib in Resources */,
 				DA70054422EC269A0002A685 /* MetacellTimeline.xib in Resources */,
+				8F7281DF25A9A42F008B0ECB /* HomeTableViewCell.xib in Resources */,
 				DAEC70512314022B00EEA43C /* AdtblCell.xib in Resources */,
+				8F0EEDBF25D652900090AFF5 /* SFUIText-RegularItalic.ttf in Resources */,
+				8F0EEDBC25D652900090AFF5 /* SFUIText-Bold.ttf in Resources */,
 				DAEBB59522EC0D5100907988 /* MultiImgcellTimeline.xib in Resources */,
+				8F0EEDB825D652900090AFF5 /* SFUIText-BoldItalic.ttf in Resources */,
+				8F0EEDBA25D652900090AFF5 /* SFUIText-Semibold.ttf in Resources */,
 				DA021A7D22855A5500D4BEDE /* Assets.xcassets in Resources */,
+				8F0EEDC225D652900090AFF5 /* SFUIText-LightItalic.ttf in Resources */,
 				DAEC30D4231A4B8100C82D18 /* GoogleService-Info.plist in Resources */,
 				DAEA47EE229FFC8000D5CFD3 /* SWComboxImageSelection.xib in Resources */,
+				8F0EEDBB25D652900090AFF5 /* SFUIText-SemiboldItalic.ttf in Resources */,
 				DA021A7B22855A5500D4BEDE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1156,6 +1384,7 @@
 				DAEFCB1624B61A530008D487 /* RedeemController.swift in Sources */,
 				DAE95A7022F800DF009A1AF1 /* PageCategoryController.swift in Sources */,
 				DAF6F2CB2289479D00431097 /* FriendsViewController.swift in Sources */,
+				8F5B67F025AD5AC000C16326 /* CommentTableViewCell.swift in Sources */,
 				DAE9752D22A64D9200CB73FA /* CommentsViewControllers.swift in Sources */,
 				DAE9E3EC22FD773400A4E7D0 /* tblcellPageaddmembercontroller.swift in Sources */,
 				DAE811F522F946BA007788A0 /* PhotosAlbumViewcontroller.swift in Sources */,
@@ -1166,9 +1395,12 @@
 				DAE85271229816B000E8AE89 /* BiodataViewController.swift in Sources */,
 				DAEC289C230BC1F4000B9870 /* YoutubeVideoPlaycell.swift in Sources */,
 				DAEC28A1230BD207000B9870 /* PlayerView.swift in Sources */,
+				8FD6704B25AEF3920023F013 /* DisplayView.swift in Sources */,
 				DAE91EA922A23D9800B28382 /* DeactiveController.swift in Sources */,
 				DAE8433A24A2ED5800176F5E /* AdvertiseResponseModel.swift in Sources */,
+				8FE68BFC25DBC72000378855 /* GroupCollCell.swift in Sources */,
 				DAA18B422489557D007E2DEC /* TimelineResponsModel.swift in Sources */,
+				8FE6650425BAB3F7002265A4 /* SettingsCell.swift in Sources */,
 				DA16B09922BCBED5000EF764 /* AZTabBarDelegate.swift in Sources */,
 				DAEA47DC229FEF1D00D5CFD3 /* tblMypagesCell.swift in Sources */,
 				DAE9E3E222FD696000A4E7D0 /* PageAddmembersController.swift in Sources */,
@@ -1179,6 +1411,7 @@
 				DAEB9EEB22C390A400744F3C /* MyfriendsController.swift in Sources */,
 				DAEA47EC229FFC8000D5CFD3 /* SWComboxSelectionCell.swift in Sources */,
 				DA44E5A522AB71FC00D5C311 /* ChatConversionController.swift in Sources */,
+				8F39BA0F25D7AD9400512A93 /* PreviewVC.swift in Sources */,
 				DAF6F2C92289434000431097 /* NewsfeedViewController.swift in Sources */,
 				DAEDAD7A2293BD65004443A2 /* FriendtblCell.swift in Sources */,
 				DAE8BECE229910D50098B650 /* tblCellFriendzListGroup.swift in Sources */,
@@ -1188,18 +1421,23 @@
 				DAEA9450229C0A0A00B78F7D /* HowareyoufeelingController.swift in Sources */,
 				DAE7D7B322DC59D100B3E3EA /* Webservice.swift in Sources */,
 				DAA2D31F22F45BE600671FC4 /* openNewuserGroupController.swift in Sources */,
+				8FFF50B725C5375A00988D78 /* MyGroupVC.swift in Sources */,
+				8F59561C25E8DBBD002A75A6 /* LBIndicator.swift in Sources */,
 				DAE9E3DD22FD473200A4E7D0 /* PagejoinedlistController.swift in Sources */,
 				DAE92492229E597E00B935CE /* tblPostCell.swift in Sources */,
 				DAEFCB1824B61A750008D487 /* WithdrawController.swift in Sources */,
 				DAEA9448229BA3BD00B78F7D /* LikedView.swift in Sources */,
 				DAEA568722DF2E1D001A0C7A /* FriendsGuestEventController.swift in Sources */,
 				DAEBDFDB22D895080069984A /* FriendsBioController.swift in Sources */,
+				8F5B67F825AD916F00C16326 /* VideoPlayerView.swift in Sources */,
 				DAE96BC0231519320043A9D0 /* DislikeViewController.swift in Sources */,
 				DAEACE4622D5E34C006870BA /* GroupProfileViewController.swift in Sources */,
 				DAB86F862286D0AE00AB9E17 /* DashboardViewController.swift in Sources */,
 				DAEACE4422D5E190006870BA /* GroupTimelineSetController.swift in Sources */,
+				8F22361E25E38A9A007F3AC3 /* OtpVC.swift in Sources */,
 				DA5AC8F122AE666000E6BBAF /* constant.swift in Sources */,
 				DAEC2899230BAD61000B9870 /* LargeFound.swift in Sources */,
+				8F38CB5425BFE9FB00848D2C /* PostVC.swift in Sources */,
 				DAEA47D6229FD09700D5CFD3 /* NotificationController.swift in Sources */,
 				DAEBB59422EC0D5100907988 /* MultiImgcellTimeline.swift in Sources */,
 				DAEECC7023165D9200F6B09D /* postEditViewController.swift in Sources */,
@@ -1207,10 +1445,14 @@
 				DAF13D962302CF7B0052215D /* EventCreateController.swift in Sources */,
 				DA16B09822BCBED5000EF764 /* AZTabBarButtonDelegate.swift in Sources */,
 				DAEBCCF3230402F3008B904A /* EventGuestsViewcontroller.swift in Sources */,
+				8FE6650925BAE3A3002265A4 /* SettingsTableViewCell.swift in Sources */,
 				DAEBCCF623043144008B904A /* EventMemberController.swift in Sources */,
 				DAEBDFE722D8960C0069984A /* tblFriendsTimelineCell.swift in Sources */,
 				DAE811F722F98301007788A0 /* userImageListController.swift in Sources */,
+				8F8429A825C12A6F0065A795 /* NewPostCell.swift in Sources */,
 				DAEEF150230D5278001ED1E1 /* TimezoneController.swift in Sources */,
+				8F0EEDC825D669640090AFF5 /* HomeVC.swift in Sources */,
+				8F5B67FD25AD91BC00C16326 /* VideoCacheManager.swift in Sources */,
 				DA021AA92285750100D4BEDE /* LoaderView.swift in Sources */,
 				DAEA8DD023192AD100611755 /* postDetailsConteroller.swift in Sources */,
 				DA2890D422F18DE900BA58C1 /* GroupAddMemberCell.swift in Sources */,
@@ -1220,13 +1462,17 @@
 				DAE8526F2298145900E8AE89 /* tblJoinedGroupCell.swift in Sources */,
 				DA021AA622856E5E00D4BEDE /* LaunchController.swift in Sources */,
 				DAA2D31D22F451B900671FC4 /* UserJoinedGroupViewController.swift in Sources */,
+				8F7281EE25A9A5C8008B0ECB /* HomeViewController.swift in Sources */,
 				DAE77EEC22FC428600479E1B /* FriendsAlbumController.swift in Sources */,
 				DAE9E3E822FD69B700A4E7D0 /* PagePeopleLikethisController.swift in Sources */,
 				DABB265122F2A7A200792794 /* GroupjoinRequestListController.swift in Sources */,
 				DAF106FD24BE26A700CC212A /* MyprofileResponsModel.swift in Sources */,
 				DAEF59DE230FB53500C43E39 /* PrivateAndMemberController.swift in Sources */,
+				8F22361925E387DF007F3AC3 /* MobileVC.swift in Sources */,
 				DAEACE3C22D5E0F9006870BA /* GroupmemberController.swift in Sources */,
 				DAE9E3E422FD697800A4E7D0 /* PageMembersController.swift in Sources */,
+				8F7281DE25A9A42F008B0ECB /* HomeTableViewCell.swift in Sources */,
+				8F59562125E8DC82002A75A6 /* NVActivityIndicatorShape.swift in Sources */,
 				DAEBCCF1230402D7008B904A /* EventPostController.swift in Sources */,
 				DAF6F2D1228947CF00431097 /* ProfileViewController.swift in Sources */,
 				DAEBDFD522D857FC0069984A /* LikedPageviewController.swift in Sources */,
@@ -1241,13 +1487,16 @@
 				DAED53192334A73E0030517E /* ChatFriendsSearchview.swift in Sources */,
 				DAEA47DA229FE06400D5CFD3 /* MypagesViewController.swift in Sources */,
 				DAE82BF422A1506D003375CC /* EmailnotificationController.swift in Sources */,
+				8F59561725E8DB52002A75A6 /* LineSpinFadeLoader.swift in Sources */,
 				DAF6F2D3228947DB00431097 /* MenuViewController.swift in Sources */,
+				8F5B680725AD927E00C16326 /* String.swift in Sources */,
 				DAF1831724B5B25000F6C4DD /* walletLoginTokenResponsModel.swift in Sources */,
 				DAE96BC2231533F10043A9D0 /* publicAndGuestProfileViewController.swift in Sources */,
 				DAEBDFD922D858F90069984A /* tblJoinedMeGroup.swift in Sources */,
 				DAE9752B22A6408D00CB73FA /* LikeViewController.swift in Sources */,
 				DAE9E3DB22FD3A4A00A4E7D0 /* MypageProfileViewController.swift in Sources */,
 				DAE82BEE22A0ECB3003375CC /* GeneralSettingsViewController.swift in Sources */,
+				8F5955C125E8C808002A75A6 /* LoadingButton.swift in Sources */,
 				DAEA47F5229FFC8000D5CFD3 /* UIViewEx.swift in Sources */,
 				DAEC2895230BA2F6000B9870 /* Foundview.swift in Sources */,
 				DA70054322EC269A0002A685 /* MetacellTimeline.swift in Sources */,
@@ -1261,7 +1510,10 @@
 				DAEA47D8229FD6D500D5CFD3 /* tblNotiCell.swift in Sources */,
 				DAEEA2672306AC6900AC4BDA /* PrivateEventController.swift in Sources */,
 				8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */,
+				8F2E90E025CBBD1D00ED83C4 /* BrowseVC.swift in Sources */,
 				DAE7D7B122DC594D00B3E3EA /* GeneralResponseModel.swift in Sources */,
+				8F7281D725A9A07E008B0ECB /* Colors.swift in Sources */,
+				8F5955D225E8CA0B002A75A6 /* IndicatorProtocol.swift in Sources */,
 				DAEF59E0230FB80800C43E39 /* MygroupsViewControllerList.swift in Sources */,
 				DAEDAD7D2293C26C004443A2 /* GrouptblCell.swift in Sources */,
 				DAF13D942302C6F60052215D /* EventlistControllerview.swift in Sources */,
@@ -1270,20 +1522,27 @@
 				DAF3774824A1B884000D33B4 /* AdmanagerViewController.swift in Sources */,
 				DAE8BECC2299096C0098B650 /* ChooseFriendViewController.swift in Sources */,
 				DAEA47F0229FFC8000D5CFD3 /* SWComboxTextSelection.swift in Sources */,
+				8FFF50BC25C5378900988D78 /* MyGroupCell.swift in Sources */,
 				DAEFCB1C24B62AC70008D487 /* RedeemwalletResponsModel.swift in Sources */,
 				DAE77EE822FC1E6C00479E1B /* CreateAlbumViewcontroller.swift in Sources */,
 				8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */,
+				8F8429A325C127210065A795 /* NewPostVC.swift in Sources */,
 				8F7735A2257DE678002B67C6 /* HeaderViewController.swift in Sources */,
+				8F22366825E3A687007F3AC3 /* WithdrawVC.swift in Sources */,
+				8F2E90EF25CC01CE00ED83C4 /* HeaderVC.swift in Sources */,
 				DABD1E0122D75FE200A82B37 /* FriendsProfileViewController.swift in Sources */,
 				DAEA566522D9AC6900910C59 /* ProfileGuestEventController.swift in Sources */,
+				8F0EEDCE25D66B1B0090AFF5 /* HomeVCCell.swift in Sources */,
 				DAE613382295205800BFB474 /* GroupsettingViewController.swift in Sources */,
 				DAE6F0032320C3850098AC19 /* detailsCommentCell.swift in Sources */,
+				8F22367225E3A81F007F3AC3 /* TellzmeHeaderVC.swift in Sources */,
 				DAEC30C8231A2DFD00C82D18 /* DetailsPostandComment.swift in Sources */,
 				DAF260B424C338AB0091BFCD /* MoneyWithdrawController.swift in Sources */,
 				DAEBCCF823043180008B904A /* PublicEventProfileController.swift in Sources */,
 				DA16B09A22BCBED5000EF764 /* AZTabBarButton.swift in Sources */,
 				DA70053F22EC1F0C0002A685 /* VideocellTimeline.swift in Sources */,
 				DAEBDFE122D8955B0069984A /* FriendsJoinedgroupController.swift in Sources */,
+				8F5B680225AD921300C16326 /* URL.swift in Sources */,
 				DAE9E3E022FD693E00A4E7D0 /* PageTimelineController.swift in Sources */,
 				DAEA47F2229FFC8000D5CFD3 /* SWComboxView.swift in Sources */,
 				DAECEEA0231E5D9B00C25772 /* navigationLoaderpageredirection.swift in Sources */,
@@ -1291,6 +1550,7 @@
 				DAF106F924BE1B0000CC212A /* WithdrawHistoryResponsModel.swift in Sources */,
 				DAEACE3922D5C767006870BA /* ProfileFriendViewController.swift in Sources */,
 				DAF1831524B5AAEA00F6C4DD /* WalletLoginResponseModel.swift in Sources */,
+				8F2BECC625BA92350009ABAD /* SettingVC.swift in Sources */,
 				DAEADCC1228D825800BA4A6E /* SignupViewController.swift in Sources */,
 				DAEA47EB229FFC8000D5CFD3 /* SWComboxSelectionView.swift in Sources */,
 				DAE8BEC62298F97E0098B650 /* TimelineViewCiontroller.swift in Sources */,
@@ -1298,6 +1558,7 @@
 				DAEACE3E22D5E136006870BA /* GroupAddMemberController.swift in Sources */,
 				DA021A7622855A5500D4BEDE /* AppDelegate.swift in Sources */,
 				DA3DFD9F229D4606009AFE13 /* AppImageView.swift in Sources */,
+				8F5955CC25E8C82F002A75A6 /* Extensions.swift in Sources */,
 				DA8E6B54231D3D7300F972E0 /* BrowseallpostController.swift in Sources */,
 				8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */,
 				DA021AB022857FE500D4BEDE /* CardView.swift in Sources */,
@@ -1314,8 +1575,11 @@
 				DA051B5624B1CB79004E89A0 /* FollowersResponsModel.swift in Sources */,
 				DABB265522F2B1FB00792794 /* openAndSecretGroupController.swift in Sources */,
 				DAF6F2CF228947C100431097 /* ChatViewController.swift in Sources */,
+				8F2E90E525CBBDD300ED83C4 /* CommentVC.swift in Sources */,
+				8F22362325E38B77007F3AC3 /* VerifyVC.swift in Sources */,
 				DAF6F2CD228947B400431097 /* GroupsViewController.swift in Sources */,
 				DAEC28A3230BF57A000B9870 /* commentCell.swift in Sources */,
+				8F7281E825A9A56C008B0ECB /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1496,7 +1760,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1504,7 +1768,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1521,7 +1785,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1529,7 +1793,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

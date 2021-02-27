@@ -31,4 +31,9 @@ target 'FriendzPoint' do
  pod 'UIDropDown'
  pod 'RBBAnimation'
  pod 'Kingfisher'
+ pod 'SnapKit'
+ pod 'FSPagerView'
+ pod 'YPImagePicker'
+ pod 'MBProgressHUD'
+ pod "KWVerificationCodeView"
 end

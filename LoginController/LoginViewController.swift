@@ -166,6 +166,7 @@ class LoginViewController: UIViewController {
                                     let profile = data.value(forKey: "avatar")as! String
                                     let cover = data.value(forKey: "cover")as! String
                                     let walletToken1 = data.value(forKey: "wallet_token")as! String
+                                    let email = data.value(forKey: "email")as! String
                                     
                                     loggdenUser.set(name, forKey: NAMELOgin)
                                     loggdenUser.set(token, forKey: TOKEN)
@@ -175,6 +176,7 @@ class LoginViewController: UIViewController {
                                     loggdenUser.set(profile, forKey: PROFILE)
                                     loggdenUser.set(cover, forKey: COVER)
                                     loggdenUser.set(walletToken1, forKey:walletToken)//
+                                    loggdenUser.setValue(email, forKey: EMAIL)
                                     self.appDel.gotoDashboardController()
                                     self.activityIndicator.stopAnimating()
                                     self.activityIndicator.isHidden = true

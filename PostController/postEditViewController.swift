@@ -97,31 +97,31 @@ class postEditViewController: UIViewController, UITextFieldDelegate {
         screenWidth = screenSize.width
         screenHeight = screenSize.height
        
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.HeaderView.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        HeaderView.layer.addSublayer(gradientLayer)
-        HeaderView.addSubview(btnback)
-        HeaderView.addSubview(lblName)
-        HeaderView.addSubview(btnPost)
-        HeaderView.addSubview(activity)
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.HeaderView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        HeaderView.layer.addSublayer(gradientLayer)
+//        HeaderView.addSubview(btnback)
+//        HeaderView.addSubview(lblName)
+//        HeaderView.addSubview(btnPost)
+//        HeaderView.addSubview(activity)
         imgIcon.layer.cornerRadius = 25
         imgIcon.clipsToBounds = true
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: HeaderView.bounds.origin.x, y: HeaderView.bounds.origin.y, width: 414, height: HeaderView.bounds.size.height)
-        }
-        else if UIScreen.main.bounds.height == 812 {
-            // txtviewHeightConstraint.constant = 400
-        }
-        else if UIScreen.main.bounds.width == 320 {
-            //txtviewHeightConstraint.constant = 190
-            bottomViewHeight.constant = 50
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: HeaderView.bounds.origin.x, y: HeaderView.bounds.origin.y, width: 414, height: HeaderView.bounds.size.height)
+//        }
+//        else if UIScreen.main.bounds.height == 812 {
+//            // txtviewHeightConstraint.constant = 400
+//        }
+//        else if UIScreen.main.bounds.width == 320 {
+//            //txtviewHeightConstraint.constant = 190
+////            bottomViewHeight.constant = 50
+//        }
         
         if txtDescrption.text.isEmpty {
             txtDescrption.text = "Write Something..."

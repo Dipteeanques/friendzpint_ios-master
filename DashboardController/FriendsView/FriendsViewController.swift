@@ -89,6 +89,15 @@ class FriendsViewController: UIViewController {
             self.lblbadge.badge(text: String(count))
         }
         
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+                currentTabBar!.setBadgeText(nil, atIndex: 3)
+            }
+            else{
+                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+            }
+        }
         
         if UIScreen.main.bounds.width == 320 {
             
@@ -244,6 +253,39 @@ class FriendsViewController: UIViewController {
                     let data = response?.data
                     let follow = data?.followrequest
                     print(follow)
+                }
+            }
+        }
+    }
+    
+    func FollowUnfollow(timeVala_id: String) {
+        let parameters = ["timeline_id" : timeVala_id]
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsResponsModel?) in
+            if sucess {
+                let suc = response?.success
+                if suc! {
+//                    if response?.followed == true{
+//                        self.btnFriends.setTitle("Unfollow", for: .normal)
+//                    }
+//                    else{
+//                        self.btnFriends.setTitle("Follow", for: .normal)
+//                    }
+                    
+//                    let data = response?.data
+//                    let follow = data?.followrequest
+//                    if follow! {
+//                        self.btnFriends.setTitle("Requested", for: .normal)
+//                    }
+//                    else {
+////                        self.btnFriends.setTitle("Add Friends", for: .normal)
+//                        self.btnFriends.setTitle("Follow", for: .normal)
+//                    }
                 }
             }
         }
@@ -439,12 +481,14 @@ extension FriendsViewController: UICollectionViewDelegate,UICollectionViewDataSo
             if let button = sender as? UIButton {
                 if button.isSelected {
                     button.isSelected = false
-                    AddFriends(timeVala_id: "\(timelineid)")
+                    //AddFriends(timeVala_id: "\(timelineid)")
+                    FollowUnfollow(timeVala_id: "\(timelineid)")
                     cell.btnAdd.layer.backgroundColor = UIColor(red: 5/255, green: 88/255, blue: 195/255, alpha: 1).cgColor
                 }
                 else {
                     button.isSelected = true
-                    AddFriends(timeVala_id: "\(timelineid)")
+//                    AddFriends(timeVala_id: "\(timelineid)")
+                    FollowUnfollow(timeVala_id: "\(timelineid)")
                     cell.btnAdd.layer.backgroundColor = UIColor(red: 221/255, green: 221/255, blue: 221/255, alpha: 1).cgColor
                 }
             }

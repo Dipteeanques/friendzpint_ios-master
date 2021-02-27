@@ -28,7 +28,7 @@ class FriendsAlbumController: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(PhotosAlbumViewcontroller.Photos), name: NSNotification.Name(rawValue: "Photos"), object: nil)
-        
+        setDefault()
     }
     
     @objc func Photos(_ notification: NSNotification) {
@@ -37,6 +37,11 @@ class FriendsAlbumController: UIViewController {
         getAlbum()
     }
     
+    func setDefault(){
+        loaderView.isHidden = false
+        activity.startAnimating()
+        getAlbum()
+    }
     
     func getAlbum() {
         strUsername = loggdenUser.value(forKey: FRIENDSUSERNAME)as! String

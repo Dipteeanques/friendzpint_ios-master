@@ -136,7 +136,7 @@ extension MultiplaePhotoViewControllerList: UITableViewDelegate,UITableViewDataS
             arrImages.append(source_url)
             url = URL(string: source_url)
             cell.imgMulti.sd_setImage(with: url, placeholderImage: nil, options: [], completed: { (theImage, error, cache, url) in
-                cell.heightConstraint.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
+//                cell.heightConstraint.constant = self.getAspectRatioAccordingToiPhones(cellImageFrame: cellFrame,downloadedImage: theImage!)
             })
             return cell
         //}

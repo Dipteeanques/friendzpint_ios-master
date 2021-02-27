@@ -400,6 +400,16 @@ class NewsfeedViewController: UIViewController,UIPopoverPresentationControllerDe
             self.lblbadge.badge(text: String(count))
         }
         
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+                currentTabBar!.setBadgeText(nil, atIndex: 3)
+            }
+            else{
+                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+            }
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.BadgeCleare), name: NSNotification.Name(rawValue: "BadgeCleare"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.UserBlock), name: NSNotification.Name(rawValue: "UserBlock"), object: nil)
@@ -2632,14 +2642,12 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                
 //                                self.tblFeed.endUpdates()
                                 cellfeed.animatedview.isHidden = false
-                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
+//                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     cellfeed.animatedview.isHidden = true
                                     self.tblFeed.beginUpdates()
                                     self.tblFeed.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                                     self.tblFeed.endUpdates()
-                                    
-                                    
                                 }
                             }
                             else {
@@ -2662,7 +2670,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
 //                                self.tblFeed.endUpdates()
                                 
                                 cellfeed.animatedview.isHidden = false
-                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
+//                                cellfeed.lbl_coininfo.text = "-" + String(response?.coin ?? "0") + " Coin"
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     cellfeed.animatedview.isHidden = true
@@ -2690,7 +2698,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 let strLikeTotal = likeCount! + " Like"
                                 cellfeed.animatedview.isHidden = false
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
+//                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
 
 //                                self.tblFeed.beginUpdates()
 //                                self.tblFeed.endUpdates()
@@ -2713,7 +2721,7 @@ extension NewsfeedViewController: UITableViewDelegate,UITableViewDataSource,UISc
                                 let strLikeTotal = likeCount! + " Like"
                                 cellfeed.animatedview.isHidden = false
                                 cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
+//                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     cellfeed.animatedview.isHidden = true

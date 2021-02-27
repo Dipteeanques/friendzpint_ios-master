@@ -45,9 +45,16 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     @IBOutlet weak var btnaddfriends: UIButton!
     @IBOutlet weak var img_logo: UIImageView!
+    @IBOutlet weak var lblTitle: UILabel!
     
     var url : URL?
     var ustCover : URL?
@@ -66,7 +73,9 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
+        currentTabBar?.setBar(hidden: true, animated: false)
         setDefault()
+        setStatusBar1(backgroundColor: .black)
     }
     
     func setDefault() {
@@ -107,36 +116,46 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         btnMessage.clipsToBounds = true
         btnaddfriends.layer.cornerRadius = 5
         btnaddfriends.clipsToBounds = true
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.gridentView.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gridentView.layer.addSublayer(gradientLayer)
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.gridentView.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        gridentView.layer.addSublayer(gradientLayer)
         gridentView.addSubview(btncamera)
-        gridentView.addSubview(btnNotification)
-        gridentView.addSubview(lineView)
-        gridentView.addSubview(iconSearch)
-        gridentView.addSubview(lblSearch)
-        gridentView.addSubview(btnSearch)
-        gridentView.addSubview(lblbadge)
-        gridentView.addSubview(img_logo)
+//        gridentView.addSubview(btnNotification)
+//        gridentView.addSubview(lineView)
+//        gridentView.addSubview(iconSearch)
+//        gridentView.addSubview(lblSearch)
+//        gridentView.addSubview(btnSearch)
+//        gridentView.addSubview(lblbadge)
+//        gridentView.addSubview(img_logo)
+//
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            self.lblbadge.badge(text: String(count))
+//        }
         
-        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
-            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            self.lblbadge.badge(text: String(count))
-        }
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
+//        }
         
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 410
             segmentedPager.parallaxHeader.minimumHeight = 66
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
         }
         else {
             segmentedPager.parallaxHeader.height = 440
             segmentedPager.parallaxHeader.minimumHeight = 90
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
         }
         
         if passBackvala == "passBackvala" {
@@ -168,6 +187,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
             if sucess {
                 let dic = response?.data
                 self.lblName.text = dic?.name
+                self.lblTitle.text = dic?.name
                 self.user_id = dic!.id
                 print(self.user_id)
                 self.lblFollower.text = String(dic!.followers)
@@ -184,6 +204,13 @@ class FriendsProfileViewController: MXSegmentedPagerController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FriendsView"), object: self.strUserName)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FriendsprofileTimeline"), object: self.strUserName)
                 self.send_request = dic!.sendRequested
+                print("sendRequested: ",dic!.sendRequested)
+                if self.send_request == "follow"{
+                    self.btnFriends.setTitle("Follow", for: .normal)
+                }
+                else{
+                    self.btnFriends.setTitle("Unfollow", for: .normal)
+                }
                 self.message_priva = dic!.messagePrivacy
                 self.btnFriends.isHidden = false
                 self.btnMessage.isHidden = false
@@ -246,19 +273,53 @@ class FriendsProfileViewController: MXSegmentedPagerController {
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
         
-        wc.callSimplewebservice(url: USERFOLLOWREQUEST, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsRequestSentResponsModel?) in
+        wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsResponsModel?) in
             if sucess {
                 let suc = response?.success
                 if suc! {
-                    let data = response?.data
-                    let follow = data?.followrequest
-                    if follow! {
-                        self.btnFriends.setTitle("Requested", for: .normal)
+//                    let data = response?.data
+                    let follow = response?.followed
+                    if follow == true {
+                        self.btnFriends.setTitle("Unfollow", for: .normal)
                     }
                     else {
 //                        self.btnFriends.setTitle("Add Friends", for: .normal)
                         self.btnFriends.setTitle("Follow", for: .normal)
                     }
+                }
+            }
+        }
+    }
+    
+    
+    func FollowUnfollow() {
+        let parameters = ["timeline_id" : timeVala_id]
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsResponsModel?) in
+            if sucess {
+                let suc = response?.success
+                if suc! {
+                    if response?.followed == true{
+                        self.btnFriends.setTitle("Unfollow", for: .normal)
+                    }
+                    else{
+                        self.btnFriends.setTitle("Follow", for: .normal)
+                    }
+                    
+//                    let data = response?.data
+//                    let follow = data?.followrequest
+//                    if follow! {
+//                        self.btnFriends.setTitle("Requested", for: .normal)
+//                    }
+//                    else {
+////                        self.btnFriends.setTitle("Add Friends", for: .normal)
+//                        self.btnFriends.setTitle("Follow", for: .normal)
+//                    }
                 }
             }
         }
@@ -408,25 +469,33 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         }
     }
     @IBAction func btnNewAddfriendsAction(_ sender: UIButton) {
-        if self.send_request == "approved" {
-            RemoveFriends()
-        }
-        else if self.send_request == "addfriend" {
-            AddFriends()
-        }
-        else {
-        }
+//        if self.send_request == "approved" {
+//            RemoveFriends()
+//        }
+//        else {//if self.send_request == "addfriend" {
+//            AddFriends()
+//        }
+//        else {
+//        }
+        
+        FollowUnfollow()
     }
     
     @IBAction func btnFriendAction(_ sender: UIButton) {
-        if self.send_request == "approved" {
-            RemoveFriends()
-        }
-        else if self.send_request == "addfriend" {
-            AddFriends()
-        }
-        else {
-        }
+//        if self.send_request == "approved" {
+//            RemoveFriends()
+//        }
+//        else {// if self.send_request == "addfriend" {
+//            AddFriends()
+//        }
+//        else {
+//        }
+        
+//        if self.send_request == "follow"{
+//
+//        }
+        
+        FollowUnfollow()
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
@@ -435,7 +504,10 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         }
         else {
             self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
         }
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
@@ -512,7 +584,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Bio data", "Timeline", "Liked pages","Joined groups","Gallery","Friendz"][index]//
+        return ["Bio data", "Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"
         
     }
     
@@ -533,9 +605,9 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         else if index == 4 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
         }
-        else if index == 5 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Friends"), object: nil)
-        }
+//        else if index == 5 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Friends"), object: nil)
+//        }
 //        else if index == 6 {
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Guestevents"), object: nil)
 //        }

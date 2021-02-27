@@ -90,6 +90,7 @@ class PostViewController: UIViewController,GMSMapViewDelegate, UITextFieldDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setStatusBar(backgroundColor: .black)
         activity.isHidden = true
         lblName.text = loggdenUser.value(forKey: NAMELOgin)as? String
         lblUserName.text = loggdenUser.value(forKey: NAMELOgin)as? String
@@ -97,9 +98,13 @@ class PostViewController: UIViewController,GMSMapViewDelegate, UITextFieldDelega
         url = URL(string: profile)
         imgIcon.sd_setImage(with: url, completed: nil)
         setDeafult()
+        print("arrImages:",arrImages)
+        print("videoUrlPath:",videoUrlPath)
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setStatusBar(backgroundColor: .black)
          self.navigationController?.navigationBar.isHidden = true
        
     }
@@ -339,6 +344,7 @@ class PostViewController: UIViewController,GMSMapViewDelegate, UITextFieldDelega
                           "user_tags":strTage_id,
                           "soundcloud_title": "",
                           "post_images_upload_modified[]":""]as [String:Any]
+        print("parameters: ",parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,

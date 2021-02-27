@@ -180,7 +180,7 @@ extension userImageListController: UICollectionViewDelegate,UICollectionViewData
             btnRound.isHidden = false
             btnRound.setImage(#imageLiteral(resourceName: "whiteRound"), for: UIControl.State.normal)
         }
-        let strimage = arrImage[indexPath.row].image
+        let strimage = arrImage[indexPath.row].avatar_img
         url = URL(string: strimage)
         img.sd_setImage(with: url, completed: nil)
         return cell

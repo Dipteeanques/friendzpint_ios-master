@@ -163,12 +163,20 @@ extension LikedPageviewController: UITableViewDelegate,UITableViewDataSource,UIS
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+            print(username)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            loggdenUser.setValue(username, forKey: UNAME)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

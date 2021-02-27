@@ -38,6 +38,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
 //        UIApplication.shared.statusBarView?.layer.addSublayer(gradientLayer)
         
+//        UIApplication.shared.statusBarView?.backgroundColor = .Blue
+//
+//        if #available(iOS 13.0, *) {
+//
+//        }
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         FirebaseApp.configure()
         setNotification(application)
         Messaging.messaging().isAutoInitEnabled = true
@@ -57,6 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GMSServices.provideAPIKey("AIzaSyCaupwMul15BWqwMBCZjgCD_GCpJi_-fG8")
         GMSPlacesClient.provideAPIKey("AIzaSyCaupwMul15BWqwMBCZjgCD_GCpJi_-fG8")
+        
+        
         return true
     }
     
@@ -330,6 +340,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 if let rootViewController = self.window!.rootViewController as? UINavigationController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "MypageProfileViewController") as? MypageProfileViewController {
+                        loggdenUser.setValue(username, forKey: UNAME)
                         viewcontroller.strUserName = username
                         viewcontroller.onlyPost = post_privacy
                         viewcontroller.onlyInvaite = invite_privacy
@@ -1033,4 +1044,53 @@ extension AppDelegate: MessagingDelegate {
         loggdenUser.set(fcmToken, forKey: FCMTOKEN)
     }
 }
+
+
+//extension UIApplication {
+//    var statusBarView: UIView? {
+//        if responds(to: Selector(("statusBar"))) {
+//            return value(forKey: "statusBar") as? UIView
+//        }
+//        return nil
+//    }
+//}
+
+
+extension UIApplication {
+var statusBarView: UIView? {
+    if #available(iOS 13.0, *) {
+        let tag = 5111
+        if let statusBar = self.keyWindow?.viewWithTag(tag) {
+            return statusBar
+        } else {
+            let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+            statusBarView.tag = tag
+
+            self.keyWindow?.addSubview(statusBarView)
+            return statusBarView
+        }
+    } else {
+        if responds(to: Selector(("statusBar"))) {
+            return value(forKey: "statusBar") as? UIView
+        }
+    }
+    return nil}
+}
+
+extension UINavigationController {
+
+    func setStatusBar(backgroundColor: UIColor) {
+        let statusBarFrame: CGRect
+        if #available(iOS 13.0, *) {
+            statusBarFrame = view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
+        } else {
+            statusBarFrame = UIApplication.shared.statusBarFrame
+        }
+        let statusBarView = UIView(frame: statusBarFrame)
+        statusBarView.backgroundColor = backgroundColor
+        view.addSubview(statusBarView)
+    }
+
+}
+
 

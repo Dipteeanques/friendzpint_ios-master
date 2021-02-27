@@ -168,7 +168,11 @@ extension DislikeViewController: UITableViewDelegate,UITableViewDataSource {
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
             obj.strUserName = selectedUsername
-            self.navigationController?.pushViewController(obj, animated: true)
+            loggdenUser.setValue(selectedUsername, forKey: UNAME)
+           // self.navigationController?.pushViewController(obj, animated: true)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

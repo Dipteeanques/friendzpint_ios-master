@@ -50,7 +50,13 @@ class ProfileViewController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     @IBOutlet weak var img_logo: UIImageView!
     
     var url : URL?
@@ -65,10 +71,12 @@ class ProfileViewController: MXSegmentedPagerController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        currentTabBar?.setBar(hidden: true, animated: false)
          NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.Profile), name: NSNotification.Name(rawValue: "Profile"), object: nil)
        
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.EditProfile), name: NSNotification.Name(rawValue: "SettingsProfile"), object: nil)
         setDefault()
+        setStatusBar1(backgroundColor: .black)
     }
     
     @objc func Profile(_ notification: NSNotification) {
@@ -92,10 +100,12 @@ class ProfileViewController: MXSegmentedPagerController {
         self.navigationController?.navigationBar.isHidden = true
         segmentedPager.backgroundColor = .white
         
+        headerView.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: self.view.frame.width, height: 440)
+        self.updateViewConstraints()
         // Parallax Header
         segmentedPager.parallaxHeader.view = headerView
-        segmentedPager.parallaxHeader.mode = .fill
-        segmentedPager.parallaxHeader.height = 180
+//        segmentedPager.parallaxHeader.mode = .fill
+        segmentedPager.parallaxHeader.height = 440//180
         segmentedPager.parallaxHeader.minimumHeight = 0
         
         // Segmented Control customization
@@ -128,37 +138,47 @@ class ProfileViewController: MXSegmentedPagerController {
         btnMessage.layer.cornerRadius = 5
         btnMessage.clipsToBounds = true
 
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.gridentView.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gridentView.layer.addSublayer(gradientLayer)
-        gridentView.addSubview(btncamera)
-        gridentView.addSubview(btnNotification)
-        gridentView.addSubview(lineView)
-        gridentView.addSubview(iconSearch)
-        gridentView.addSubview(lblSearch)
-        gridentView.addSubview(btnSearch)
-        gridentView.addSubview(lblbadge)
-        gridentView.addSubview(img_logo)
+//        gridentView.backgroundColor = .white
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.gridentView.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        gridentView.layer.addSublayer(gradientLayer)
+//        gridentView.addSubview(btncamera)
+//        gridentView.addSubview(btnNotification)
+//        gridentView.addSubview(lineView)
+//        gridentView.addSubview(iconSearch)
+//        gridentView.addSubview(lblSearch)
+//        gridentView.addSubview(btnSearch)
+//        gridentView.addSubview(lblbadge)
+//        gridentView.addSubview(img_logo)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
             self.lblbadge.badge(text: String(count))
         }
+//        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+//            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
+//        }
         
-        if UIScreen.main.bounds.width == 320 {
-            viewHeght.constant = 66
-            segmentedPager.parallaxHeader.height = 410
-            segmentedPager.parallaxHeader.minimumHeight = 66
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
-        }
-        else {
-            segmentedPager.parallaxHeader.height = 440
-            segmentedPager.parallaxHeader.minimumHeight = 90
-            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
-        }
+//        if UIScreen.main.bounds.width == 320 {
+//            viewHeght.constant = 66
+//            segmentedPager.parallaxHeader.height = 410
+//            segmentedPager.parallaxHeader.minimumHeight = 66
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
+//        }
+//        else {
+//            segmentedPager.parallaxHeader.height = 440
+//            segmentedPager.parallaxHeader.minimumHeight = 90
+//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
+//        }
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.BadgeCleare), name: NSNotification.Name(rawValue: "BadgeCleare"), object: nil)
     }
     
@@ -356,80 +376,84 @@ class ProfileViewController: MXSegmentedPagerController {
     
 
     @IBAction func btnCameraCoverAction(_ sender: UIButton) {
-        let pickerController = DKImagePickerController()
-        pickerController.didSelectAssets = { (assets: [DKAsset]) in
-            let asset = assets[0]
-            asset.fetchOriginalImage(completeBlock: { (image, info) in
-                self.imgCover.image = image
-                let timelin_id = loggdenUser.value(forKey: TimeLine_id)as! Int
-                let token = loggdenUser.value(forKey: TOKEN)as! String
-                let BEARERTOKEN = BEARER + token
-                let parameters = ["timeline_id":timelin_id,
-                                  "timeline_type": self.strUserType] as [String : Any]
-                
-                let headers: HTTPHeaders = ["Xapi": XAPI,
-                                            "Accept":ACCEPT,
-                                            "Authorization":BEARERTOKEN]
-
-                self.viewCoverActivity.isHidden = true
-                self.coverActivity.stopAnimating()
-                
-                AF.upload(
-                    multipartFormData: { multiPart in
-                        for (key, value) in parameters {
-                            if let temp = value as? String {
-                                multiPart.append(temp.data(using: .utf8)!, withName: key)
-                            }
-                            if let temp = value as? Int {
-                                multiPart.append("\(temp)".data(using: .utf8)!, withName: key)
-                            }
-                            if let temp = value as? NSArray {
-                                temp.forEach({ element in
-                                    let keyObj = key + "[]"
-                                    if let string = element as? String {
-                                        multiPart.append(string.data(using: .utf8)!, withName: keyObj)
-                                    } else
-                                        if let num = element as? Int {
-                                            let value = "\(num)"
-                                            multiPart.append(value.data(using: .utf8)!, withName: keyObj)
-                                    }
-                                })
-                            }
-                        }
-                        DispatchQueue.main.sync {
-                             let image = self.imgCover.image!.resizeWithWidth(width: 700)!
-                                                   let imagedata = image.jpegData(compressionQuality: 1)
-                                                   multiPart.append(imagedata!, withName: "change_cover", fileName: "image.png", mimeType: "image/png")
-                        }
-                       
-                },
-                    usingThreshold: UInt64.init(),to: CHANGECOVER, method: .post , headers: headers)
-                    .responseJSON(completionHandler: { (response) in
-                        print(response)
-                    })
-            })
-        }
-        pickerController.showsCancelButton = true
-        pickerController.singleSelect = true
-        
-        self.present(pickerController, animated: true) {
-            self.viewCoverActivity.isHidden = false
-            self.coverActivity.startAnimating()
-        }
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "SettingVC")as! SettingVC
+        self.navigationController?.pushViewController(obj, animated: false)
+//        let pickerController = DKImagePickerController()
+//        pickerController.didSelectAssets = { (assets: [DKAsset]) in
+//            let asset = assets[0]
+//            asset.fetchOriginalImage(completeBlock: { (image, info) in
+//                self.imgCover.image = image
+//                let timelin_id = loggdenUser.value(forKey: TimeLine_id)as! Int
+//                let token = loggdenUser.value(forKey: TOKEN)as! String
+//                let BEARERTOKEN = BEARER + token
+//                let parameters = ["timeline_id":timelin_id,
+//                                  "timeline_type": self.strUserType] as [String : Any]
+//
+//                let headers: HTTPHeaders = ["Xapi": XAPI,
+//                                            "Accept":ACCEPT,
+//                                            "Authorization":BEARERTOKEN]
+//
+//                self.viewCoverActivity.isHidden = true
+//                self.coverActivity.stopAnimating()
+//
+//                AF.upload(
+//                    multipartFormData: { multiPart in
+//                        for (key, value) in parameters {
+//                            if let temp = value as? String {
+//                                multiPart.append(temp.data(using: .utf8)!, withName: key)
+//                            }
+//                            if let temp = value as? Int {
+//                                multiPart.append("\(temp)".data(using: .utf8)!, withName: key)
+//                            }
+//                            if let temp = value as? NSArray {
+//                                temp.forEach({ element in
+//                                    let keyObj = key + "[]"
+//                                    if let string = element as? String {
+//                                        multiPart.append(string.data(using: .utf8)!, withName: keyObj)
+//                                    } else
+//                                        if let num = element as? Int {
+//                                            let value = "\(num)"
+//                                            multiPart.append(value.data(using: .utf8)!, withName: keyObj)
+//                                    }
+//                                })
+//                            }
+//                        }
+//                        DispatchQueue.main.sync {
+//                             let image = self.imgCover.image!.resizeWithWidth(width: 700)!
+//                                                   let imagedata = image.jpegData(compressionQuality: 1)
+//                                                   multiPart.append(imagedata!, withName: "change_cover", fileName: "image.png", mimeType: "image/png")
+//                        }
+//
+//                },
+//                    usingThreshold: UInt64.init(),to: CHANGECOVER, method: .post , headers: headers)
+//                    .responseJSON(completionHandler: { (response) in
+//                        print(response)
+//                    })
+//            })
+//        }
+//        pickerController.showsCancelButton = true
+//        pickerController.singleSelect = true
+//
+//        self.present(pickerController, animated: true) {
+//            self.viewCoverActivity.isHidden = false
+//            self.coverActivity.startAnimating()
+//        }
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
-        let pickerController = DKImagePickerController()
-        pickerController.didSelectAssets = { (assets: [DKAsset]) in
-            print("didSelectAssets")
-            self.updateAssets(assets: assets)
-        }
-        pickerController.showsCancelButton = true
-        pickerController.allowMultipleTypes = false
-        pickerController.maxSelectableCount = 10
-        self.present(pickerController, animated: true) {
-        }
+        self.dismiss(animated: false, completion: nil)
+//        self.navigationController?.popViewController(animated: true)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        let pickerController = DKImagePickerController()
+//        pickerController.didSelectAssets = { (assets: [DKAsset]) in
+//            print("didSelectAssets")
+//            self.updateAssets(assets: assets)
+//        }
+//        pickerController.showsCancelButton = true
+//        pickerController.allowMultipleTypes = false
+//        pickerController.maxSelectableCount = 10
+//        self.present(pickerController, animated: true) {
+//        }
     }
     
     func updateAssets(assets: [DKAsset]) {

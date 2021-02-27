@@ -19,6 +19,7 @@ class EventlistControllerview: UIViewController {
     @IBOutlet weak var loaderView: UIView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var foundView: LargeFound!
+    @IBOutlet weak var btnFloat: UIButton!
     
     var arrLiked = [eventList]()
     var url : URL?
@@ -41,25 +42,31 @@ class EventlistControllerview: UIViewController {
     }
     
     func setDefault() {
+        currentTabBar?.setBar(hidden: true, animated: false)
         eventGet()
         pageCount = 1
-        let gradientLayer = CAGradientLayer()
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.headerview.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerview.layer.addSublayer(gradientLayer)
+//        headerview.addSubview(btnBack)
+//        headerview.addSubview(lblTitle)
         
-        gradientLayer.frame = self.headerview.bounds
         
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerview.layer.addSublayer(gradientLayer)
-        headerview.addSubview(btnBack)
-        headerview.addSubview(lblTitle)
+//        if UIScreen.main.bounds.width == 320 {
+//
+//        } else if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
+//        }
         
-        
-        if UIScreen.main.bounds.width == 320 {
-            
-        } else if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
-        }
+//        let image = UIImage(named: "Plusegroup")?.withRenderingMode(.alwaysTemplate)
+//        btnFloat.setImage(image, for: .normal)
+//        btnFloat.tintColor = UIColor.white
+//        btnFloat.backgroundColor = .black
     }
     
     func eventGet() {

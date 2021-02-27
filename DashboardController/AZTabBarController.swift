@@ -71,7 +71,7 @@ open class AZTabBarController: UIViewController {
     
     
     /// The default icon color of the buttons in the tab bar.
-    open var defaultColor:UIColor = .lightGray {
+    open var defaultColor:UIColor = .black {
         didSet{
             updateInterfaceIfNeeded()
             if didSetUpInterface {

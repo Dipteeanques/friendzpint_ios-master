@@ -31,9 +31,17 @@ class PagePeopleLikethisController: UIViewController {
          NotificationCenter.default.addObserver(self, selector: #selector(PagePeopleLikethisController.getlikeMember), name: NSNotification.Name(rawValue: "Peoplelikethis"), object: nil)
         
         strUsername = loggdenUser.value(forKey: USERNAME) as! String
+        setDefault()
     }
     
     @objc func getlikeMember(_ notification: NSNotification) {
+        loaderView.isHidden = false
+        activity.startAnimating()
+        getPeople()
+        pageCount = 1
+    }
+    
+    func setDefault(){
         loaderView.isHidden = false
         activity.startAnimating()
         getPeople()
@@ -210,7 +218,11 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
             print(username)
             loggdenUser.set(username, forKey: FRIENDSUSERNAME)
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: true)
+//            loggdenUser.setValue(username, forKey: UNAME)
+//            self.navigationController?.pushViewController(obj, animated: true)
+            self.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
     }
     
@@ -245,14 +257,14 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
                                             "Accept" : ACCEPT,
                                             "Authorization":BEARERTOKEN]
                 
-                wc.callSimplewebservice(url: USERFOLLOWREQUEST, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsRequestSentResponsModel?) in
+                wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsResponsModel?) in
                     if sucess {
                         let suc = response?.success
                         if suc! {
-                            let data = response?.data
-                            let follow = data?.followrequest
-                            if follow! {
-                                btnFriends.setTitle("Requested", for: .normal)
+//                            let data = response?.data
+                            let follow = response?.followed
+                            if follow  == true {
+                                btnFriends.setTitle("Unfollow", for: .normal)
                             }
                             else {
 //                                btnFriends.setTitle("Add Friends", for: .normal)
@@ -263,4 +275,7 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
                 }
             }
         }
+    
+
     }
+
