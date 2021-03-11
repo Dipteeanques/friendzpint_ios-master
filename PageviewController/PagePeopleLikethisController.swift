@@ -220,7 +220,7 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
             obj.strUserName = username
 //            loggdenUser.setValue(username, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: true)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

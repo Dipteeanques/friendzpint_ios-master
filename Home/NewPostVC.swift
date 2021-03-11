@@ -21,6 +21,10 @@ class NewPostVC: UIViewController,UITextViewDelegate {
         return nav
     }
     
+    
+    @IBOutlet weak var btn1: UIButton!
+    @IBOutlet weak var btn2: UIButton!
+    
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet weak var loaderView: UIView!
     var check = String()
@@ -51,6 +55,10 @@ class NewPostVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var lblTagPeople: UILabel!
     @IBOutlet weak var lblAddLocation: UILabel!
     
+    
+    @IBOutlet weak var CollLocation: UICollectionView!
+    
+    
     //MARK: LOCATION
     var locationBool = true
     var strLocation = String()
@@ -65,15 +73,30 @@ class NewPostVC: UIViewController,UITextViewDelegate {
     var arrImages = [UIImage]()
     var videoUrlPath = ""
     
+    var arrLocation = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        mainVIew.isHidden = true
 //        showPicker()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+       let arrLocation1 = loggdenUser.object(forKey: "AL")
+        if arrLocation1 != nil{
+            arrLocation = arrLocation1! as! [String]
+        }
         
-        self.navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .black)
-        setStatusBar1(backgroundColor: .black)
+        
+        let image = UIImage(named: "backr")?.withRenderingMode(.alwaysTemplate)
+        btn1.setImage(image, for: .normal)
+        btn1.tintColor = UIColor.lightGray
+        
+        btn2.setImage(image, for: .normal)
+        btn2.tintColor = UIColor.lightGray
+        
+        self.navigationController?.navigationBar.isHidden = false
+//        navigationController?.setStatusBar(backgroundColor: .black)
+//        setStatusBar1(backgroundColor: .black)
         txtCaption.text = "Write a Caption"
         txtCaption.textColor = UIColor.lightGray
         txtCaption.delegate = self
@@ -96,8 +119,81 @@ class NewPostVC: UIViewController,UITextViewDelegate {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
+        setUpNavBar()
+    }
+    func setUpNavBar(){
+        //For title in navigation bar
+        self.navigationController?.view.backgroundColor = UIColor.white
+        self.navigationController?.view.tintColor = UIColor.black
+        self.navigationItem.title = "New post"
+
+        //For back button in navigation bar
+//        let backButton = UIBarButtonItem()
+//        backButton.title = "Back"
+//        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "dback"),
+            style: .plain,
+            target: self,
+            action: #selector(popToPrevious)
+        )
         
-       
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Share",
+            style: .plain,
+            target: self,
+            action: #selector(SharePost)
+        )
+        
+//        navigationItem.backBarButtonItem = UIBarButtonItem(
+//            title: "",
+//            style: .plain,
+//            target: self,
+//            action: #selector(popToPrevious)
+//        )
+    }
+    
+    @objc private func SharePost(){
+        loaderView.backgroundColor = .clear
+        loaderView.isHidden = false
+        indicatorView.startAnimating()
+        
+        if videoUrlPath.count == 0 {
+            Flag = 0
+            createPost()
+            for (index,image) in self.arrImages.enumerated() {
+                print(image)
+                
+            }
+        }
+        else {
+            Flag = 0
+            videoUpload()
+        }
+    }
+    
+    @objc private func popToPrevious() {
+        // our custom stuff
+//        navigationController?.popViewController(animated: true)
+        
+        if check == "camera" {
+            Flag = 0
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: false, completion: nil)
+        }
+        Flag = 0
+        currentTabBar?.setIndex(0)
+        
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        edgesForExtendedLayout = []
+        
+        
+    
+         
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -116,6 +212,11 @@ class NewPostVC: UIViewController,UITextViewDelegate {
             Flag = 1
           showPickerCamera()
         }
+//        else if Flag == 3{
+//            Flag = 4
+//            mainVIew.isHidden = true
+//            showPicker()
+//        }
     }
     
     @IBAction func btnUpdateAction(_ sender: Any) {
@@ -148,6 +249,9 @@ class NewPostVC: UIViewController,UITextViewDelegate {
         }
         Flag = 0
         currentTabBar?.setIndex(0)
+        
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
 //        let obj = PostVC()
 //        self.navigationController?.pushViewController(obj, animated: false)
 //        appDel.gotoDashboardController()
@@ -530,6 +634,14 @@ extension NewPostVC : GMSAutocompleteViewControllerDelegate{
         print("Place name: \(place.name)")
         print("Place address: \(place.formattedAddress ?? "null")")
         strLocation = place.formattedAddress!
+        if arrLocation.contains(strLocation){
+
+        }
+        else{
+            arrLocation.append(strLocation)
+        }
+        loggdenUser.setValue(arrLocation, forKey: "AL")
+        CollLocation.reloadData()
         lblAddLocation.text = strLocation
         print("Place attributions: \(String(describing: place.attributions))")
         
@@ -547,6 +659,34 @@ extension NewPostVC : GMSAutocompleteViewControllerDelegate{
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+}
+
+
+extension NewPostVC: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return arrLocation.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AddLocationCell
+        cell.lblPlaceName.text = arrLocation[indexPath.row]
+//        cell.backgroundColor = UIColor.lightGray
+//        cell.layer.cornerRadius = 5.0
+//        cell.clipsToBounds = true
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        strLocation = arrLocation[indexPath.row]
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+////        let padding: CGFloat =  30
+////        let collectionViewSize = collectionView.frame.size.width - padding
+////        print("collectionViewSize: ",collectionViewSize)
+//            return CGSize(width: 128, height: 40)
+//    }
     
 }
 
@@ -602,7 +742,7 @@ extension NewPostVC: YPImagePickerDelegate{
 
         /* Defines which screens are shown at launch, and their order.
            Default value is `[.library, .photo]` */
-        config.screens = [.library, .photo]//, .video
+        config.screens = [.library, .photo, .video]//, .video
 
         /* Can forbid the items with very big height with this property */
 //        config.library.minWidthForItem = UIScreen.main.bounds.width * 0.8
@@ -616,7 +756,7 @@ extension NewPostVC: YPImagePickerDelegate{
         config.video.libraryTimeLimit = 500.0
 
         /* Adds a Crop step in the photo taking process, after filters. Defaults to .none */
-//        config.showsCrop = .rectangle(ratio: (16/9))
+//        config.showsCrop = .rectangle(ratio: (1/1)) //16/9
 
         /* Defines the overlay view for the camera. Defaults to UIView(). */
         // let overlayView = UIView()
@@ -687,8 +827,17 @@ extension NewPostVC: YPImagePickerDelegate{
                 print("Picker was canceled")
                 picker.dismiss(animated: false, completion: nil)
                 
+//                if Flag == 4{
+                    
+                   
+//                }
+                
+                Flag = 0
+                
                 //self.appDel.gotoDashboardController()
                 self.currentTabBar?.setIndex(0)
+                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: false, completion: nil)
                 return
             }
             _ = items.map { print("🧀 \($0)") }
@@ -847,7 +996,7 @@ extension NewPostVC: YPImagePickerDelegate{
         config.video.libraryTimeLimit = 500.0
 
         /* Adds a Crop step in the photo taking process, after filters. Defaults to .none */
-//        config.showsCrop = .rectangle(ratio: (16/9))
+//         config.showsCrop = .rectangle(ratio: (16/9))
 
         /* Defines the overlay view for the camera. Defaults to UIView(). */
         // let overlayView = UIView()

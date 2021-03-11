@@ -159,6 +159,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
 //        setDefault()
 //        NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewCiontroller.profileTimeline), name: NSNotification.Name(rawValue: "profileTimeline"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewCiontroller.GetCreatedPost), name: NSNotification.Name(rawValue: "PostCreat"), object: nil)
@@ -1206,9 +1207,16 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
     }
     
     @IBAction func btnfloatAction(_ sender: UIButton) {
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        let obj = storyboard?.instantiateViewController(withIdentifier: "PostViewController")as! PostViewController
+//        obj.MyProfile = "MyProfile"
+//        let naviget: UINavigationController = UINavigationController(rootViewController: obj)
+//        self.present(naviget, animated: true, completion: nil)
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
-        let obj = storyboard?.instantiateViewController(withIdentifier: "PostViewController")as! PostViewController
-        obj.MyProfile = "MyProfile"
+        let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
+        Flag = 0
+//        obj.GroupTimeline_Id = gtime_id
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
     }
@@ -5500,7 +5508,7 @@ extension TimelineViewCiontroller: UICollectionViewDelegate,UICollectionViewData
         }
         obj.timeline_Type_top_bottom = "Bottom"
 //        self.navigationController?.pushViewController(obj, animated: true)
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

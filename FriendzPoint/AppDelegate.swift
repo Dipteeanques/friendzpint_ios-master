@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //        }
         
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
         
         FirebaseApp.configure()
         setNotification(application)
@@ -1087,7 +1087,7 @@ extension UINavigationController {
             statusBarFrame = UIApplication.shared.statusBarFrame
         }
         let statusBarView = UIView(frame: statusBarFrame)
-        statusBarView.backgroundColor = backgroundColor
+        statusBarView.backgroundColor = UIColor.white//backgroundColor
         view.addSubview(statusBarView)
     }
 

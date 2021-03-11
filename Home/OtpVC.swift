@@ -60,8 +60,9 @@ class OtpVC: UIViewController {
 //                    self.viewBgCustom.isHidden = true
 //                    self.paymentview.isHidden = true
                     let obj1 = self.storyboard?.instantiateViewController(withIdentifier: "VerifyVC")as! VerifyVC//TellzmeWalletViewController
+                    obj1.mobileNumber = strNumber//obj?.mobileNumber ?? ""
                     obj1.number = self.number ?? ""
-                    self.modalPresentationStyle = .fullScreen
+                    obj1.modalPresentationStyle = .fullScreen
                     self.present(obj1, animated: false, completion: nil)//pushViewController(obj1, animated: true)
                 
                 }

@@ -64,7 +64,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         setDefault()
     }
     
@@ -475,8 +475,9 @@ class openNewuserGroupController: MXSegmentedPagerController {
     }
     
     func backTwo() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

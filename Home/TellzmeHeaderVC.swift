@@ -37,7 +37,7 @@ class TellzmeHeaderVC: UIViewController {
     @IBAction func btnCovertCoin(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "WithdrawVC")as! WithdrawVC//TellzmeWalletViewController
         obj.checkwithdraw = "convert"
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
 //        self.navigationController?.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }
@@ -46,7 +46,7 @@ class TellzmeHeaderVC: UIViewController {
     @IBAction func btnWithdraw(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "WithdrawVC")as! WithdrawVC//TellzmeWalletViewController
         obj.checkwithdraw = "true"
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
        // self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

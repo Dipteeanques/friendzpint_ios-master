@@ -204,6 +204,7 @@ class MypageProfileViewController: MXSegmentedPagerController {
                 loggdenUser.set(self.strUserName, forKey: PAGEUSERNAME)
                
                 let object: [String: Any] = ["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
+                loggdenUser.setValue(object, forKey: OBJECT)
                  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: object)
             }
         }
@@ -418,8 +419,9 @@ class MypageProfileViewController: MXSegmentedPagerController {
     }
     
     func backTwo() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -443,6 +445,7 @@ class MypageProfileViewController: MXSegmentedPagerController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         if index == 0 {
             let object: [String: Any] = ["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
+            loggdenUser.setValue(object, forKey: OBJECT)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: object)
         }
         else if index == 1 {

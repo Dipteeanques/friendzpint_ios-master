@@ -163,11 +163,13 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.GroupView), name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.GroupView), name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: nil)
        
 //        if strUserName.isEmpty{
 //            
 //        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        GETDATA()
         strUserName = loggdenUser.value(forKey: UNAME)as? String ?? ""
         setupView()
         navigationController?.setStatusBar(backgroundColor: .black)
@@ -231,6 +233,8 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
 //        })
         
         blurImage(img: imgbackground)
+        
+        getPageDetails()
     }
     
 //    func blurImage(img:UIImageView){
@@ -980,6 +984,58 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
 //        getFeed()
 //    }
 //
+    
+    
+    func getPageDetails() {
+        let parameters = ["username":strUserName]
+        print(parameters)
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        wc.callSimplewebservice(url: PAGE_GENERAL, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: pageProfileResponsModel?) in
+            if sucess {
+                let res = response?.data
+                self.gtime_id = res!.timeline_id
+                let Mygroup = res!.is_page_admin
+                if Mygroup == 1 {
+                    self.btnFloating.isHidden = false
+                }
+                else {
+                    self.btnFloating.isHidden = true
+                }
+                //["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
+            }
+        }
+    }
+    
+    func GETDATA() {
+        let object = loggdenUser.object(forKey: OBJECT) as? [String: Any]
+        print(object)
+        
+        if let id = object?["id"] as? Int {
+            gtime_id = id
+            print(gtime_id)
+        }
+        if let email = object?["Gusername"] as? String {
+            strUserName = email
+            print(strUserName)
+        }
+        if let Mygroup = object?["group_request"] as? Int {
+            if Mygroup == 1 {
+                btnFloating.isHidden = false
+            }
+            else {
+                btnFloating.isHidden = true
+            }
+        }
+        loaderView.isHidden = false
+        activity.startAnimating()
+//        setDefault()
+        pageCount = 1
+    }
+    
     @objc func GroupView(_ notification: NSNotification) {
         if let object = notification.object as? [String: Any] {
             print(object)
@@ -1231,6 +1287,7 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
 //        self.present(naviget, animated: true, completion: nil)
         
         let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
+        Flag = 0
         obj.GroupTimeline_Id = gtime_id
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -1285,7 +1342,7 @@ extension PageTimelineController: UICollectionViewDelegate,UICollectionViewDataS
             obj.timeline_last_first_id = arrFeed[indexPath.row - 1].id
         }
         obj.timeline_Type_top_bottom = "Bottom"
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

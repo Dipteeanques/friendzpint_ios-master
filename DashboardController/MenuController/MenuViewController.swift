@@ -52,6 +52,7 @@ class MenuViewController: UIViewController {
     //MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         setDefault()
 //        NotificationCenter.default.addObserver(self, selector: #selector(MenuViewController.ProfileImageChange), name: NSNotification.Name(rawValue: "ProfileImage"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(MenuViewController.Menu), name: NSNotification.Name(rawValue: "Menu"), object: nil)
@@ -524,8 +525,8 @@ extension UIViewController{
             segmentController.segmentSelectedTitleColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
             segmentController.selectedSegmentViewColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
             segmentController.segmentTitleFont = UIFont(name: "SFUIText-Medium", size: 15)!
-            self.modalPresentationStyle = .fullScreen
-            self.present(segmentController, animated: false, completion: nil)//pushViewController(segmentController, animated: true)
+//            self.modalPresentationStyle = .fullScreen
+            present(segmentController, animated: false, completion: nil)//pushViewController(segmentController, animated: true)
         }
     }
     
@@ -552,7 +553,7 @@ extension UIViewController{
             segmentController.segmentControllers = [firstViewController,
                                                     secondViewController,thirdViewController]
             segmentController.headerViewHeight = 55
-            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.headerViewOffsetHeight = 0
             segmentController.selectedSegmentViewHeight = 1.5
             segmentController.segmentTitleColor = .lightGray
             segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black

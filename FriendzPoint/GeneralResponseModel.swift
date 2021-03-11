@@ -408,7 +408,7 @@ struct MyTimelineList1: Decodable, Encodable {
     let youtube_title: String
     let youtube_video_id: String
     let images: [String]
-    let users_liked: [LikesetRespons]
+    let users_liked: [String]//LikesetRespons
     let users_tagged: [userTagpeopelListResponse]
     let is_my_post: Int
     let user_page: TimelineUnotherResoponseModel?
@@ -421,12 +421,23 @@ struct MyTimelineList1: Decodable, Encodable {
     var is_hide: Int
     var is_report: Int
     var video_poster: String
+    var post_link: String
 }
 
 struct AllTimelineResponseModel: Decodable,Encodable {
     let success: Bool
     let message: String
     let data: [MyTimelineList]?
+}
+
+//MARK: New Post Rsponse
+
+struct NewPostResponseModel: Decodable {
+
+    let success: Bool
+    let data: Int
+    let message: String
+    
 }
 
 //MARK: - MyTimeline List Response
@@ -478,7 +489,7 @@ struct MyTimelineList: Decodable, Encodable {
     let youtube_title: String
     let youtube_video_id: String
     let images: [String]
-    let users_liked: [LikesetRespons]
+    let users_liked: [String]//LikesetRespons
     let users_tagged: [userTagpeopelListResponse]
     let is_my_post: Int
     let user_page: TimelineUnotherResoponseModel?
@@ -491,6 +502,7 @@ struct MyTimelineList: Decodable, Encodable {
     var is_hide: Int
     var is_report: Int
     var video_poster: String
+    var post_link: String
 }
 
 

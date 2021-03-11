@@ -157,9 +157,10 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(FriendsTimelineController.profileTimeline), name: NSNotification.Name(rawValue: "FriendsprofileTimeline"), object: nil)
         
-        strUserName = loggdenUser.value(forKey: UNAME)as! String
+        strUserName = loggdenUser.value(forKey: UNAME)as? String ?? ""
         setupView()
         navigationController?.setStatusBar(backgroundColor: .black)
         self.navigationController?.navigationBar.isHidden = true
@@ -5711,7 +5712,7 @@ extension FriendsTimelineController: UICollectionViewDelegate,UICollectionViewDa
         }
         obj.timeline_Type_top_bottom = "Bottom"
 //        self.navigationController?.pushViewController(obj, animated: true)
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

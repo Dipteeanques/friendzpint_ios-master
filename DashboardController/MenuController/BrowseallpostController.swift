@@ -149,6 +149,7 @@ class BrowseallpostController: UIViewController,UIPopoverPresentationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         getProfileDetails()
         tblFeed.rowHeight = 300
         tblFeed.estimatedRowHeight = UITableView.automaticDimension

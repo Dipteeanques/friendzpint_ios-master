@@ -31,6 +31,22 @@ class ChooseFriendViewController: UIViewController,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        setDefault()
+        self.navigationItem.title = "Choose Friends"
+        
+        self.navigationItem.backButtonTitle = ""
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Next",
+            style: .plain,
+            target: self,
+            action: #selector(Nextbtn)
+        )
+    }
+    
+    @objc func Nextbtn(){
+        print(selectedTag)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SelectedFriendZlistInGroup"), object: arrSelected)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setDefault() {
@@ -148,7 +164,13 @@ extension ChooseFriendViewController: UITableViewDelegate,UITableViewDataSource 
             }
             else
             {
+
                 cell.accessoryType = .checkmark
+                cell.accessoryView?.backgroundColor = .clear
+                cell.focusStyle = .custom
+                cell.tintColor = .black
+                cell.backgroundColor = .white
+//                cell.selectionStyle = .none
             }
         
         

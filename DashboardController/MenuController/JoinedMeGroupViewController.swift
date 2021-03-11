@@ -41,6 +41,9 @@ class JoinedMeGroupViewController: UIViewController {
     }
     
     func setDefault() {
+        
+        self.foundView.isHidden = true
+        
         getSuggestedGroup()
         getGroup(strPage: "1")
         pageCount = 1
@@ -110,10 +113,10 @@ class JoinedMeGroupViewController: UIViewController {
                         self.loaderView.isHidden = true
                         self.activity.stopAnimating()
                         if self.arrUsergroup.count == 0 {
-                            self.foundView.isHidden = false
+//                            self.foundView.isHidden = false
                         }
                         else {
-                            self.foundView.isHidden = true
+//                            self.foundView.isHidden = true
                         }
                     }
                 }
@@ -123,10 +126,10 @@ class JoinedMeGroupViewController: UIViewController {
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
                     if self.arrUsergroup.count == 0 {
-                        self.foundView.isHidden = false
+//                        self.foundView.isHidden = false
                     }
                     else {
-                        self.foundView.isHidden = true
+//                        self.foundView.isHidden = true
                     }
                 }
             }
@@ -135,10 +138,10 @@ class JoinedMeGroupViewController: UIViewController {
                 self.loaderView.isHidden = true
                 self.activity.stopAnimating()
                 if self.arrUsergroup.count == 0 {
-                    self.foundView.isHidden = false
+//                    self.foundView.isHidden = false
                 }
                 else {
-                    self.foundView.isHidden = true
+//                    self.foundView.isHidden = true
                 }
         }
     }
@@ -193,7 +196,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                            // self.navigationController?.pushViewController(obj, animated: true)
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -203,7 +206,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             //self.navigationController?.pushViewController(obj, animated: true)
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -212,7 +215,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -221,7 +224,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -230,7 +233,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -239,7 +242,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -250,7 +253,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -259,7 +262,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -268,7 +271,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -277,7 +280,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -286,7 +289,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -295,7 +298,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -306,7 +309,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -315,7 +318,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -324,7 +327,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -333,7 +336,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -342,7 +345,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -351,7 +354,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -364,7 +367,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -373,7 +376,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -382,7 +385,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -391,7 +394,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -400,7 +403,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -409,7 +412,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -420,7 +423,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -429,7 +432,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -438,7 +441,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -447,7 +450,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -456,7 +459,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -465,7 +468,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -478,7 +481,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -487,7 +490,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -496,7 +499,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -505,7 +508,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -514,7 +517,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -523,7 +526,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -534,7 +537,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -543,7 +546,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -552,7 +555,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -561,7 +564,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -570,7 +573,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -579,7 +582,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.modalPresentationStyle = .fullScreen
+                            obj.modalPresentationStyle = .fullScreen
                             //self.navigationController?.pushViewController(obj, animated: true)
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -592,7 +595,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .fullScreen
                     //self.navigationController?.pushViewController(obj, animated: true)
                     self.present(obj, animated: false, completion: nil)
                 }
@@ -601,7 +604,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .fullScreen
                     //self.navigationController?.pushViewController(obj, animated: true)
                     self.present(obj, animated: false, completion: nil)
                 }
@@ -610,7 +613,7 @@ extension JoinedMeGroupViewController: UITableViewDelegate,UITableViewDataSource
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .fullScreen
                     //self.navigationController?.pushViewController(obj, animated: true)
                     self.present(obj, animated: false, completion: nil)
                 }

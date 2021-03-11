@@ -48,7 +48,7 @@ class TellzmeWalletViewController: MXSegmentedPagerController,UITextFieldDelegat
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         setDefault()
     }
     

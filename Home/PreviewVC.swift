@@ -23,7 +23,13 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         }
     }
     
-    @IBOutlet weak var btnBack: UIButton!
+    @IBOutlet weak var btnBack: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btnBack.setImage(image, for: .normal)
+            btnBack.tintColor = UIColor.white
+        }
+    }
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var countView: UIView!{
         didSet{
@@ -55,6 +61,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 //
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
 //        scrollView.removeFromSuperview()
 //        imageview.removeFromSuperview()
 //        navigationController?.setStatusBar(backgroundColor: .black)'
@@ -81,15 +88,15 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         
 //        tabBarController?.tabBar.isHidden = true
         shotImageView.imageURL = nil
-        videoLayer.frame = CGRect(x: 0, y: 0, width: shotImageView.frame.size.width, height: shotImageView.frame.size.height)
+        videoLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
 
         shotImageView.layer.cornerRadius = 5
-        shotImageView.backgroundColor = UIColor.gray.withAlphaComponent(0.7)
+        shotImageView.backgroundColor = UIColor.black//UIColor.gray.withAlphaComponent(0.7)
         shotImageView.clipsToBounds = true
-        shotImageView.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        shotImageView.layer.borderColor = UIColor.black.cgColor//UIColor.gray.withAlphaComponent(0.3).cgColor
         shotImageView.layer.borderWidth = 0.5
-        videoLayer.backgroundColor = UIColor.clear.cgColor
-        videoLayer.videoGravity = AVLayerVideoGravity.resize
+        videoLayer.backgroundColor = UIColor.black.cgColor//UIColor.clear.cgColor
+        videoLayer.videoGravity = AVLayerVideoGravity.resizeAspect//AVLayerVideoGravity.resizeAspect
         shotImageView.layer.addSublayer(videoLayer)
         blurImage(img: imageviewBackground)
         pagerView.addSubview(countView)
@@ -217,6 +224,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
     */
     @IBAction func btnBackAction(_ sender: Any) {
        // self.navigationController?.popViewController(animated: true)
+        ASVideoPlayerController.sharedVideoPlayer.pauseVideo(forLayer: videoLayer, url: self.videoURL ?? "")
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -230,6 +238,7 @@ extension PreviewVC{
 //        self.descriptionLabel.text = description
         self.shotImageView.imageURL = imageUrl
         self.videoURL = videoUrl
+        ASVideoPlayerController.sharedVideoPlayer.playVideo(withLayer: videoLayer, url: videoURL ?? "")
     }
 
     
@@ -288,7 +297,7 @@ extension UIViewController{
             statusBarFrame = UIApplication.shared.statusBarFrame
         }
         let statusBarView = UIView(frame: statusBarFrame)
-        statusBarView.backgroundColor = backgroundColor
+        statusBarView.backgroundColor = UIColor.white//backgroundColor
         view.addSubview(statusBarView)
     }
 }

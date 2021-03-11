@@ -14,7 +14,12 @@ class DeactiveController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var btnDeactive: UIButton!
+    @IBOutlet weak var btnDeactive: UIButton!{
+        didSet{
+            btnDeactive.layer.cornerRadius = btnDeactive.frame.size.height/2
+            btnDeactive.clipsToBounds = true
+        }
+    }
     
     let appDel = UIApplication.shared.delegate as! AppDelegate
     

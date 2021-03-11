@@ -180,7 +180,7 @@ extension PagejoinedlistController: UITableViewDelegate,UITableViewDataSource,UI
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
             obj.strUserName = username
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }
@@ -189,7 +189,7 @@ extension PagejoinedlistController: UITableViewDelegate,UITableViewDataSource,UI
             obj.strUserName = username
             print(username)
             loggdenUser.setValue(username, forKey: UNAME)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

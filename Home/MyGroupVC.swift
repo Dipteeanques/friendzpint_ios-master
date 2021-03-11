@@ -30,7 +30,7 @@ class MyGroupVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setStatusBar(backgroundColor: .black)
+        navigationController?.setStatusBar(backgroundColor: .white)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int

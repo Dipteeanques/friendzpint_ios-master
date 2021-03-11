@@ -114,6 +114,7 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         loaderView.isHidden = false
         activity.startAnimating()
         

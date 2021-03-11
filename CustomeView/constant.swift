@@ -41,6 +41,7 @@ let BROWSE                      =             Domain + "/browse?type=ios"
 
 //MARK: - Timeline
 let SHOWFEED                    =             Domain + "/showFeed?type=ios"
+let NEWPOST                     =             Domain + "/IsAvailableShowFeed?type=ios"
 let LIKEPOST                    =             Domain + "/likePost"
 let POSTCOMMENT                 =             Domain + "/postComment_v2"
 let TIMELINE_COMMENTS           =             Domain + "/timeline_comments_v2"
@@ -48,6 +49,7 @@ let PARENT_TIMELINE_COMMENTS    =             Domain + "/parent_timeline_comment
 let USERNAMEWISESEARCH          =             Domain + "/usernamewiseSearch"
 let POSTBYID                    =             Domain + "/postbyid"
 let POSTLISKELIST               =             Domain + "/postLikeList"
+let SAVEPOSTList                =             Domain + "/saved?type=ios"
 
 
 
@@ -231,6 +233,8 @@ let mobNumberWallet = "mobNumberWallet"
 
 let BEARER             =           "Bearer "
 
+
+let OBJECT = "OBJECT"
 
 
 

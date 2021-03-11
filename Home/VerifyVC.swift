@@ -26,6 +26,7 @@ class VerifyVC: UIViewController {
     
     var wc = Webservice.init()
     var number = String()
+    var mobileNumber = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class VerifyVC: UIViewController {
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
         setStatusBar1(backgroundColor: .black)
+        self.lblMsg.text = "Enter the OTP sent to +91 " + mobileNumber
     }
     
 

@@ -191,6 +191,8 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.GroupView), name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: nil)
         
+//        GETDATA()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         tblFeed.isHidden = true
         strUserName = loggdenUser.value(forKey: UNAME)as! String
         setupView()
@@ -255,6 +257,8 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
 //        })
         
         blurImage(img: imgbackground)
+        
+        getPageDetails()
     }
     
 //    func blurImage(img:UIImageView){
@@ -1011,6 +1015,62 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
 //        getFeed()
 //    }
 //
+    
+    
+    
+    func getPageDetails() {
+        let parameters = ["username":strUserName]
+        print(parameters)
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        wc.callSimplewebservice(url: PAGE_GENERAL, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: pageProfileResponsModel?) in
+            if sucess {
+                let res = response?.data
+                self.gtime_id = res!.timeline_id
+                let Mygroup = res!.is_page_admin
+                if Mygroup == 1 {
+                    self.btnFloat.isHidden = false
+                }
+                else {
+                    self.btnFloat.isHidden = true
+                }
+                //["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
+            }
+        }
+    }
+    
+    
+    func GETDATA() {
+        let object = loggdenUser.object(forKey: OBJECT)// as? [String: Any]
+        print(object)
+        
+        
+        
+//        if let id = object?["id"] as? Int {
+//            gtime_id = id
+//            print(gtime_id)
+//        }
+//        if let email = object?["Gusername"] as? String {
+//            strUserName = email
+//            print(strUserName)
+//        }
+//        if let Mygroup = object?["group_request"] as? Int {
+//            if Mygroup == 1 {
+//                btnFloat.isHidden = false
+//            }
+//            else {
+//                btnFloat.isHidden = true
+//            }
+//        }
+//        loaderView.isHidden = false
+//        activity.startAnimating()
+////        setDefault()
+//        pageCount = 1
+    }
+    
     @objc func GroupView(_ notification: NSNotification) {
         
         if let object = notification.object as? [String: Any] {
@@ -1257,6 +1317,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
     @IBAction func btnPageFloatingAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
+        Flag = 0
         obj.GroupTimeline_Id = gtime_id
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -9517,7 +9578,7 @@ extension GroupTimelineSetController: UICollectionViewDelegate,UICollectionViewD
             obj.timeline_last_first_id = arrFeed[indexPath.row - 1].id
         }
         obj.timeline_Type_top_bottom = "Bottom"
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

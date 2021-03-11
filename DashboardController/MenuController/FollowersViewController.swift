@@ -11,6 +11,7 @@ import Alamofire
 
 class FollowersViewController: UIViewController,UISearchBarDelegate {
 
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tblFreinds: UITableView!
     @IBOutlet weak var gredientView: UIView!
     @IBOutlet weak var btnBack: UIButton!
@@ -21,6 +22,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
     @IBOutlet weak var foundView: LargeFound!
     
     var arrFollow = [DatumFollower]()
+    var arrFollow1 = [DatumFollower]()
     var url: URL?
     var spinner = UIActivityIndicatorView()
     var pageCount = Int()
@@ -31,6 +33,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
         super.viewDidLoad()
         tblFreinds.delegate = self
         tblFreinds.dataSource = self
+        searchBar.delegate = self
         loaderView.isHidden = false
         activity.startAnimating()
         setDefault()
@@ -68,6 +71,23 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
 //        searchbar.endEditing(true)
 //    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        arrFollow1.removeAll()
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            self.arrFollow1 = self.arrFollow.filter { recipe in
+                 let ingredients = recipe.name //else { return false }
+                return ingredients.lowercased().contains(searchText.lowercased())//ingredients.contains { $0.range(of: searchText, options: .caseInsensitive) != nil }
+                
+            }
+        } else {
+            self.arrFollow1 = self.arrFollow
+        }
+
+        print("arrFollow1:",arrFollow1)
+        tblFreinds.reloadData();
+        tblFreinds.reloadInputViews();
+//        searchBar.resignFirstResponder()
+    }
     
     func getFriends() {
         let username = loggdenUser.value(forKey: USERNAME)as! String
@@ -85,6 +105,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
                     let data = response?.data
                     let arr_dict  = data?.data
                     self.arrFollow = arr_dict!
+                    self.arrFollow1 = self.arrFollow
                     self.tblFreinds.reloadData()
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
@@ -186,6 +207,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
 
     @IBAction func btnbackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     /*
     // MARK: - Navigation
@@ -203,7 +225,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
 
 extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrFollow.count
+        return arrFollow1.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -211,22 +233,26 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
         let lblname = cell.viewWithTag(101)as! UILabel
         let btnRemove = cell.viewWithTag(102)as! UIButton
         let img = cell.viewWithTag(2811)as! UIImageView
-        img.layer.cornerRadius = 25
-        img.clipsToBounds = true
-        btnRemove.layer.cornerRadius = 5
-        btnRemove.clipsToBounds = true
-        let strimg = arrFollow[indexPath.row].avatar
+//        img.layer.cornerRadius = 25
+//        img.clipsToBounds = true
+//        btnRemove.layer.cornerRadius = 5
+//        btnRemove.clipsToBounds = true
+        let strimg = arrFollow1[indexPath.row].avatar
         url = URL(string: strimg)
 //        img.sd_setImage(with: url, completed: nil)
         img.sd_setImage(with: url, placeholderImage: UIImage(named: "user"), options: [], completed: nil)
-        lblname.text = arrFollow[indexPath.row].name
+        lblname.text = arrFollow1[indexPath.row].name
+        
+       
+
+        
         btnRemove.addTarget(self, action: #selector(self.btnfriendsRemoveAction), for: UIControl.Event.touchUpInside)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
-        let username = arrFollow[indexPath.row].username
+        let username = arrFollow1[indexPath.row].username
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
         loggdenUser.set(username, forKey: FRIENDSUSERNAME)
         obj.strUserName = username
@@ -234,7 +260,7 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
+        return 65
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -256,8 +282,8 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
     
     @objc func btnfriendsRemoveAction(_ sender: UIButton) {
          if let indexPath = self.tblFreinds.indexPathForView(sender) {
-            let timeVala_id = arrFollow[indexPath.row].timelineID
-            self.arrFollow.remove(at: indexPath.row)
+            let timeVala_id = arrFollow1[indexPath.row].timelineID
+            self.arrFollow1.remove(at: indexPath.row)
             self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
             let parameters = ["timeline_id" : timeVala_id]
             let token = loggdenUser.value(forKey: TOKEN)as! String

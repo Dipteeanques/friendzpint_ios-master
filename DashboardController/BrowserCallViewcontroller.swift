@@ -19,13 +19,16 @@ class BrowserCallViewcontroller: UIViewController,WKNavigationDelegate {
     var strPassLink = String()
     var privacy = String()
     var terms = String()
+    var strtitle = String()
     
-   // var webView = WKWebView()
+    @IBOutlet weak var lblTitle: UILabel!
+    // var webView = WKWebView()
     var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lblTitle.text = strtitle
         currentTabBar?.setBar(hidden: true, animated: false)
         loaderView.isHidden = false
         activity.startAnimating()

@@ -21,7 +21,7 @@ class PostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setStatusBar(backgroundColor: .black)
+        navigationController?.setStatusBar(backgroundColor: .white)
         
         self.view.backgroundColor = .black
         
@@ -226,7 +226,7 @@ class PostVC: UIViewController {
                         
                     }
                     obj.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(obj, animated: false, completion: nil)
+                    self.present(obj, animated: false, completion: nil)
 //                    self.show(obj, sender: self)
 //                    self.navigationController?.pushViewController(obj, animated: true)
                 case .video(let video):
@@ -243,7 +243,7 @@ class PostVC: UIViewController {
                     
 //                    self.navigationController?.pushViewController(obj, animated: false)
                     obj.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(obj, animated: false, completion: nil)
+                    self.present(obj, animated: false, completion: nil)
 
                     picker.dismiss(animated: false, completion: { [weak self] in
                         self?.present(playerVC, animated: false, completion: nil)

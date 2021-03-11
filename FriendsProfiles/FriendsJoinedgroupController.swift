@@ -218,7 +218,7 @@ extension FriendsJoinedgroupController: UITableViewDelegate,UITableViewDataSourc
         loggdenUser.set(username, forKey: GROUPUSERNAME)
         obj.strUserName = username
         //self.navigationController?.pushViewController(obj, animated: true)
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

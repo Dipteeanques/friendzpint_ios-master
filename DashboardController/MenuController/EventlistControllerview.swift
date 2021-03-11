@@ -171,10 +171,13 @@ class EventlistControllerview: UIViewController {
     }
     @IBAction func btnFlottingAction(_ sender: UIButton) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventCreateController")as! EventCreateController
-        self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
+//        self.navigationController?.pushViewController(obj, animated: true)
     }
     
     @IBAction func btnBackAction(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
     /*
@@ -217,7 +220,9 @@ extension EventlistControllerview: UITableViewDelegate,UITableViewDataSource,UIS
 //        if type == "private" {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventProfileController")as! EventProfileController
             obj.strUserName = username
-            self.navigationController?.pushViewController(obj, animated: false)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
+//            self.navigationController?.pushViewController(obj, animated: false)
 //        }
 //        else {
 //            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController

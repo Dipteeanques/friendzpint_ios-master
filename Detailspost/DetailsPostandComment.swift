@@ -164,6 +164,8 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         tblFeed.sectionHeaderHeight = UITableView.automaticDimension;
         tblFeed.estimatedSectionHeaderHeight = 100;
         currentTabBar?.setBar(hidden: true, animated: false)

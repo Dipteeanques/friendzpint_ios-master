@@ -441,6 +441,7 @@ class ProfileViewController: MXSegmentedPagerController {
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
 //        self.navigationController?.popViewController(animated: true)
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
@@ -495,7 +496,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
         print(index)
-        return ["Bio data", "Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"
+        return ["Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
 
     }
     
@@ -509,22 +510,22 @@ class ProfileViewController: MXSegmentedPagerController {
 
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelectViewAt index: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        if index == 0 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: nil)
+//        }
         if index == 0 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: nil)
-        }
-        else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "profileTimeline"), object: nil)
         }
-        else if index == 2 {
+        else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Likedpages"), object: nil)
         }
-        else if index == 3 {
+        else if index == 2 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
         }
-        else if index == 4 {
+        else if index == 3 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
         }
-        else if index == 5 {
+        else if index == 4 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Friends"), object: nil)
         }
 //        else if index == 6 {

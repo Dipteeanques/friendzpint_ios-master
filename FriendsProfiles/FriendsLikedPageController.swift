@@ -229,7 +229,7 @@ extension FriendsLikedPageController: UITableViewDelegate,UITableViewDataSource,
             obj.strUserName = username
             loggdenUser.setValue(username, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: false)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }
@@ -239,7 +239,7 @@ extension FriendsLikedPageController: UITableViewDelegate,UITableViewDataSource,
             obj.strUserName = username
             loggdenUser.setValue(username, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: false)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0DD80A25EDFAF700B63E24 /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0DD80925EDFAF700B63E24 /* FollowersCell.swift */; };
 		8F0EEDB825D652900090AFF5 /* SFUIText-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAC25D652660090AFF5 /* SFUIText-BoldItalic.ttf */; };
 		8F0EEDB925D652900090AFF5 /* SFUIText-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAD25D6526C0090AFF5 /* SFUIText-Heavy.ttf */; };
 		8F0EEDBA25D652900090AFF5 /* SFUIText-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDAE25D652710090AFF5 /* SFUIText-Semibold.ttf */; };
@@ -33,6 +34,7 @@
 		8F2E90E025CBBD1D00ED83C4 /* BrowseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90DF25CBBD1D00ED83C4 /* BrowseVC.swift */; };
 		8F2E90E525CBBDD300ED83C4 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90E425CBBDD300ED83C4 /* CommentVC.swift */; };
 		8F2E90EF25CC01CE00ED83C4 /* HeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2E90EE25CC01CE00ED83C4 /* HeaderVC.swift */; };
+		8F3001B825ED08A100B64B53 /* SavePostListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3001B725ED08A100B64B53 /* SavePostListVC.swift */; };
 		8F38CB5425BFE9FB00848D2C /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F38CB5325BFE9FB00848D2C /* PostVC.swift */; };
 		8F39BA0F25D7AD9400512A93 /* PreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39BA0E25D7AD9400512A93 /* PreviewVC.swift */; };
 		8F5955C125E8C808002A75A6 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5955C025E8C808002A75A6 /* LoadingButton.swift */; };
@@ -56,12 +58,14 @@
 		8F7BD0E6257B39C400F6BFE4 /* TellzwalletupdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */; };
 		8F8429A325C127210065A795 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8429A225C127210065A795 /* NewPostVC.swift */; };
 		8F8429A825C12A6F0065A795 /* NewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8429A725C12A6E0065A795 /* NewPostCell.swift */; };
+		8F92C1BE25F6320F0032F3CF /* AddLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92C1BD25F6320E0032F3CF /* AddLocationCell.swift */; };
 		8FD6704B25AEF3920023F013 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD6704925AEF3920023F013 /* DisplayView.swift */; };
 		8FD6704C25AEF3920023F013 /* DisplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6704A25AEF3920023F013 /* DisplayView.xib */; };
 		8FE6650425BAB3F7002265A4 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6650325BAB3F7002265A4 /* SettingsCell.swift */; };
 		8FE6650925BAE3A3002265A4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6650825BAE3A3002265A4 /* SettingsTableViewCell.swift */; };
 		8FE68BFC25DBC72000378855 /* GroupCollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE68BFB25DBC72000378855 /* GroupCollCell.swift */; };
 		8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */; };
+		8FFF0B5825F9F0E700C4AADE /* MoneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFF0B5725F9F0E700C4AADE /* MoneyVC.swift */; };
 		8FFF50B725C5375A00988D78 /* MyGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFF50B625C5375A00988D78 /* MyGroupVC.swift */; };
 		8FFF50BC25C5378900988D78 /* MyGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFF50BB25C5378900988D78 /* MyGroupCell.swift */; };
 		C3D0A2F0B04695B4D7EFA4E9 /* Pods_FriendzPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */; };
@@ -280,6 +284,7 @@
 /* Begin PBXFileReference section */
 		02C2414B9EFABA42B155E96F /* Pods_FriendzPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendzPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		562D34F0158BFBB32BB65842 /* Pods-FriendzPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendzPoint.release.xcconfig"; path = "Target Support Files/Pods-FriendzPoint/Pods-FriendzPoint.release.xcconfig"; sourceTree = "<group>"; };
+		8F0DD80925EDFAF700B63E24 /* FollowersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCell.swift; sourceTree = "<group>"; };
 		8F0EEDAC25D652660090AFF5 /* SFUIText-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-BoldItalic.ttf"; sourceTree = "<group>"; };
 		8F0EEDAD25D6526C0090AFF5 /* SFUIText-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Heavy.ttf"; sourceTree = "<group>"; };
 		8F0EEDAE25D652710090AFF5 /* SFUIText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIText-Semibold.ttf"; sourceTree = "<group>"; };
@@ -306,6 +311,7 @@
 		8F2E90DF25CBBD1D00ED83C4 /* BrowseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseVC.swift; sourceTree = "<group>"; };
 		8F2E90E425CBBDD300ED83C4 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		8F2E90EE25CC01CE00ED83C4 /* HeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVC.swift; sourceTree = "<group>"; };
+		8F3001B725ED08A100B64B53 /* SavePostListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePostListVC.swift; sourceTree = "<group>"; };
 		8F38CB5325BFE9FB00848D2C /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		8F39BA0E25D7AD9400512A93 /* PreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewVC.swift; sourceTree = "<group>"; };
 		8F5955C025E8C808002A75A6 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingButton.swift; path = "../../bizzbrain_ios-master_school/ViewController/Database/LoadingButton.swift"; sourceTree = "<group>"; };
@@ -329,12 +335,14 @@
 		8F7BD0E5257B39C400F6BFE4 /* TellzwalletupdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzwalletupdateVC.swift; sourceTree = "<group>"; };
 		8F8429A225C127210065A795 /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		8F8429A725C12A6E0065A795 /* NewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostCell.swift; sourceTree = "<group>"; };
+		8F92C1BD25F6320E0032F3CF /* AddLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationCell.swift; sourceTree = "<group>"; };
 		8FD6704925AEF3920023F013 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		8FD6704A25AEF3920023F013 /* DisplayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisplayView.xib; sourceTree = "<group>"; };
 		8FE6650325BAB3F7002265A4 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		8FE6650825BAE3A3002265A4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		8FE68BFB25DBC72000378855 /* GroupCollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollCell.swift; sourceTree = "<group>"; };
 		8FF0F2122579EA0D00F19DA7 /* TellzmeWalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellzmeWalletVC.swift; sourceTree = "<group>"; };
+		8FFF0B5725F9F0E700C4AADE /* MoneyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyVC.swift; sourceTree = "<group>"; };
 		8FFF50B625C5375A00988D78 /* MyGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupVC.swift; sourceTree = "<group>"; };
 		8FFF50BB25C5378900988D78 /* MyGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupCell.swift; sourceTree = "<group>"; };
 		DA021A7222855A5500D4BEDE /* FriendzPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendzPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -631,6 +639,7 @@
 				8F0EEDCC25D66B1B0090AFF5 /* HomeVCCell.swift */,
 				8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */,
 				8FE68BFB25DBC72000378855 /* GroupCollCell.swift */,
+				8F0DD80925EDFAF700B63E24 /* FollowersCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -665,6 +674,9 @@
 				8F22362225E38B77007F3AC3 /* VerifyVC.swift */,
 				8F22366725E3A687007F3AC3 /* WithdrawVC.swift */,
 				8F22367125E3A81F007F3AC3 /* TellzmeHeaderVC.swift */,
+				8F3001B725ED08A100B64B53 /* SavePostListVC.swift */,
+				8F92C1BD25F6320E0032F3CF /* AddLocationCell.swift */,
+				8FFF0B5725F9F0E700C4AADE /* MoneyVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1430,6 +1442,7 @@
 				DAEA568722DF2E1D001A0C7A /* FriendsGuestEventController.swift in Sources */,
 				DAEBDFDB22D895080069984A /* FriendsBioController.swift in Sources */,
 				8F5B67F825AD916F00C16326 /* VideoPlayerView.swift in Sources */,
+				8F3001B825ED08A100B64B53 /* SavePostListVC.swift in Sources */,
 				DAE96BC0231519320043A9D0 /* DislikeViewController.swift in Sources */,
 				DAEACE4622D5E34C006870BA /* GroupProfileViewController.swift in Sources */,
 				DAB86F862286D0AE00AB9E17 /* DashboardViewController.swift in Sources */,
@@ -1474,11 +1487,13 @@
 				8F7281DE25A9A42F008B0ECB /* HomeTableViewCell.swift in Sources */,
 				8F59562125E8DC82002A75A6 /* NVActivityIndicatorShape.swift in Sources */,
 				DAEBCCF1230402D7008B904A /* EventPostController.swift in Sources */,
+				8F92C1BE25F6320F0032F3CF /* AddLocationCell.swift in Sources */,
 				DAF6F2D1228947CF00431097 /* ProfileViewController.swift in Sources */,
 				DAEBDFD522D857FC0069984A /* LikedPageviewController.swift in Sources */,
 				DAE61336229519CC00BFB474 /* tblGroupListCell.swift in Sources */,
 				DAE77EEA22FC279400479E1B /* tblcellCreateAlbum.swift in Sources */,
 				DAE7EBDB22B0DC64009C6DAA /* tblMultiCellphoto.swift in Sources */,
+				8F0DD80A25EDFAF700B63E24 /* FollowersCell.swift in Sources */,
 				DAE6ECED22966EE600EB7672 /* EasyNotificationBadge.swift in Sources */,
 				DA3DFD9C229D44B8009AFE13 /* ASVideoContainer.swift in Sources */,
 				DAE9E3E622FD698C00A4E7D0 /* PageAdminController.swift in Sources */,
@@ -1578,6 +1593,7 @@
 				8F2E90E525CBBDD300ED83C4 /* CommentVC.swift in Sources */,
 				8F22362325E38B77007F3AC3 /* VerifyVC.swift in Sources */,
 				DAF6F2CD228947B400431097 /* GroupsViewController.swift in Sources */,
+				8FFF0B5825F9F0E700C4AADE /* MoneyVC.swift in Sources */,
 				DAEC28A3230BF57A000B9870 /* commentCell.swift in Sources */,
 				8F7281E825A9A56C008B0ECB /* BaseViewController.swift in Sources */,
 			);

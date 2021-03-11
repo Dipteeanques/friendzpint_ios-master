@@ -99,7 +99,8 @@ class navigationLoaderpageredirection: UIViewController {
                         loggdenUser.set(username, forKey: FRIENDSUSERNAME)
                         obj.strUserName = username
                         obj.passBackvala = "passBackvala"
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                 }
                 else if type == "page" {
@@ -109,7 +110,8 @@ class navigationLoaderpageredirection: UIViewController {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.passBackvala = "passBackvala"
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
@@ -119,7 +121,8 @@ class navigationLoaderpageredirection: UIViewController {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.passBackvala = "passBackvala"
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                 }
                 else if type == "event" {
@@ -132,7 +135,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                             else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
@@ -141,7 +145,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                             else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
@@ -150,7 +155,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                             else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
@@ -159,7 +165,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                             else {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
@@ -168,7 +175,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                         }
                         else {
@@ -180,7 +188,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -189,7 +198,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -198,7 +208,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -207,7 +218,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -216,7 +228,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                             else {
@@ -224,7 +237,8 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.strUserName = username
                                 obj.onlyPrivet = "onlyPrivet"
                                 obj.passBackvala = "passBackvala"
-                                self.navigationController?.pushViewController(obj, animated: false)
+                                obj.modalPresentationStyle = .fullScreen
+                                self.present(obj, animated: false, completion: nil)
                             }
                         }
                     }
@@ -233,7 +247,8 @@ class navigationLoaderpageredirection: UIViewController {
                         obj.strUserName = username
                         obj.is_page_admin = pageAdmin
                         obj.passBackvala = "passBackvala"
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                 }
                 else {
@@ -246,7 +261,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -254,7 +270,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -262,7 +279,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -270,7 +288,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -278,7 +297,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -286,7 +306,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                             else if status_group == "pending" {
@@ -296,7 +317,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -304,7 +326,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -312,7 +335,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -320,7 +344,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -328,7 +353,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -336,7 +362,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                             else if status_group == "joined" {
@@ -346,7 +373,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -354,7 +382,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
@@ -362,7 +391,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -370,7 +400,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -378,7 +409,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -386,7 +418,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                         }
@@ -398,7 +431,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -406,7 +440,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -414,7 +449,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -422,7 +458,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -430,7 +467,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -438,7 +476,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                             else {
@@ -448,7 +487,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -456,7 +496,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -464,7 +505,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -472,7 +514,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -480,7 +523,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -488,7 +532,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                         }
@@ -500,7 +545,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -508,7 +554,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -516,7 +563,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -524,7 +572,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -532,7 +581,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
@@ -540,7 +590,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                             else {
@@ -550,7 +601,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -558,7 +610,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -566,7 +619,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -574,7 +628,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -582,7 +637,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
@@ -590,7 +646,8 @@ class navigationLoaderpageredirection: UIViewController {
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
-                                    self.navigationController?.pushViewController(obj, animated: false)
+                                    obj.modalPresentationStyle = .fullScreen
+                                    self.present(obj, animated: false, completion: nil)
                                 }
                             }
                         }
@@ -602,7 +659,8 @@ class navigationLoaderpageredirection: UIViewController {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if group_Type == "open" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
@@ -610,7 +668,8 @@ class navigationLoaderpageredirection: UIViewController {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
@@ -618,7 +677,8 @@ class navigationLoaderpageredirection: UIViewController {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                 }

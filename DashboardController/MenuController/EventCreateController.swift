@@ -298,7 +298,8 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
                         self.activity.stopAnimating()
                         self.activity.isHidden = true
                         self.btnCreate.isHidden = false
-                        self.backTwo()
+                        self.dismiss(animated: false, completion: nil)
+//                        self.backTwo()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createdevent"), object: nil)
                     }
                     else
@@ -366,8 +367,9 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
     }
     
     func backTwo() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     //MARK: - Btn Action

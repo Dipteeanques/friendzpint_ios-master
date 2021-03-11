@@ -11,6 +11,7 @@ import Alamofire
 
 class MyfriendsController: UIViewController,UISearchBarDelegate {
 
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tblFreinds: UITableView!
     @IBOutlet weak var gredientView: UIView!
     @IBOutlet weak var btnBack: UIButton!
@@ -21,6 +22,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
     @IBOutlet weak var foundView: LargeFound!
     
     var arrFollow = [FriendList]()
+    var arrFollow1 = [FriendList]()
     var url: URL?
     var spinner = UIActivityIndicatorView()
     var pageCount = Int()
@@ -30,6 +32,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loaderView.isHidden = false
+        searchBar.delegate = self
         activity.startAnimating()
         setDefault()
     }
@@ -66,6 +69,24 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
 //        searchbar.endEditing(true)
 //    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        arrFollow1.removeAll()
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            self.arrFollow1 = self.arrFollow.filter { recipe in
+                 let ingredients = recipe.name //else { return false }
+                return ingredients.lowercased().contains(searchText.lowercased())//ingredients.contains { $0.range(of: searchText, options: .caseInsensitive) != nil }
+                
+            }
+        } else {
+            self.arrFollow1 = self.arrFollow
+        }
+
+        print("arrFollow1:",arrFollow1)
+        tblFreinds.reloadData();
+        tblFreinds.reloadInputViews();
+//        searchBar.resignFirstResponder()
+    }
+    
     
     func getFriends() {
         let username = loggdenUser.value(forKey: USERNAME)as! String
@@ -83,6 +104,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
                     let data = response?.data
                     let arr_dict  = data?.data
                     self.arrFollow = arr_dict!
+                    self.arrFollow1 = self.arrFollow
                     self.tblFreinds.reloadData()
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
@@ -138,6 +160,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
                     let arr_dict  = data?.data
                     for i in 0..<arr_dict!.count
                     {
+                        self.arrFollow1.append(arr_dict![i])
                         self.arrFollow.append(arr_dict![i])
                         self.tblFreinds.beginUpdates()
                         self.tblFreinds.insertRows(at: [
@@ -184,6 +207,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
 
     @IBAction func btnbackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     /*
     // MARK: - Navigation
@@ -201,7 +225,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
 
 extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrFollow.count
+        return arrFollow1.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -209,22 +233,27 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
         let lblname = cell.viewWithTag(101)as! UILabel
         let btnRemove = cell.viewWithTag(102)as! UIButton
         let img = cell.viewWithTag(2811)as! UIImageView
-        img.layer.cornerRadius = 25
+        img.layer.cornerRadius = img.frame.height/2//25
         img.clipsToBounds = true
-        btnRemove.layer.cornerRadius = 5
+//        btnRemove.layer.cornerRadius = btnRemove.frame.height/2//5
+//        btnRemove.clipsToBounds = true
+        
+        btnRemove.layer.cornerRadius = btnRemove.frame.height/2
         btnRemove.clipsToBounds = true
-        let strimg = arrFollow[indexPath.row].avatar
+        btnRemove.layer.borderColor = UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 0.20).cgColor
+        btnRemove.layer.borderWidth = 1.0
+        let strimg = arrFollow1[indexPath.row].avatar
         url = URL(string: strimg)
 //        img.sd_setImage(with: url, completed: nil)//user
         img.sd_setImage(with: url, placeholderImage: UIImage(named: "user"), options: [], completed: nil)
-        lblname.text = arrFollow[indexPath.row].name
+        lblname.text = arrFollow1[indexPath.row].name
         btnRemove.addTarget(self, action: #selector(MyfriendsController.btnfriendsRemoveAction), for: UIControl.Event.touchUpInside)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
-        let username = arrFollow[indexPath.row].username
+        let username = arrFollow1[indexPath.row].username
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
         loggdenUser.set(username, forKey: FRIENDSUSERNAME)
         obj.strUserName = username
@@ -232,7 +261,7 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
+        return 65
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -254,8 +283,8 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
     
     @objc func btnfriendsRemoveAction(_ sender: UIButton) {
          if let indexPath = self.tblFreinds.indexPathForView(sender) {
-            let timeVala_id = arrFollow[indexPath.row].timeline_id
-            self.arrFollow.remove(at: indexPath.row)
+            let timeVala_id = arrFollow1[indexPath.row].timeline_id
+            self.arrFollow1.remove(at: indexPath.row)
             self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
             let parameters = ["timeline_id" : timeVala_id]
             let token = loggdenUser.value(forKey: TOKEN)as! String

@@ -74,6 +74,7 @@ class GroupsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(GroupsViewController.Group), name: NSNotification.Name(rawValue: "Group"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GroupsViewController.GetCreatedGroup), name: NSNotification.Name(rawValue: "GroupCreat"), object: nil)
         self.loaderView.isHidden = false

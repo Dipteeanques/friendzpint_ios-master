@@ -9,9 +9,14 @@
 import UIKit
 import FSPagerView
 import AVFoundation
+import ActiveLabel
+import TTTAttributedLabel
 
 class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     
+//    @IBOutlet weak var lblDetailHeight: NSLayoutConstraint!
+//    @IBOutlet weak var viewtopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lblDetails: ActiveLabel!
     //MARK: For Video Player
     var playerController: ASVideoPlayerController?
     var videoLayer: AVPlayerLayer = AVPlayerLayer()
@@ -24,18 +29,30 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         }
     }
 
+//    @IBOutlet weak var btnTimerLeading: NSLayoutConstraint!
+    @IBOutlet weak var btnStatusWidth: NSLayoutConstraint!
+    @IBOutlet weak var likeViewHeight: NSLayoutConstraint!
     var arrFeed1 = [MyTimelineList]()
     @IBOutlet weak var imageviewBackground: UIImageView!
     @IBOutlet weak var imageview: UIImageView!
     
-    @IBOutlet weak var bottomVIew: UIView!{
-        didSet{
-            bottomVIew.backgroundColor = .white
-            bottomVIew.clipsToBounds = true
-            bottomVIew.layer.cornerRadius = 15
-            bottomVIew.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        }
-    }
+//    @IBOutlet weak var bottomVIew: UIView!
+//    {
+//        didSet{
+////            bottomVIew.backgroundColor = .white
+////            bottomVIew.clipsToBounds = true
+////            bottomVIew.layer.cornerRadius = 15
+////            bottomVIew.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+////            bottomVIew.backgroundColor = UIColor.black.withAlphaComponent(0.30)
+//
+//            bottomVIew.layer.shadowOpacity = 0.5
+////            bottomVIew.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+////            bottomVIew.layer.shadowRadius = 15.0
+//            bottomVIew.layer.shadowOffset = CGSize(width: 0, height: 3)
+//            bottomVIew.layer.shadowColor = UIColor.black.cgColor
+//
+//        }
+//    }
     
     @IBOutlet weak var img1: UIImageView!{
         didSet{
@@ -70,6 +87,9 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         }
     }
     
+    
+    @IBOutlet weak var lbldetailsBottom: NSLayoutConstraint!
+    @IBOutlet weak var btnmoreHeight: NSLayoutConstraint!
     @IBOutlet weak var lblLikeDescription: UILabel!
     
     @IBOutlet weak var profileView: shadowView!
@@ -81,11 +101,13 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     }
     
     @IBOutlet weak var lblUserName: UILabel!
-    @IBOutlet var btnStatus: LoadingButton!{
+    @IBOutlet var btnStatus: UIButton!
+    {
         didSet{
-            btnStatus.layer.cornerRadius = btnStatus.frame.height/2
-            btnStatus.clipsToBounds = true
-            btnStatus.indicator = LineSpinFadeLoader(color: .black)
+//            btnStatus.layer.cornerRadius = btnStatus.frame.height/2
+//            btnStatus.clipsToBounds = true
+//            btnStatus.indicator = LineSpinFadeLoader(color: .black)
+            btnStatus.backgroundColor = .clear
         }
     }
     
@@ -103,15 +125,17 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     
     @IBOutlet weak var btnMenu: UIButton!
     
-    @IBOutlet weak var btnLocationWidth: NSLayoutConstraint!
+//    @IBOutlet weak var btnLocationWidth: NSLayoutConstraint!
     
     
-    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
+//    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imgWidth1: NSLayoutConstraint!
     @IBOutlet weak var imgWidth2: NSLayoutConstraint!
     @IBOutlet weak var imgWidth3: NSLayoutConstraint!
     @IBOutlet weak var imgWidth4: NSLayoutConstraint!
     
+    @IBOutlet weak var viewpeople: UIView!
+    @IBOutlet weak var ButtonView: UIView!
     
     @IBOutlet weak var pagerView: FSPagerView!{
         didSet {
@@ -119,7 +143,9 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
             self.pagerView.itemSize = FSPagerView.automaticSize
         }
     }
+    @IBOutlet weak var btnmore: UIButton!
     
+    @IBOutlet weak var lblTag: ActiveLabel!
     @IBOutlet weak var countView: UIView!{
         didSet{
             countView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
@@ -127,31 +153,48 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
             countView.clipsToBounds = true
         }
     }
+    @IBOutlet weak var lblTimeLeading: NSLayoutConstraint!
     @IBOutlet weak var lblPageCount: UILabel!
     var images = [String]()
     
+    @IBOutlet weak var dotView: UIView!{
+        didSet{
+            dotView.layer.cornerRadius = dotView.frame.height/2
+            dotView.clipsToBounds = true
+        }
+    }
+    @IBOutlet weak var lblDetailsTop: NSLayoutConstraint!
     @IBOutlet weak var shotImageView: UIImageView!
-    
+     
+    @IBOutlet weak var lblDetailHeight: NSLayoutConstraint!
     
     @IBOutlet weak var btnClick: UIButton!
     
+    @IBOutlet weak var lblTagBottom: NSLayoutConstraint!
     
     @IBOutlet weak var btnProfileClick: UIButton!
     @IBOutlet weak var btnUserNameClick: UIButton!
     
     @IBOutlet weak var btnLikeClick: UIButton!
     
+    @IBOutlet weak var lblLikeCount: UILabel!
+    @IBOutlet weak var lblDislikeCount: UILabel!
+    
+    var shadowimg = UIImageView()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(Videopause(_:)), name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         shotImageView.layer.cornerRadius = 5
-        shotImageView.backgroundColor = UIColor.gray.withAlphaComponent(0.7)
+        shotImageView.backgroundColor = UIColor.black//UIColor.gray.withAlphaComponent(0.7)
         shotImageView.clipsToBounds = true
-        shotImageView.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        shotImageView.layer.borderColor = UIColor.black.cgColor//UIColor.gray.withAlphaComponent(0.3).cgColor
         shotImageView.layer.borderWidth = 0.5
-        videoLayer.backgroundColor = UIColor.clear.cgColor
-        videoLayer.videoGravity = AVLayerVideoGravity.resize
+        videoLayer.backgroundColor = UIColor.black.cgColor
+        videoLayer.videoGravity = AVLayerVideoGravity.resizeAspect//resize
         shotImageView.layer.addSublayer(videoLayer)
         selectionStyle = .none
         blurImage(img: imageviewBackground)
@@ -159,8 +202,24 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         pagerView.delegate = self
         pagerView.dataSource = self
         
-        pagerView.addSubview(btnClick)
+        shadowimg.frame = CGRect(x: 0, y: 0, width: imageview.frame.width, height: imageview.frame.height)
+//        shadowimg.contentMode = .scaleAspectFill
+        shadowimg.image = UIImage(named: "shadowimg")
+        pagerView.addSubview(shadowimg)
+        shadowimg.contentMode = .center
         
+//        ButtonView.addSubview(btnMenu)
+        pagerView.addSubview(btnClick)
+        pagerView.addSubview(ButtonView)
+        pagerView.addSubview(viewpeople)
+//        pagerView.addSubview(btnMenu)
+        pagerView.addSubview(btnmore)
+        pagerView.addSubview(profileView)
+        pagerView.addSubview(btnUserNameClick)
+        pagerView.addSubview(btnStatus)
+        pagerView.addSubview(lblUserName)
+        pagerView.addSubview(lblDetails)
+        pagerView.addSubview(lblTag)
     }
     func blurImage(img:UIImageView){
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
@@ -183,11 +242,18 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
 //        self.descriptionLabel.text = description
         self.shotImageView.imageURL = imageUrl
         self.videoURL = videoUrl
+        ASVideoPlayerController.sharedVideoPlayer.playVideo(withLayer: videoLayer, url: videoURL ?? "")
     }
 
     override func prepareForReuse() {
         shotImageView.imageURL = nil
         super.prepareForReuse()
+    }
+    
+    @objc func Videopause(_ notification: NSNotification) {
+//        videoLayer.player?.pause()
+        
+        ASVideoPlayerController.sharedVideoPlayer.pauseVideo(forLayer: videoLayer, url: self.videoURL ?? "")
     }
     
     override func layoutSubviews() {

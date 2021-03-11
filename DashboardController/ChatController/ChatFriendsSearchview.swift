@@ -28,13 +28,13 @@ class ChatFriendsSearchview: UIViewController,UISearchBarDelegate {
         searchbar.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .default
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .lightContent
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        UIApplication.shared.statusBarStyle = .default
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        UIApplication.shared.statusBarStyle = .lightContent
+//    }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

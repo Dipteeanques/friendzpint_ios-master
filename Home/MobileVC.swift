@@ -32,7 +32,7 @@ class MobileVC: UIViewController {
     
     @IBAction func btnUpdate(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "OtpVC")as! OtpVC//TellzmeWalletViewController
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         self.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: true)
     }
     /*

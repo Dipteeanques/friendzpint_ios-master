@@ -98,7 +98,7 @@ class HomeViewController: UIViewController {
             }
         }
         setupView()
-        navigationController?.setStatusBar(backgroundColor: .black)
+        navigationController?.setStatusBar(backgroundColor: .white)
         self.navigationController?.navigationBar.isHidden = true
     
 //        MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -460,6 +460,7 @@ class HomeViewController: UIViewController {
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
                     obj.usernamepost = usernamepost

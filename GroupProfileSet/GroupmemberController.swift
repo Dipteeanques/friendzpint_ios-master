@@ -44,10 +44,10 @@ class GroupmemberController: UIViewController {
     }
 
     func getMember() {
-        let group_id = loggdenUser.value(forKey: GROUPID)as! Int
-        let username = loggdenUser.value(forKey: GROUPUSERNAME)as! String
-        let parameters = ["group_id":group_id,
-                          "username":username] as [String : Any]
+        let group_id = loggdenUser.value(forKey: GROUPID)as? Int
+        let username = loggdenUser.value(forKey: GROUPUSERNAME)as? String
+        let parameters = ["group_id":group_id ?? 0,
+                          "username":username ?? ""] as [String : Any]
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,

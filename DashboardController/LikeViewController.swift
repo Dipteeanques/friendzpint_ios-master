@@ -186,7 +186,7 @@ extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
             
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
 //            self.navigationController?.pushViewController(obj, animated: true)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }
@@ -195,7 +195,7 @@ extension LikeViewController: UITableViewDelegate,UITableViewDataSource {
             obj.strUserName = selectedUsername
             loggdenUser.setValue(selectedUsername, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: true)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

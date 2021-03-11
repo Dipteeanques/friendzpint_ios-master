@@ -324,8 +324,9 @@ class publicAndGuestProfileViewController: MXSegmentedPagerController {
     }
     
     func backTwo() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -349,7 +350,7 @@ class publicAndGuestProfileViewController: MXSegmentedPagerController {
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelectViewAt index: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         if index == 0 {
-            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: self.strUserName)
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: self.strUserName)
         }
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)

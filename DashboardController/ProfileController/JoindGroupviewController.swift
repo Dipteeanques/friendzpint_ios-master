@@ -221,7 +221,7 @@ extension JoindGroupviewController: UITableViewDelegate,UITableViewDataSource,UI
         print(username)
         loggdenUser.set(username, forKey: GROUPUSERNAME)
         obj.strUserName = username
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

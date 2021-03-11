@@ -170,7 +170,7 @@ extension DislikeViewController: UITableViewDelegate,UITableViewDataSource {
             obj.strUserName = selectedUsername
             loggdenUser.setValue(selectedUsername, forKey: UNAME)
            // self.navigationController?.pushViewController(obj, animated: true)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

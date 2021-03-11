@@ -190,7 +190,7 @@ extension GroupjoinRequestListController: UITableViewDelegate,UITableViewDataSou
             print(username)
             obj.strUserName = username
             //self.navigationController?.pushViewController(obj, animated: true)
-            self.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }

@@ -35,6 +35,7 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
         super.viewDidLoad()
         loaderView.isHidden = false
         activity.startAnimating()
+        self.foundView.isHidden = true
         setDeafult()
         NotificationCenter.default.addObserver(self, selector: #selector(MypagesViewController.GetCreatedGroup), name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
     }
@@ -121,10 +122,10 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
                         self.loaderView.isHidden = true
                         self.activity.stopAnimating()
                         if self.arrMypage.count == 0 {
-                            self.foundView.isHidden = false
+//                            self.foundView.isHidden = false
                         }
                         else {
-                            self.foundView.isHidden = true
+//                            self.foundView.isHidden = true
                         }
                     }
                 }
@@ -134,10 +135,10 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
                     if self.arrMypage.count == 0 {
-                        self.foundView.isHidden = false
+//                        self.foundView.isHidden = false
                     }
                     else {
-                        self.foundView.isHidden = true
+//                        self.foundView.isHidden = true
                     }
                 }
             }
@@ -146,10 +147,10 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
             self.loaderView.isHidden = true
             self.activity.stopAnimating()
             if self.arrMypage.count == 0 {
-                self.foundView.isHidden = false
+//                self.foundView.isHidden = false
             }
             else {
-                self.foundView.isHidden = true
+//                self.foundView.isHidden = true
             }
         }
     }

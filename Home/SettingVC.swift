@@ -22,7 +22,7 @@ class SettingVC: UIViewController {
     var wc = Webservice.init()
     var gradientLayer: CAGradientLayer!
     
-    var colorSets = [[UIColor(red: 0.11, green: 0.75, blue: 0.92, alpha: 1.00).cgColor, UIColor(red: 0.00, green: 0.07, blue: 1.00, alpha: 1.00).cgColor], [UIColor(red: 0.02, green: 0.36, blue: 0.91, alpha: 1.00).cgColor, UIColor(red: 0.04, green: 0.78, blue: 0.98, alpha: 1.00).cgColor], [UIColor(red: 0.30, green: 0.36, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.02, green: 0.60, blue: 0.95, alpha: 1.00).cgColor],[UIColor(red: 0.11, green: 0.23, blue: 0.87, alpha: 1.00).cgColor,UIColor(red: 0.13, green: 0.62, blue: 0.81, alpha: 1.00).cgColor],[UIColor(red: 0.90, green: 0.01, blue: 0.66, alpha: 1.00).cgColor,UIColor(red: 0.01, green: 0.48, blue: 0.87, alpha: 1.00).cgColor],[UIColor(red: 0.90, green: 0.01, blue: 0.66, alpha: 1.00).cgColor,UIColor(red: 0.01, green: 0.48, blue: 0.87, alpha: 1.00).cgColor],[UIColor(red: 0.02, green: 0.36, blue: 0.91, alpha: 1.00).cgColor,UIColor(red: 0.04, green: 0.78, blue: 0.98, alpha: 1.00).cgColor],[UIColor(red: 0.11, green: 0.75, blue: 0.92, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.07, blue: 1.00, alpha: 1.00).cgColor],[UIColor(red: 0.30, green: 0.36, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.02, green: 0.60, blue: 0.95, alpha: 1.00).cgColor],[UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00).cgColor]]//[[CGColor]]()
+    var colorSets = [[UIColor(red: 0.11, green: 0.75, blue: 0.92, alpha: 1.00).cgColor, UIColor(red: 0.00, green: 0.07, blue: 1.00, alpha: 1.00).cgColor], [UIColor(red: 0.02, green: 0.36, blue: 0.91, alpha: 1.00).cgColor, UIColor(red: 0.04, green: 0.78, blue: 0.98, alpha: 1.00).cgColor], [UIColor(red: 0.30, green: 0.36, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.02, green: 0.60, blue: 0.95, alpha: 1.00).cgColor],[UIColor(red: 0.11, green: 0.23, blue: 0.87, alpha: 1.00).cgColor,UIColor(red: 0.13, green: 0.62, blue: 0.81, alpha: 1.00).cgColor],[UIColor(red: 0.90, green: 0.01, blue: 0.66, alpha: 1.00).cgColor,UIColor(red: 0.01, green: 0.48, blue: 0.87, alpha: 1.00).cgColor],[UIColor(red: 0.90, green: 0.01, blue: 0.66, alpha: 1.00).cgColor,UIColor(red: 0.01, green: 0.48, blue: 0.87, alpha: 1.00).cgColor],[UIColor(red: 0.02, green: 0.36, blue: 0.91, alpha: 1.00).cgColor,UIColor(red: 0.04, green: 0.78, blue: 0.98, alpha: 1.00).cgColor],[UIColor(red: 0.11, green: 0.75, blue: 0.92, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.07, blue: 1.00, alpha: 1.00).cgColor],[UIColor(red: 0.30, green: 0.36, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.02, green: 0.60, blue: 0.95, alpha: 1.00).cgColor],[UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00).cgColor,UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00).cgColor],[UIColor(red: 0.02, green: 0.36, blue: 0.91, alpha: 1.00).cgColor,UIColor(red: 0.04, green: 0.78, blue: 0.98, alpha: 1.00).cgColor]]//[[CGColor]]()
     
     var currentColorSet: Int!
     
@@ -37,9 +37,9 @@ class SettingVC: UIViewController {
     }
     @IBOutlet weak var lblName: UILabel!
     
-    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile"]//,"Articals"
+    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post"]//,"Articals"
     
-    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile"]//,"Articals"
+    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post"]//,"Articals"
     
     let arrSettingList = ["General Setting","Privacy Setting","Privacy Policy","Change Password","Terms and Conditions","Deactivate Account","Logout"]
     
@@ -62,9 +62,10 @@ class SettingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .black)
+        navigationController?.setStatusBar(backgroundColor: .white)
 //        self.tblHeight?.constant = 0
         
         tblMenu.backgroundColor = .clear
@@ -280,21 +281,36 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
         }
         else if indexPath.row == 2{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventlistControllerview")as! EventlistControllerview
-            self.navigationController?.pushViewController(obj, animated: true)
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
         else if indexPath.row == 3 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowseVC")as! BrowseVC
-            self.navigationController?.pushViewController(obj, animated: true)
+//            self.navigationController?.pushViewController(obj, animated: true)
 //            self.modalPresentationStyle = .overFullScreen
 //            self.navigationController?.present(obj, animated: false, completion: nil)
+            
+//            let vc = BrowseVC()
+            if #available(iOS 13.0, *) {
+//                obj.isModalInPresentation = true
+                obj.modalPresentationStyle = .fullScreen
+//                obj.modalTransitionStyle = .partialCurl
+            } else {
+                // Fallback on earlier versions
+            }
+            present(obj, animated: false)
         }
         else if indexPath.row == 4{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController")as! FollowersViewController
-            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            present(obj, animated: false)//pushViewController(obj, animated: true)
         }
         else if indexPath.row == 5{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "MyfriendsController")as! MyfriendsController
-            self.navigationController?.pushViewController(obj, animated: true)
+          //  self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            present(obj, animated: false)//pushViewController(obj, animated: true)
         }
         else if indexPath.row == 6{
            
@@ -310,12 +326,12 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
             }
             else {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "MobileVC")as! MobileVC//TellzmeWalletViewController
-                self.modalPresentationStyle = .fullScreen
-                self.navigationController?.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: true)
+                obj.modalPresentationStyle = .fullScreen
+                present(obj, animated: false, completion: nil)//pushViewController(obj, animated: true)//self.navigationController?
             }
         }
         else if indexPath.row == 7{
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
 //           let obj = storyboard?.instantiateViewController(withIdentifier: "PostViewController")as! PostViewController
 //           let naviget: UINavigationController = UINavigationController(rootViewController: obj)
 //           self.present(naviget, animated: true, completion: nil)
@@ -327,6 +343,12 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
                     UIApplication.shared.open(url)
                 }
             }
+        }
+        else if indexPath.row == 8{
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "SavePostListVC")as! SavePostListVC//TellzmeWalletViewController
+            obj.strUrlType = "Save"
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
 
     }
@@ -355,6 +377,7 @@ extension SettingVC: UITableViewDelegate,UITableViewDataSource{
         }
         else if indexPath.row == 2{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowserCallViewcontroller")as! BrowserCallViewcontroller
+            obj.strtitle = "Privacy Policy"
             obj.privacy = "privacy"
             self.navigationController?.pushViewController(obj, animated: true)
         }
@@ -447,13 +470,15 @@ extension SettingVC: UITableViewDelegate,UITableViewDataSource{
                 (action : UIAlertAction!) -> Void in
                 
             })
-            alertController.addAction(saveAction)
             alertController.addAction(cancelAction)
+            alertController.addAction(saveAction)
+           
             
             self.present(alertController, animated: true, completion: nil)
         }
         else if indexPath.row == 4{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowserCallViewcontroller")as! BrowserCallViewcontroller
+            obj.strtitle = "Terms and Conditions"
             obj.terms = "terms"
             self.navigationController?.pushViewController(obj, animated: true)
         }
@@ -465,6 +490,7 @@ extension SettingVC: UITableViewDelegate,UITableViewDataSource{
             let alert = UIAlertController(title: "Friendzpoint", message: "Are you sure to logout?", preferredStyle: .alert)
             
             let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
+                timer.invalidate()
                 loggdenUser.set(false, forKey: Islogin)
                 loggdenUser.removeObject(forKey: NAMELOgin)
                 loggdenUser.removeObject(forKey: STORETIMELINE)

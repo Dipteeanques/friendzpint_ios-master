@@ -37,7 +37,18 @@ class WithdrawVC: UIViewController {
             showalert(tlt: "", msg: "Please enter number of coin")
         }
         else{
-            Convert_coin_money()
+            
+            if checkwithdraw == "true"{
+                let obj = self.storyboard?.instantiateViewController(withIdentifier: "MoneyVC")as! MoneyVC//TellzmeWalletViewController
+                obj.strtPoint = lblMsg.text ?? ""
+                obj.modalPresentationStyle = .fullScreen
+               // self.navigationController?.pushViewController(obj, animated: true)
+                self.present(obj, animated: false, completion: nil)
+            }
+            else{
+                Convert_coin_money()
+            }
+            
         }
     }
     

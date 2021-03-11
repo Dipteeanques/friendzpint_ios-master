@@ -154,7 +154,7 @@ extension PhotosAlbumViewcontroller: UICollectionViewDelegate,UICollectionViewDa
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "userImageListController")as! userImageListController
         obj.Album_id = arrAlbum[indexPath.row].id
         obj.titleName = arrAlbum[indexPath.row].name
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }

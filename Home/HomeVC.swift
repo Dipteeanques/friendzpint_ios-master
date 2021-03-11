@@ -16,6 +16,7 @@ import Photos
 import MBProgressHUD
 import AJMessage
 import FSPagerView
+import TTTAttributedLabel
 
 class HomeVC: UIViewController {
     @IBOutlet weak var imgLogo: UIImageView!
@@ -27,6 +28,15 @@ class HomeVC: UIViewController {
         return nav
     }
     
+    @IBOutlet weak var ViewNewpost: UIView!{
+        didSet{
+            ViewNewpost.backgroundColor = UIColor.white.withAlphaComponent(0.20)
+            ViewNewpost.layer.cornerRadius = ViewNewpost.frame.height/2
+            ViewNewpost.clipsToBounds = true
+        }
+    }
+    
+    
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var loaderView: UIView!
@@ -36,9 +46,19 @@ class HomeVC: UIViewController {
     var lastIndex_id = Int()
     var timeline_Type_top_bottom = String()
     
+    var hashtagpost = String()
+    var arrUserTag = [userTagpeopelListResponse]()
+    var tagFirstUsername = String()
+    var nameTag = [String]()
+    var userTag = [String]()
+    var strName = String()
+    var strTageName = String()
+    
+    var usernamemention = String()
+    
     @IBOutlet weak var transparentView: UIView!{
         didSet{
-            transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            transparentView.backgroundColor = .clear//UIColor.black.withAlphaComponent(0.5)
         }
     }
     
@@ -57,26 +77,54 @@ class HomeVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+//        ViewNewpost.isHidden = false
+        
+//        UIView.animate(withDuration: 1.0, animations: {
+//              self.ViewNewpost.layer.position.y = 200.0
+//          })
+        
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.GetNewPost), userInfo: nil, repeats: true)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotificationVideo(notification:)), name: Notification.Name("Videopause"), object: nil)
+        
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.appEnteredFromBackground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        
+        currentTabBar?.setAction(atIndex: 0) {
+            //Your statments
+            self.mainTableView.scrollToTop()
+            print("Hello World")
+        }
         setDefault()
+    }
+    
+    
+    @IBAction func btnNewPostAction(_ sender: Any) {
+        timeline_last_first_id = arrFeed[0].id
+        timeline_Type_top_bottom = "Top"
+//        transparentView.backgroundColor = .clear
+//        imgLogo.isHidden = true
+        
+        //getFeed(strPage: "1")
+        FlagData = 1
+        firstTime()
     }
     
     func setDefault(){
         
 
         navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .black)
+//        navigationController?.setStatusBar(backgroundColor: .black)
         mainTableView.translatesAutoresizingMaskIntoConstraints = false 
         mainTableView.isPagingEnabled = true
         mainTableView.contentInsetAdjustmentBehavior = .never
         mainTableView.showsVerticalScrollIndicator = false
         mainTableView.prefetchDataSource = self
         mainTableView.snp.makeConstraints({ make in
-            make.edges.equalTo(self.loaderView)//equalToSuperview()
+            make.edges.equalTo(self.view)//equalToSuperview()
         })
         mainTableView.register(UINib(nibName: "HomeVCCell", bundle: nil), forCellReuseIdentifier: "cell")
         mainTableView.isHidden = true
@@ -118,14 +166,17 @@ class HomeVC: UIViewController {
     }
     
     @IBAction func btnCameraAction(_ sender: Any) {
-        Flag = 2
+        Flag = 0
 //        showPicker()
-        let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        let obj = launchStoryBoard.instantiateViewController(withIdentifier: "NewPostVC") as! NewPostVC
-        obj.check = "camera"
-        obj.modalPresentationStyle = .fullScreen
-        self.navigationController?.present(obj, animated: false, completion: nil)
+//        let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let obj = launchStoryBoard.instantiateViewController(withIdentifier: "NewPostVC") as! NewPostVC
+//        obj.check = "camera"
+//        obj.modalPresentationStyle = .fullScreen
+//        self.navigationController?.present(obj, animated: false, completion: nil)
+//        self.navigationController?.pushViewController(obj, animated: false)
         
+        currentTabBar?.setIndex(2)
+//        NewPostVC.instance()
     }
     
     @IBAction func btnChatAction(_ sender: Any) {
@@ -133,7 +184,7 @@ class HomeVC: UIViewController {
         let obj = launchStoryBoard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
         //self.navigationController?.pushViewController(obj, animated: false)
         obj.modalPresentationStyle = .fullScreen
-        self.navigationController?.present(obj, animated: false, completion: nil)
+        self.present(obj, animated: false, completion: nil)
     }
     
     /*
@@ -146,6 +197,52 @@ class HomeVC: UIViewController {
     }
     */
     
+    
+    @objc func GetNewPost(){
+        
+        if arrFeed.count > 0{
+            
+            
+            
+            let parameters = ["timeline_last_post_id": arrFeed[0].id,
+                              "timeline_type":"Top"] as [String : Any]//"Bottom"
+            let token = loggdenUser.value(forKey: TOKEN)as! String
+            let BEARERTOKEN = BEARER + token
+            let headers: HTTPHeaders = ["Xapi": XAPI,
+                                        "Accept" : ACCEPT,
+                                        "Authorization":BEARERTOKEN]
+            
+//            print("parameters: ",parameters)
+//            print("headers: ",headers)
+//            print("NEWPOST: ",NEWPOST)
+            wc.callSimplewebservice(url: NEWPOST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: NewPostResponseModel?) in
+                //            print("response:",response.re)
+                if sucess {
+                    
+                    //                self.transparentView.backgroundColor = .clear//UIColor.black.withAlphaComponent(0.5)
+                    //                self.imgLogo.isHidden = false
+                    let sucessMy = response?.success
+                    if sucessMy! {
+                        
+                        if response?.data == 0{
+                            self.ViewNewpost.isHidden = true
+                        }
+                        else{
+                            self.ViewNewpost.isHidden = false
+                        }
+                        
+                    }
+                    else {
+                        
+                    }
+                }
+                else {
+                    
+                }
+            }
+        }
+    }
+    
     func firstTime(){
         let parameters = ["timeline_last_post_id": timeline_last_first_id,
                           "timeline_type":timeline_Type_top_bottom] as [String : Any]//"Bottom"
@@ -155,14 +252,14 @@ class HomeVC: UIViewController {
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
         
-//        print("parameters: ",parameters)
-//        print("headers: ",headers)
-//        print("SHOWFEED: ",SHOWFEED)
+        print("parameters: ",parameters)
+        print("headers: ",headers)
+        print("SHOWFEED: ",SHOWFEED)
         wc.callSimplewebservice(url: SHOWFEED, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel?) in
             //            print("response:",response.re)
             if sucess {
                 
-                self.transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+                self.transparentView.backgroundColor = .clear//UIColor.black.withAlphaComponent(0.5)
                 self.imgLogo.isHidden = false
                 let sucessMy = response?.success
                 if sucessMy! {
@@ -180,9 +277,9 @@ class HomeVC: UIViewController {
                     }
                     else{
                         if FlagData == 1{
-                            print("parameters: ",parameters)
-                            print("headers: ",headers)
-                            print("SHOWFEED: ",SHOWFEED)
+//                            print("parameters: ",parameters)
+//                            print("headers: ",headers)
+//                            print("SHOWFEED: ",SHOWFEED)
                             let arr_dict = response!.data!
                             self.loaderView.isHidden = true
                             self.activity.stopAnimating()
@@ -221,7 +318,7 @@ class HomeVC: UIViewController {
                 }
             }
             else {
-                self.transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+                self.transparentView.backgroundColor = .clear//UIColor.black.withAlphaComponent(0.5)
                 self.imgLogo.isHidden = false
                 self.loaderView.isHidden = true
                 self.activity.stopAnimating()
@@ -247,7 +344,7 @@ class HomeVC: UIViewController {
         let attrs2 = [NSAttributedString.Key.font : UIFont(name: "SFUIText-Regular", size: 14)]//systemFont(ofSize: 15)
         let attributedString1 = NSMutableAttributedString(string:normalText1, attributes:attrs2)
         
-        let attrs = [NSAttributedString.Key.font : UIFont(name: "SFUIText-Regular", size: 14)!,NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor] as [NSAttributedString.Key : Any]
+        let attrs = [NSAttributedString.Key.font : UIFont(name: "SFUIText-Regular", size: 14)!,NSAttributedString.Key.foregroundColor: UIColor.white.cgColor] as [NSAttributedString.Key : Any]
         let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
         
         //        let boldString1 = NSMutableAttributedString(string: boldText1, attributes:attrs)
@@ -831,9 +928,38 @@ class HomeVC: UIViewController {
         
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             let cell = mainTableView.cellForRow(at: indexPath) as! HomeVCCell
-            cell.btnStatus.showLoader(userInteraction: true)
-            cell.btnStatus.setTitle("", for: .normal)
+          //  cell.btnStatus.showLoader(userInteraction: true)
             let timeVala_id = arrFeed[indexPath.row].timeline_id
+            
+            if  self.arrFeed[indexPath.row].is_follow == 1{
+                cell.btnStatus.setTitle("Follow", for: .normal)
+//                self.arrFeed[indexPath.row].is_follow = 1
+                for i in 0...(self.arrFeed.count-1){
+                    if self.arrFeed[i].timeline_id == timeVala_id{
+                        self.arrFeed[i].is_follow = 0
+                    }
+                }
+            }
+            else{
+                cell.btnStatus.setTitle("Unfollow", for: .normal)//Unfollow
+//                self.arrFeed[indexPath.row].is_follow = 0
+                
+                for i in 0...(self.arrFeed.count-1){
+                    if self.arrFeed[i].timeline_id == timeVala_id{
+                        self.arrFeed[i].is_follow = 1
+                    }
+                }
+            }
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.mainTableView.beginUpdates()
+                self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                self.mainTableView.endUpdates()
+               
+//            }
+            
+//            cell.btnStatus.setTitle("", for: .normal)
+            
             //                self.arrFeed.remove(at: indexPath.row)
             //                self.mainTableView.deleteRows(at: [indexPath], with: .fade)
             
@@ -849,31 +975,26 @@ class HomeVC: UIViewController {
                     let suc = response?.success
                     if suc! {
                         if response?.followed == true{
-                            cell.btnStatus.setTitle("Unfollow", for: .normal)
-                            cell.btnStatus.tintColor = .ButtonTextColor
-                            for i in 0...(self.arrFeed.count-1){
-                                if self.arrFeed[i].timeline_id == timeVala_id{
-                                    self.arrFeed[i].is_follow = 1
-                                }
-                            }
-                            cell.btnStatus.hideLoader()
+//                            cell.btnStatus.setTitle("Unfollow", for: .normal)
+                           // cell.btnStatus.tintColor = .ButtonTextColor
+//                            for i in 0...(self.arrFeed.count-1){
+//                                if self.arrFeed[i].timeline_id == timeVala_id{
+//                                    self.arrFeed[i].is_follow = 1
+//                                }
+//                            }
+                          //  cell.btnStatus.hideLoader()
                         }
                         else{
-                            cell.btnStatus.setTitle("Follow", for: .normal)
-                            cell.btnStatus.tintColor = .Blue
-                            for i in 0...(self.arrFeed.count-1){
-                                if self.arrFeed[i].timeline_id == timeVala_id{
-                                    self.arrFeed[i].is_follow = 0
-                                }
-                            }
-                            cell.btnStatus.hideLoader()
+                           // cell.btnStatus.setTitle("Follow", for: .normal)
+                            //cell.btnStatus.tintColor = .Blue
+//                            for i in 0...(self.arrFeed.count-1){
+//                                if self.arrFeed[i].timeline_id == timeVala_id{
+//                                    self.arrFeed[i].is_follow = 0
+//                                }
+//                            }
+                            //cell.btnStatus.hideLoader()
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            self.mainTableView.beginUpdates()
-                            self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-                            self.mainTableView.endUpdates()
-                           
-                        }
+
                     }
                 }
             }
@@ -939,7 +1060,7 @@ class HomeVC: UIViewController {
     }
 }
 
-extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching{
+extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching,TTTAttributedLabelDelegate{
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         
     }
@@ -952,11 +1073,11 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
     @IBAction func btnImageAction(_ sender: UIButton) {
         print("Image click...")
         let arrImages = arrFeed[sender.tag].images
-        
-
+        pausePlayeVideos()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PreviewVC")as! PreviewVC
       
-        self.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .fullScreen
         pausePlayeVideos()
         let typeFeed = arrFeed[sender.tag].type
         print("typeFeed: ",typeFeed)
@@ -968,14 +1089,14 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 obj.source_url = source_url
             }
             //self.navigationController?.pushViewController(obj, animated: true)
-            self.navigationController?.present(obj, animated: false, completion: nil)
+            self.present(obj, animated: false, completion: nil)
             break
             
         case "multi_image" :
             obj.images = arrFeed[sender.tag].images
             obj.type = typeFeed
 //            self.navigationController?.pushViewController(obj, animated: true)
-            self.navigationController?.present(obj, animated: false, completion: nil)
+            self.present(obj, animated: false, completion: nil)
             break
             
         case "video":
@@ -986,7 +1107,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
             }
             obj.video_poster = arrFeed[sender.tag].video_poster
 //            self.navigationController?.pushViewController(obj, animated: true)
-            self.navigationController?.present(obj, animated: false, completion: nil)
+            self.present(obj, animated: false, completion: nil)
             break
         default:
             break
@@ -994,47 +1115,242 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         
     }
     
+//    @objc func methodOfReceivedNotificationVideo(notification: Notification) {
+//
+//    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeVCCell
+        
+        
+        
+//        cell.btnStatus.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
+        let selectedUsername = arrFeed[indexPath.row].username
+        var name = arrFeed[indexPath.row].users_name
+        name = name.capitalizingFirstLetter()
+        cell.lblUserName.text = name
+        let shared_person_name = arrFeed[indexPath.row].shared_person_name
+        let shared_username = arrFeed[indexPath.row].shared_username
+        if shared_person_name.count == 0 {
+            arrUserTag = arrFeed[indexPath.row].users_tagged
+            if arrUserTag.count == 1 {
+                let strName = arrUserTag[0].name
+                tagFirstUsername = arrUserTag[0].username
+                
+                let string = "\(name) with \(strName)"
+                let nsString = string as NSString
+                
+                let paragraphStyle = NSMutableParagraphStyle()
+                //UIFont.systemFont(ofSize: 15)
+                let fullAttributedString = NSAttributedString(string:string, attributes: [
+                    NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont(name: "SFUIText-Medium", size: 17)!,
+                    NSAttributedString.Key.foregroundColor: UIColor.white.cgColor,
+                    ])
+               // cell.lblUserName.text = name//fullAttributedString;
+                
+                cell.lblTag.handleMentionTap { mentiontag in
+                    self.usernamemention = strName
+                    self.getMentionPost()
+                }
+                
+                cell.lblTag.text =  "@" + strName.decodeEmoji
+                cell.lblTag.enabledTypes = [.mention, .hashtag, .url]
+
+                cell.lblUserName.textColor = UIColor.white;
+//                cell.lblUserName.delegate = self;
+                
+                cell.lbldetailsBottom.constant = 8
+                cell.lblTagBottom.constant = 8
+            }
+            else if arrUserTag.count >= 2 {
+                for strNamegat in arrUserTag {
+                    let name = strNamegat.name
+                    let tagUsername = strNamegat.username
+                    nameTag.append(name)
+                    userTag.append(tagUsername)
+                    self.strTageName = nameTag.joined(separator: ",")
+                    strName = nameTag[0]
+                    tagFirstUsername = userTag[0]
+                }
+                
+                var strmention = String()
+                for index in 0...arrUserTag.count - 1{
+                    print("\(index)")
+                    strmention = strmention.appending("@" + nameTag[index] + ",")
+//                    if index == arrUserTag.count - 1{
+//                        strmention = strmention.appending("@" + nameTag[index] )
+//                    }
+//                    else{
+//                        strmention = strmention.appending("@" + nameTag[index] + ", ")
+//                    }
+                }
+                
+            
+                let countOther = arrUserTag.count - 1
+                let strCount = String(countOther)
+                let FinalCount = strCount + " others."
+                
+                let strTC = strName
+                let strPP = FinalCount
+                
+                let string = "\(name) with \(strTC) and \(strPP)"
+                let nsString = string as NSString
+                
+                let paragraphStyle = NSMutableParagraphStyle()
+                
+                let fullAttributedString = NSAttributedString(string:string, attributes: [
+                    NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont(name: "SFUIText-Medium", size: 17)!,
+                    NSAttributedString.Key.foregroundColor: UIColor.white.cgColor,
+                    ])
+//                cell.lblUserName.attributedText = fullAttributedString;
+                
+                
+                cell.lblTag.handleMentionTap { mentiontag in
+                    self.usernamemention = mentiontag
+                    self.getMentionPost()
+                }
+                
+//                let strmention1 = String(strmention.dropLast())
+                
+                strmention.remove(at: strmention.index(before: strmention.endIndex))
+                
+                cell.lblTag.text =  strmention.decodeEmoji//"@" + strTC.decodeEmoji + "@" + strPP.decodeEmoji
+                cell.lblTag.enabledTypes = [.mention, .hashtag, .url]
+                
+
+                cell.lblUserName.textColor = UIColor.white;
+//                cell.lblUserName.delegate = self;
+                
+                cell.lbldetailsBottom.constant = 8
+                cell.lblTagBottom.constant = 8
+            }
+            else {
+                
+                cell.lblTag.text = ""
+                cell.lbldetailsBottom.constant = -8
+                cell.lblTagBottom.constant = -8
+                
+            }
+
+        }
+        else {
+            let string = "\(name) shared \(shared_person_name) 's post"
+            let nsString = string as NSString
+
+            let paragraphStyle = NSMutableParagraphStyle()
+
+            let fullAttributedString = NSAttributedString(string:string, attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.font : UIFont(name: "SFUIText-Regular", size: 15)!,
+                NSAttributedString.Key.foregroundColor: UIColor.white.cgColor,
+            ])
+           // cell.lblUserName.attributedText = fullAttributedString;
+
+            let rangeMY = nsString.range(of: name)
+            let rangeTC = nsString.range(of: shared_person_name)
+
+            let MyLinkAttributes: [String: Any] = [
+                NSAttributedString.Key.foregroundColor.rawValue: UIColor.white.cgColor,
+                NSAttributedString.Key.underlineStyle.rawValue: false,
+            ]
+
+            let ppLinkAttributes: [String: Any] = [
+                NSAttributedString.Key.foregroundColor.rawValue: UIColor.white.cgColor,
+                NSAttributedString.Key.underlineStyle.rawValue: false,
+            ]
+//            cell.lblUserName.activeLinkAttributes = MyLinkAttributes
+//            cell.lblUserName.linkAttributes = ppLinkAttributes
+//            cell.lblUserName.addLink(toPhoneNumber: selectedUsername, with: rangeMY)
+//            cell.lblUserName.addLink(toPhoneNumber: shared_username, with: rangeTC)
+//            cell.lblUserName.textColor = UIColor.white;
+//            cell.lblUserName.delegate = self;
+            
+            let normalText =  " shared \(shared_person_name) 's post"
+
+            let boldText  = name
+
+            let attrs1 = [NSAttributedString.Key.font : UIFont(name: "SFUIText-Regular", size: 14)!]
+            let attributedString = NSMutableAttributedString(string:normalText, attributes:attrs1)
+
+            let attrs = [NSAttributedString.Key.font : UIFont(name: "SFUIText-Medium", size: 17)!]
+            let boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+
+            boldString.append(attributedString)
+          //  cell.lblUserName.attributedText = boldString
+
+            cell.lblTag.handleMentionTap { mentiontag in
+                self.usernamemention = mentiontag
+                self.getMentionPost()
+            }
+            
+            cell.lblTag.text =  "@" + shared_person_name.decodeEmoji
+            cell.lblTag.enabledTypes = [.mention, .hashtag, .url]
+            
+            if shared_person_name.count == 0{
+                cell.lblTag.text = ""
+                cell.lbldetailsBottom.constant = -8
+                cell.lblTagBottom.constant = -8
+            }
+            else{
+                cell.lbldetailsBottom.constant = 8
+                cell.lblTagBottom.constant = 8
+            }
+            
+            
+        }
+        
+//        cell.lblUserName.textColor = .white
        
+        
         let myprofile = loggdenUser.value(forKey: USERNAME)as! String
         
         if arrFeed[indexPath.row].username == myprofile{
             cell.btnStatus.isHidden = true
+            cell.dotView.isHidden = true
+            cell.btnStatusWidth.constant =  0
         }
         else{
             cell.btnStatus.isHidden = false
+            cell.dotView.isHidden = false
+            cell.btnStatusWidth.constant =  45
         }
         
         
-        cell.btnStatus.backgroundColor = .ButtonColor
+       // cell.btnStatus.backgroundColor = .ButtonColor
         let is_follow = arrFeed[indexPath.row].is_follow
         print("is_follow",is_follow)
         if is_follow == 1 {
 //            cell.btnStatus = LoadingButton(text: "Unfollow", textColor: .ButtonTextColor, bgColor: .ButtonColor)
 //            cell.btnStatus.isSelected = true
-            cell.btnStatus.tintColor = .ButtonTextColor
+            //cell.btnStatus.tintColor = .ButtonTextColor
 //            cell.btnStatus.setImage(UIImage(named: "Unfollow"), for: .normal)
             cell.btnStatus.setTitle("Unfollow", for: .normal)
         }
         else if is_follow == 0{
 //            cell.btnStatus.isSelected = false
 //            cell.btnStatus = LoadingButton(text: "Follow", textColor: .Blue, bgColor: .ButtonColor)
-            cell.btnStatus.tintColor = .Blue
+            //cell.btnStatus.tintColor = .Blue
             cell.btnStatus.setTitle("Follow", for: .normal)
            // cell.btnStatus.setImage(UIImage(named: "Follow"), for: .normal)
         }
         
-        if arrFeed[indexPath.row].is_users_shared == 1{
-            cell.btnShare.isHidden = false
-        }
-        else{
-            cell.btnShare.isHidden = true
-        }
+//        if arrFeed[indexPath.row].is_users_shared == 1{
+////            cell.btnShare.isHidden = false
+//            cell.btnShare.isSelected = true
+//            cell.btnShare.setImage(UIImage(named: "sendfill"), for: .normal)
+//        }
+//        else{
+////            cell.btnShare.isHidden = true
+//            cell.btnShare.isSelected = false
+//            cell.btnShare.setImage(UIImage(named: "send"), for: .normal)
+//        }
         
         cell.arrFeed1 = arrFeed
         cell.btnChat.tag = indexPath.row
         cell.btnChat.addTarget(self, action: #selector(btnShowmoreComment(_:)), for: UIControl.Event.touchUpInside)
+        
+        
+        cell.btnmore.tag = indexPath.row
+        cell.btnmore.addTarget(self, action: #selector(btnMoreAction(_:)), for: UIControl.Event.touchUpInside)
 //
         cell.btnLikeClick.tag = indexPath.row
         cell.btnLikeClick.addTarget(self, action: #selector(btnTapLikes(_:)), for: UIControl.Event.touchUpInside)
@@ -1073,7 +1389,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 //        cell.btnLikePeople.addTarget(self, action: #selector(btnLikesAction(_:)), for: UIControl.Event.touchUpInside)
 
             let typeFeed = arrFeed[indexPath.row].type
-            cell.lblUserName.text = arrFeed[indexPath.row].users_name
+//            cell.lblUserName.text = arrFeed[indexPath.row].users_name
         
         cell.imgProfile.kf.setImage(with: URL(string: arrFeed[indexPath.row].users_avatar),placeholder:UIImage(named: "Placeholder"))
       
@@ -1091,57 +1407,109 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         let datavala = Date().timeAgoSinceDate(date, numericDates: true)
         cell.lblTime.text = datavala
         cell.lblLocation.text =  arrFeed[indexPath.row].location
+        
         if arrFeed[indexPath.row].location == ""{
-            cell.btnLocationWidth.constant = 0
+            
+            cell.lblTimeLeading.constant = 0
         }
         else{
-            cell.btnLocationWidth.constant = 13
+            cell.lblTimeLeading.constant = 10
         }
+        
+//        if arrFeed[indexPath.row].location == ""{
+//            cell.btnLocationWidth.constant =  0
+//            cell.btnTimerLeading.constant = 0
+//        }
+//        else{
+//            cell.btnLocationWidth.constant = 13
+//            cell.btnTimerLeading.constant = 15
+//        }
         
         let totalLike = arrFeed[indexPath.row].users_liked_count
-//        let strLikeTotal = String(totalLike) + " Like"
-        if totalLike == 0 {
-            cell.lblLikeDescription.isHidden = true
-            cell.imgWidth1.constant = 0
-            cell.imgWidth2.constant = 0
-            cell.imgWidth3.constant = 0
-            cell.imgWidth4.constant = 0
-            cell.bottomViewHeight.constant = 110
-            cell.btnLikeClick.isHidden = true
-        }
-        else{
-            cell.lblLikeDescription.isHidden = false
-            cell.imgWidth1.constant = 25
-            cell.imgWidth2.constant = 25
-            cell.imgWidth3.constant = 25
-            cell.imgWidth4.constant = 25
-            cell.bottomViewHeight.constant = 150
-            cell.btnLikeClick.isHidden = false
-            
-            if totalLike == 1{
-                cell.imgWidth1.constant = 25
-                cell.imgWidth2.constant = 0
-                cell.imgWidth3.constant = 0
-                cell.imgWidth4.constant = 0
-            }
-            else if totalLike == 2{
-                cell.imgWidth1.constant = 25
-                cell.imgWidth2.constant = 25
-                cell.imgWidth3.constant = 0
-                cell.imgWidth4.constant = 0
-            }
-            else if totalLike == 3{
-                cell.imgWidth1.constant = 25
-                cell.imgWidth2.constant = 25
-                cell.imgWidth3.constant = 25
-                cell.imgWidth4.constant = 0
-            }
-
-        }
+////        let strLikeTotal = String(totalLike) + " Like"
+//        if totalLike == 0 {
+//            cell.lblLikeDescription.isHidden = true
+//            cell.imgWidth1.constant = 0
+//            cell.imgWidth2.constant = 0
+//            cell.imgWidth3.constant = 0
+//            cell.imgWidth4.constant = 0
+////            cell.bottomViewHeight.constant = 110
+////            cell.viewtopConstraint.constant = -8
+//            cell.likeViewHeight.constant = 0
+//            cell.btnLikeClick.isHidden = true
+//        }
+//        else{
+//            
+//            let arrUserLiked = arrFeed[indexPath.row].users_liked
+//            
+////            cell.viewtopConstraint.constant = 8
+//            cell.likeViewHeight.constant = 25
+//            cell.lblLikeDescription.isHidden = false
+//            cell.imgWidth1.constant = 25
+//            cell.imgWidth2.constant = 25
+//            cell.imgWidth3.constant = 25
+//            cell.imgWidth4.constant = 25
+////            cell.bottomViewHeight.constant = 150
+//            cell.btnLikeClick.isHidden = false
+//            
+//            if totalLike == 1{
+//                
+//                if arrUserLiked.count >= 1 {
+//                    cell.img1.kf.setImage(with: URL(string: arrUserLiked[0]),placeholder:UIImage(named: "Placeholder"))
+//                }
+//    
+//                cell.imgWidth1.constant = 25
+//                cell.imgWidth2.constant = 0
+//                cell.imgWidth3.constant = 0
+//                cell.imgWidth4.constant = 0
+//            }
+//            else if totalLike == 2{
+//                
+//                if arrUserLiked.count >= 2 {
+//                    cell.img1.kf.setImage(with: URL(string: arrUserLiked[0]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img2.kf.setImage(with: URL(string: arrUserLiked[1]),placeholder:UIImage(named: "Placeholder"))
+//                }
+//                
+//                cell.imgWidth1.constant = 25
+//                cell.imgWidth2.constant = 25
+//                cell.imgWidth3.constant = 0
+//                cell.imgWidth4.constant = 0
+//            }
+//            else if totalLike == 3{
+//                
+//                if arrUserLiked.count >= 3 {
+//                    cell.img1.kf.setImage(with: URL(string: arrUserLiked[0]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img2.kf.setImage(with: URL(string: arrUserLiked[1]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img3.kf.setImage(with: URL(string: arrUserLiked[2]),placeholder:UIImage(named: "Placeholder"))
+//                }
+//                
+//                cell.imgWidth1.constant = 25
+//                cell.imgWidth2.constant = 25
+//                cell.imgWidth3.constant = 25
+//                cell.imgWidth4.constant = 0
+//            }
+//            else if totalLike == 4{
+//                
+//                if arrUserLiked.count >= 4 {
+//                    cell.img1.kf.setImage(with: URL(string: arrUserLiked[0]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img2.kf.setImage(with: URL(string: arrUserLiked[1]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img3.kf.setImage(with: URL(string: arrUserLiked[2]),placeholder:UIImage(named: "Placeholder"))
+//                    cell.img4.kf.setImage(with: URL(string: arrUserLiked[3]),placeholder:UIImage(named: "Placeholder"))
+//                }
+//                
+//                cell.imgWidth1.constant = 25
+//                cell.imgWidth2.constant = 25
+//                cell.imgWidth3.constant = 25
+//                cell.imgWidth4.constant = 25
+//            }
+//            
+//
+//        }
         
-        cell.lblLikeDescription.attributedText = setLike(likedcount: String(totalLike))//boldString
+//        cell.lblLikeDescription.attributedText = setLike(likedcount: String(totalLike))//boldString
 //        cell.btnImgLike.setTitle(strLikeTotal, for: .normal)
-        
+        cell.lblLikeCount.text = String(totalLike)
+        cell.lblDislikeCount.text = String(arrFeed[indexPath.row].users_disliked_count)
         
         let is_liked = arrFeed[indexPath.row].is_liked
         if is_liked == 1 {
@@ -1150,7 +1518,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
             
             let image = UIImage(named: "likefill")?.withRenderingMode(.alwaysTemplate)
             cell.btnLike.setImage(image, for: .normal)
-            cell.btnLike.tintColor = UIColor.red
+            cell.btnLike.tintColor = UIColor(red: 0.93, green: 0.29, blue: 0.34, alpha: 1.00)//UIColor.red
         }
         else {
             cell.btnLike.isSelected = false
@@ -1161,17 +1529,77 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         let is_disliked = arrFeed[indexPath.row].is_disliked
         if is_disliked == 1 {
             cell.btnDisLike.isSelected = true
-            cell.btnDisLike.setImage(UIImage(named: "dislikefill"), for: .normal)
+            let image = UIImage(named: "dislikefill")?.withRenderingMode(.alwaysTemplate)
+            cell.btnDisLike.setImage(image, for: .normal)
         }
         else {
             cell.btnDisLike.isSelected = false
-            cell.btnDisLike.setImage(UIImage(named: "dislike1"), for: .normal)
+            let image = UIImage(named: "dislike1")?.withRenderingMode(.alwaysTemplate)
+            cell.btnDisLike.setImage(image, for: .normal)
         }
+
+
+        
+        cell.lblDetails.handleHashtagTap { hashtag in
+            self.hashtagpost = hashtag
+            self.getHashtagPost()
+        }
+        
+        
+        //MARK: - Description
+        let strdescription = arrFeed[indexPath.row].description
+        if strdescription.count == 0 {
+//            lbltop.constant = 0
+//            imgtopconstraint.constant = 0
+            cell.btnmore.isHidden = true
+            cell.lblDetails.text = ""
+            cell.btnmoreHeight.constant = 0
+            cell.lbldetailsBottom.constant = -8
+            cell.lblDetailsTop.constant = 0
+//            cell.lblDetailHeight.constant = 0
+            cell.lblDetails.isHidden = true
+//            cell.lblDetailHeight.constant = 0
+        }
+        else {
+//            lbltop.constant = 8
+//            imgtopconstraint.constant = 8
+//            cell.btnmore.isHidden =  false
+            cell.lblDetails.numberOfLines = 1
+//            cell.lblDetailHeight.constant = 17
+            cell.btnmoreHeight.constant = 16
+            cell.lbldetailsBottom.constant = 8
+            cell.lblDetailsTop.constant = 8
+            cell.lblDetails.isHidden = false
+            cell.lblDetails.text = strdescription.decodeEmoji
+            cell.lblDetails.enabledTypes = [.mention, .hashtag, .url]
+            cell.lblDetails.hashtagColor = .white
+            cell.lblDetails.hashtagSelectedColor = .blue
+            
+            
+            let maxSize = CGSize(width: cell.lblDetails.frame.size.width, height: CGFloat(MAXFLOAT))
+
+            let labelRect = cell.lblDetails.text?.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [
+                NSAttributedString.Key.font: cell.lblDetails.font
+            ], context: nil)
+
+            print("size \(NSCoder.string(for: labelRect!.size))")
+            
+            if (labelRect?.size.height)! >= 16{
+                cell.btnmore.isHidden = false
+            }
+            else{
+                cell.btnmore.isHidden = true
+            }
+
+        }
+        
+        
         
             print("typeFeed: ",typeFeed)
             switch typeFeed {
             case "image":
 //
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
 //                cell.btnclick.isHidden = false
                 cell.countView.isHidden = true
 //                cell.pagerView.isHidden = true
@@ -1186,12 +1614,25 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 
                 let arrImages = arrFeed[indexPath.row].images
 
+                if arrImages.count == 0{
+                    cell.imageviewBackground.image = UIImage(named: "Placeholder")
+                    cell.imageview.image = UIImage(named: "Placeholder")
+                }
+                
                 for item in arrImages {
                     let source_url = item
-                    cell.imageviewBackground.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
-//                    blurImage(img: cell.imageviewBackground)
                     
-                    cell.imageview.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
+                    if source_url.isEmpty{
+                        cell.imageviewBackground.image = UIImage(named: "Placeholder")
+                        cell.imageview.image = UIImage(named: "Placeholder")
+                    }
+                    else{
+                        cell.imageviewBackground.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
+    //                    blurImage(img: cell.imageviewBackground)
+                        
+                        cell.imageview.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
+                    }
+
                 }
                 cell.btnClick.isHidden = false
             
@@ -1199,6 +1640,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 
             case "multi_image" :
 
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
                 cell.btnClick.isHidden = true
                 cell.countView.isHidden = false
                 
@@ -1260,12 +1702,12 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.loaderView.frame.height
+        return self.view.frame.height
 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.loaderView.frame.height
+        return self.view.frame.height
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -1292,6 +1734,59 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         ASVideoPlayerController.sharedVideoPlayer.pausePlayeVideosFor(tableView: mainTableView, appEnteredFromBackground: true)
     }
     
+    func getMentionPost(){
+        
+        let username = self.usernamemention
+//            let type = arrFeed[sender.tag].type
+//            let group_Type = arrFeed[sender.tag].groups_type
+//            let status_group = arrFeed[sender.tag].groups_status
+//            let pageAdmin = arrFeed[sender.tag].is_page_admin
+//            let event_type = arrFeed[sender.tag].event_type
+//            let invite_privacy = arrFeed[sender.tag].invite_privacy
+//            let post_privacy = arrFeed[sender.tag].post_privacy
+//            let member_privacy = arrFeed[sender.tag].member_privacy
+//            let is_guest = arrFeed[sender.tag].is_guest
+            let myprofile = loggdenUser.value(forKey: USERNAME)as! String
+            
+            
+//            if type == "user" {
+                if myprofile == username {
+    //                currentTabBar?.setIndex(4)
+                    
+                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+    //                loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+    //                obj.strUserName = username
+                    //self.navigationController?.pushViewController(obj, animated: false)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
+                }
+                else {
+                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
+                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                    loggdenUser.set(username, forKey: UNAME)
+                    obj.strUserName = username
+//                    self.navigationController?.pushViewController(obj, animated: false)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
+                }
+//            }
+
+    }
+    
+    func getHashtagPost(){
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
+//        obj.hashtagpost = hashtagpost
+//        self.navigationController?.pushViewController(obj, animated: false)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowseVC")as! BrowseVC
+        obj.hashtagpost = hashtagpost
+        obj.strUrlType = "#"
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
+    }
 }
 
 extension HomeVC{
@@ -1309,7 +1804,8 @@ extension HomeVC{
 //            obj.passappDel = "passappDel"
            // self.present(naviget, animated: true, completion: nil)
 //            self.navigationController?.pushViewController(obj, animated: false)
-            self.navigationController?.present(naviget, animated: false, completion: nil)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(naviget, animated: false, completion: nil)
         }
     }
     
@@ -1318,7 +1814,8 @@ extension HomeVC{
         let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
         let obj = launchStoryBoard.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
         obj.post_id = arrFeed[sender.tag].id
-        self.navigationController?.pushViewController(obj, animated: false)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
     }
     
 //    func animate(newImage: UIImage, newScale: CGFloat) {
@@ -1336,6 +1833,15 @@ extension HomeVC{
 //      }
     
     
+    @IBAction func btnMoreAction(_ sender: UIButton) {
+        if let indexPath = self.mainTableView.indexPathForView(sender) {
+
+            let cellfeed = mainTableView.cellForRow(at: indexPath) as! HomeVCCell
+            cellfeed.lblDetails.numberOfLines = 0
+            cellfeed.lblDetails.sizeToFit()
+            cellfeed.btnmore.isHidden = true
+        }
+    }
     
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
@@ -1384,7 +1890,9 @@ extension HomeVC{
 
                               
                                 
-                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+//                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+                                
+                                cellfeed.lblLikeCount.text = likeCount
                                 
 //                                self.tblFeed.beginUpdates()
                                
@@ -1412,7 +1920,8 @@ extension HomeVC{
                                 let likeCount = response?.likecount
 //                                let strLikeTotal = likeCount! + " Like"
 //                                cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+//                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+                                cellfeed.lblLikeCount.text = likeCount
 
 //                                self.tblFeed.beginUpdates()
                                
@@ -1440,7 +1949,7 @@ extension HomeVC{
                         cellfeed.btnLike.transform = cellfeed.btnLike.transform.scaledBy(x: 1.3, y: 1.3)
                         let image = UIImage(named: "likefill")?.withRenderingMode(.alwaysTemplate)
                         cellfeed.btnLike.setImage(image, for: .normal)
-                        cellfeed.btnLike.tintColor = UIColor.red
+                        cellfeed.btnLike.tintColor = UIColor(red: 0.93, green: 0.29, blue: 0.34, alpha: 1.00)//UIColor.red
                         
                         }, completion: { _ in
                           UIView.animate(withDuration: 0.1, animations: {
@@ -1463,7 +1972,8 @@ extension HomeVC{
 //                                let strLikeTotal = likeCount! + " Like"
 //                                cellfeed.animatedview.isHidden = false
 //                                cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+//                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+                                cellfeed.lblLikeCount.text = likeCount
 //                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
 
 //                                self.tblFeed.beginUpdates()
@@ -1487,7 +1997,8 @@ extension HomeVC{
 //                                let strLikeTotal = likeCount! + " Like"
 //                                cellfeed.animatedview.isHidden = false
 //                                cellfeed.btnImgLike.setTitle(strLikeTotal, for: .normal)
-                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+//                                cellfeed.lblLikeDescription.attributedText = self.setLike(likedcount:likeCount ?? "0")
+                                cellfeed.lblLikeCount.text = likeCount
 //                                cellfeed.lbl_coininfo.text = "+" + String(response?.coin ?? "0") + " Coin"
 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -1533,9 +2044,10 @@ extension HomeVC{
                                         }
                                         return mutableBook
                                     }
-//                                    let likeCount = response?.dislikecount
+                                    let likeCount = response?.dislikecount
 //                                    let strLikeTotal = likeCount! + " Dislike"
 //                                    cellfeed.dislikeCount.setTitle(strLikeTotal, for: .normal)
+                                    cellfeed.lblDislikeCount.text = likeCount
                                     self.mainTableView.beginUpdates()
                                     self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                                     self.mainTableView.endUpdates()
@@ -1549,7 +2061,8 @@ extension HomeVC{
                                         }
                                         return mutableBook
                                     }
-//                                    let likeCount = response?.dislikecount
+                                    let likeCount = response?.dislikecount
+                                    cellfeed.lblDislikeCount.text = likeCount
 //                                    let strLikeTotal = likeCount! + " Dislike"
 //                                    cellfeed.dislikeCount.setTitle(strLikeTotal, for: .normal)
                                     self.mainTableView.beginUpdates()
@@ -1572,7 +2085,8 @@ extension HomeVC{
                                         }
                                         return mutableBook
                                     }
-//                                    let likeCount = response?.dislikecount
+                                    let likeCount = response?.dislikecount
+                                    cellfeed.lblDislikeCount.text = likeCount
 //                                    let strLikeTotal = likeCount! + " Dislike"
 //                                    cellfeed.dislikeCount.setTitle(strLikeTotal, for: .normal)
                                     self.mainTableView.beginUpdates()
@@ -1587,7 +2101,8 @@ extension HomeVC{
                                         }
                                         return mutableBook
                                     }
-//                                    let likeCount = response?.dislikecount
+                                    let likeCount = response?.dislikecount
+                                    cellfeed.lblDislikeCount.text = likeCount
 //                                    let strLikeTotal = likeCount! + " Dislike"
 //                                    cellfeed.dislikeCount.setTitle(strLikeTotal, for: .normal)
                                     self.mainTableView.beginUpdates()
@@ -1602,33 +2117,21 @@ extension HomeVC{
     }
     
     @IBAction func btnShareAction(_ sender: UIButton) {
-        let parameters = ["post_id":self.post_Id] as [String : Any]
-        let token = loggdenUser.value(forKey: TOKEN)as! String
-        let BEARERTOKEN = BEARER + token
-        let headers: HTTPHeaders = ["Xapi": XAPI,
-                                    "Accept" : ACCEPT,
-                                    "Authorization":BEARERTOKEN]
-        self.wc.callSimplewebservice(url: SHAREPOST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: SharePostResponseModel?) in
-            if sucess {
-                let shareSucess = response?.success
-                let message = response?.message
-                if shareSucess! {
-                    self.arrFeed = self.arrFeed.map{
-                        var mutableBook = $0
-                        if $0.id == self.post_Id {
-                            mutableBook.is_users_shared = 1
-                        }
-                        return mutableBook
-                    }
-                    print(response)
-                    AJMessage.show(title: "", message: "post is successfully shared",position:.top).onHide {_ in
-                        print("did dissmiss")
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PostCreat"), object: nil)
-                    self.mainTableView.scrollToTop()
-                }
+        
+        if let indexPath = self.mainTableView.indexPathForView(sender) {
+            //            let cellfeed = mainTableView.cellForRow(at: indexPath) as! HomeVCCell
+            //            post_Id = arrFeed[indexPath.row].id
+            
+            let text = arrFeed[indexPath.row].post_link ///"This is some text that I want to share."
+            
+            // set up activity view controller
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that
+            // present the view controller
+            self.present(activityViewController, animated: true, completion: nil)
             }
-        }
+        
     }
     
     @IBAction func btnProfileAction(_ sender: UIButton){
@@ -1654,18 +2157,23 @@ extension HomeVC{
     //                loggdenUser.set(username, forKey: FRIENDSUSERNAME)
     //                obj.strUserName = username
                     //self.navigationController?.pushViewController(obj, animated: false)
-                    self.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(obj, animated: false, completion: nil)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
                 }
                 else {
-                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
-                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
-                    loggdenUser.set(username, forKey: UNAME)
-                    obj.strUserName = username
-//                    self.navigationController?.pushViewController(obj, animated: false)
-                    self.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(obj, animated: false, completion: nil)
+//                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
+//                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+//                    loggdenUser.set(username, forKey: UNAME)
+//                    obj.strUserName = username
+////                    self.navigationController?.pushViewController(obj, animated: false)
+//                    obj.modalPresentationStyle = .fullScreen
+//                    self.present(obj, animated: false, completion: nil)
+                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+                    obj.strUser = username
+//                    self.navigationController?.pushViewController(obj, animated: true)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
                 }
 //            }
 
@@ -1955,3 +2463,15 @@ extension UIViewController{
 
 var FlagData = 0
 
+var timer = Timer()
+
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}
