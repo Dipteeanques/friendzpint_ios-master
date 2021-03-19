@@ -50,7 +50,8 @@ let USERNAMEWISESEARCH          =             Domain + "/usernamewiseSearch"
 let POSTBYID                    =             Domain + "/postbyid"
 let POSTLISKELIST               =             Domain + "/postLikeList"
 let SAVEPOSTList                =             Domain + "/saved?type=ios"
-
+let IMPRESSIONCLICKPOST         =             Domain + "/ImpressionClickPost"
+let VIEWCOUNTER                 =             Domain + "/postViewCounter"
 
 
 let LIKECOMMENT                 =             Domain + "/likeComment"
@@ -158,7 +159,7 @@ let GET_MEMBERS_INVITE          =             Domain + "/get-members-invite"
 let ADD_EVENT_MEMBERS           =             Domain + "/add-event-members"
 var EVENT_SETTINGS_SAVE         =             Domain + "/event-settings-save"
 var JOIN_UNJOIN_EVENT           =             Domain + "/join-unjoin-event"
-
+let DISCOVEREVENT               =             Domain + "/events/discovery"
 
 //MARK: - Album photos
 let ALBUM_MYALBUMLIST           =             Domain + "/album/myalbumList"

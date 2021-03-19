@@ -16,18 +16,23 @@ class RedeemController: UIViewController {
     var wc = Webservice.init()
     var arrList = [DatumRedeem]()
     
+    var refreshControl = UIRefreshControl()
+    var spinner = UIActivityIndicatorView()
+    
+    var pagecount = 1
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tblView.delegate = self
         tblView.dataSource = self
-        myRedeem()
+        myRedeem(page: pagecount)
         // Do any additional setup after loading the view.
     }
     
     
-    func myRedeem() {
+    func myRedeem(page: Int) {
         print("walletToken:",loggdenUser.value(forKey: walletToken) ?? "")
         if loggdenUser.value(forKey: walletToken) != nil {
             let token = loggdenUser.value(forKey: walletToken)as! String
@@ -35,19 +40,40 @@ class RedeemController: UIViewController {
             
             let headers: HTTPHeaders = ["Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
+            print(headers)
             
-            wc.callGETSimplewebservice(url: myredeems, parameters: [:], headers: headers, fromView: self.view, isLoading: true) { (success, response: RedeemwalletResponsModel?) in
+            wc.callGETSimplewebservice(url: myredeems, parameters: ["page":page], headers: headers, fromView: self.view, isLoading: true) { (success, response: RedeemwalletResponsModel?) in
                 print("response: ",response)
                 if success {
                     let suc = response?.success
                     if suc == true {
                         let data = response?.data
-                        self.arrList = data!.data
+//                        self.arrList = data!.data
+                        
+                        if self.pagecount > 1{
+                            if FlagRedeem == 1{
+                                for i in 0..<data!.data.count
+                                {
+                                    self.arrList.append(data!.data[i])
+                                    self.refreshControl.endRefreshing()
+                                    self.spinner.stopAnimating()
+                                    //                            self.arrFeed.insert(arr_dict![i], at: 0)
+                                }
+                            }
+                            
+                            FlagRedeem = 0
+                        }
+                        else{
+                            self.arrList = data!.data
+                        }
+
+                        
                         if self.arrList.count == 0 {
                             self.viewfound.isHidden = false
                         }
                         else {
                             self.viewfound.isHidden = true
+//                            self.arrList.removeAll()
                         }
                         self.tblView.reloadData()
                     }
@@ -101,6 +127,7 @@ extension RedeemController: UITableViewDelegate,UITableViewDataSource {
 //            cell.img.image = #imageLiteral(resourceName: "W1")
 //            gradientRed(profileImageView: cell, shanghaiImage: cell.img)
            // gradientGreen(profileImageView: cell, shanghaiImage: cell.img)
+           // cell.
             cell.img.isHidden = true
             cell.img2.isHidden = false
             cell.imgCash.image = UIImage(named: "cash2")
@@ -151,6 +178,23 @@ extension RedeemController: UITableViewDelegate,UITableViewDataSource {
         shanghaiImage.bringSubviewToFront(view)
     }
     
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let index = tblView.indexPathsForVisibleRows
+        for index1 in index ?? [] {
+            
+            if ((index1.row + 1) == arrList.count){
+                spinner = UIActivityIndicatorView(style: .gray)
+                spinner.startAnimating()
+                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tblView.bounds.width, height: CGFloat(44))
+                FlagRedeem = 1
+                pagecount = pagecount + 1
+                myRedeem(page: pagecount)
+                self.tblView.tableFooterView = spinner
+                self.tblView.tableFooterView?.isHidden = false
+            }
+        }
+        
+    }
 }
 
 

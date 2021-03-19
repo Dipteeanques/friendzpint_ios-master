@@ -98,7 +98,7 @@ class HomeViewController: UIViewController {
             }
         }
         setupView()
-        navigationController?.setStatusBar(backgroundColor: .white)
+      //  navigationController?.setStatusBar(backgroundColor: .white)
         self.navigationController?.navigationBar.isHidden = true
     
 //        MBProgressHUD.showAdded(to: self.view, animated: true)

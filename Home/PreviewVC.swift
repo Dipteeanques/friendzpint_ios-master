@@ -39,6 +39,20 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         }
     }
     @IBOutlet weak var lblPageCount: UILabel!
+    
+    @IBOutlet weak var PlayView: UIView!{
+        didSet{
+            PlayView.layer.cornerRadius = PlayView.frame.height/2
+            PlayView.clipsToBounds = true
+            PlayView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        }
+    }
+    
+    
+    @IBOutlet weak var btnTime: UIButton!
+    
+    @IBOutlet weak var sliderplay: UISlider!
+    
     var images = [String]()
     
     var type = String()
@@ -65,11 +79,16 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
 //        scrollView.removeFromSuperview()
 //        imageview.removeFromSuperview()
 //        navigationController?.setStatusBar(backgroundColor: .black)'
-        modalPresentationCapturesStatusBarAppearance = false
-        setStatusBar1(backgroundColor: .black)
+//        modalPresentationCapturesStatusBarAppearance = false
+//        setStatusBar1(backgroundColor: .black)
         scrollView.maximumZoomScale = 4
         scrollView.minimumZoomScale = 1
 
+        
+       
+        
+//            let seconds : Float64 = CMTimeGetSeconds(duration)
+        
         scrollView.delegate = self
         scrollView.frame = CGRect(x: self.pagerView.frame.origin.x, y: self.pagerView.frame.origin.y, width: self.pagerView.frame.width, height: self.pagerView.frame.height)
 
@@ -98,6 +117,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         videoLayer.backgroundColor = UIColor.black.cgColor//UIColor.clear.cgColor
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspect//AVLayerVideoGravity.resizeAspect
         shotImageView.layer.addSublayer(videoLayer)
+       
         blurImage(img: imageviewBackground)
         pagerView.addSubview(countView)
         pagerView.delegate = self
@@ -105,15 +125,47 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         
         pagerView.addSubview(btnBack)
         pagerView.addSubview(imgLogo)
+        pagerView.addSubview(PlayView)
         
         setDefault()
         self.navigationController?.navigationBar.isHidden = true
-        setStatusBar1(backgroundColor: .black)
+        
+
+//        setStatusBar1(backgroundColor: .black)
     }
     
     
+    @IBAction func btnPlayPause(_ sender: UIButton) {
+        if videoLayer.player?.rate == 0
+        {
+            videoLayer.player!.play()
+            //playButton!.setImage(UIImage(named: "player_control_pause_50px.png"), forState: UIControlState.Normal)
+//            sender.setTitle("Pause", for: UIControl.State.normal)
+            sender.setImage(UIImage(named: "Pause"), for: .normal)
+        } else {
+            videoLayer.player!.pause()
+            //playButton!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
+//            sender.setTitle("Play", for: UIControl.State.normal)
+            sender.setImage(UIImage(named: "Play"), for: .normal)
+        }
+    }
     
-//    override func viewWillAppear(_ animated: Bool) {
+    @IBAction func btnMute(_ sender: UIButton) {
+        
+        if videoLayer.player?.isMuted == true{
+//            sender.setTitle("unmute", for: UIControl.State.normal)
+            sender.setImage(UIImage(named: "Unmute"), for: .normal)
+            videoLayer.player?.isMuted = false
+        }
+        else{
+//            sender.setTitle("mute", for: UIControl.State.normal)
+            sender.setImage(UIImage(named: "Mute"), for: .normal)
+            videoLayer.player?.isMuted = true
+        }
+        
+        
+    }
+    //    override func viewWillAppear(_ animated: Bool) {
 ////        navigationController?.setStatusBar(backgroundColor: .black)
 //            //Change status bar color
 //        setStatusBar1(backgroundColor: .black)
@@ -138,6 +190,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         switch type {
         case "image":
 //
+            PlayView.isHidden = true
 //                cell.btnclick.isHidden = false
             countView.isHidden = true
 //                cell.pagerView.isHidden = true
@@ -163,14 +216,14 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
 
         case "multi_image" :
 
-            
+            PlayView.isHidden = true
           countView.isHidden = false
             scrollView.isHidden = true
 //                cell.pageControl.isHidden = true
 //                cell.pagerView.isHidden = false
            shotImageView.isHidden = true
           imageview.isHidden = true
-           imageviewBackground.isHidden = true
+           imageviewBackground.isHidden = false
 //                cell.btn_play.isHidden = true
 //                cell.countView.isHidden = false
 //           images = arrFeed[indexPath.row].images
@@ -181,7 +234,8 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
             break
 
         case "video":
-           
+            PlayView.isHidden = false
+            timer1 = Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(self.updateSlider), userInfo: nil, repeats: true)
 
             images = []
             pagerView.reloadData()
@@ -205,14 +259,105 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
 //                cell.imageview.layer.addSublayer(cell.videoLayer)
 //                cell.selectionStyle = .none
             
-         
+//            let asset = AVURLAsset(url: URL(string: source_url)!)
+//            let durationInSeconds = asset.duration.seconds
+//            print("durationInSeconds: ",durationInSeconds)
                configureCell(imageUrl:video_poster, description: "Video", videoUrl:source_url)
+//            let duration = videoLayer.player?.currentItem?.asset.duration.seconds
+//            print("duration: ",duration)
+            
+           
+              //  lblcurrentText.text = self.stringFromTimeInterval(interval: seconds)
+            
+            
+            sliderplay.minimumValue = 0
+                    
+                    
+            let duration : CMTime = (videoLayer.player?.currentItem?.asset.duration)!
+            let seconds1 : Float64 = CMTimeGetSeconds(duration)
+                    
+            sliderplay.maximumValue = Float(seconds1)
+            sliderplay.isContinuous = true
+//            sliderplay.tintColor = UIColor.green
+//
+            sliderplay.addTarget(self, action: #selector(self.handlePlayheadSliderTouchBegin), for: .touchDown)
+            sliderplay.addTarget(self, action:    #selector(self.handlePlayheadSliderTouchEnd), for: .touchUpInside)
+            sliderplay.addTarget(self, action: #selector(self.handlePlayheadSliderTouchEnd), for: .touchUpOutside)
+            sliderplay.addTarget(self, action: #selector(playbackSliderValueChanged(_:)), for: .valueChanged)
+            
+
             
             break
         default:
             break
         }
     }
+    
+    @objc func updateSlider() {
+        let duration1 : CMTime = (videoLayer.player?.currentTime())!
+            let seconds : Float64 = CMTimeGetSeconds(duration1)
+
+        btnTime.setTitle(self.stringFromTimeInterval(interval: seconds))
+        
+//        let duration : CMTime = (videoLayer.player?.currentItem!.asset.duration)!
+//        let seconds1 : Float64 = CMTimeGetSeconds(duration) * Double(sliderplay.value)
+//     //   var newCurrentTime: TimeInterval = sender.value * CMTimeGetSeconds(currentPlayer.currentItem.duration)
+//    //lblcurrentText.text = self.stringFromTimeInterval(interval: seconds)
+//        btnTime.setTitle(self.stringFromTimeInterval(interval: seconds1))
+//
+//        let second : Int64 = Int64(sliderplay.value)
+//             let targetTime:CMTime = CMTimeMake(value: second, timescale: 1)
+             
+        sliderplay.value = Float(seconds)
+//        videoLayer.player?.seek(to: targetTime)
+//
+//             if  videoLayer.player!.rate == 0
+//             {
+////                videoLayer.player?.play()
+//             }
+    }
+    
+    func stringFromTimeInterval(interval: TimeInterval) -> String {
+
+        let interval = Int(interval)
+        let seconds = interval % 60
+        let minutes = (interval / 60) % 60
+        let hours = (interval / 3600)
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    @IBAction func handlePlayheadSliderTouchBegin(_ sender: UISlider) {
+        videoLayer.player?.pause()
+    }
+    
+    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider){
+
+        let duration : CMTime = (videoLayer.player?.currentItem!.asset.duration)!
+        let seconds : Float64 = CMTimeGetSeconds(duration) * Double(playbackSlider.value)
+     //   var newCurrentTime: TimeInterval = sender.value * CMTimeGetSeconds(currentPlayer.currentItem.duration)
+    //lblcurrentText.text = self.stringFromTimeInterval(interval: seconds)
+        btnTime.setTitle(self.stringFromTimeInterval(interval: seconds))
+        
+        let second : Int64 = Int64(sliderplay.value)
+             let targetTime:CMTime = CMTimeMake(value: second, timescale: 1)
+             
+        videoLayer.player?.seek(to: targetTime)
+             
+             if  videoLayer.player!.rate == 0
+             {
+                videoLayer.player?.play()
+             }
+       }
+    
+    
+    
+    @IBAction func handlePlayheadSliderTouchEnd(_ sender: UISlider) {
+
+        let duration : CMTime = (videoLayer.player?.currentItem!.asset.duration)!
+        let newCurrentTime: TimeInterval = Double(sender.value) * CMTimeGetSeconds(duration)
+        let seekToTime: CMTime = CMTimeMakeWithSeconds(newCurrentTime, preferredTimescale: 600)
+        videoLayer.player?.seek(to: seekToTime)
+   }
     /*
     // MARK: - Navigation
 
@@ -224,6 +369,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
     */
     @IBAction func btnBackAction(_ sender: Any) {
        // self.navigationController?.popViewController(animated: true)
+        timer1.invalidate()
         ASVideoPlayerController.sharedVideoPlayer.pauseVideo(forLayer: videoLayer, url: self.videoURL ?? "")
         self.dismiss(animated: false, completion: nil)
     }
@@ -262,7 +408,8 @@ extension PreviewVC: FSPagerViewDataSource,FSPagerViewDelegate{
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         //        cell.imageView?.image = UIImage(named: self.images[index])
         cell.imageView?.kf.setImage(with: URL(string: self.images[index]),placeholder:UIImage(named: "Placeholder"))
-        cell.imageView?.contentMode = .scaleAspectFill
+        imageviewBackground.kf.setImage(with: URL(string:images[0]),placeholder:UIImage(named: "Placeholder"))
+        cell.imageView?.contentMode = .scaleAspectFit
         cell.imageView?.clipsToBounds = true
         //        cell.textLabel?.text = index.description+index.description
         return cell
@@ -276,6 +423,7 @@ extension PreviewVC: FSPagerViewDataSource,FSPagerViewDelegate{
     
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
 //        self.pageControl.currentPage = targetIndex
+        imageviewBackground.kf.setImage(with: URL(string:images[targetIndex]),placeholder:UIImage(named: "Placeholder"))
         lblPageCount.text = String(targetIndex+1) + "/" + String(images.count)
     }
     
@@ -288,16 +436,16 @@ extension PreviewVC: FSPagerViewDataSource,FSPagerViewDelegate{
 }
 
 
-extension UIViewController{
-    func setStatusBar1(backgroundColor: UIColor) {
-        let statusBarFrame: CGRect
-        if #available(iOS 13.0, *) {
-            statusBarFrame = view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
-        } else {
-            statusBarFrame = UIApplication.shared.statusBarFrame
-        }
-        let statusBarView = UIView(frame: statusBarFrame)
-        statusBarView.backgroundColor = UIColor.white//backgroundColor
-        view.addSubview(statusBarView)
-    }
-}
+//extension UIViewController{
+//    func setStatusBar1(backgroundColor: UIColor) {
+//        let statusBarFrame: CGRect
+//        if #available(iOS 13.0, *) {
+//            statusBarFrame = view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
+//        } else {
+//            statusBarFrame = UIApplication.shared.statusBarFrame
+//        }
+//        let statusBarView = UIView(frame: statusBarFrame)
+//        statusBarView.backgroundColor = UIColor.white//backgroundColor
+//        view.addSubview(statusBarView)
+//    }
+//}

@@ -181,18 +181,30 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     @IBOutlet weak var lblDislikeCount: UILabel!
     
     var shadowimg = UIImageView()
+    @IBOutlet weak var lblviewcounter: UILabel!
     
+    @IBOutlet weak var btneye: UIButton!{
+        didSet{
+            let image = UIImage(named: "eye")?.withRenderingMode(.alwaysTemplate)
+            btneye.setImage(image, for: .normal)
+            btneye.tintColor = .white
+        }
+    }
+    
+    @IBOutlet weak var btnLikeCount: UIButton!
+    
+    @IBOutlet weak var btnDidLikeCount: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(Videopause(_:)), name: NSNotification.Name(rawValue: "Videopause"), object: nil)
-        shotImageView.layer.cornerRadius = 5
+//        shotImageView.layer.cornerRadius = 5
         shotImageView.backgroundColor = UIColor.black//UIColor.gray.withAlphaComponent(0.7)
-        shotImageView.clipsToBounds = true
-        shotImageView.layer.borderColor = UIColor.black.cgColor//UIColor.gray.withAlphaComponent(0.3).cgColor
-        shotImageView.layer.borderWidth = 0.5
+//        shotImageView.clipsToBounds = true
+//        shotImageView.layer.borderColor = UIColor.black.cgColor//UIColor.gray.withAlphaComponent(0.3).cgColor
+//        shotImageView.layer.borderWidth = 0.5
         videoLayer.backgroundColor = UIColor.black.cgColor
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspect//resize
         shotImageView.layer.addSublayer(videoLayer)
@@ -210,6 +222,7 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         
 //        ButtonView.addSubview(btnMenu)
         pagerView.addSubview(btnClick)
+       
         pagerView.addSubview(ButtonView)
         pagerView.addSubview(viewpeople)
 //        pagerView.addSubview(btnMenu)
@@ -259,9 +272,10 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     override func layoutSubviews() {
         super.layoutSubviews()
         let horizontalMargin: CGFloat = 20
-        let width: CGFloat = bounds.size.width - horizontalMargin * 2
-        let height: CGFloat = (width * 0.9).rounded(.up)
-        videoLayer.frame = CGRect(x: 0, y: 0, width: shotImageView.frame.size.width, height: shotImageView.frame.size.height)
+        let width: CGFloat = bounds.size.width// - horizontalMargin * 2
+        let height: CGFloat = bounds.size.height//(width * 0.9).rounded(.up)
+//        videoLayer.frame = CGRect(x: 0, y: 0, width: shotImageView.frame.size.width, height: shotImageView.frame.size.height)
+        videoLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
     }
     
     func visibleVideoHeight() -> CGFloat {
@@ -285,16 +299,17 @@ extension HomeVCCell: FSPagerViewDataSource,FSPagerViewDelegate{
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         //        cell.imageView?.image = UIImage(named: self.images[index])
         cell.imageView?.kf.setImage(with: URL(string: self.images[index]),placeholder:UIImage(named: "Placeholder"))
-        cell.imageView?.contentMode = .scaleAspectFill
+        
+        cell.imageView?.contentMode = .scaleAspectFit
         cell.imageView?.clipsToBounds = true
         //        cell.textLabel?.text = index.description+index.description
         return cell
     }
     // MARK:- FSPagerView Delegate
     
-//    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-//        pagerView.deselectItem(at: index, animated: true)
-//        pagerView.scrollToItem(at: index, animated: true)
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        pagerView.deselectItem(at: index, animated: true)
+        pagerView.scrollToItem(at: index, animated: true)
 //        print("PageTag: ",pagerView.tag)
 //        print("images: ",images)
 //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -303,13 +318,15 @@ extension HomeVCCell: FSPagerViewDataSource,FSPagerViewDelegate{
 //        obj.images = images
 //        obj.type = "multi_image"
 //        naviget.pushViewController(obj, animated: true)
-//        
-//        
-//    }
+        
+        
+    }
     
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
 //        self.pageControl.currentPage = targetIndex
+       
         lblPageCount.text = String(targetIndex+1) + "/" + String(images.count)
+        
     }
     
     func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {

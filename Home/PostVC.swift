@@ -21,7 +21,7 @@ class PostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setStatusBar(backgroundColor: .white)
+      //  navigationController?.setStatusBar(backgroundColor: .white)
         
         self.view.backgroundColor = .black
         

@@ -15,6 +15,7 @@ import Alamofire
 
 class FriendPageProfileController: MXSegmentedPagerController {
     
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnMenu: UIButton!
     @IBOutlet weak var viewReport: UIView!
     @IBOutlet weak var btnJoined: UIButton!
@@ -41,7 +42,13 @@ class FriendPageProfileController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
     var strUserName = String()
     var strUserType = String()
@@ -70,7 +77,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
         getPageDetails()
         self.navigationController?.navigationBar.isHidden = true
         segmentedPager.backgroundColor = .white
-        setStatusBar1(backgroundColor: .black)
+//        setStatusBar1(backgroundColor: .black)
         // Parallax Header
         segmentedPager.parallaxHeader.view = headerView
         segmentedPager.parallaxHeader.mode = .fill
@@ -135,17 +142,17 @@ class FriendPageProfileController: MXSegmentedPagerController {
 //            }
 //        }
         
-        if UIScreen.main.bounds.width == 320 {
-            viewHeght.constant = 66
-            segmentedPager.parallaxHeader.height = 370
-            segmentedPager.parallaxHeader.minimumHeight = 66
-//            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
-        }
-        else {
+//        if UIScreen.main.bounds.width == 320 {
+//            viewHeght.constant = 66
+//            segmentedPager.parallaxHeader.height = 370
+//            segmentedPager.parallaxHeader.minimumHeight = 66
+////            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
+//        }
+//        else {
             segmentedPager.parallaxHeader.height = 400
             segmentedPager.parallaxHeader.minimumHeight = 90
 //            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: gridentView.bounds.size.height)
-        }
+//        }
         
         if passBackvala == "passBackvala" {
             self.navigationController?.interactivePopGestureRecognizer!.isEnabled = false
@@ -184,6 +191,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
                 self.imgCover.sd_setImage(with: self.ustCover, completed: nil)
                 self.strUserType = res!.type
                 self.lblName.text = Name!
+                self.lblTitle.text = Name!
                 self.groupTimeline_id = res!.timeline_id
                 self.is_page_admin = res!.is_page_admin
                 let isLiked = res?.is_like
@@ -396,7 +404,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
             self.backTwo()
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
         }
         self.navigationController?.popViewController(animated: false)
         self.dismiss(animated: false, completion: nil)
@@ -420,7 +428,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline", "Members","Admins","People like this"][index]
+        return ["Timeline", "Members","People like this"][index]//,"Admins"
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -442,10 +450,10 @@ class FriendPageProfileController: MXSegmentedPagerController {
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
         }
+//        else if index == 2 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
+//        }
         else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
-        }
-        else if index == 3 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Peoplelikethis"), object: nil)
         }
     }

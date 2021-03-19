@@ -28,7 +28,7 @@ class TellzmeHeaderVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        setStatusBar1(backgroundColor: .black)
+        //setStatusBar1(backgroundColor: .black)
         // Do any additional setup after loading the view.
 //        createGradientLayer(view: view1, index: 0)
         Getwallet()
@@ -52,7 +52,15 @@ class TellzmeHeaderVC: UIViewController {
     }
     
     @IBAction func btnBack(_ sender: Any) {
-        self.dismiss(animated: false, completion: nil)
+        
+        if FlagBack == 1{
+            FlagBack = 0
+            self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+        }
+        else{
+            self.dismiss(animated: false, completion: nil)
+        }
+        
     }
     
     

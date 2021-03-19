@@ -17,6 +17,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
    
     @IBOutlet weak var onlySettingView: UIView!
     
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnMenu: UIButton!
     @IBOutlet weak var viewReport: UIView!
     
@@ -48,7 +49,13 @@ class GroupProfileViewController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
     var strUserName = String()
     var strUserType = String()
@@ -198,6 +205,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
                 self.imgCover.sd_setImage(with: self.ustCover, completed: nil)
                 self.strUserType = res!.type
                 self.lblName.text = Name!
+                self.lblTitle.text = Name!
                 self.groupTimeline_id = res!.timeline_id
                 let groupId = res?.id
                 self.group = res!.group_request
@@ -446,7 +454,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
             self.backTwo()
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
         }
         
         self.navigationController?.popViewController(animated: false)
@@ -471,7 +479,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline", "Add members","Members","Admins","Join Requests"][index]
+        return ["Timeline", "Add members","Members","Join Requests"][index]//"Admins",
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -495,10 +503,10 @@ class GroupProfileViewController: MXSegmentedPagerController {
         else if index == 2 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
         }
+//        else if index == 3 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
+//        }
         else if index == 3 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
-        }
-        else if index == 4 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "JoinRequests"), object: nil)
         }
     }

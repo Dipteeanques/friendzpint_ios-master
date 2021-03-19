@@ -90,7 +90,7 @@ class PostViewController: UIViewController,GMSMapViewDelegate, UITextFieldDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setStatusBar(backgroundColor: .black)
+       // navigationController?.setStatusBar(backgroundColor: .black)
         activity.isHidden = true
         lblName.text = loggdenUser.value(forKey: NAMELOgin)as? String
         lblUserName.text = loggdenUser.value(forKey: NAMELOgin)as? String
@@ -104,7 +104,7 @@ class PostViewController: UIViewController,GMSMapViewDelegate, UITextFieldDelega
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setStatusBar(backgroundColor: .black)
+        //navigationController?.setStatusBar(backgroundColor: .black)
          self.navigationController?.navigationBar.isHidden = true
        
     }

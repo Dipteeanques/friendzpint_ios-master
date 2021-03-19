@@ -29,7 +29,7 @@ class OtpVC: UIViewController {
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = true
-        setStatusBar1(backgroundColor: .black)
+        //setStatusBar1(backgroundColor: .black)
         // Do any additional setup after loading the view.
     }
     
@@ -60,6 +60,7 @@ class OtpVC: UIViewController {
 //                    self.viewBgCustom.isHidden = true
 //                    self.paymentview.isHidden = true
                     let obj1 = self.storyboard?.instantiateViewController(withIdentifier: "VerifyVC")as! VerifyVC//TellzmeWalletViewController
+                    print(strNumber)
                     obj1.mobileNumber = strNumber//obj?.mobileNumber ?? ""
                     obj1.number = self.number ?? ""
                     obj1.modalPresentationStyle = .fullScreen

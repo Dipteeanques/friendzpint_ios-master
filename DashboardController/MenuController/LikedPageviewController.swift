@@ -162,8 +162,9 @@ extension LikedPageviewController: UITableViewDelegate,UITableViewDataSource,UIS
         let username = arrLiked[indexPath.row].username
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
-            obj.strUserName = username
+            obj.strUserName = username//
             loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+            loggdenUser.set(username, forKey: PAGEUSERNAME)
             loggdenUser.set(username, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: false)
             obj.modalPresentationStyle = .fullScreen
@@ -176,6 +177,7 @@ extension LikedPageviewController: UITableViewDelegate,UITableViewDataSource,UIS
             print(username)
 //            self.navigationController?.pushViewController(obj, animated: false)
             loggdenUser.setValue(username, forKey: UNAME)
+            loggdenUser.set(username, forKey: PAGEUSERNAME)
             obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)

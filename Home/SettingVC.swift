@@ -41,7 +41,10 @@ class SettingVC: UIViewController {
     
     let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post"]//,"Articals"
     
-    let arrSettingList = ["General Setting","Privacy Setting","Privacy Policy","Change Password","Terms and Conditions","Deactivate Account","Logout"]
+    let arrSettingList = ["General Setting","Privacy Setting","Privacy Policy","Change Password","Terms and Conditions"]//,"Deactivate Account","Logout"
+    
+    let arrtopcolor = [UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.97, green: 0.03, blue: 0.35, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00)]
+    let arrbottomcolor = [UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.74, green: 0.31, blue: 0.61, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00)]
     
     @IBOutlet weak var collectionMenu: UICollectionView!
     
@@ -65,7 +68,7 @@ class SettingVC: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .white)
+        //navigationController?.setStatusBar(backgroundColor: .white)
 //        self.tblHeight?.constant = 0
         
         tblMenu.backgroundColor = .clear
@@ -75,7 +78,7 @@ class SettingVC: UIViewController {
 //        self.dropDownView.addGestureRecognizer(tapGesture)
 //
         self.tblMenu.isHidden = true
-        self.tblHeight?.constant = 227
+        self.tblHeight?.constant = 0//227
         setDefault()
         
         //manageConstant()
@@ -109,7 +112,7 @@ class SettingVC: UIViewController {
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
         
-        wc.callSimplewebservice(url: MYPROFILEDETAILS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: MyprofileResponsModel?) in
+        wc.callSimplewebservice(url: MYPROFILEDETAILS, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: MyprofileResponsModel?) in
             if sucess {
                 
                 self.datadic = response?.data
@@ -144,22 +147,41 @@ class SettingVC: UIViewController {
         manageConstant()
     }
     
-    @IBAction func btnDownarrow(_ sender: Any) {
-        manageConstant()
+    @IBAction func btnDownarrow(_ sender: UIButton) {
+//        manageConstant()
+        
+        super.updateViewConstraints()
+        if checkFlag == 0{
+            btnDownarrowOutlet.setImage(UIImage(named: "uparrow"),for: .normal)
+            self.tblMenu.isHidden = false
+            checkFlag = 1
+            self.tblHeight?.constant = self.tblMenu.contentSize.height
+         //   self.tblMenu.reloadData()
+        }
+        else{
+            btnDownarrowOutlet.setImage(UIImage(named: "downarrow"),for: .normal)
+            self.tblMenu.isHidden = true
+            checkFlag = 0
+            self.tblHeight?.constant = 0//227
+        }
+        
+        super.updateViewConstraints()
     }
     
     func manageConstant() {
         super.updateViewConstraints()
         if checkFlag == 0{
+            btnDownarrowOutlet.setImage(UIImage(named: "uparrow"),for: .normal)
             self.tblMenu.isHidden = false
             checkFlag = 1
             self.tblHeight?.constant = self.tblMenu.contentSize.height
-            self.tblMenu.reloadData()
+            //self.tblMenu.reloadData()
         }
         else{
+            btnDownarrowOutlet.setImage(UIImage(named: "downarrow"),for: .normal)
             self.tblMenu.isHidden = true
             checkFlag = 0
-            self.tblHeight?.constant = 227
+            self.tblHeight?.constant = 0//227
         }
     }
     
@@ -174,6 +196,7 @@ class SettingVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        super.updateViewConstraints()
         getProfileDetails()
         currentTabBar?.setBar(hidden: false, animated: false)
         print("viewDidAppear")
@@ -204,6 +227,59 @@ class SettingVC: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         gridentView.layer.addSublayer(gradientLayer)
     }
+    
+    func GredientMainView(gView: GradientView1, topcolor: UIColor , bottomcolor: UIColor){
+        gView.topColor = topcolor//UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00)
+        gView.bottomColor = bottomcolor//UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00)
+        gView.shadowColor = UIColor.gray
+        gView.shadowX = 0
+        gView.shadowY = 12
+        gView.shadowBlur = 17
+        gView.startPointX = 0
+        gView.startPointY = 1
+        gView.endPointX = 1
+        gView.endPointY = 0
+        gView.cornerRadius = 8
+    }
+    
+    @IBAction func btndeactivateaccount(_ sender: Any) {
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "DeactiveController")as!   DeactiveController
+        self.navigationController?.pushViewController(obj, animated: true)
+    }
+    @IBAction func btnLogout(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Friendzpoint", message: "Are you sure to logout?", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
+            timer.invalidate()
+            timer1.invalidate()
+            loggdenUser.set(false, forKey: Islogin)
+            loggdenUser.removeObject(forKey: NAMELOgin)
+            loggdenUser.removeObject(forKey: STORETIMELINE)
+            loggdenUser.removeObject(forKey: TOKEN)
+            loggdenUser.removeObject(forKey: USERNAME)
+            loggdenUser.removeObject(forKey: TimeLine_id)
+            loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
+            loggdenUser.removeObject(forKey: GROUPUSERNAME)
+            loggdenUser.removeObject(forKey: PROFILE)
+            loggdenUser.removeObject(forKey: COVER)
+            loggdenUser.removeObject(forKey: GROUPID)
+            loggdenUser.removeObject(forKey: PAGEID)
+            loggdenUser.removeObject(forKey: PAGEUSERNAME)
+            loggdenUser.removeObject(forKey: EVENTID)
+            loggdenUser.removeObject(forKey: AD)
+            loggdenUser.removeObject(forKey: POSTDETAILS)
+            self.appDel.gotoLoginController()
+        })
+        alert.addAction(ok)
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { action in
+        })
+        alert.addAction(cancel)
+        DispatchQueue.main.async(execute: {
+            self.present(alert, animated: true)
+        })
+    }
+    
 }
 
 
@@ -218,7 +294,10 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingsCell
         cell.lblTitle.text = arrMenuList[indexPath.row]
         cell.imgIcon.image = UIImage(named: arrMenuImage[indexPath.row])
-        createGradientLayer(view: cell.mainView, index: indexPath.row)
+//        createGradientLayer(view: cell.mainView, index: indexPath.row)
+        
+        GredientMainView(gView: cell.mainView ,topcolor: arrtopcolor[indexPath.row], bottomcolor: arrbottomcolor[indexPath.row])
+        
 //        GradientView(gridentView: cell.mainView)
         cell.mainView.addSubview(cell.lblCount)
         cell.mainView.addSubview(cell.lblTitle)
@@ -280,10 +359,12 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
             NavigateGroups()
         }
         else if indexPath.row == 2{
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventlistControllerview")as! EventlistControllerview
-//            self.navigationController?.pushViewController(obj, animated: true)
-            obj.modalPresentationStyle = .fullScreen
-            self.present(obj, animated: false, completion: nil)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventlistControllerview")as! EventlistControllerview
+////            self.navigationController?.pushViewController(obj, animated: true)
+//            obj.modalPresentationStyle = .fullScreen
+//            self.present(obj, animated: false, completion: nil)
+            strTitle = "Events"
+            NavigateEvents() 
         }
         else if indexPath.row == 3 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowseVC")as! BrowseVC
@@ -491,6 +572,7 @@ extension SettingVC: UITableViewDelegate,UITableViewDataSource{
             
             let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
                 timer.invalidate()
+                timer1.invalidate()
                 loggdenUser.set(false, forKey: Islogin)
                 loggdenUser.removeObject(forKey: NAMELOgin)
                 loggdenUser.removeObject(forKey: STORETIMELINE)

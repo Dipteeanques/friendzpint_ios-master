@@ -17,17 +17,21 @@ class WithdrawController: UIViewController {
     var wc = Webservice.init()
     var arrList = [DatumWithdrwHistory]()
     
+    var refreshControl = UIRefreshControl()
+    var spinner = UIActivityIndicatorView()
+    
+    var pagecount = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tblView.delegate = self
         tblView.dataSource = self
-        WithdrawHistory()
+        WithdrawHistory(page: pagecount)
         // Do any additional setup after loading the view.
     }
     
-    func WithdrawHistory() {
+    func WithdrawHistory(page: Int) {
         if loggdenUser.value(forKey: walletToken) != nil {
             let token = loggdenUser.value(forKey: walletToken)as! String
             let BEARERTOKEN = BEARER + token
@@ -35,12 +39,33 @@ class WithdrawController: UIViewController {
             let headers: HTTPHeaders = ["Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
             
-            wc.callGETSimplewebservice(url: withdraw_history, parameters: [:], headers: headers, fromView: self.view, isLoading: true) { (success, response: WithdrawHistoryResponsModel?) in
+            wc.callGETSimplewebservice(url: withdraw_history, parameters: ["page":page], headers: headers, fromView: self.view, isLoading: true) { (success, response: WithdrawHistoryResponsModel?) in
                 if success {
                     let suc = response?.success
                     if suc == true {
                         let data = response?.data
-                        self.arrList = data!.data
+//                        self.arrList = data!.data
+                        
+                        if self.pagecount > 1{
+                            if FlagWithdraw == 1{
+                                for i in 0..<data!.data.count
+                                {
+                                    self.arrList.append(data!.data[i])
+                                    self.refreshControl.endRefreshing()
+                                    self.spinner.stopAnimating()
+                                    //                            self.arrFeed.insert(arr_dict![i], at: 0)
+                                }
+                            }
+                            
+                            FlagWithdraw = 0
+                            self.refreshControl.endRefreshing()
+                            self.spinner.stopAnimating()
+                        }
+                        else{
+                            self.arrList = data!.data
+                        }
+
+                        
                         if self.arrList.count == 0 {
                             self.viewFound.isHidden = false
                         }
@@ -79,12 +104,32 @@ extension WithdrawController: UITableViewDelegate,UITableViewDataSource {
         let data = arrList[indexPath.row]
         let cell = tblView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as! withdrawtblCell
         cell.lblId.text = data.txnID
+        cell.lblDate.text = data.date
         cell.lblPrice.text = rupee + String(data.amount)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let index = tblView.indexPathsForVisibleRows
+        for index1 in index ?? [] {
+            
+            if ((index1.row + 1) == arrList.count){
+                spinner = UIActivityIndicatorView(style: .gray)
+                spinner.startAnimating()
+                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tblView.bounds.width, height: CGFloat(44))
+                FlagWithdraw = 1
+                pagecount = pagecount + 1
+               WithdrawHistory(page: pagecount)
+                self.tblView.tableFooterView = spinner
+                self.tblView.tableFooterView?.isHidden = false
+            }
+        }
+        
     }
     
 }

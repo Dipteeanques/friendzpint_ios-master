@@ -12,6 +12,7 @@ import Alamofire
 import AVKit
 import YPImagePicker
 
+
 class NewPostVC: UIViewController,UITextViewDelegate {
     
     class func instance()->UIViewController{
@@ -21,6 +22,7 @@ class NewPostVC: UIViewController,UITextViewDelegate {
         return nav
     }
     
+    var playvideourl : URL?
     
     @IBOutlet weak var btn1: UIButton!
     @IBOutlet weak var btn2: UIButton!
@@ -86,6 +88,9 @@ class NewPostVC: UIViewController,UITextViewDelegate {
             arrLocation = arrLocation1! as! [String]
         }
         
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+            imgNewPost.isUserInteractionEnabled = true
+            imgNewPost.addGestureRecognizer(tapGestureRecognizer)
         
         let image = UIImage(named: "backr")?.withRenderingMode(.alwaysTemplate)
         btn1.setImage(image, for: .normal)
@@ -121,6 +126,23 @@ class NewPostVC: UIViewController,UITextViewDelegate {
 //        }
         setUpNavBar()
     }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+//        let tappedImage = tapGestureRecognizer.view as! UIImageView
+
+        if videoUrlPath.count == 0 {
+            
+        }
+        else{
+            let playerVC = AVPlayerViewController()
+            let player = AVPlayer(playerItem: AVPlayerItem(url:playvideourl!))
+            playerVC.player = player
+            self.present(playerVC, animated: false, completion: nil)
+        }
+        // Your action
+    }
+    
     func setUpNavBar(){
         //For title in navigation bar
         self.navigationController?.view.backgroundColor = UIColor.white
@@ -154,6 +176,7 @@ class NewPostVC: UIViewController,UITextViewDelegate {
     }
     
     @objc private func SharePost(){
+        navigationItem.rightBarButtonItem?.isEnabled = false
         loaderView.backgroundColor = .clear
         loaderView.isHidden = false
         indicatorView.startAnimating()
@@ -560,6 +583,7 @@ extension NewPostVC: UITableViewDelegate,UITableViewDataSource{
 //                self.btnPost.isHidden = false
 //                self.activity.isHidden = true
 //                self.activity.stopAnimating()
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
                 self.appDel.gotoDashboardController()
                 
                 self.loaderView.isHidden = true
@@ -660,6 +684,7 @@ extension NewPostVC : GMSAutocompleteViewControllerDelegate{
     }
     
     
+    
 }
 
 
@@ -688,6 +713,7 @@ extension NewPostVC: UICollectionViewDelegate, UICollectionViewDataSource{
 //            return CGSize(width: 128, height: 40)
 //    }
     
+
 }
 
 
@@ -730,7 +756,7 @@ extension NewPostVC: YPImagePickerDelegate{
         config.shouldSaveNewPicturesToAlbum = false
 
         /* Choose the videoCompression. Defaults to AVAssetExportPresetHighestQuality */
-        config.video.compression = AVAssetExportPresetMediumQuality
+//        config.video.compression = AVAssetExportPresetMediumQuality
 
         /* Defines the name of the album when saving pictures in the user's photo library.
            In general that would be your App name. Defaults to "DefaultYPImagePickerAlbumName" */
@@ -753,7 +779,7 @@ extension NewPostVC: YPImagePickerDelegate{
 
         /* Defines the time limit for videos from the library.
            Defaults to 60 seconds. */
-        config.video.libraryTimeLimit = 500.0
+        config.video.libraryTimeLimit = 30.0
 
         /* Adds a Crop step in the photo taking process, after filters. Defaults to .none */
 //        config.showsCrop = .rectangle(ratio: (1/1)) //16/9
@@ -882,9 +908,10 @@ extension NewPostVC: YPImagePickerDelegate{
                     self.selectedImageV.image = video.thumbnail
                     
                     let assetURL = video.url
-                    let playerVC = AVPlayerViewController()
-                    let player = AVPlayer(playerItem: AVPlayerItem(url:assetURL))
-                    playerVC.player = player
+                    self.playvideourl = video.url
+//                    let playerVC = AVPlayerViewController()
+//                    let player = AVPlayer(playerItem: AVPlayerItem(url:assetURL))
+//                    playerVC.player = player
                     
                     self.videoUrlPath = video.url.path
                     
@@ -896,7 +923,7 @@ extension NewPostVC: YPImagePickerDelegate{
                     print("videoUrlPath:",self.videoUrlPath)
                     self.mainVIew.isHidden = false
                     picker.dismiss(animated: false, completion: { [weak self] in
-                        self?.present(playerVC, animated: false, completion: nil)
+//                        self?.present(playerVC, animated: false, completion: nil)
                         
                         print("😀 \(String(describing: self?.resolutionForLocalVideo(url: assetURL)!))")
                     })

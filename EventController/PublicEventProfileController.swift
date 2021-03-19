@@ -15,6 +15,7 @@ import Alamofire
 
 class PublicEventProfileController: MXSegmentedPagerController {
     
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblDateView: UILabel!
     @IBOutlet weak var viewDate: UIView!
     @IBOutlet weak var btnMenu: UIButton!
@@ -44,7 +45,13 @@ class PublicEventProfileController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
     var strUserName = String()
     var strUserType = String()
@@ -133,7 +140,7 @@ class PublicEventProfileController: MXSegmentedPagerController {
 //            }
 //        }
         
-        gridentView.backgroundColor = .white
+        //gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 370
@@ -177,6 +184,7 @@ class PublicEventProfileController: MXSegmentedPagerController {
                 let res = response?.data
                 let Name = res?.name
                 self.lblName.text = Name
+                self.lblTitle.text = Name
                 self.strUserName = res!.username
                 self.lblDateView.text = res?.date_dis
                 let strcour = res!.cover_url
@@ -309,7 +317,7 @@ class PublicEventProfileController: MXSegmentedPagerController {
             self.backTwo()
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
         }
         self.navigationController?.popViewController(animated: false)
         self.dismiss(animated: false, completion: nil)

@@ -61,7 +61,7 @@ class ChatViewController: UIViewController {
     
     func setDefault() {
         chatList()
-        setStatusBar1(backgroundColor: .black)
+        //setStatusBar1(backgroundColor: .black)
 //        currentTabBar?.setBar(hidden: true, animated: false)
         self.navigationController?.navigationBar.isHidden = true
 //        let gradientLayer = CAGradientLayer()

@@ -168,7 +168,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
 //        getFeed()
         strUserName = loggdenUser.value(forKey: USERNAME)as! String
         setupView()
-        navigationController?.setStatusBar(backgroundColor: .black)
+        //navigationController?.setStatusBar(backgroundColor: .black)
         self.navigationController?.navigationBar.isHidden = true
     
 //        MBProgressHUD.showAdded(to: self.view, animated: true)

@@ -422,12 +422,35 @@ struct MyTimelineList1: Decodable, Encodable {
     var is_report: Int
     var video_poster: String
     var post_link: String
+    var is_sponsored: Int
+    var post_view_counter: Int
 }
 
 struct AllTimelineResponseModel: Decodable,Encodable {
     let success: Bool
     let message: String
     let data: [MyTimelineList]?
+}
+
+
+//
+
+struct GetViewCounterModel:  Decodable{
+    let success: Bool
+    let message: String
+}
+//Get Impression
+
+struct GetImpressionModel:  Decodable{
+    let success: Bool
+    let message: String
+    let data: ImpressionData
+}
+
+struct ImpressionData: Decodable {
+
+    let post_id: String
+    let type: String
 }
 
 //MARK: New Post Rsponse
@@ -503,6 +526,8 @@ struct MyTimelineList: Decodable, Encodable {
     var is_report: Int
     var video_poster: String
     var post_link: String
+    var is_sponsored: Int
+    var post_view_counter: Int
 }
 
 
@@ -851,6 +876,54 @@ struct SearchDataResoponseModel: Codable {
 //    }
 //}
 
+
+//MARK: Discover Event
+struct MyDiscoverEvent: Decodable {
+
+    let success: Bool
+    let data: MyDiscoverEventData
+    let message: String
+
+}
+
+struct MyDiscoverEventData: Decodable {
+
+    let current_page: Int
+    let data: [MyDiscoverEventDatasub]
+    let from: Int
+    let last_page: Int
+    let next_page_url: String
+    let path: String
+    let per_page: Int
+    let prev_page_url: String
+    let to: Int
+    let total: Int
+
+}
+
+
+
+struct MyDiscoverEventDatasub: Codable {
+
+    let id: Int
+    let timeline_id: Int
+    let event_type: String
+    let location: String
+    let start_date: String
+    let end_date: String
+    let active: Int
+    let invite_privacy: String
+    let timeline_post_privacy: String
+    let username: String
+    let type: String
+    let name: String
+    let avatar_url: String
+    let cover_url: String
+    let is_hosting: Int
+    let is_going: Int
+    let is_guest: Int
+
+}
 
 //MARK: MygroupList Response
 struct MygroupListResponse : Decodable {

@@ -101,22 +101,23 @@ class CreateGroupViewController: UIViewController {
     func setDeafult() {
         self.navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.addObserver(self,selector: #selector(selectedValueset),name: NSNotification.Name(rawValue: "SelectedFriendZlistInGroup"),object: nil)
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.headerView.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerView.layer.addSublayer(gradientLayer)
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.headerView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerView.layer.addSublayer(gradientLayer)
+        headerView.backgroundColor = .white
         headerView.addSubview(btnBack)
         headerView.addSubview(lblTitle)
         headerView.addSubview(btnCreate)
         headerView.addSubview(activitybtn)
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
+//        }
         
         imgProfile.layer.cornerRadius = 50
         imgProfile.clipsToBounds = true
@@ -490,7 +491,18 @@ class CreateGroupViewController: UIViewController {
     }
     
     @IBAction func btnCreateAction(_ sender: UIButton) {
-        createGroup()
+        if txtgroupname.text!.isEmpty{
+            showalert(tlt: "", msg: "Please enter Group Name")
+        }
+        else{
+            if txtUsername.text!.isEmpty{
+                showalert(tlt: "", msg: "Please enter User Name")
+            }
+            else{
+                createGroup()
+            }
+        }
+       
     }
     
     

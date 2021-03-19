@@ -76,7 +76,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         currentTabBar?.setBar(hidden: true, animated: false)
         setDefault()
-        setStatusBar1(backgroundColor: .black)
+//        setStatusBar1(backgroundColor: .black)
     }
     
     func setDefault() {
@@ -507,8 +507,8 @@ class FriendsProfileViewController: MXSegmentedPagerController {
             
         }
         else {
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
+//            self.navigationController?.popViewController(animated: true)
+//            self.dismiss(animated: true, completion: nil)
         }
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)

@@ -158,7 +158,8 @@ extension FriendsAlbumController: UICollectionViewDelegate,UICollectionViewDataS
         obj.Album_id = arrAlbum[indexPath.row].id
         obj.titleName = arrAlbum[indexPath.row].name
         obj.friendsAlbum = "friendsAlbum"
-        self.navigationController?.pushViewController(obj, animated: true)
+       // self.navigationController?.pushViewController(obj, animated: true)
+        present(obj, animated: false, completion: nil)
     }
     
     //    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

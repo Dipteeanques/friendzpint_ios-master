@@ -25,6 +25,8 @@
 		8F0EEDCF25D66B1B0090AFF5 /* HomeVCCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */; };
 		8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */; };
 		8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */; };
+		8F1DF49E2603698E003DF6FF /* DiscoverEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DF49D2603698E003DF6FF /* DiscoverEventVC.swift */; };
+		8F1DF4A3260369E1003DF6FF /* DiscoverEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DF4A2260369E1003DF6FF /* DiscoverEventCell.swift */; };
 		8F22361925E387DF007F3AC3 /* MobileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22361825E387DF007F3AC3 /* MobileVC.swift */; };
 		8F22361E25E38A9A007F3AC3 /* OtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22361D25E38A9A007F3AC3 /* OtpVC.swift */; };
 		8F22362325E38B77007F3AC3 /* VerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F22362225E38B77007F3AC3 /* VerifyVC.swift */; };
@@ -302,6 +304,8 @@
 		8F0EEDCD25D66B1B0090AFF5 /* HomeVCCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeVCCell.xib; sourceTree = "<group>"; };
 		8F1B0D8E2590B12400F7A756 /* ImgCellTimeline1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCellTimeline1.swift; sourceTree = "<group>"; };
 		8F1B0D8F2590B12400F7A756 /* ImgCellTimeline1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImgCellTimeline1.xib; sourceTree = "<group>"; };
+		8F1DF49D2603698E003DF6FF /* DiscoverEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverEventVC.swift; sourceTree = "<group>"; };
+		8F1DF4A2260369E1003DF6FF /* DiscoverEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverEventCell.swift; sourceTree = "<group>"; };
 		8F22361825E387DF007F3AC3 /* MobileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileVC.swift; sourceTree = "<group>"; };
 		8F22361D25E38A9A007F3AC3 /* OtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVC.swift; sourceTree = "<group>"; };
 		8F22362225E38B77007F3AC3 /* VerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyVC.swift; sourceTree = "<group>"; };
@@ -677,6 +681,8 @@
 				8F3001B725ED08A100B64B53 /* SavePostListVC.swift */,
 				8F92C1BD25F6320E0032F3CF /* AddLocationCell.swift */,
 				8FFF0B5725F9F0E700C4AADE /* MoneyVC.swift */,
+				8F1DF49D2603698E003DF6FF /* DiscoverEventVC.swift */,
+				8F1DF4A2260369E1003DF6FF /* DiscoverEventCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1539,6 +1545,7 @@
 				DAEA47F0229FFC8000D5CFD3 /* SWComboxTextSelection.swift in Sources */,
 				8FFF50BC25C5378900988D78 /* MyGroupCell.swift in Sources */,
 				DAEFCB1C24B62AC70008D487 /* RedeemwalletResponsModel.swift in Sources */,
+				8F1DF49E2603698E003DF6FF /* DiscoverEventVC.swift in Sources */,
 				DAE77EE822FC1E6C00479E1B /* CreateAlbumViewcontroller.swift in Sources */,
 				8F1B0D902590B12400F7A756 /* ImgCellTimeline1.swift in Sources */,
 				8F8429A325C127210065A795 /* NewPostVC.swift in Sources */,
@@ -1576,6 +1583,7 @@
 				8F5955CC25E8C82F002A75A6 /* Extensions.swift in Sources */,
 				DA8E6B54231D3D7300F972E0 /* BrowseallpostController.swift in Sources */,
 				8FF0F2132579EA0D00F19DA7 /* TellzmeWalletVC.swift in Sources */,
+				8F1DF4A3260369E1003DF6FF /* DiscoverEventCell.swift in Sources */,
 				DA021AB022857FE500D4BEDE /* CardView.swift in Sources */,
 				DAE8BECA2299017C0098B650 /* PagelikedViewController.swift in Sources */,
 				DAE8526D2298141D00E8AE89 /* JoindGroupviewController.swift in Sources */,
@@ -1776,7 +1784,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1784,7 +1792,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1801,7 +1809,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1809,7 +1817,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -499,6 +499,9 @@ extension UIViewController{
         }
     }
     
+    
+    
+    
     func NavigateWalletMain()  {
         if let storyboard = self.storyboard {
 
@@ -553,7 +556,36 @@ extension UIViewController{
             segmentController.segmentControllers = [firstViewController,
                                                     secondViewController,thirdViewController]
             segmentController.headerViewHeight = 55
-            segmentController.headerViewOffsetHeight = 0
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
+            navigationController?.pushViewController(segmentController, animated: true)
+        }
+    }
+    
+    
+    func NavigateEvents()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "HeaderVC")
+
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "DiscoverEventVC")
+            firstViewController.title = "Discover Event"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "EventlistControllerview")
+            secondViewController.title = "My Event"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController]
+            segmentController.headerViewHeight = 55
+            segmentController.headerViewOffsetHeight = 31.0
             segmentController.selectedSegmentViewHeight = 1.5
             segmentController.segmentTitleColor = .lightGray
             segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black

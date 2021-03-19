@@ -26,7 +26,7 @@ class WithdrawVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        setStatusBar1(backgroundColor: .black)
+        //setStatusBar1(backgroundColor: .black)
 
         // Do any additional setup after loading the view.
         

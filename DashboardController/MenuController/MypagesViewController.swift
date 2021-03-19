@@ -272,7 +272,19 @@ extension MypagesViewController: UICollectionViewDelegate,UICollectionViewDataSo
         cell.image.sd_setImage(with: url, completed: nil)
         cell.lblTitle.text = (suggested as AnyObject).value(forKey: "name")as? String
         cell.btnLike.addTarget(self, action: #selector(MypagesViewController.btnjoinedActionopen), for: .touchUpInside)
+        cell.btnclick.tag = indexPath.row
+        cell.btnclick.addTarget(self, action: #selector(btnClickAction(_:)), for: .touchUpInside)
         return cell
+    }
+    
+    @objc func btnClickAction(_ sender: UIButton) {
+        let suggested = arrPageSuggested[sender.tag]
+        let username = (suggested as AnyObject).value(forKey: "username")as? String//arrLiked[indexPath.row].username
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+        obj.strUserName = username ?? ""
+        obj.modalPresentationStyle = .fullScreen
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.present(obj, animated: false, completion: nil)
     }
     
     @objc func btnjoinedActionopen(_ sender: UIButton) {
@@ -311,4 +323,7 @@ class cellMyPagesuggested: UICollectionViewCell {
     }
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var image: UIImageView!
+    
+    @IBOutlet weak var btnclick: UIButton!
+    
 }

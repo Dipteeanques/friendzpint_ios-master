@@ -263,7 +263,19 @@ extension PagejoinedlistController: UICollectionViewDelegate,UICollectionViewDat
         cell.image.sd_setImage(with: url, completed: nil)
         cell.lblTitle.text = (suggested as AnyObject).value(forKey: "name")as? String
         cell.btnLike.addTarget(self, action: #selector(PagejoinedlistController.btnjoinedActionopen), for: .touchUpInside)
+        cell.btnclick.tag = indexPath.row
+        cell.btnclick.addTarget(self, action: #selector(btnClickAction(_:)), for: .touchUpInside)
         return cell
+    }
+
+    @objc func btnClickAction(_ sender: UIButton) {
+        let suggested = arrPageSuggested[sender.tag]
+        let username = (suggested as AnyObject).value(forKey: "username")as? String//arrLiked[indexPath.row].username
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+        obj.strUserName = username ?? ""
+        obj.modalPresentationStyle = .fullScreen
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.present(obj, animated: false, completion: nil)
     }
     
     @objc func btnjoinedActionopen(_ sender: UIButton) {
@@ -281,6 +293,24 @@ extension PagejoinedlistController: UICollectionViewDelegate,UICollectionViewDat
                   if sucess {
                       let joined = response?.liked
                       if joined! {
+                       // self.collectionPagesuggest.deleteRows(at: [indexPath], with: .fade)
+//                        if let indexPath = self.collectionPagesuggest.indexPathForView(sender) {
+//                            self.collectionPagesuggest.deleteItems(at: [indexPath])
+////                            self.collectionPagesuggest.reloadData()
+//                        }
+                        
+//                        if let selectedCells =  self.collectionPagesuggest.indexPathsForSelectedItems {
+//                              // 1
+//                              let items = selectedCells.map { $0.item }.sorted().reversed()
+//                              // 2
+//                              for item in items {
+////                                arrPageSuggested.remo//remove(at: item)
+//                              }
+//                              // 3
+//                            self.collectionPagesuggest.deleteItems(at: selectedCells)
+//
+//                            }
+                        
                         cell.btnLike.setTitle("Liked", for: .normal)
                       }
                       else {
@@ -302,4 +332,7 @@ class cellPagesuggested: UICollectionViewCell {
     }
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var image: UIImageView!
+    
+    @IBOutlet weak var btnclick: UIButton!
+    
 }

@@ -30,7 +30,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setStatusBar(backgroundColor: .black)
+        //navigationController?.setStatusBar(backgroundColor: .black)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         

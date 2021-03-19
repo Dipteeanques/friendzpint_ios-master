@@ -154,6 +154,7 @@ class LikeViewController: UIViewController {
     */
     @IBAction func btnCancelAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     
 }

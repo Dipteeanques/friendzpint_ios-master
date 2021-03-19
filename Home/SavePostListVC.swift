@@ -78,6 +78,9 @@ class SavePostListVC: UIViewController {
     
     var usernamemention = String()
     
+    var Postime_id = Int()
+    var strDescriptionedit = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,12 +93,55 @@ class SavePostListVC: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.appEnteredFromBackground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(editPost(_:)), name: NSNotification.Name(rawValue: "editpost"), object: nil)
         setDefault()
     }
     
     @IBAction func btnBack(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    
+    @objc func editPost(_ notification: NSNotification) {
+        if let object = notification.object as? [String: Any] {
+            if let id = object["postid"] as? Int {
+                Postime_id = id
+            }
+        }
+        if let object = notification.object as? [String: Any] {
+            if let str = object["strdescription"] as? String {
+                strDescriptionedit = str
+            }
+        }
+        self.arrFeed1 = self.arrFeed1.map
+        {
+            var mutableBook = $0
+            if $0.id == self.Postime_id
+            {
+                print("$0: ",$0)
+                
+
+               
+               mutableBook.description = strDescriptionedit
+//                self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                
+                for i in 0...self.arrFeed1.count - 1 {
+                    if self.arrFeed1[i].id == $0.id {
+                        print(i)
+                        self.arrFeed1[i].description = strDescriptionedit
+                        let myIndexPath = IndexPath(row: i, section: 0)
+                        self.mainTableView.beginUpdates()
+                        self.mainTableView.reloadRows(at: [myIndexPath], with: UITableView.RowAnimation.none)
+                        self.mainTableView.endUpdates()
+                    }
+                }
+               
+            }
+            return mutableBook
+        }
     }
     
     func setDefault(){
@@ -236,6 +282,54 @@ class SavePostListVC: UIViewController {
                 self.refreshControl.endRefreshing()
                 self.spinner.stopAnimating()
                 self.foundView.isHidden = false
+            }
+        }
+    }
+    
+    func GetImpression(impression: String, post_id: Int){
+        let parameters = ["post_id": post_id,
+                          "type":impression] as [String : Any]//"Bottom"
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        print("parameters: ",parameters)
+        print("headers: ",headers)
+        print("SHOWFEED: ",IMPRESSIONCLICKPOST)
+        wc.callSimplewebservice(url: IMPRESSIONCLICKPOST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: GetImpressionModel?) in
+            //            print("response:",response.re)
+            if sucess {
+                print(response?.success)
+            }
+            else {
+                
+            }
+        }
+    }
+    
+    func ViewCounter(post_id: Int , indexpath: IndexPath){
+        let parameters = ["post_id": post_id] as [String : Any]//"Bottom"
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        print("parameters: ",parameters)
+        print("headers: ",headers)
+        print("SHOWFEED: ",VIEWCOUNTER)
+        wc.callSimplewebservice(url: VIEWCOUNTER, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: GetViewCounterModel?) in
+            //            print("response:",response.re)
+            if sucess {
+                self.arrFeed1[indexpath.row].post_view_counter = self.arrFeed1[indexpath.row].post_view_counter + 1
+//                self.mainTableView.beginUpdates()
+//                self.mainTableView.reloadRows(at: [indexpath], with: UITableView.RowAnimation.none)
+//                self.mainTableView.endUpdates()
+            }
+            else {
+                
             }
         }
     }
@@ -1085,6 +1179,10 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //        cell.btnStatus.tag = indexPath.row
 //        cell.btnStatus.addTarget(self, action: #selector(btnStatusAction(_:)), for: UIControl.Event.touchUpInside)
 //
+        
+        cell.btnmore.tag = indexPath.row
+        cell.btnmore.addTarget(self, action: #selector(btnMoreAction(_:)), for: UIControl.Event.touchUpInside)
+        
         cell.btnLike.tag = indexPath.row
         cell.btnLike.addTarget(self, action: #selector(btnLikeAction(_:)), for: UIControl.Event.touchUpInside)
 
@@ -1349,6 +1447,13 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 
         }
         
+        if arrFeed1[indexPath.row].is_sponsored == 1{
+            cell.lblTime.text = "Sponsored"
+            cell.lblLocation.isHidden = true
+        }
+        
+        cell.lblviewcounter.text = String(arrFeed1[indexPath.row].post_view_counter)
+        
             print("typeFeed: ",typeFeed)
             switch typeFeed {
             case "image":
@@ -1388,7 +1493,7 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //                cell.pagerView.isHidden = false
                 cell.shotImageView.isHidden = true
                 cell.imageview.isHidden = true
-                cell.imageviewBackground.isHidden = true
+                cell.imageviewBackground.isHidden = false
 //                cell.btn_play.isHidden = true
 //                cell.countView.isHidden = false
                 cell.images = arrFeed1[indexPath.row].images
@@ -1396,6 +1501,7 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //                cell.pageControl.numberOfPages = arrFeed1[indexPath.row].images.count
                 cell.lblPageCount.text = "1" + "/" + String(arrFeed1[indexPath.row].images.count)
 //                cell.btnclick.isHidden = true
+                cell.imageviewBackground.kf.setImage(with: URL(string: arrFeed1[indexPath.row].images[0]),placeholder:UIImage(named: "Placeholder"))
                 cell.pagerView.reloadData()
                 break
 
@@ -1439,6 +1545,17 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //        }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        ViewCounter(post_id: arrFeed1[indexPath.row].id ,indexpath: indexPath)
+        
+        if arrFeed1[indexPath.row].is_sponsored == 1{
+            GetImpression(impression: "impression", post_id: arrFeed1[indexPath.row].id)
+        }
+        
+//        GetImpression(impression: "impression", post_id: arrFeed[indexPath.row].id)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1555,6 +1672,16 @@ extension SavePostListVC{
         let obj = launchStoryBoard.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
         obj.post_id = arrFeed1[sender.tag].id
         present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
+    }
+    
+    @IBAction func btnMoreAction(_ sender: UIButton) {
+        if let indexPath = self.mainTableView.indexPathForView(sender) {
+
+            let cellfeed = mainTableView.cellForRow(at: indexPath) as! HomeVCCell
+            cellfeed.lblDetails.numberOfLines = 0
+            cellfeed.lblDetails.sizeToFit()
+            cellfeed.btnmore.isHidden = true
+        }
     }
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
@@ -1943,6 +2070,20 @@ extension SavePostListVC: FSPagerViewDelegate{
         navigationController?.pushViewController(obj, animated: true)
         
         
+    }
+    
+    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
+//        self.pageControl.currentPage = targetIndex
+//        lblPageCount.text = String(targetIndex+1) + "/" + String(images.count)
+        let label:UILabel = self.view.viewWithTag(884) as! UILabel
+        label.text = String(targetIndex+1) + "/" + String(images.count)
+        
+        let imageviewBackground:UIImageView = self.view.viewWithTag(885) as! UIImageView
+        imageviewBackground.kf.setImage(with: URL(string:images[targetIndex]),placeholder:UIImage(named: "Placeholder"))
+    }
+    
+    func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {
+//        self.pageControl.currentPage = pagerView.currentIndex
     }
     
 }

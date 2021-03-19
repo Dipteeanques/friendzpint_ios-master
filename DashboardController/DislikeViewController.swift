@@ -37,24 +37,26 @@ class DislikeViewController: UIViewController {
         self.activity.startAnimating()
         likelist(strPage : "1")
         pageCount = 1
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.headerview.bounds
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerview.layer.addSublayer(gradientLayer)
+        headerview.backgroundColor = .white
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.headerview.bounds
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerview.layer.addSublayer(gradientLayer)
         headerview.addSubview(btnback)
         headerview.addSubview(lblTitle)
+        lblTitle.textColor = .black
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
-        }
-        else if UIScreen.main.bounds.height == 812 {
-            // txtviewHeightConstraint.constant = 400
-        }
-        else if UIScreen.main.bounds.width == 320 {
-            //txtviewHeightConstraint.constant = 190
-        }
+////        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerview.bounds.origin.x, y: headerview.bounds.origin.y, width: 414, height: headerview.bounds.size.height)
+//        }
+//        else if UIScreen.main.bounds.height == 812 {
+//            // txtviewHeightConstraint.constant = 400
+//        }
+//        else if UIScreen.main.bounds.width == 320 {
+//            //txtviewHeightConstraint.constant = 190
+//        }
         
     }
     
@@ -136,6 +138,7 @@ class DislikeViewController: UIViewController {
      */
     @IBAction func btnCancelAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     
 }

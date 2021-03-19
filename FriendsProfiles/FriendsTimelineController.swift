@@ -162,7 +162,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
         
         strUserName = loggdenUser.value(forKey: UNAME)as? String ?? ""
         setupView()
-        navigationController?.setStatusBar(backgroundColor: .black)
+       // navigationController?.setStatusBar(backgroundColor: .black)
         self.navigationController?.navigationBar.isHidden = true
     
 //        MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -277,7 +277,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
         
         print("parameters: ",parameters)
         print("headers: ",headers)
-        print("BROWSE: ",BROWSE)
+        print("BROWSE: ",MYTIMELINELIST)
         wc.callSimplewebservice(url: MYTIMELINELIST+"?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel1?) in
             //            print("response:",response.re)
             if sucess {

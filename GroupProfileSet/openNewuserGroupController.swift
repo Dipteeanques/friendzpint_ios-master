@@ -47,8 +47,15 @@ class openNewuserGroupController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
+    @IBOutlet weak var lblTitle: UILabel!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -146,7 +153,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
 //            }
 //        }
         
-        gridentView.backgroundColor = .white
+//        gridentView.backgroundColor = .white
         
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
@@ -196,6 +203,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
                 self.imgCover.sd_setImage(with: self.ustCover, completed: nil)
                 self.strUserType = res!.type
                 self.lblName.text = Name!
+                self.lblTitle.text = Name!
                 self.groupTimeline_id = res!.timeline_id
                 let groupId = res?.id
                 self.group = res!.group_request
@@ -461,7 +469,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
             self.backTwo()
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
         }
         
         self.navigationController?.popViewController(animated: false)

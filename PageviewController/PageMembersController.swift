@@ -26,6 +26,9 @@ class PageMembersController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(PageMembersController.getMemberAction), name: NSNotification.Name(rawValue: "Members"), object: nil)
+        
+        activity.startAnimating()
+        getMember()
     }
     
     

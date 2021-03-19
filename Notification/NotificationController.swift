@@ -40,7 +40,7 @@ class NotificationController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         
-        navigationController?.setStatusBar(backgroundColor: .black)
+        //navigationController?.setStatusBar(backgroundColor: .black)
         loaderView.isHidden = false
         activity.startAnimating()
         setDeafult()

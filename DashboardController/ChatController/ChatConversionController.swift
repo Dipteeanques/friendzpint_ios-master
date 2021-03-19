@@ -51,7 +51,7 @@ class ChatConversionController: UIViewController,PusherDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setStatusBar(backgroundColor: .black)
+        //navigationController?.setStatusBar(backgroundColor: .black)
         
          NotificationCenter.default.addObserver(self, selector: #selector(ChatConversionController.chatnotification), name: NSNotification.Name(rawValue: "Chatnotification"), object: nil)
         

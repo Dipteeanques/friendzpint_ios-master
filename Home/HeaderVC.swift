@@ -17,7 +17,7 @@ class HeaderVC: UIViewController {
         // Do any additional setup after loading the view.
         currentTabBar?.setBar(hidden: true, animated: false)
         lblTitle.text = strTitle
-        navigationController?.setStatusBar(backgroundColor: .black)
+       // navigationController?.setStatusBar(backgroundColor: .black)
     }
     
 

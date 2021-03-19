@@ -10,7 +10,8 @@ import UIKit
 
 class SettingsCell: UICollectionViewCell {
     
-    @IBOutlet weak var mainView: UIView!{
+    @IBOutlet weak var mainView: GradientView1!
+    {
         didSet{
             mainView.layer.cornerRadius = 10.0
             mainView.clipsToBounds = true

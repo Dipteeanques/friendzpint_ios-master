@@ -21,6 +21,9 @@ import TTTAttributedLabel
 class HomeVC: UIViewController {
     @IBOutlet weak var imgLogo: UIImageView!
     
+    var Postime_id = Int()
+    var strDescriptionedit = String()
+    
     class func instance()->UIViewController{
         let colorController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeVC")
         let nav = UINavigationController(rootViewController: colorController)
@@ -92,6 +95,7 @@ class HomeVC: UIViewController {
                                                selector: #selector(self.appEnteredFromBackground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(editPost(_:)), name: NSNotification.Name(rawValue: "editpost"), object: nil)
         
         currentTabBar?.setAction(atIndex: 0) {
             //Your statments
@@ -328,6 +332,55 @@ class HomeVC: UIViewController {
         }
     }
 
+    
+    func GetImpression(impression: String, post_id: Int){
+        let parameters = ["post_id": post_id,
+                          "type":impression] as [String : Any]//"Bottom"
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        print("parameters: ",parameters)
+        print("headers: ",headers)
+        print("SHOWFEED: ",IMPRESSIONCLICKPOST)
+        wc.callSimplewebservice(url: IMPRESSIONCLICKPOST, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: GetImpressionModel?) in
+            //            print("response:",response.re)
+            if sucess {
+                print(response?.success)
+            }
+            else {
+                
+            }
+        }
+    }
+    
+    func ViewCounter(post_id: Int , indexpath: IndexPath){
+        let parameters = ["post_id": post_id] as [String : Any]//"Bottom"
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        print("parameters: ",parameters)
+        print("headers: ",headers)
+        print("SHOWFEED: ",VIEWCOUNTER)
+        wc.callSimplewebservice(url: VIEWCOUNTER, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: GetViewCounterModel?) in
+            //            print("response:",response.re)
+            if sucess {
+                self.arrFeed[indexpath.row].post_view_counter = self.arrFeed[indexpath.row].post_view_counter + 1
+//                self.mainTableView.beginUpdates()
+//                self.mainTableView.reloadRows(at: [indexpath], with: UITableView.RowAnimation.none)
+//                self.mainTableView.endUpdates()
+            }
+            else {
+                
+            }
+        }
+    }
+    
     func setLike(likedcount:String) -> NSMutableAttributedString {
         //        let normalText =  " Wendy Lambert "
         
@@ -354,6 +407,47 @@ class HomeVC: UIViewController {
         //        boldString.append(boldString1)
        return boldString
     }
+    
+    
+    @objc func editPost(_ notification: NSNotification) {
+        if let object = notification.object as? [String: Any] {
+            if let id = object["postid"] as? Int {
+                Postime_id = id
+            }
+        }
+        if let object = notification.object as? [String: Any] {
+            if let str = object["strdescription"] as? String {
+                strDescriptionedit = str
+            }
+        }
+        self.arrFeed = self.arrFeed.map
+        {
+            var mutableBook = $0
+            if $0.id == self.Postime_id
+            {
+                print("$0: ",$0)
+                
+
+               
+               mutableBook.description = strDescriptionedit
+//                self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                
+                for i in 0...self.arrFeed.count - 1 {
+                    if self.arrFeed[i].id == $0.id {
+                        print(i)
+                        self.arrFeed[i].description = strDescriptionedit
+                        let myIndexPath = IndexPath(row: i, section: 0)
+                        self.mainTableView.beginUpdates()
+                        self.mainTableView.reloadRows(at: [myIndexPath], with: UITableView.RowAnimation.none)
+                        self.mainTableView.endUpdates()
+                    }
+                }
+               
+            }
+            return mutableBook
+        }
+    }
+    
     //MARK: ------ btnMenuAction
     
     @objc func btnMenuAction(_ sender: UIButton) {
@@ -1071,6 +1165,11 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
     
     
     @IBAction func btnImageAction(_ sender: UIButton) {
+        
+        if arrFeed[sender.tag].is_sponsored == 1{
+            GetImpression(impression: "click", post_id: arrFeed[sender.tag].id)
+        }
+        
         print("Image click...")
         let arrImages = arrFeed[sender.tag].images
         pausePlayeVideos()
@@ -1352,9 +1451,12 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         cell.btnmore.tag = indexPath.row
         cell.btnmore.addTarget(self, action: #selector(btnMoreAction(_:)), for: UIControl.Event.touchUpInside)
 //
-        cell.btnLikeClick.tag = indexPath.row
-        cell.btnLikeClick.addTarget(self, action: #selector(btnTapLikes(_:)), for: UIControl.Event.touchUpInside)
+        cell.btnLikeCount.tag = indexPath.row
+        cell.btnLikeCount.addTarget(self, action: #selector(btnTapLikes(_:)), for: UIControl.Event.touchUpInside)
 //
+        cell.btnDidLikeCount.tag = indexPath.row
+        cell.btnDidLikeCount.addTarget(self, action: #selector(btndislikeCountAction(_:)), for: UIControl.Event.touchUpInside)
+        
         cell.btnClick.tag = indexPath.row
         cell.btnClick.addTarget(self, action: #selector(btnImageAction(_:)), for: UIControl.Event.touchUpInside)
         
@@ -1593,8 +1695,12 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 
         }
         
+        if arrFeed[indexPath.row].is_sponsored == 1{
+            cell.lblTime.text = "Sponsored"
+            cell.lblLocation.isHidden = true
+        }
         
-        
+        cell.lblviewcounter.text = String(arrFeed[indexPath.row].post_view_counter)
             print("typeFeed: ",typeFeed)
             switch typeFeed {
             case "image":
@@ -1648,11 +1754,13 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 //                cell.pagerView.isHidden = false
                 cell.shotImageView.isHidden = true
                 cell.imageview.isHidden = true
-                cell.imageviewBackground.isHidden = true
+                cell.imageviewBackground.isHidden = false
 //                cell.btn_play.isHidden = true
 //                cell.countView.isHidden = false
                 cell.images = arrFeed[indexPath.row].images
                 images = arrFeed[indexPath.row].images
+                cell.pagerView.delegate = self
+                cell.imageviewBackground.kf.setImage(with: URL(string: arrFeed[indexPath.row].images[0]),placeholder:UIImage(named: "Placeholder"))
 //                cell.pageControl.numberOfPages = arrFeed[indexPath.row].images.count
                 cell.lblPageCount.text = "1" + "/" + String(arrFeed[indexPath.row].images.count)
 //                cell.btnclick.isHidden = true
@@ -1699,6 +1807,17 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 //        }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        ViewCounter(post_id: arrFeed[indexPath.row].id ,indexpath: indexPath)
+        
+        if arrFeed[indexPath.row].is_sponsored == 1{
+            GetImpression(impression: "impression", post_id: arrFeed[indexPath.row].id)
+        }
+        
+//        GetImpression(impression: "impression", post_id: arrFeed[indexPath.row].id)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1812,11 +1931,25 @@ extension HomeVC{
     @IBAction func btnTapLikes(_ sender: UIButton) {
         print("Please Help!")
         let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         let obj = launchStoryBoard.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
         obj.post_id = arrFeed[sender.tag].id
         obj.modalPresentationStyle = .fullScreen
-        self.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
+        present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
     }
+    
+    @objc func btndislikeCountAction(_ sender: UIButton) {
+        if let indexPath = self.mainTableView.indexPathForView(sender) {
+            post_Id = arrFeed[indexPath.row].id
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "DislikeViewController") as! DislikeViewController
+            obj.post_id = post_Id
+//            self.navigationController?.pushViewController(obj, animated: false)
+            obj.modalPresentationStyle = .fullScreen
+            present(obj, animated: false, completion: nil)
+        }
+    }
+    
     
 //    func animate(newImage: UIImage, newScale: CGFloat) {
 //        var transform = CGAffineTransform()
@@ -2429,6 +2562,8 @@ extension HomeVC: YPImagePickerDelegate{
 }
 extension HomeVC: FSPagerViewDelegate{
 
+    
+
     // MARK:- FSPagerView Delegate
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
@@ -2441,11 +2576,26 @@ extension HomeVC: FSPagerViewDelegate{
         let naviget = UINavigationController()// = UINavigationController(rootViewController: obj)
         obj.images = images
         obj.type = "multi_image"
-        navigationController?.pushViewController(obj, animated: true)
-        
+//        navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        present(obj, animated: false, completion: nil)
         
     }
     
+    
+    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
+//        self.pageControl.currentPage = targetIndex
+//        lblPageCount.text = String(targetIndex+1) + "/" + String(images.count)
+        let label:UILabel = self.view.viewWithTag(884) as! UILabel
+        label.text = String(targetIndex+1) + "/" + String(images.count)
+        
+        let imageviewBackground:UIImageView = self.view.viewWithTag(885) as! UIImageView
+        imageviewBackground.kf.setImage(with: URL(string:images[targetIndex]),placeholder:UIImage(named: "Placeholder"))
+    }
+    
+    func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {
+//        self.pageControl.currentPage = pagerView.currentIndex
+    }
 }
 
 
@@ -2463,7 +2613,13 @@ extension UIViewController{
 
 var FlagData = 0
 
+var FlagRedeem = 0
+
+var FlagWithdraw = 0
+
 var timer = Timer()
+
+var timer1 = Timer()
 
 
 extension String {

@@ -88,23 +88,23 @@ class CreatePageViewController: UIViewController {
             getEditPage()
         }
         
-        
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.headerView.bounds
-        
-        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        headerView.layer.addSublayer(gradientLayer)
+        headerView.backgroundColor = .white
+//        let gradientLayer = CAGradientLayer()
+//
+//        gradientLayer.frame = self.headerView.bounds
+//
+//        gradientLayer.colors = [UIColor(red: 79/255, green: 199/255, blue: 249/255, alpha: 1).cgColor, UIColor(red: 238/255, green: 209/255, blue: 71/255, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        headerView.layer.addSublayer(gradientLayer)
         headerView.addSubview(btnBack)
         headerView.addSubview(lblTitle)
         headerView.addSubview(btnCreatePage)
         headerView.addSubview(activity)
         
-        if UIScreen.main.bounds.width == 414 {
-            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
-        }
+//        if UIScreen.main.bounds.width == 414 {
+//            gradientLayer.frame = CGRect(x: headerView.bounds.origin.x, y: headerView.bounds.origin.y, width: 414, height: headerView.bounds.size.height)
+//        }
         txtAbout.layer.borderWidth = 0.5
         txtAbout.layer.borderColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1).cgColor
         txtAbout.layer.cornerRadius = 5
@@ -237,8 +237,8 @@ class CreatePageViewController: UIViewController {
                             })
                         }
                     }
-                    let image = self.imageProfile.image!.resizeWithWidth(width: 800)!
-                    let imageData:Data = image.jpegData(compressionQuality: 0.2)!
+                    let image = self.imageProfile.image!.resizeWithWidth(width: 800)
+                    let imageData:Data = image?.jpegData(compressionQuality: 0.2)! ?? Data()
                     multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
             },
                 usingThreshold: UInt64.init(),to: CREATE_PAGE, method: .post , headers: headers)
@@ -347,7 +347,24 @@ class CreatePageViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btncreatepageAction(_ sender: UIButton) {
-        CreatePage()
+        if txtCategory.text!.isEmpty{
+            showalert(tlt: "", msg: "Please enter category")
+        }
+        else{
+            if txtName.text!.isEmpty{
+                showalert(tlt: "", msg: "Please enter page name")
+            }
+            else{
+                
+                if txtuserName.text!.isEmpty{
+                    showalert(tlt: "", msg: "Please enter Username")
+                }
+                else{
+                    CreatePage()
+                }
+            }
+        }
+        
     }
     @IBAction func btnCategoryAction(_ sender: UIButton) {
         let obj = self.storyboard!.instantiateViewController(withIdentifier: "PageCategoryController") as! PageCategoryController

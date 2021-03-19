@@ -16,7 +16,7 @@ class CommentVC: UIViewController, UIPopoverPresentationControllerDelegate {
         
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .white)
+       // navigationController?.setStatusBar(backgroundColor: .white)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int

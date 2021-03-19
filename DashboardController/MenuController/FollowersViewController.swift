@@ -255,8 +255,10 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
         let username = arrFollow1[indexPath.row].username
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
         loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+        loggdenUser.set(username, forKey: UNAME)
         obj.strUserName = username
-        self.navigationController?.pushViewController(obj, animated: true)
+        //self.navigationController?.pushViewController(obj, animated: true)
+        present(obj, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

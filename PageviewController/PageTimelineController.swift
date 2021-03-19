@@ -172,7 +172,7 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
 //        GETDATA()
         strUserName = loggdenUser.value(forKey: UNAME)as? String ?? ""
         setupView()
-        navigationController?.setStatusBar(backgroundColor: .black)
+       // navigationController?.setStatusBar(backgroundColor: .black)
         self.navigationController?.navigationBar.isHidden = true
     
 //        MBProgressHUD.showAdded(to: self.view, animated: true)

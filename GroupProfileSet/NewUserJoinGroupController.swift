@@ -151,7 +151,7 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
 //            }
 //        }
         
-        gridentView.backgroundColor = .white
+       // gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 370
@@ -445,7 +445,7 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
             self.backTwo()
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
         }
         
         self.navigationController?.popViewController(animated: false)

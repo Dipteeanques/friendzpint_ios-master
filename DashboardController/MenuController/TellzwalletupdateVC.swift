@@ -402,7 +402,7 @@ class TellzwalletupdateVC: UIViewController {
 extension UIViewController{
     func showalert(tlt:String, msg:String)  {
         let alert = UIAlertController(title:tlt, message: msg, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

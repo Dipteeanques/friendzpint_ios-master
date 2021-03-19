@@ -97,6 +97,8 @@ class navigationLoaderpageredirection: UIViewController {
                         loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
                         loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                        loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                        loggdenUser.set(username, forKey: UNAME)
                         obj.strUserName = username
                         obj.passBackvala = "passBackvala"
                         obj.modalPresentationStyle = .fullScreen
@@ -106,6 +108,7 @@ class navigationLoaderpageredirection: UIViewController {
                 else if type == "page" {
                     if pageAdmin == 0 {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+                        loggdenUser.set(username, forKey: UNAME)
                         obj.strUserName = username
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
@@ -130,6 +133,7 @@ class navigationLoaderpageredirection: UIViewController {
                         if event_type == "public" {
                             if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.strUserName = username
                                 obj.onlyPost = post_privacy
                                 obj.onlyInvaite = invite_privacy
@@ -145,12 +149,14 @@ class navigationLoaderpageredirection: UIViewController {
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
                                 obj.passBackvala = "passBackvala"
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.modalPresentationStyle = .fullScreen
                                 self.present(obj, animated: false, completion: nil)
                             }
                             else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
                                 obj.strUserName = username
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.onlyPost = post_privacy
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
@@ -161,6 +167,7 @@ class navigationLoaderpageredirection: UIViewController {
                             else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
                                 obj.strUserName = username
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.onlyPost = post_privacy
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
@@ -171,6 +178,7 @@ class navigationLoaderpageredirection: UIViewController {
                             else {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
                                 obj.strUserName = username
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.onlyPost = post_privacy
                                 obj.onlyInvaite = invite_privacy
                                 obj.is_page_admin = pageAdmin
@@ -184,6 +192,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
@@ -194,6 +203,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
@@ -204,6 +214,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
@@ -214,6 +225,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
@@ -224,6 +236,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = invite_privacy
                                     obj.is_page_admin = pageAdmin
@@ -235,6 +248,7 @@ class navigationLoaderpageredirection: UIViewController {
                             else {
                                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateEventController")as! PrivateEventController
                                 obj.strUserName = username
+                                loggdenUser.set(username, forKey: UNAME)
                                 obj.onlyPrivet = "onlyPrivet"
                                 obj.passBackvala = "passBackvala"
                                 obj.modalPresentationStyle = .fullScreen
@@ -245,6 +259,7 @@ class navigationLoaderpageredirection: UIViewController {
                     else {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventProfileController")as! EventProfileController
                         obj.strUserName = username
+                        loggdenUser.set(username, forKey: UNAME)
                         obj.is_page_admin = pageAdmin
                         obj.passBackvala = "passBackvala"
                         obj.modalPresentationStyle = .fullScreen
@@ -258,6 +273,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -267,6 +283,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -285,6 +302,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -294,6 +312,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -303,6 +322,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -314,6 +334,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -323,6 +344,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -332,6 +354,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -341,6 +364,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -350,6 +374,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -359,6 +384,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -370,6 +396,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -379,6 +406,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -388,6 +416,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -397,6 +426,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -406,6 +436,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -415,6 +446,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -428,6 +460,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -437,6 +470,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -446,6 +480,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -455,6 +490,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -464,6 +500,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -473,6 +510,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -484,6 +522,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -493,6 +532,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -502,6 +542,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -511,6 +552,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -520,6 +562,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -529,6 +572,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -542,6 +586,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -551,6 +596,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -560,6 +606,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -569,6 +616,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -578,6 +626,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -587,6 +636,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -598,6 +648,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 if member_privacy == "only_admins" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -607,6 +658,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -616,6 +668,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "only_admins" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -625,6 +678,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "only_admins" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -634,6 +688,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "members" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -643,6 +698,7 @@ class navigationLoaderpageredirection: UIViewController {
                                 else if member_privacy == "members" && post_privacy == "everyone" {
                                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
                                     obj.strUserName = username
+                                    loggdenUser.set(username, forKey: UNAME)
                                     obj.onlyPost = post_privacy
                                     obj.onlyInvaite = member_privacy
                                     obj.passBackvala = "passBackvala"
@@ -656,6 +712,7 @@ class navigationLoaderpageredirection: UIViewController {
                         if group_Type == "closed" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "GroupProfileViewController")as! GroupProfileViewController
                             obj.strUserName = username
+                            loggdenUser.set(username, forKey: UNAME)
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"
@@ -665,6 +722,7 @@ class navigationLoaderpageredirection: UIViewController {
                         else if group_Type == "open" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
+                            loggdenUser.set(username, forKey: UNAME)
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"
@@ -674,6 +732,7 @@ class navigationLoaderpageredirection: UIViewController {
                         else {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
+                            loggdenUser.set(username, forKey: UNAME)
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
                             obj.passBackvala = "passBackvala"

@@ -175,7 +175,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
         activity.startAnimating()
         setDefault()
         self.navigationController?.navigationBar.isHidden = true
-        navigationController?.setStatusBar(backgroundColor: .black)
+       // navigationController?.setStatusBar(backgroundColor: .black)
         let avatar = loggdenUser.value(forKey: PROFILE)as! String
         url = URL(string: avatar)
         imgProfileComment.sd_setImage(with: url, completed: nil)

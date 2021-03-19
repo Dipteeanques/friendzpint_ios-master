@@ -710,8 +710,160 @@ extension JoinedMeGroupViewController: UICollectionViewDelegate,UICollectionView
         url = URL(string: image)
         cell.image.sd_setImage(with: url, completed: nil)
         cell.lblTitle.text = (suggested as AnyObject).value(forKey: "name")as? String
+        cell.btnclick.tag = indexPath.row
         cell.btnjoin.addTarget(self, action: #selector(JoinedMeGroupViewController.btnjoinedActionopen), for: .touchUpInside)
+        cell.btnclick.addTarget(self, action: #selector(btnClick(_:)), for: .touchUpInside)
         return cell
+    }
+    
+    
+    @objc func btnClick(_ sender: UIButton){
+        let suggested = arrSugestgroup[sender.tag]
+        let username = (suggested as AnyObject).value(forKey: "username")as? String//arrSugestgroup[sender.tag].username
+//        let group_Type = (suggested as AnyObject).value(forKey: "type_group")as? String//arrSugestgroup[indexPath.row].type_group
+//        let status_group = (suggested as AnyObject).value(forKey: "status")as? String//arrSugestgroup[indexPath.row].status
+//        let is_page_admin = (suggested as AnyObject).value(forKey: "is_page_admin")as? String//arrSugestgroup[indexPath.row].is_page_admin
+        let post_privacy = (suggested as AnyObject).value(forKey: "post_privacy")as? String//arrSugestgroup[indexPath.row].post_privacy
+        let member_privacy = (suggested as AnyObject).value(forKey: "member_privacy")as? String//arrSugestgroup[indexPath.row].member_privacy
+           // if is_page_admin == 0 {
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+        obj.strUserName = username ?? ""
+        obj.onlyPost = post_privacy ?? ""
+        obj.onlyInvaite = member_privacy ?? ""
+        obj.modalPresentationStyle = .fullScreen
+        //self.navigationController?.pushViewController(obj, animated: true)
+        self.present(obj, animated: false, completion: nil)
+        
+//                if group_Type == "closed" {
+//
+//                        if member_privacy == "only_admins" && post_privacy == "only_admins" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                           // self.navigationController?.pushViewController(obj, animated: true)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if member_privacy == "only_admins" && post_privacy == "members" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if member_privacy == "only_admins" && post_privacy == "everyone" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if member_privacy == "members" && post_privacy == "only_admins" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if member_privacy == "members" && post_privacy == "members" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if member_privacy == "members" && post_privacy == "everyone" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
+//                            obj.strUserName = username ?? ""
+//                            obj.onlyPost = post_privacy ?? ""
+//                            obj.onlyInvaite = member_privacy ?? ""
+//                            obj.modalPresentationStyle = .fullScreen
+//                            //self.navigationController?.pushViewController(obj, animated: true)
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//
+//
+//                }
+//                else if group_Type == "open" {
+//
+//                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+//                    obj.strUserName = username ?? ""
+//                    obj.onlyPost = post_privacy ?? ""
+//                    obj.onlyInvaite = member_privacy ?? ""
+//                    obj.modalPresentationStyle = .fullScreen
+//                    //self.navigationController?.pushViewController(obj, animated: true)
+//                    self.present(obj, animated: false, completion: nil)
+////                        if member_privacy == "only_admins" && post_privacy == "only_admins" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+////                        else if member_privacy == "only_admins" && post_privacy == "members" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+////                        else if member_privacy == "only_admins" && post_privacy == "everyone" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+////                        else if member_privacy == "members" && post_privacy == "only_admins" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+////                        else if member_privacy == "members" && post_privacy == "members" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+////                        else if member_privacy == "members" && post_privacy == "everyone" {
+////                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
+////                            obj.strUserName = username ?? ""
+////                            obj.onlyPost = post_privacy ?? ""
+////                            obj.onlyInvaite = member_privacy ?? ""
+////                            obj.modalPresentationStyle = .fullScreen
+////                            //self.navigationController?.pushViewController(obj, animated: true)
+////                            self.present(obj, animated: false, completion: nil)
+////                        }
+//
+//                }
+//
+
+        
     }
     
     @objc func btnjoinedActionopen(_ sender: UIButton) {
@@ -750,4 +902,5 @@ class SuggestGroupCell: UICollectionViewCell {
     }
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var btnclick: UIButton!
 }

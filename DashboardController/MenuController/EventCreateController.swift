@@ -310,7 +310,8 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
                             self.activity.stopAnimating()
                             self.activity.isHidden = true
                             self.btnCreate.isHidden = false
-                            self.dismiss(animated: true, completion: nil)
+//                            self.dismiss(animated: true, completion: nil)
+                            uiAlert.dismiss(animated: false, completion: nil)
                         }))
                     }
             }
@@ -375,6 +376,7 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
     //MARK: - Btn Action
     @IBAction func btnBackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     
     @IBAction func btnStartDateAction(_ sender: UIButton) {
@@ -385,7 +387,29 @@ class EventCreateController: UIViewController,GMSMapViewDelegate, UITextFieldDel
         showEndDatePicker()
     }
     @IBAction func btnCreateAction(_ sender: UIButton) {
-        createEvent()
+        
+        if txtName.text!.isEmpty{
+            showalert(tlt: "", msg: "Please enter event name")
+        }
+        else{
+            if txtLocation.text!.isEmpty{
+                showalert(tlt: "", msg: "Please enter event location")
+            }
+            else{
+                if txtStartDate.text!.isEmpty{
+                    showalert(tlt: "", msg: "Please enter event date")
+                }
+                else{
+                    if txtEnddate.text!.isEmpty{
+                        showalert(tlt: "", msg: "Please enter event date")
+                    }
+                    else{
+                        createEvent()
+                    }
+                }
+            }
+        }
+        
     }
     
     /*

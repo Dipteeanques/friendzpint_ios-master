@@ -21,6 +21,7 @@ class ProfileViewController: MXSegmentedPagerController {
         return nav
     }
 
+    @IBOutlet weak var lblTitle: UILabel!
     
     @IBOutlet weak var lblFollowing: UILabel!
     @IBOutlet weak var lblFollower: UILabel!
@@ -76,7 +77,7 @@ class ProfileViewController: MXSegmentedPagerController {
        
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.EditProfile), name: NSNotification.Name(rawValue: "SettingsProfile"), object: nil)
         setDefault()
-        setStatusBar1(backgroundColor: .black)
+       // setStatusBar1(backgroundColor: .black)
     }
     
     @objc func Profile(_ notification: NSNotification) {
@@ -90,6 +91,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     func setDefault() {
         getProfileDetails()
+        lblTitle.text = loggdenUser.value(forKey: NAMELOgin)as? String
         lblName.text = loggdenUser.value(forKey: NAMELOgin)as? String
         let profile = loggdenUser.value(forKey: PROFILE)as! String
         url = URL(string: profile)
@@ -202,6 +204,7 @@ class ProfileViewController: MXSegmentedPagerController {
                 
                 let dic = response?.data
                 self.lblName.text = dic?.name
+                self.lblTitle.text = dic?.name
                 self.lblFollower.text = dic?.followers.description
                 self.lblFollowing.text = dic?.following.description
                 let strAvatar = dic?.avatar

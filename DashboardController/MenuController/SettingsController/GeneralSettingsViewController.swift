@@ -37,10 +37,16 @@ class GeneralSettingsViewController: UIViewController {
     var arrTimeZone = [String]()
     var selectedTimezone = String()
     
+    var oldmobile = String()
+    
+    var Flagchange = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        txtContectNumber.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        oldmobile = txtContectNumber.text ?? ""
         currentTabBar?.setBar(hidden: true, animated: false)
          NotificationCenter.default.addObserver(self, selector: #selector(GeneralSettingsViewController.Timezone), name: NSNotification.Name(rawValue: "Timezone"), object: nil)
         setDeafult()
@@ -51,6 +57,9 @@ class GeneralSettingsViewController: UIViewController {
         txtTimezonw.text = selectedtime
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        Flagchange = 1
+    }
 
     func setDeafult() {
         getGeneralSetting()
@@ -236,21 +245,74 @@ class GeneralSettingsViewController: UIViewController {
         
         self.wc.callSimplewebservice(url: SAVEUSERGENERALSETTINGS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: UsergenralSettingModel?) in
             if sucess {
+                
+                
+                if self.Flagchange == 1{
+                    loggdenUser.set(false, forKey: walletLoginTellz)
+                    self.NumberVerify(strNumber: self.txtContectNumber.text!)
+                }
+                else{
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
                 let message = response?.message
                 let uiAlert = UIAlertController(title: "FriendzPoint", message: message, preferredStyle: UIAlertController.Style.alert)
                 self.present(uiAlert, animated: true, completion: nil)
                 uiAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+//                    if self.oldmobile == self.txtContectNumber.text!{
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "OtpVC")as! OtpVC//TellzmeWalletViewController
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                    else{
+                        
+//                    }
+                    
+                    
+                   
                     self.btnSaveChange.isHidden = false
                     self.activity.stopAnimating()
                     self.activity.isHidden = true
                     self.dismiss(animated: true, completion: nil)
                      NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SettingsProfile"), object: nil)
-                    self.navigationController?.popViewController(animated: true)
+                    
+                    
+                    
+                    
                 }))
             }
         }
     }
     
+    
+    func NumberVerify(strNumber: String) {
+        let email = loggdenUser.value(forKey: EMAIL)
+        let parameters = ["mobile_number":"91" + strNumber,"email":email]
+        print(parameters)
+       let headers: HTTPHeaders = ["Accept" : ACCEPT]
+        wc.callSimplewebservice(url: tellZLogin, parameters: parameters as [String : Any], headers: headers, fromView: self.view, isLoading: true) { (success, response: WalletLoginResponsModel?) in
+            if success {
+                let suc = response?.success
+                if suc == true {
+                    let obj = response?.data
+                     let otp = obj?.otp
+                    let number = obj?.mobileNumber
+                    loggdenUser.set(number, forKey: mobNumberWallet)
+//                    self.viewOtp.isHidden = false
+//                    self.viewBgCustom.isHidden = true
+//                    self.paymentview.isHidden = true
+                    let obj1 = self.storyboard?.instantiateViewController(withIdentifier: "VerifyVC")as! VerifyVC//TellzmeWalletViewController
+                    obj1.mobileNumber = strNumber//obj?.mobileNumber ?? ""
+                    obj1.number = number ?? ""
+                    obj1.check = "ok"
+                    obj1.modalPresentationStyle = .fullScreen
+                    self.present(obj1, animated: false, completion: nil)//pushViewController(obj1, animated: true)
+                
+                }
+            }
+        }
+    }
     
     //MARK: - Btn Action
     

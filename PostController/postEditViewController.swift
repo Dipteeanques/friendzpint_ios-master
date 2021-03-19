@@ -160,8 +160,11 @@ class postEditViewController: UIViewController, UITextFieldDelegate {
                     self.dismiss(animated: true, completion: nil)
                 }
                 else {
-                    
+                    self.dismiss(animated: true, completion: nil)
                 }
+            }
+            else{
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -169,6 +172,7 @@ class postEditViewController: UIViewController, UITextFieldDelegate {
 
     
     @IBAction func btnPostAction(_ sender: UIButton) {
+        view.endEditing(true)
         UpdateEdit()
     }
     /*
