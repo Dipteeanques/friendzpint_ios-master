@@ -220,6 +220,7 @@ extension JoindGroupviewController: UITableViewDelegate,UITableViewDataSource,UI
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "GroupProfileViewController")as! GroupProfileViewController
         print(username)
         loggdenUser.set(username, forKey: GROUPUSERNAME)
+        loggdenUser.set(username, forKey: UNAME)
         obj.strUserName = username
         obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)

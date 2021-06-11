@@ -26,7 +26,7 @@ class FriendsGuestEventController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(FriendsGuestEventController.Guestevents), name: NSNotification.Name(rawValue: "Guestevents"), object: nil)
-        
+        getEvent()
     }
     
     @objc func Guestevents(_ notification: NSNotification) {

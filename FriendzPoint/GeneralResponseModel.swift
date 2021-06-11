@@ -212,6 +212,7 @@ struct FriendList: Decodable {
     let name: String
     let avatar: String
     let username: String
+    var is_follow: Int
 }
 
 //MARK: - Notification List Response
@@ -589,6 +590,8 @@ struct PostLikeResponseModel: Decodable {
     let likecount: String
     let coin: String
 }
+
+
 
 
 //MARK: - SharePostResponseModel
@@ -1253,6 +1256,8 @@ struct groupsettingGetresponsModel: Decodable {
 }
 
 struct GetSettingRespons: Decodable {
+    //let id: Int
+    let timeline_id: Int
     let username: String
     let name: String
     let about: String
@@ -1262,6 +1267,7 @@ struct GetSettingRespons: Decodable {
     let event_privacy: String
     let avatar: String
     let cover: String
+    let is_group_admin: Int
 }
 
 //MARK: - ForgotPasswordRespons
@@ -1931,7 +1937,7 @@ struct adsData: Decodable,Encodable {
 
 
 
-//MARK:- suggestedFriendResponsMode
+//MARK:- suggestedFriendResponsModel
 
 struct suggestedFriendResponsMode: Decodable {
     let success: Bool
@@ -1962,3 +1968,155 @@ struct suggetedList: Decodable {
     let type: String
 }
 
+//MARK:- ArticleList ResponsModel
+struct ArticleListResponsModel: Codable {
+
+    let success: Bool
+    let data: ArticleListData
+    let message: String
+
+}
+
+struct ArticleListData: Codable {
+
+    let current_page: Int
+    let data: [ArticleListMaindata]
+    let from: Int
+    let last_page: Int
+    let next_page_url: String
+    let path: String
+    let per_page: Int
+    let prev_page_url: String
+    let to: Int
+    let total: Int
+
+}
+
+struct ArticleListMaindata: Codable {
+
+    let id: Int
+    let title: String
+    let slug: String
+    let description: String
+    let type: String
+    let video_link: String
+    let link: String
+    let tag: String
+    let created_by: String
+    let created_at: String
+    let status: String
+    let articleimages: Articleimages
+    let is_admin: Int
+    var like_count: Int
+    let comment_count: Int
+    var is_like: Int
+    let article_web_link: String
+    var view_count : Int
+
+}
+
+struct Articleimages: Codable {
+
+    let id: Int
+    let images: String
+    let article_id: Int
+    let full_url: String
+
+}
+
+
+struct ArticleLikeModel: Codable {
+    let success: Bool
+    let data: [JSONAny]
+    let message: String
+}
+
+
+//MARK: Article Comment Response Model
+struct ArticleCommentModel: Codable {
+
+    let success: Bool
+    let data: ArticleCommentData
+    let message: String
+
+}
+struct ArticleCommentData: Codable {
+
+    let current_page: Int
+    let data: [ArticleCommentDatamain]
+    let from: Int
+    let last_page: Int
+    let next_page_url: String
+    let path: String
+    let per_page: Int
+    let prev_page_url: String
+    let to: Int
+    let total: Int
+
+}
+
+struct ArticleCommentDatamain: Codable {
+
+    let id: Int
+    let comment: String
+    let created_by: String
+    let profile: String
+
+}
+
+
+//MARK: MyArticle ResponseModel
+struct  MyArticleResponseModel: Codable {
+
+    let success: Bool
+    let data: MyArticleData
+    let message: String
+
+}
+
+struct MyArticleData: Codable {
+
+    let current_page: Int
+    let data: [MyArticleDatamain]
+    let from: Int
+    let last_page: Int
+    let next_page_url: String
+    let path: String
+    let per_page: Int
+    let prev_page_url: String
+    let to: Int
+    let total: Int
+
+}
+
+struct MyArticleDatamain: Codable {
+
+    let id: Int
+    let title: String
+    let slug: String
+    let description: String
+    let type: String
+    let video_link: String
+    let link: String
+    let tag: String
+    let created_by: String
+    let created_at: String
+    let status: String
+    var view_count: Int
+    let is_admin: Int
+    var like_count: Int
+    let comment_count: Int
+    var is_like: Int
+    let article_web_link: String
+    let articleimages: MyArticleArticleimages
+
+}
+
+struct MyArticleArticleimages: Codable {
+
+    let id: Int
+    let images: String
+    let article_id: Int
+    let full_url: String
+
+}

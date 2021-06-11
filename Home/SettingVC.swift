@@ -37,14 +37,14 @@ class SettingVC: UIViewController {
     }
     @IBOutlet weak var lblName: UILabel!
     
-    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post"]//,"Articals"
+    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post","Notification", "My Article"]//,"Articals"
     
-    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post"]//,"Articals"
+    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post", "Snotification", "Articals"]//,"Articals"
     
     let arrSettingList = ["General Setting","Privacy Setting","Privacy Policy","Change Password","Terms and Conditions"]//,"Deactivate Account","Logout"
     
-    let arrtopcolor = [UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.97, green: 0.03, blue: 0.35, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00)]
-    let arrbottomcolor = [UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.74, green: 0.31, blue: 0.61, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00)]
+    let arrtopcolor = [UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.97, green: 0.03, blue: 0.35, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00)]
+    let arrbottomcolor = [UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.74, green: 0.31, blue: 0.61, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00)]
     
     @IBOutlet weak var collectionMenu: UICollectionView!
     
@@ -94,12 +94,12 @@ class SettingVC: UIViewController {
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            if count == 0{
-                currentTabBar!.setBadgeText(nil, atIndex: 3)
-            }
-            else{
-                currentTabBar!.setBadgeText(String(count), atIndex: 3)
-            }
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
         }
        // getProfileDetails()
     }
@@ -155,7 +155,8 @@ class SettingVC: UIViewController {
             btnDownarrowOutlet.setImage(UIImage(named: "uparrow"),for: .normal)
             self.tblMenu.isHidden = false
             checkFlag = 1
-            self.tblHeight?.constant = self.tblMenu.contentSize.height
+            self.tblHeight?.constant = 350//self.tblMenu.contentSize.height
+            print(self.tblMenu.contentSize.height)
          //   self.tblMenu.reloadData()
         }
         else{
@@ -294,6 +295,8 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingsCell
         cell.lblTitle.text = arrMenuList[indexPath.row]
         cell.imgIcon.image = UIImage(named: arrMenuImage[indexPath.row])
+        cell.imgIcon.image = cell.imgIcon.image?.withRenderingMode(.alwaysTemplate)
+        cell.imgIcon.tintColor = UIColor.white
 //        createGradientLayer(view: cell.mainView, index: indexPath.row)
         
         GredientMainView(gView: cell.mainView ,topcolor: arrtopcolor[indexPath.row], bottomcolor: arrbottomcolor[indexPath.row])
@@ -431,7 +434,17 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
             obj.modalPresentationStyle = .fullScreen
             self.present(obj, animated: false, completion: nil)
         }
-
+        else if indexPath.row == 9{
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
+        }
+        else if indexPath.row == 10{
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ArticlesVC")as! ArticlesVC
+            obj.CheckVC = "MY"
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
+        }
     }
 }
 

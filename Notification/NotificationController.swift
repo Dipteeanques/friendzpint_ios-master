@@ -46,10 +46,13 @@ class NotificationController: UIViewController {
         setDeafult()
         
 //        tabBarItem.badgeValue = "1"
-        currentTabBar!.setBadgeText(nil, atIndex: 3)
+        //currentTabBar!.setBadgeText(nil, atIndex: 3)
         
         loggdenUser.set(nil, forKey: BADGECOUNT)
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        currentTabBar?.setBar(hidden: false, animated: false)
+//    }
     
     func setDeafult() {
         getNotification(strPage: "1")
@@ -71,6 +74,7 @@ class NotificationController: UIViewController {
     }
     func getNotification(strPage : String) {
         let parameters = ["page" : strPage]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers : HTTPHeaders = ["Xapi": XAPI,
@@ -246,30 +250,67 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
         let post_id = api_notification_data.post_id
         let myprofile = loggdenUser.value(forKey: USERNAME)as! String
         
-        if type == "post" {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "postDetailsConteroller")as! postDetailsConteroller
-            obj.postDetail_id = post_id
-            self.navigationController?.pushViewController(obj, animated: true)
+        print("type: ",type)
+        
+        let maintype = arrNotification[indexPath.row].type
+        if maintype == "join_event" || maintype == "unjoin_event" || maintype == "follow" || maintype == "unfollow" || maintype == "accept_follow_request" || maintype == "reject_follow_request" || maintype == "join_group" || maintype == "unjoin_group" || maintype == "remove_group_member" || maintype == "accept_group_join" || maintype == "reject_group_join" || maintype == "follow_requested" || maintype == "like_page" || maintype == "unlike_page" || maintype == "remove_page_member"{
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = arrNotification[indexPath.row].username//username
+                       print("username: ",username)
+           //                    self.navigationController?.pushViewController(obj, animated: true)
+                       obj.modalPresentationStyle = .fullScreen
+                       self.present(obj, animated: false, completion: nil)
         }
+       else if type == "post" {
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "postDetailsConteroller")as! postDetailsConteroller
+//
+//            obj.postDetail_id = post_id
+//            self.navigationController?.pushViewController(obj, animated: true)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "SavePostListVC")as! SavePostListVC
+            
+            obj.postDetail_id = post_id
+            
+            obj.strUrlType = "post"
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
+        }
+//        else if type == "homepage" {
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+//            obj.strUser = username
+//            print("username: ",username)
+////                    self.navigationController?.pushViewController(obj, animated: true)
+//            obj.modalPresentationStyle = .fullScreen
+//            self.present(obj, animated: false, completion: nil)
+//        }
         else if type == "user" {
             if myprofile == username {
-                currentTabBar?.setIndex(4)
+               // currentTabBar?.setIndex(4)
+                let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+               // self.navigationController?.pushViewController(obj, animated: true)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
             }
             else {
                 loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
                 loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                loggdenUser.set(username, forKey: UNAME)
                 obj.strUserName = username
-                self.navigationController?.pushViewController(obj, animated: false)
+                //self.navigationController?.pushViewController(obj, animated: false)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
             }
         }
         else if type == "page" {
             if pageAdmin == 0 {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+                loggdenUser.set(username, forKey: UNAME)
                 obj.strUserName = username
                 obj.onlyPost = post_privacy
                 obj.onlyInvaite = invite_privacy
-                self.navigationController?.pushViewController(obj, animated: false)
+                //self.navigationController?.pushViewController(obj, animated: false)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
             }
             else {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
@@ -278,7 +319,9 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                 obj.strUserName = username
                 obj.onlyPost = post_privacy
                 obj.onlyInvaite = invite_privacy
-                self.navigationController?.pushViewController(obj, animated: false)
+                //self.navigationController?.pushViewController(obj, animated: false)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
             }
         }
         else if type == "event" {
@@ -287,10 +330,13 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                     if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
                         obj.strUserName = username
+                        loggdenUser.set(username, forKey: UNAME)
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.is_page_admin = pageAdmin
-                        self.navigationController?.pushViewController(obj, animated: false)
+                       // self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
@@ -298,7 +344,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.is_page_admin = pageAdmin
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        loggdenUser.set(username, forKey: UNAME)
+                        //self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
@@ -306,7 +355,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.is_page_admin = pageAdmin
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        loggdenUser.set(username, forKey: UNAME)
+                       // self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
@@ -314,7 +366,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.is_page_admin = pageAdmin
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        loggdenUser.set(username, forKey: UNAME)
+                        //self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
@@ -322,7 +377,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                         obj.onlyPost = post_privacy
                         obj.onlyInvaite = invite_privacy
                         obj.is_page_admin = pageAdmin
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        loggdenUser.set(username, forKey: UNAME)
+                        //self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                 }
                 else {
@@ -333,7 +391,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = invite_privacy
                             obj.is_page_admin = pageAdmin
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -341,7 +402,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = invite_privacy
                             obj.is_page_admin = pageAdmin
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -349,7 +413,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = invite_privacy
                             obj.is_page_admin = pageAdmin
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            loggdenUser.set(username, forKey: UNAME)
+                           // self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -357,7 +424,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = invite_privacy
                             obj.is_page_admin = pageAdmin
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
@@ -365,14 +435,20 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = invite_privacy
                             obj.is_page_admin = pageAdmin
-                            self.navigationController?.pushViewController(obj, animated: false)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: false)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                     else {
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateEventController")as! PrivateEventController
                         obj.strUserName = username
                         obj.onlyPrivet = "onlyPrivet"
-                        self.navigationController?.pushViewController(obj, animated: false)
+                        loggdenUser.set(username, forKey: UNAME)
+                        //self.navigationController?.pushViewController(obj, animated: false)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
                     }
                 }
             }
@@ -380,7 +456,10 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventProfileController")as! EventProfileController
                 obj.strUserName = username
                 obj.is_page_admin = pageAdmin
-                self.navigationController?.pushViewController(obj, animated: false)
+                loggdenUser.set(username, forKey: UNAME)
+                //self.navigationController?.pushViewController(obj, animated: false)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
             }
         }
         else {
@@ -392,42 +471,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                           // self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                     else if status_group == "pending" {
@@ -436,42 +533,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                     else if status_group == "joined" {
@@ -480,42 +595,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NewUserJoinGroupController")as! NewUserJoinGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                 }
@@ -526,42 +659,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                           // self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                     else {
@@ -570,42 +721,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                 }
@@ -616,42 +785,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                     else {
@@ -660,42 +847,60 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                           // self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "only_admins" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "only_admins" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "members" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                         else if member_privacy == "members" && post_privacy == "everyone" {
                             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
                             obj.strUserName = username
                             obj.onlyPost = post_privacy
                             obj.onlyInvaite = member_privacy
-                            self.navigationController?.pushViewController(obj, animated: true)
+                            loggdenUser.set(username, forKey: UNAME)
+                            //self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
                         }
                     }
                 }
@@ -706,21 +911,30 @@ extension NotificationController: UITableViewDelegate,UITableViewDataSource {
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.navigationController?.pushViewController(obj, animated: true)
+                    loggdenUser.set(username, forKey: UNAME)
+                    //self.navigationController?.pushViewController(obj, animated: true)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
                 }
                 else if group_Type == "open" {
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.navigationController?.pushViewController(obj, animated: true)
+                    loggdenUser.set(username, forKey: UNAME)
+                    //self.navigationController?.pushViewController(obj, animated: true)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
                 }
                 else {
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserJoinedGroupViewController")as! UserJoinedGroupViewController
                     obj.strUserName = username
                     obj.onlyPost = post_privacy
                     obj.onlyInvaite = member_privacy
-                    self.navigationController?.pushViewController(obj, animated: true)
+                    loggdenUser.set(username, forKey: UNAME)
+                    //self.navigationController?.pushViewController(obj, animated: true)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
                 }
             }
         }

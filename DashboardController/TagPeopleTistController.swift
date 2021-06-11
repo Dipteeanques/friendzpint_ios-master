@@ -108,11 +108,21 @@ extension TagPeopleTistController: UITableViewDelegate,UITableViewDataSource {
         let selectedUsername = arrUserTag[indexPath.row].username
         if selectedUsername == username {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-            obj.strUserName = selectedUsername
-            self.navigationController?.pushViewController(obj, animated: true)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//            obj.strUserName = selectedUsername
+//            self.navigationController?.pushViewController(obj, animated: true)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = selectedUsername
+    //                    self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

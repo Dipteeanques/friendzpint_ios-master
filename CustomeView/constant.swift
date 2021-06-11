@@ -182,6 +182,19 @@ let UNSHAREPOST                 =             Domain + "/unsharePost"
 let FindsuggestedGroups         =             Domain + "/FindsuggestedGroups"
 let FindsuggestedPages          =             Domain + "/FindsuggestedPages"
 
+
+//MARK: - Article
+let LISTARTICLE                 =             Domain + "/ListArticle"
+let LIKEARTICLE                 =             Domain + "/UpdateLikes"
+let ADDARTICLE                  =             Domain + "/AddArticle"
+let MYARTICLE                   =             Domain + "/MyArticleList"
+let LISTARTICLECOMMENT          =             Domain + "/ListComment"
+let ADDARTICLECOMMENT           =             Domain + "/AddComment"
+let ARTICLEVIEWCOUNTER          =             Domain + "/AddArticleCount"
+let DELETEARTICLE               =             Domain + "/DeleteArticle"
+let EDITARTICLE                 =             Domain + "/EditArticle"
+
+
 let tellZLogin  = tellWallet + "/login"
 let tellzverify_otp = tellWallet + "/verify_otp"
 let mywallet = tellWallet + "/mywallet"
@@ -189,6 +202,7 @@ let myredeems = tellWallet + "/myredeems"
 let withdraw_history = tellWallet + "/withdraw_history"
 let withdraw_money = tellWallet + "/withdraw_money"
 let convert_coin_money = tellWallet + "/convert_coin_money"
+
 
 
 let Advertise = Domain + "/advertisementPlans"

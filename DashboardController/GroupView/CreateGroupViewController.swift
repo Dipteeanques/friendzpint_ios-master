@@ -54,7 +54,8 @@ class CreateGroupViewController: UIViewController {
     var member_privacy = String()
     var post_privacy = String()
     var event_privacy = String()
-    
+    var strbackcheck = String()
+    var selectedimage = UIImage()
   
     
     override func viewDidLoad() {
@@ -142,10 +143,14 @@ class CreateGroupViewController: UIViewController {
         txtAbout.text = "Write Something..."
         txtAbout.textColor = UIColor.lightGray
         txtAbout.delegate = self
+        
+        self.imgProfile.image = UIImage(named: "PlaceholderGroupimg")
+        self.selectedimage = self.imgProfile.image!
     }
     
     func getGroupSetting() {
         let parameters = ["username":username]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -158,6 +163,7 @@ class CreateGroupViewController: UIViewController {
                 let strImg = data?.avatar
                 self.url = URL(string: strImg!)
                 self.imgProfile.sd_setImage(with: self.url, completed: nil)
+                self.selectedimage = self.imgProfile.image!
                 self.txtgroupname.text = data?.name
                 self.txtUsername.text = data?.username
                 self.txtAbout.text = data?.about
@@ -269,7 +275,7 @@ class CreateGroupViewController: UIViewController {
                             })
                         }
                     }
-                    let image = self.imgProfile.image!.resizeWithWidth(width: 800)!
+                    let image = self.selectedimage// self.imgProfile.image!.resizeWithWidth(width: 800)!
                     let imageData:Data = image.jpegData(compressionQuality: 0.2)!
                     multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
             },
@@ -283,17 +289,19 @@ class CreateGroupViewController: UIViewController {
                         self.btnCreate.isHidden = true
                         self.activitybtn.isHidden = false
                         self.activitybtn.startAnimating()
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupCreat"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
                         self.dismiss(animated: true, completion: nil)
+                       // self.backTwo()
                     }
                     else {
                         let uiAlert = UIAlertController(title: "FriendzPoint", message: message, preferredStyle: UIAlertController.Style.alert)
                         self.present(uiAlert, animated: true, completion: nil)
                         uiAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.btnCreate.isHidden = true
-                            self.activitybtn.isHidden = false
-                            self.activitybtn.startAnimating()
-                            self.dismiss(animated: true, completion: nil)
+                            self.btnCreate.isHidden = false
+                            self.activitybtn.isHidden = true
+                            self.activitybtn.stopAnimating()
+                            //self.dismiss(animated: true, completion: nil)
+                            uiAlert.dismiss(animated: true, completion: nil)
                         }))
                     }
                 })
@@ -344,7 +352,7 @@ class CreateGroupViewController: UIViewController {
                             })
                         }
                     }
-                    let image = self.imgProfile.image!.resizeWithWidth(width: 800)!
+                    let image = self.selectedimage//self.imgProfile.image!.resizeWithWidth(width: 800)!
                     let imageData:Data = image.jpegData(compressionQuality: 0.2)!
                     multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
             },
@@ -358,8 +366,16 @@ class CreateGroupViewController: UIViewController {
                         self.btnCreate.isHidden = true
                         self.activitybtn.isHidden = false
                         self.activitybtn.startAnimating()
-                        self.backTwo()
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupCreat"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
+                        //if self.strbackcheck == "3"{
+                            //self.backThree()
+                            self.dismiss(animated: false, completion: nil)
+//                        }
+//                        else{
+//                            self.backTwo()
+//                        }
+                        
+                        
                     }
                     else {
                         let uiAlert = UIAlertController(title: "FriendzPoint", message: message, preferredStyle: UIAlertController.Style.alert)
@@ -434,7 +450,7 @@ class CreateGroupViewController: UIViewController {
             self.wc.callSimplewebservice(url: GROUPDELETE, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: GroupDeleteResponsModel?) in
                 if sucess {
                     self.backTwo()
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupCreat"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
                 }
             }
         }))
@@ -451,6 +467,9 @@ class CreateGroupViewController: UIViewController {
         self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
+    func backThree() {
+        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
@@ -466,7 +485,15 @@ class CreateGroupViewController: UIViewController {
 //            self.dismiss(animated: true, completion: nil)
 //        }
 //        else {
-        self.navigationController?.popViewController(animated: true)
+        
+//        if self.strbackcheck == "3"{
+//            self.backThree()
+//        }
+//        else{
+        self.dismiss(animated: false, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+       // }
+        
         //}
         
     }
@@ -477,6 +504,7 @@ class CreateGroupViewController: UIViewController {
             let asset = assets[0]
             asset.fetchOriginalImage(completeBlock: { (image, info) in
                 self.imgProfile.image = image
+                self.selectedimage = image ?? UIImage(named: "PlaceholderGroupimg")!
                 self.hidenView.isHidden = true
                 self.indicator.stopAnimating()
             })

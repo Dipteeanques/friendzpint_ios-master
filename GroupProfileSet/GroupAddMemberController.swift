@@ -106,6 +106,11 @@ extension GroupAddMemberController: UITableViewDelegate,UITableViewDataSource {
         let selectedUsername = arrResults[indexPath.row].username
         if selectedUsername == username {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
@@ -157,7 +162,7 @@ extension GroupAddMemberController: UITableViewDelegate,UITableViewDataSource {
                             self.tblMemberFriends.beginUpdates()
                             self.tblMemberFriends.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                             self.tblMemberFriends.endUpdates()
-                           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
                     }
                     else {
                         self.arrResults = self.arrResults.map{
@@ -170,7 +175,7 @@ extension GroupAddMemberController: UITableViewDelegate,UITableViewDataSource {
                         self.tblMemberFriends.beginUpdates()
                         self.tblMemberFriends.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                         self.tblMemberFriends.endUpdates()
-                        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
                     }
                 }
             }

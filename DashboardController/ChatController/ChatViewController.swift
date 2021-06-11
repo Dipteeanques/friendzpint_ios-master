@@ -239,18 +239,18 @@ extension ChatViewController: UITableViewDataSource,UITableViewDelegate {
             cell.lblmsg.text = strLatmessage
         }
         
-        let dicUser = (self.arrChatList[indexPath.row]as AnyObject).value(forKey: "user")as! NSDictionary
-        let strName = dicUser.value(forKey: "name")as! String
+        let dicUser = (self.arrChatList[indexPath.row]as AnyObject).value(forKey: "user")as? NSDictionary
+        let strName = dicUser?.value(forKey: "name")as? String
         cell.lblName.text = strName
-        let strAvater = dicUser.value(forKey: "avatar")as! String
+        let strAvater = dicUser?.value(forKey: "avatar")as? String
         cell.imgprofile.layer.cornerRadius = 25
         cell.imgprofile.clipsToBounds = true
-        url = URL(string: strAvater)
+        url = URL(string: strAvater ?? "")
         cell.imgprofile.sd_setImage(with: url, completed: nil)
-        let strDate = dicUser.value(forKey: "updated_at")as! String
+        let strDate = dicUser?.value(forKey: "updated_at")as? String ?? ""
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = dateFormatter.date(from: strDate)!
+        let date = dateFormatter.date(from: strDate) ?? Date()
         let datavala = Date().timeAgoSinceDate(date, numericDates: true)
         cell.lblSDate.text = datavala
         return cell

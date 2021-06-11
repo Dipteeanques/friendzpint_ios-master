@@ -83,8 +83,13 @@ class userImageListController: UIViewController {
                     self.collectionImage.reloadData()
                     self.loaderView.isHidden = true
                     self.activity.stopAnimating()
+                    self.btnDelete.isEnabled = true
+                }
+                else{
+                    self.btnDelete.isEnabled = true
                 }
             }
+            
         }
     }
     
@@ -119,6 +124,7 @@ class userImageListController: UIViewController {
         }
         let strPhoto_id = selectedMedia.joined(separator: ",")
         let parameters = ["photos_ids": strPhoto_id]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -128,19 +134,31 @@ class userImageListController: UIViewController {
         wc.callSimplewebservice(url: ALBUM_DELETE_PHOTOS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: PhotosDeleteResponsModel?) in
             if sucess {
                 let res = response?.success
+                print(response)
+                
                 if res! {
+                    
                     self.getPhotos()
                 }
+                else{
+                    self.btnDelete.isEnabled = true
+                }
+            }
+            else{
+                self.btnDelete.isEnabled = true
             }
         }
     }
     @IBAction func btnEditAction(_ sender: UIButton) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateAlbumViewcontroller")as! CreateAlbumViewcontroller
         obj.Album_id = Album_id
-        self.navigationController?.pushViewController(obj, animated: true)
+       // self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
     }
     
     @IBAction func btnDeleteAction(_ sender: UIButton) {
+        btnDelete.isEnabled = false
         if arrselected.count == 0 {
             deleteAlbum()
         }

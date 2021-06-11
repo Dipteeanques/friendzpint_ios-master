@@ -1650,6 +1650,11 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         let myname = loggdenUser.value(forKey: USERNAME)as! String
         if myname == phoneNumber {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection

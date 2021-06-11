@@ -23,6 +23,9 @@ class commentCell: UITableViewCell {
     @IBOutlet weak var viewSecondBack: UIView!
     @IBOutlet weak var lblreplyname: UILabel!
     @IBOutlet weak var lblReply: UILabel!
+    @IBOutlet weak var lblTimeHeight: NSLayoutConstraint!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

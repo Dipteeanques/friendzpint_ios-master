@@ -17,7 +17,12 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
     
     @IBOutlet weak var onlySettingView: UIView!
     
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var btnMenu: UIButton!{
+        didSet{
+            btnMenu.layer.cornerRadius = btnMenu.frame.height/2
+            btnMenu.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var viewReport: UIView!
     
     @IBOutlet weak var ViewJoin: UIView!
@@ -49,8 +54,15 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -65,6 +77,7 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
     var onlyInvaite = String()
     var passBackvala = String()
     
+    @IBOutlet weak var lblTitle: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,6 +164,8 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
 //            }
 //        }
         
+        imgwidth.constant = UIScreen.main.bounds.width
+        
        // gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
@@ -200,6 +215,7 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
                 self.imgCover.sd_setImage(with: self.ustCover, completed: nil)
                 self.strUserType = res!.type
                 self.lblName.text = Name!
+                self.lblTitle.text = Name!
                 self.groupTimeline_id = res!.timeline_id
                 let groupId = res?.id
                 self.group = res!.group_request
@@ -278,6 +294,13 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
     @IBAction func btnjoinedAction(_ sender: UIButton) {
     }
     @IBAction func btnSettingAction(_ sender: UIButton) {
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
+        obj.username = strUserName
+        obj.strbackcheck = "3"
+        //self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
     }
     
     //MARK: - Btn Action
@@ -469,7 +492,7 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline", "Add members","Members","Admins"][index]
+        return ["Timeline", "Add members","Members"][index]//,"Admins"
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -493,9 +516,9 @@ class UserJoinedGroupViewController: MXSegmentedPagerController {
         else if index == 2 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
         }
-        else if index == 3 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
-        }
+//        else if index == 3 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
+//        }
     }
     
     

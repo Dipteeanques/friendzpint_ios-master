@@ -269,21 +269,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         print(userInfo)
         let messageID = userInfo["gcm.message_id"]
-        let username = userInfo["username"]as! String
-        let status_group = userInfo["groups_status"]as! String
-        let post_privacy = userInfo["post_privacy"]as! String
+        let username = userInfo["username"]as? String
+        let status_group = userInfo["groups_status"]as? String
+        let post_privacy = userInfo["post_privacy"]as? String
         let googlecae = userInfo["google.c.a.e"]
-        let member_privacy = userInfo["member_privacy"]as! String
-        let pageAdmin = userInfo["is_page_admin"]as! String
-        let post_id = userInfo["post_id"]as! String
-        let name = userInfo["name"]as! String
-        let invite_privacy = userInfo["invite_privacy"]as! String
-        let event_type = userInfo["event_type"]as! String
-        let groups_type = userInfo["groups_type"]as! String
-        let type = userInfo["type"]as! String
-        let redirect_action = userInfo["redirect_action"]as! String
-        let is_guest = userInfo["is_guest"]as! String
-        let id = userInfo["id"]as! String
+        let member_privacy = userInfo["member_privacy"]as? String
+        let pageAdmin = userInfo["is_page_admin"]as? String
+        let post_id = userInfo["post_id"]as? String
+        let name = userInfo["name"]as? String
+        let invite_privacy = userInfo["invite_privacy"]as? String
+        let event_type = userInfo["event_type"]as? String
+        let groups_type = userInfo["groups_type"]as? String
+        let type = userInfo["type"]as? String
+        let redirect_action = userInfo["redirect_action"]as? String
+        let is_guest = userInfo["is_guest"]as? String
+        let id = userInfo["id"]as? String
         
         let myprofile = loggdenUser.value(forKey: USERNAME)as! String
         
@@ -291,7 +291,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "DetailsPostandComment") as? DetailsPostandComment {
-                    viewcontroller.postDetail_id = Int(post_id)!
+                    viewcontroller.postDetail_id = Int(post_id ?? "")!
                     rootViewController.pushViewController(viewcontroller, animated: true)
                 }
             }
@@ -328,9 +328,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 if let rootViewController = self.window!.rootViewController as? UINavigationController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "FriendPageProfileController") as? FriendPageProfileController {
-                        viewcontroller.strUserName = username
-                        viewcontroller.onlyPost = post_privacy
-                        viewcontroller.onlyInvaite = invite_privacy
+                        viewcontroller.strUserName = username ?? ""
+                        viewcontroller.onlyPost = post_privacy ?? ""
+                        viewcontroller.onlyInvaite = invite_privacy ?? ""
                         rootViewController.pushViewController(viewcontroller, animated: true)
                     }
                 }
@@ -341,9 +341,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "MypageProfileViewController") as? MypageProfileViewController {
                         loggdenUser.setValue(username, forKey: UNAME)
-                        viewcontroller.strUserName = username
-                        viewcontroller.onlyPost = post_privacy
-                        viewcontroller.onlyInvaite = invite_privacy
+                        viewcontroller.strUserName = username ?? ""
+                        viewcontroller.onlyPost = post_privacy ?? ""
+                        viewcontroller.onlyInvaite = invite_privacy ?? ""
                         rootViewController.pushViewController(viewcontroller, animated: true)
                     }
                 }
@@ -356,10 +356,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PublicEventProfileController") as? PublicEventProfileController {
-                                viewcontroller.strUserName = username
-                                viewcontroller.onlyPost = post_privacy
-                                viewcontroller.onlyInvaite = invite_privacy
-                                viewcontroller.is_page_admin = Int(pageAdmin)!
+                                viewcontroller.strUserName = username ?? ""
+                                viewcontroller.onlyPost = post_privacy ?? ""
+                                viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
                         }
@@ -368,10 +368,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController") as? publicAndGuestProfileViewController {
-                                viewcontroller.strUserName = username
-                                viewcontroller.onlyPost = post_privacy
-                                viewcontroller.onlyInvaite = invite_privacy
-                                viewcontroller.is_page_admin = Int(pageAdmin)!
+                                viewcontroller.strUserName = username ?? ""
+                                viewcontroller.onlyPost = post_privacy ?? ""
+                                viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
                         }
@@ -380,10 +380,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PublicEventProfileController") as? PublicEventProfileController {
-                                viewcontroller.strUserName = username
-                                viewcontroller.onlyPost = post_privacy
-                                viewcontroller.onlyInvaite = invite_privacy
-                                viewcontroller.is_page_admin = Int(pageAdmin)!
+                                viewcontroller.strUserName = username ?? ""
+                                viewcontroller.onlyPost = post_privacy ?? ""
+                                viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
                         }
@@ -392,10 +392,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController") as? publicAndGuestProfileViewController {
-                                viewcontroller.strUserName = username
-                                viewcontroller.onlyPost = post_privacy
-                                viewcontroller.onlyInvaite = invite_privacy
-                                viewcontroller.is_page_admin = Int(pageAdmin)!
+                                viewcontroller.strUserName = username ?? ""
+                                viewcontroller.onlyPost = post_privacy ?? ""
+                                viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
                         }
@@ -404,10 +404,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PublicEventProfileController") as? PublicEventProfileController {
-                                viewcontroller.strUserName = username
-                                viewcontroller.onlyPost = post_privacy
-                                viewcontroller.onlyInvaite = invite_privacy
-                                viewcontroller.is_page_admin = Int(pageAdmin)!
+                                viewcontroller.strUserName = username ?? ""
+                                viewcontroller.onlyPost = post_privacy ?? ""
+                                viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
                         }
@@ -419,10 +419,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateAndMemberController") as? PrivateAndMemberController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = invite_privacy
-                                    viewcontroller.is_page_admin = Int(pageAdmin)!
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                    viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -431,10 +431,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateAndMemberController") as? PrivateAndMemberController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = invite_privacy
-                                    viewcontroller.is_page_admin = Int(pageAdmin)!
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                    viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -443,10 +443,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateAndMemberController") as? PrivateAndMemberController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = invite_privacy
-                                    viewcontroller.is_page_admin = Int(pageAdmin)!
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                    viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -455,10 +455,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateAndMemberController") as? PrivateAndMemberController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = invite_privacy
-                                    viewcontroller.is_page_admin = Int(pageAdmin)!
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                    viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -467,10 +467,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateAndMemberController") as? PrivateAndMemberController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = invite_privacy
-                                    viewcontroller.is_page_admin = Int(pageAdmin)!
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = invite_privacy ?? ""
+                                    viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -480,7 +480,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if let rootViewController = self.window!.rootViewController as? UINavigationController {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "PrivateEventController") as? PrivateEventController {
-                                viewcontroller.strUserName = username
+                                viewcontroller.strUserName = username ?? ""
                                 viewcontroller.onlyPrivet = "onlyPrivet"
                                 rootViewController.pushViewController(viewcontroller, animated: true)
                             }
@@ -492,8 +492,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 if let rootViewController = self.window!.rootViewController as? UINavigationController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "EventProfileController") as? EventProfileController {
-                        viewcontroller.strUserName = username
-                        viewcontroller.is_page_admin = Int(pageAdmin)!
+                        viewcontroller.strUserName = username ?? ""
+                        viewcontroller.is_page_admin = Int(pageAdmin ?? "")!
                         rootViewController.pushViewController(viewcontroller, animated: true)
                     }
                 }
@@ -507,9 +507,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -518,9 +518,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -529,9 +529,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -540,9 +540,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -551,9 +551,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -562,9 +562,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -575,9 +575,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -586,9 +586,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -597,9 +597,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -608,9 +608,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -619,9 +619,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -630,9 +630,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -643,9 +643,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -654,9 +654,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -665,9 +665,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "NewUserJoinGroupController") as? NewUserJoinGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -676,9 +676,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -687,9 +687,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -698,9 +698,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -713,9 +713,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -724,9 +724,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -735,9 +735,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -746,9 +746,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -757,9 +757,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -768,9 +768,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -781,9 +781,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -792,9 +792,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -803,9 +803,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -814,9 +814,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -825,9 +825,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -836,9 +836,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -851,9 +851,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -862,9 +862,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -873,9 +873,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -884,9 +884,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -895,9 +895,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -906,9 +906,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openAndSecretGroupController") as? openAndSecretGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -919,9 +919,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -930,9 +930,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -941,9 +941,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -952,9 +952,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -963,9 +963,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -974,9 +974,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             if let rootViewController = self.window!.rootViewController as? UINavigationController {
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openAndSecretGroupController") as? openAndSecretGroupController {
-                                    viewcontroller.strUserName = username
-                                    viewcontroller.onlyPost = post_privacy
-                                    viewcontroller.onlyInvaite = member_privacy
+                                    viewcontroller.strUserName = username ?? ""
+                                    viewcontroller.onlyPost = post_privacy ?? ""
+                                    viewcontroller.onlyInvaite = member_privacy ?? ""
                                     rootViewController.pushViewController(viewcontroller, animated: true)
                                 }
                             }
@@ -989,9 +989,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     if let rootViewController = self.window!.rootViewController as? UINavigationController {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "GroupProfileViewController") as? GroupProfileViewController {
-                            viewcontroller.strUserName = username
-                            viewcontroller.onlyPost = post_privacy
-                            viewcontroller.onlyInvaite = member_privacy
+                            viewcontroller.strUserName = username ?? ""
+                            viewcontroller.onlyPost = post_privacy ?? ""
+                            viewcontroller.onlyInvaite = member_privacy ?? ""
                             rootViewController.pushViewController(viewcontroller, animated: true)
                         }
                     }
@@ -1000,9 +1000,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     if let rootViewController = self.window!.rootViewController as? UINavigationController {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "openNewuserGroupController") as? openNewuserGroupController {
-                            viewcontroller.strUserName = username
-                            viewcontroller.onlyPost = post_privacy
-                            viewcontroller.onlyInvaite = member_privacy
+                            viewcontroller.strUserName = username ?? ""
+                            viewcontroller.onlyPost = post_privacy ?? ""
+                            viewcontroller.onlyInvaite = member_privacy ?? ""
                             rootViewController.pushViewController(viewcontroller, animated: true)
                         }
                     }
@@ -1011,9 +1011,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     if let rootViewController = self.window!.rootViewController as? UINavigationController {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         if let viewcontroller = storyboard.instantiateViewController(withIdentifier: "UserJoinedGroupViewController") as? UserJoinedGroupViewController {
-                            viewcontroller.strUserName = username
-                            viewcontroller.onlyPost = post_privacy
-                            viewcontroller.onlyInvaite = member_privacy
+                            viewcontroller.strUserName = username ?? ""
+                            viewcontroller.onlyPost = post_privacy ?? ""
+                            viewcontroller.onlyInvaite = member_privacy ?? ""
                             rootViewController.pushViewController(viewcontroller, animated: true)
                         }
                     }

@@ -55,6 +55,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
         }
     }
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     @IBOutlet weak var lblTitle: UILabel!
     var strUserName = String()
     var strUserType = String()
@@ -152,7 +153,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
-        
+        imgwidth.constant = UIScreen.main.bounds.width
 //        gridentView.backgroundColor = .white
         
         if UIScreen.main.bounds.width == 320 {
@@ -305,6 +306,15 @@ class openNewuserGroupController: MXSegmentedPagerController {
         }
     }
     @IBAction func btnSecretSetting(_ sender: UIButton) {
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
+        obj.username = strUserName
+        //self.navigationController?.pushViewController(obj, animated: true)
+        obj.strbackcheck = "3"
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
+        
+        
     }
     @IBAction func btnMenuAction(_ sender: UIButton) {
         if menuBool == true {
@@ -494,7 +504,7 @@ class openNewuserGroupController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline","Members","Admins"][index]
+        return ["Timeline","Members"][index]//,"Admins"
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -515,9 +525,9 @@ class openNewuserGroupController: MXSegmentedPagerController {
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
         }
-        else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
-        }
+//        else if index == 2 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
+//        }
     }
     
     

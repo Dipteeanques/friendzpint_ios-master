@@ -137,6 +137,7 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
         let member_privacy = arrResults[indexPath.row].member_privacy
         let is_guest = arrResults[indexPath.row].is_guest
         let myprofile = loggdenUser.value(forKey: USERNAME)as! String
+        let timelineid = arrResults[indexPath.row].id
         
         
         if type == "user" {
@@ -511,6 +512,17 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                             self.present(obj, animated: false, completion: nil)
                         }
                     }
+                    else{
+                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "GroupProfileViewController")as! GroupProfileViewController
+                        loggdenUser.set(username, forKey: UNAME)
+                        obj.strUserName = username
+                        obj.groupTimeline_id =  timelineid //arrMypage[indexPath.row].timeline_id
+                        obj.onlyPost = post_privacy
+                        obj.onlyInvaite = member_privacy
+                       // self.navigationController?.pushViewController(obj, animated: true)
+                        obj.modalPresentationStyle = .fullScreen
+                        self.present(obj, animated: false, completion: nil)
+                    }
                 }
                 else if group_Type == "open" {
                     if status_group == "joined" {
@@ -574,6 +586,16 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                             obj.modalPresentationStyle = .fullScreen
                             self.present(obj, animated: false, completion: nil)
                         }
+                        else{
+                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
+                            loggdenUser.set(username, forKey: UNAME)
+                            obj.strUserName = username
+                            obj.groupTimeline_id = timelineid
+                            obj.onlyPost = post_privacy
+                            obj.onlyInvaite = member_privacy
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
+                        }
                     }
                     else {
                         if member_privacy == "only_admins" && post_privacy == "only_admins" {
@@ -633,6 +655,16 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyInvaite = member_privacy
                             loggdenUser.set(username, forKey: UNAME)
 //                            self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
+                        }
+                        else{
+                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
+                            loggdenUser.set(username, forKey: UNAME)
+                            obj.strUserName = username
+                            obj.groupTimeline_id = timelineid
+                            obj.onlyPost = post_privacy
+                            obj.onlyInvaite = member_privacy
                             obj.modalPresentationStyle = .fullScreen
                             self.present(obj, animated: false, completion: nil)
                         }
@@ -700,6 +732,16 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                             obj.modalPresentationStyle = .fullScreen
                             self.present(obj, animated: false, completion: nil)
                         }
+                        else{
+                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
+                            loggdenUser.set(username, forKey: UNAME)
+                            obj.strUserName = username
+                            obj.groupTimeline_id = timelineid
+                            obj.onlyPost = post_privacy
+                            obj.onlyInvaite = member_privacy
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
+                        }
                     }
                     else {
                         if member_privacy == "only_admins" && post_privacy == "only_admins" {
@@ -759,6 +801,16 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                             obj.onlyInvaite = member_privacy
                             loggdenUser.set(username, forKey: UNAME)
 //                            self.navigationController?.pushViewController(obj, animated: true)
+                            obj.modalPresentationStyle = .fullScreen
+                            self.present(obj, animated: false, completion: nil)
+                        }
+                        else{
+                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
+                            loggdenUser.set(username, forKey: UNAME)
+                            obj.strUserName = username
+                            obj.groupTimeline_id = timelineid
+                            obj.onlyPost = post_privacy
+                            obj.onlyInvaite = member_privacy
                             obj.modalPresentationStyle = .fullScreen
                             self.present(obj, animated: false, completion: nil)
                         }

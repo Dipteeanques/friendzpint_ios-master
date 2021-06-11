@@ -51,6 +51,7 @@ class MypageProfileViewController: MXSegmentedPagerController {
         }
     }
     
+    @IBOutlet weak var imgWidth: NSLayoutConstraint!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -74,6 +75,9 @@ class MypageProfileViewController: MXSegmentedPagerController {
     }
     
     func setDefault() {
+        print(UIScreen.main.bounds.width)
+        imgWidth.constant = UIScreen.main.bounds.width
+        
         getPageDetails()
         self.navigationController?.navigationBar.isHidden = true
         segmentedPager.backgroundColor = .white
@@ -147,7 +151,7 @@ class MypageProfileViewController: MXSegmentedPagerController {
         
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
-            segmentedPager.parallaxHeader.height = 370
+            segmentedPager.parallaxHeader.height = 400
             segmentedPager.parallaxHeader.minimumHeight = 66
 //            gradientLayer.frame = CGRect(x: gridentView.bounds.origin.x, y: gridentView.bounds.origin.y, width: 414, height: 66)
         }
@@ -246,7 +250,9 @@ class MypageProfileViewController: MXSegmentedPagerController {
     @IBAction func btnSettingAction(_ sender: UIButton) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreatePageViewController")as! CreatePageViewController
         obj.strPageName = strUserName
-        self.navigationController?.pushViewController(obj, animated: true)
+        //self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
         //        let navController = UINavigationController(rootViewController: obj)
         //        self.present(navController, animated:true, completion: nil)
     }

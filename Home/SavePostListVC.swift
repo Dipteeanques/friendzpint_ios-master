@@ -80,6 +80,7 @@ class SavePostListVC: UIViewController {
     
     var Postime_id = Int()
     var strDescriptionedit = String()
+    var postDetail_id = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,8 +152,11 @@ class SavePostListVC: UIViewController {
 //            firstTime()
 //        }
 //        else if strUrlType == "Save"{
-            self.lblTitle.text = "Save Post"
-            GetSaveList()
+        
+       
+ 
+        
+           
 //        }
 //        else{
 //            self.lblTitle.text = "Browse"
@@ -180,7 +184,15 @@ class SavePostListVC: UIViewController {
         
         loaderView.isHidden = false
         activity.startAnimating()
-       
+        
+        if strUrlType == "post"{
+           self.lblTitle.text = "Post"
+           getpost()
+       }
+        else{
+           self.lblTitle.text = "Save Post"
+           GetSaveList()
+        }
        
     }
 
@@ -200,6 +212,34 @@ class SavePostListVC: UIViewController {
 //        currentTabBar?.setBar(hidden: false, animated: false)
         mainTableView.reloadData()
         pausePlayeVideos()
+    }
+    
+    func getpost() {
+        
+        let parameters = ["post_id": postDetail_id] as [String : Any]
+        print(parameters)
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        wc.callSimplewebservice(url: POSTBYID + "?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: selectedPostDetails?) in
+            if sucess {
+                let sucessMy = response?.success
+                if sucessMy! {
+                    print(response)
+                    let arr_dict = response?.data
+                    self.arrFeed1.append(arr_dict!)
+                    print("arrFeedpost: ",self.arrFeed1)
+                    print("postcount:", self.arrFeed1.count)
+                    self.mainTableView.reloadData()
+                    self.mainTableView.isHidden = false
+                    self.loaderView.isHidden = true
+                    self.foundView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+            }
+        }
     }
     
     func GetSaveList(){
@@ -373,12 +413,13 @@ class SavePostListVC: UIViewController {
             let shared_person_name = arrFeed1[indexPath.row].shared_person_name
             let shared_username = arrFeed1[indexPath.row].shared_username
             let is_users_shared = arrFeed1[indexPath.row].is_users_shared
-            
+           // let image = UIImage(named: "ProfileHeart")
             if SavePost == 0 {
                 strSaveUnsave = "Save Post"
             }
             else {
                 strSaveUnsave = "Unsave Post"
+                
             }
             
             if Notification == 0 {
@@ -926,6 +967,24 @@ class SavePostListVC: UIViewController {
             }
         }
     }
+    
+    @IBAction func btnReadMoreAction(_ sender: UIButton) {
+        let arrImages = arrFeed1[sender.tag].images
+        print("arrImages: ",arrImages)
+        
+        
+  
+        for item in arrImages {
+            let source_url = item
+            print(source_url)
+           
+            if let url = URL(string: source_url) {
+                UIApplication.shared.open(url)
+            }
+
+        }
+       
+    }
 
 }
 
@@ -1179,6 +1238,8 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //        cell.btnStatus.tag = indexPath.row
 //        cell.btnStatus.addTarget(self, action: #selector(btnStatusAction(_:)), for: UIControl.Event.touchUpInside)
 //
+        cell.btnReadMore.tag = indexPath.row
+        cell.btnReadMore.addTarget(self, action: #selector(btnReadMoreAction(_:)), for: UIControl.Event.touchUpInside)
         
         cell.btnmore.tag = indexPath.row
         cell.btnmore.addTarget(self, action: #selector(btnMoreAction(_:)), for: UIControl.Event.touchUpInside)
@@ -1458,6 +1519,7 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
             switch typeFeed {
             case "image":
 //
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
                 cell.btnClick.isHidden = false
 //                cell.btnclick.isHidden = false
                 cell.countView.isHidden = true
@@ -1475,6 +1537,7 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 
                 for item in arrImages {
                     let source_url = item
+                print(source_url)
                     cell.imageviewBackground.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
 //                    blurImage(img: cell.imageviewBackground)
                     
@@ -1485,6 +1548,8 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
                 break
 
             case "multi_image" :
+                
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
                 cell.btnClick.isHidden = true
                 
                 cell.countView.isHidden = false
@@ -1538,6 +1603,40 @@ extension SavePostListVC: UITableViewDelegate,UITableViewDataSource,UITableViewD
 //                    cell.configure(post: arrFeed1[indexPath.row].video_poster)
                 }
                 
+                break
+                
+            case "custom_url":
+                cell.ViewCustomeUrl.isHidden = false
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
+//                cell.btnclick.isHidden = false
+                cell.countView.isHidden = true
+//                cell.pagerView.isHidden = true
+//                cell.pageControl.isHidden = true
+                cell.imageview.isHidden = true
+                cell.imageviewBackground.isHidden = true
+                cell.shotImageView.isHidden = true
+//                cell.btn_play.isHidden = true
+//                cell.imageview.contentMode = .scaleAspectFit
+                cell.images = []
+                cell.pagerView.reloadData()
+                cell.pagerView.backgroundColor = .gray
+                let arrImages = arrFeed1[indexPath.row].images
+                print("arrImages: ",arrImages)
+                
+                
+                if arrImages.count == 0{
+//
+                }
+                
+                for item in arrImages {
+                    let source_url = item
+                    print(source_url)
+                    cell.strURl = source_url
+                    cell.displayWebView()
+
+
+                }
+                cell.btnClick.isHidden = true
                 break
             default:
                 break

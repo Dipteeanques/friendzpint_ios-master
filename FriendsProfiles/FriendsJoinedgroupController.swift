@@ -216,11 +216,18 @@ extension FriendsJoinedgroupController: UITableViewDelegate,UITableViewDataSourc
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "GroupProfileViewController")as! GroupProfileViewController
         print(username)
         loggdenUser.set(username, forKey: GROUPUSERNAME)
+        loggdenUser.set(username, forKey: UNAME)
         obj.strUserName = username
         //self.navigationController?.pushViewController(obj, animated: true)
         obj.modalPresentationStyle = .fullScreen
         //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
+        
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+//        obj.strUser = username
+////                    self.navigationController?.pushViewController(obj, animated: true)
+//        obj.modalPresentationStyle = .fullScreen
+//        self.present(obj, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

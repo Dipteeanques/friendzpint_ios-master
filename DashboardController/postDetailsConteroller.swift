@@ -209,12 +209,12 @@ class postDetailsConteroller: UIViewController,UIPopoverPresentationControllerDe
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            if count == 0{
-                currentTabBar!.setBadgeText(nil, atIndex: 3)
-            }
-            else{
-                currentTabBar!.setBadgeText(String(count), atIndex: 3)
-            }
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
         }
         
         let gradientLayer = CAGradientLayer()
@@ -1900,6 +1900,11 @@ extension postDetailsConteroller: UITableViewDelegate,UITableViewDataSource,UISc
         let myname = loggdenUser.value(forKey: USERNAME)as! String
         if myname == phoneNumber {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection

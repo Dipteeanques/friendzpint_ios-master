@@ -225,12 +225,17 @@ extension FriendsLikedPageController: UITableViewDelegate,UITableViewDataSource,
         let pageAdmin = arrLiked[indexPath.row].is_page_admin
         let username = arrLiked[indexPath.row].username
         if pageAdmin == 0 {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
-            obj.strUserName = username
-            loggdenUser.setValue(username, forKey: UNAME)
-//            self.navigationController?.pushViewController(obj, animated: false)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+//            obj.strUserName = username
+//            loggdenUser.setValue(username, forKey: UNAME)
+////            self.navigationController?.pushViewController(obj, animated: false)
+//            obj.modalPresentationStyle = .fullScreen
+//            //self.navigationController?.pushViewController(obj, animated: true)
+//            self.present(obj, animated: false, completion: nil)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = username
+    //                    self.navigationController?.pushViewController(obj, animated: true)
             obj.modalPresentationStyle = .fullScreen
-            //self.navigationController?.pushViewController(obj, animated: true)
             self.present(obj, animated: false, completion: nil)
         }
         else {

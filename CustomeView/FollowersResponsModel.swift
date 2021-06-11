@@ -75,7 +75,7 @@ public struct DatumFollower: Codable {
     public let name: String
     public let avatar: String
     public let username: String
-    public let isFollow: Int
+    public var isFollow: Int
 
     enum CodingKeys: String, CodingKey {
         case id = "id"

@@ -5693,6 +5693,10 @@ extension FriendsTimelineController: UICollectionViewDelegate,UICollectionViewDa
             cell.imgProfileF.kf.setImage(with: URL(string: arrFeed[indexPath.row].video_poster),placeholder:UIImage(named: "Placeholder"))
             break
             
+        case "custom_url":
+            cell.imgProfileF.image = UIImage(named: "customeurl")
+            break
+            
         default:
             break
         }

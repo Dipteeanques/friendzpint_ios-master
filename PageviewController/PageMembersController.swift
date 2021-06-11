@@ -40,8 +40,9 @@ class PageMembersController: UIViewController {
     }
     
     func getMember() {
-        let username = loggdenUser.value(forKey: PAGEUSERNAME)as! String
-        let parameters = ["username":username] as [String : Any]
+        arrAdmin.removeAll()
+        let username = loggdenUser.value(forKey: PAGEUSERNAME)as? String
+        let parameters = ["username":username ?? ""] as [String : Any]
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -194,11 +195,21 @@ extension PageMembersController : UITableViewDataSource,UITableViewDelegate,UISc
         let selectedUsername = arrAdmin[indexPath.row].username
         if selectedUsername == username {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-            obj.strUserName = selectedUsername
-            self.navigationController?.pushViewController(obj, animated: true)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//            obj.strUserName = selectedUsername
+//            self.navigationController?.pushViewController(obj, animated: true)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = selectedUsername
+    //                    self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

@@ -1218,6 +1218,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
         Flag = 0
 //        obj.GroupTimeline_Id = gtime_id
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
+        naviget.modalPresentationStyle = .fullScreen
         self.present(naviget, animated: true, completion: nil)
     }
 }
@@ -5473,6 +5474,7 @@ extension TimelineViewCiontroller: UICollectionViewDelegate,UICollectionViewData
         switch typeFeed {
         case "image":
             let arrImages = arrFeed[indexPath.row].images
+            cell.imgProfileF.image = UIImage(named: "Placeholder")
             for item in arrImages {
                 let source_url = item
                // url = URL(string: source_url)
@@ -5487,6 +5489,10 @@ extension TimelineViewCiontroller: UICollectionViewDelegate,UICollectionViewData
        
         case "video":
             cell.imgProfileF.kf.setImage(with: URL(string: arrFeed[indexPath.row].video_poster),placeholder:UIImage(named: "Placeholder"))
+            break
+            
+        case "custom_url":
+            cell.imgProfileF.image = UIImage(named: "customeurl")
             break
             
         default:

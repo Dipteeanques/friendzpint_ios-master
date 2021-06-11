@@ -111,9 +111,9 @@ class MypagesViewController: UIViewController,UISearchBarDelegate {
                     for i in 0..<arr_dict!.count
                     {
                         self.arrMypage.insert(arr_dict![i], at: 0)
-                        self.tblPages.beginUpdates()
-                        self.tblPages.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
-                        self.tblPages.endUpdates()
+//                        self.tblPages.beginUpdates()
+//                        self.tblPages.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+//                        self.tblPages.endUpdates()
                         self.spinner.stopAnimating()
                         self.tblPages.tableFooterView?.isHidden = true
                         self.loaderView.isHidden = true
@@ -125,6 +125,7 @@ class MypagesViewController: UIViewController,UISearchBarDelegate {
                             self.foundView.isHidden = true
                         }
                     }
+                    self.tblPages.reloadData()
                 }
                 else {
                     self.spinner.stopAnimating()
@@ -197,9 +198,18 @@ extension MypagesViewController: UITableViewDelegate,UITableViewDataSource {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "MypageProfileViewController")as! MypageProfileViewController
         obj.strUserName = arrMypage[indexPath.row].username
         print(arrMypage[indexPath.row].username)
-       
+        //loggdenUser.setValue(username, forKey: UNAME)
         loggdenUser.setValue(arrMypage[indexPath.row].username, forKey: UNAME)
-        self.navigationController?.pushViewController(obj, animated: true)
+
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
+        //self.navigationController?.pushViewController(obj, animated: true)
+        
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+//        obj.strUser = arrMypage[indexPath.row].username
+////                    self.navigationController?.pushViewController(obj, animated: true)
+//        obj.modalPresentationStyle = .fullScreen
+//        self.present(obj, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -279,11 +289,18 @@ extension MypagesViewController: UICollectionViewDelegate,UICollectionViewDataSo
     
     @objc func btnClickAction(_ sender: UIButton) {
         let suggested = arrPageSuggested[sender.tag]
-        let username = (suggested as AnyObject).value(forKey: "username")as? String//arrLiked[indexPath.row].username
-        let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
-        obj.strUserName = username ?? ""
+       let username = (suggested as AnyObject).value(forKey: "username")as? String//arrLiked[indexPath.row].username
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
+//        obj.strUserName = username ?? ""
+//        obj.modalPresentationStyle = .fullScreen
+//        //self.navigationController?.pushViewController(obj, animated: true)
+//        self.present(obj, animated: false, completion: nil)
+        
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+        obj.strUser = username ?? ""
+//                    self.navigationController?.pushViewController(obj, animated: true)
         obj.modalPresentationStyle = .fullScreen
-        //self.navigationController?.pushViewController(obj, animated: true)
         self.present(obj, animated: false, completion: nil)
     }
     

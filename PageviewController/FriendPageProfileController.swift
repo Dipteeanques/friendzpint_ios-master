@@ -50,6 +50,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
         }
     }
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -110,6 +111,7 @@ class FriendPageProfileController: MXSegmentedPagerController {
         btnJoined.layer.cornerRadius = 5
         btnJoined.clipsToBounds = true
        
+        imgwidth.constant = UIScreen.main.bounds.width
         
 //        let gradientLayer = CAGradientLayer()
 //

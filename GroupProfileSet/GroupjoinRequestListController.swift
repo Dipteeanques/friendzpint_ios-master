@@ -184,14 +184,24 @@ extension GroupjoinRequestListController: UITableViewDelegate,UITableViewDataSou
         let username = arrRequest[indexPath.row].username
         if usernameUser == username {
             currentTabBar?.setIndex(4)
-        }
-        else {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-            print(username)
-            obj.strUserName = username
-            //self.navigationController?.pushViewController(obj, animated: true)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
             obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
+        }
+        else {
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//            print(username)
+//            obj.strUserName = username
+//            //self.navigationController?.pushViewController(obj, animated: true)
+//            obj.modalPresentationStyle = .fullScreen
+//            //self.navigationController?.pushViewController(obj, animated: true)
+//            self.present(obj, animated: false, completion: nil)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = username
+    //                    self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
             self.present(obj, animated: false, completion: nil)
         }
     }

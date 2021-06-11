@@ -1290,6 +1290,7 @@ class PageTimelineController: UIViewController,TTTAttributedLabelDelegate {
         Flag = 0
         obj.GroupTimeline_Id = gtime_id
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
+        naviget.modalPresentationStyle = .fullScreen
         self.present(naviget, animated: true, completion: nil)
     }
     
@@ -1324,6 +1325,9 @@ extension PageTimelineController: UICollectionViewDelegate,UICollectionViewDataS
             cell.imgProfileF.kf.setImage(with: URL(string: arrFeed[indexPath.row].video_poster),placeholder:UIImage(named: "Placeholder"))
             break
             
+        case "custom_url":
+            cell.imgProfileF.image = UIImage(named: "customeurl")
+            break
         default:
             break
         }

@@ -212,16 +212,27 @@ extension PagePeopleLikethisController : UITableViewDataSource,UITableViewDelega
         let username = arrAdmin[indexPath.row].username
         if usernameUser == username {
             currentTabBar?.setIndex(4)
-        }
-        else {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-            print(username)
-            loggdenUser.set(username, forKey: FRIENDSUSERNAME)
-            obj.strUserName = username
-//            loggdenUser.setValue(username, forKey: UNAME)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
 //            self.navigationController?.pushViewController(obj, animated: true)
             obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
+        }
+        else {
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//            print(username)
+//            loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+//            obj.strUserName = username
+////            loggdenUser.setValue(username, forKey: UNAME)
+////            self.navigationController?.pushViewController(obj, animated: true)
+//            obj.modalPresentationStyle = .fullScreen
+//            //self.navigationController?.pushViewController(obj, animated: true)
+//            self.present(obj, animated: false, completion: nil)
+            
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = username
+    //                    self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
             self.present(obj, animated: false, completion: nil)
         }
     }

@@ -53,6 +53,7 @@ class PublicEventProfileController: MXSegmentedPagerController {
         }
     }
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -140,6 +141,7 @@ class PublicEventProfileController: MXSegmentedPagerController {
 //            }
 //        }
         
+        imgwidth.constant = UIScreen.main.bounds.width
         //gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66

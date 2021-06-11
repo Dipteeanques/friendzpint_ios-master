@@ -11,6 +11,7 @@ import FSPagerView
 import AVFoundation
 import ActiveLabel
 import TTTAttributedLabel
+import WebKit
 
 class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     
@@ -34,6 +35,11 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     @IBOutlet weak var likeViewHeight: NSLayoutConstraint!
     var arrFeed1 = [MyTimelineList]()
     @IBOutlet weak var imageviewBackground: UIImageView!
+//    {
+//        didSet{
+//            imageviewBackground.layer.backgroundColor = UIColor.black.withAlphaComponent(0.5).cgColor
+//        }
+//    }
     @IBOutlet weak var imageview: UIImageView!
     
 //    @IBOutlet weak var bottomVIew: UIView!
@@ -127,6 +133,7 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     
 //    @IBOutlet weak var btnLocationWidth: NSLayoutConstraint!
     
+    @IBOutlet weak var ViewCustomeUrl: CardView!
     
 //    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imgWidth1: NSLayoutConstraint!
@@ -180,6 +187,8 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     @IBOutlet weak var lblLikeCount: UILabel!
     @IBOutlet weak var lblDislikeCount: UILabel!
     
+    @IBOutlet weak var imgUrl: UIImageView!
+    @IBOutlet weak var WebView: UIView!
     var shadowimg = UIImageView()
     @IBOutlet weak var lblviewcounter: UILabel!
     
@@ -190,8 +199,9 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
             btneye.tintColor = .white
         }
     }
-    
+    var strURl = String()
     @IBOutlet weak var btnLikeCount: UIButton!
+    @IBOutlet weak var btnReadMore: UIButton!
     
     @IBOutlet weak var btnDidLikeCount: UIButton!
     override func awakeFromNib() {
@@ -233,12 +243,49 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         pagerView.addSubview(lblUserName)
         pagerView.addSubview(lblDetails)
         pagerView.addSubview(lblTag)
+        pagerView.addSubview(ViewCustomeUrl)
+        
+       // displayWebView()
     }
+    
+    //add webview
+    
+     func displayWebView() {
+        //self.ViewCustomeUrl.backgroundColor = .clear
+        //self.imgUrl.isHidden = false
+        if let webView = self.createWebView(withFrame: self.WebView.bounds) {
+            webView.layer.cornerRadius = 15.0
+            webView.clipsToBounds = true
+            WebView.backgroundColor = .clear
+            self.WebView.addSubview(imgUrl)
+            self.WebView.addSubview(webView)
+            self.ViewCustomeUrl.addSubview(btnReadMore)
+        }
+    }
+
+     func createWebView(withFrame frame: CGRect) -> WKWebView? {
+        let webView = WKWebView(frame: frame)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        if let resourceUrl = URL(string: strURl) {
+            let request = URLRequest(url: resourceUrl)
+            webView.load(request)
+            //self.imgUrl.isHidden = true
+            return webView
+        }
+        
+        return nil
+    }
+
+    
+    //End
+    
     func blurImage(img:UIImageView){
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = img.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.layer.backgroundColor = UIColor.black.withAlphaComponent(0.3).cgColor
         img.addSubview(blurEffectView)
     }
 

@@ -70,6 +70,7 @@ class EventProfileController: MXSegmentedPagerController {
     var is_page_admin = Int()
     var passBackvala = String()
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(MypageProfileViewController.GetCreatedGroup), name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
@@ -141,6 +142,8 @@ class EventProfileController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
+        
+        imgwidth.constant =  UIScreen.main.bounds.width
         
 //        gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {

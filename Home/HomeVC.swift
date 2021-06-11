@@ -39,6 +39,8 @@ class HomeVC: UIViewController {
         }
     }
     
+   
+    @IBOutlet weak var btnNotification: MFBadgeButton!
     
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -85,6 +87,23 @@ class HomeVC: UIViewController {
 //        UIView.animate(withDuration: 1.0, animations: {
 //              self.ViewNewpost.layer.position.y = 200.0
 //          })
+        
+        
+     //   btnNotification.badge = "4"
+       // btnNotification.badge(text: "4")
+        
+        
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+              //  currentTabBar!.setBadgeText(nil, atIndex: 3)
+                btnNotification.badgeValue = ""
+            }
+            else{
+                //currentTabBar!.setBadgeText(String(count), atIndex: 3)
+                btnNotification.badgeValue = String(count)
+            }
+        }
         
         timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.GetNewPost), userInfo: nil, repeats: true)
         
@@ -133,7 +152,7 @@ class HomeVC: UIViewController {
         mainTableView.register(UINib(nibName: "HomeVCCell", bundle: nil), forCellReuseIdentifier: "cell")
         mainTableView.isHidden = true
         
-        refreshControl.addTarget(self, action: #selector(NewsfeedViewController.refresh), for: UIControl.Event.valueChanged)
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         mainTableView.addSubview(refreshControl)
         
         loaderView.isHidden = false
@@ -157,6 +176,18 @@ class HomeVC: UIViewController {
         mainTableView.beginUpdates()
         currentTabBar?.setBar(hidden: false, animated: false)
         mainTableView.endUpdates()
+        
+        if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
+            let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
+            if count == 0{
+              //  currentTabBar!.setBadgeText(nil, atIndex: 3)
+                btnNotification.badgeValue = ""
+            }
+            else{
+                //currentTabBar!.setBadgeText(String(count), atIndex: 3)
+                btnNotification.badgeValue = String(count)
+            }
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -167,6 +198,12 @@ class HomeVC: UIViewController {
 //        mainTableView.reloadData()
         
         pausePlayeVideos()
+    }
+    
+    @IBAction func btnNotificationAction(_ sender: Any) {
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
     }
     
     @IBAction func btnCameraAction(_ sender: Any) {
@@ -1093,62 +1130,6 @@ class HomeVC: UIViewController {
                 }
             }
             
-//            let parameters = ["timeline_id" : timeVala_id]
-//            let token = loggdenUser.value(forKey: TOKEN)as! String
-//            let BEARERTOKEN = BEARER + token
-//            let headers: HTTPHeaders = ["Xapi": XAPI,
-//                                        "Accept" : ACCEPT,
-//                                        "Authorization":BEARERTOKEN]
-            
-//            if arrFeed[indexPath.row].is_follow == 1{
-//                wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
-//                    if sucess {
-//                        let status = response?.status
-//                        if status == "200" {
-//                            print("sucess")
-//                            cell.btnStatus.setTitle("Follow", for: .normal)
-//                            self.arrFeed[indexPath.row].is_follow = 0
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-////                                    cellfeed.animatedview.isHidden = true
-//                                self.mainTableView.beginUpdates()
-//                                self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-//                                self.mainTableView.endUpdates()
-//
-//
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            else if arrFeed[indexPath.row].is_follow == 0{
-//                wc.callSimplewebservice(url: USERFOLLOWREQUEST, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: FriendsRequestSentResponsModel?) in
-//                    if sucess {
-//                        let suc = response?.success
-//                        if suc! {
-//                            let data = response?.data
-//                            let follow = data?.followrequest
-//                            if follow! {
-//                                cell.btnStatus.setTitle("Requested", for: .normal)
-//                                self.arrFeed[indexPath.row].is_follow = 2
-//                            }
-//                            else {
-//                                cell.btnStatus.setTitle("Follow", for: .normal)
-//                                self.arrFeed[indexPath.row].is_follow = 1
-//                            }
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-////                                    cellfeed.animatedview.isHidden = true
-//                                self.mainTableView.beginUpdates()
-//                                self.mainTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-//                                self.mainTableView.endUpdates()
-//
-//
-//                            }
-//                        }
-//                    }
-//                }
-//
-//
-//            }
         }
         
     }
@@ -1248,11 +1229,11 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                // cell.lblUserName.text = name//fullAttributedString;
                 
                 cell.lblTag.handleMentionTap { mentiontag in
-                    self.usernamemention = strName
+                    self.usernamemention = self.tagFirstUsername
                     self.getMentionPost()
                 }
                 
-                cell.lblTag.text =  "@" + strName.decodeEmoji
+                cell.lblTag.text =  "@" + tagFirstUsername.decodeEmoji
                 cell.lblTag.enabledTypes = [.mention, .hashtag, .url]
 
                 cell.lblUserName.textColor = UIColor.white;
@@ -1275,7 +1256,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 var strmention = String()
                 for index in 0...arrUserTag.count - 1{
                     print("\(index)")
-                    strmention = strmention.appending("@" + nameTag[index] + ",")
+                    strmention = strmention.appending("@" + userTag[index] + ",")
 //                    if index == arrUserTag.count - 1{
 //                        strmention = strmention.appending("@" + nameTag[index] )
 //                    }
@@ -1381,7 +1362,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 self.getMentionPost()
             }
             
-            cell.lblTag.text =  "@" + shared_person_name.decodeEmoji
+            cell.lblTag.text =  "@" + shared_username.decodeEmoji
             cell.lblTag.enabledTypes = [.mention, .hashtag, .url]
             
             if shared_person_name.count == 0{
@@ -1446,7 +1427,6 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         cell.arrFeed1 = arrFeed
         cell.btnChat.tag = indexPath.row
         cell.btnChat.addTarget(self, action: #selector(btnShowmoreComment(_:)), for: UIControl.Event.touchUpInside)
-        
         
         cell.btnmore.tag = indexPath.row
         cell.btnmore.addTarget(self, action: #selector(btnMoreAction(_:)), for: UIControl.Event.touchUpInside)
@@ -1646,7 +1626,8 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
             self.hashtagpost = hashtag
             self.getHashtagPost()
         }
-        
+        cell.btnReadMore.tag = indexPath.row
+        cell.btnReadMore.addTarget(self, action: #selector(btnReadMoreAction(_:)), for: UIControl.Event.touchUpInside)
         
         //MARK: - Description
         let strdescription = arrFeed[indexPath.row].description
@@ -1705,6 +1686,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
             switch typeFeed {
             case "image":
 //
+                cell.ViewCustomeUrl.isHidden = true
                 cell.configureCell(imageUrl: "", description: "", videoUrl:"")
 //                cell.btnclick.isHidden = false
                 cell.countView.isHidden = true
@@ -1719,7 +1701,9 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 cell.pagerView.reloadData()
 
                 let arrImages = arrFeed[indexPath.row].images
-
+                print("arrImages: ",arrImages)
+                
+                
                 if arrImages.count == 0{
                     cell.imageviewBackground.image = UIImage(named: "Placeholder")
                     cell.imageview.image = UIImage(named: "Placeholder")
@@ -1745,6 +1729,8 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 break
 
             case "multi_image" :
+                
+                cell.ViewCustomeUrl.isHidden = true
 
                 cell.configureCell(imageUrl: "", description: "", videoUrl:"")
                 cell.btnClick.isHidden = true
@@ -1768,6 +1754,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                 break
 
             case "video":
+                cell.ViewCustomeUrl.isHidden = true
                 cell.btnClick.isHidden = false
                 let arrImages = arrFeed[indexPath.row].images
 
@@ -1800,6 +1787,40 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 //                    cell.configure(post: arrFeed[indexPath.row].video_poster)
                 }
                 
+                break
+                
+            case "custom_url":
+                cell.ViewCustomeUrl.isHidden = false
+                cell.configureCell(imageUrl: "", description: "", videoUrl:"")
+//                cell.btnclick.isHidden = false
+                cell.countView.isHidden = true
+//                cell.pagerView.isHidden = true
+//                cell.pageControl.isHidden = true
+                cell.imageview.isHidden = true
+                cell.imageviewBackground.isHidden = true
+                cell.shotImageView.isHidden = true
+//                cell.btn_play.isHidden = true
+//                cell.imageview.contentMode = .scaleAspectFit
+                cell.images = []
+                cell.pagerView.reloadData()
+                cell.pagerView.backgroundColor = .gray
+                let arrImages = arrFeed[indexPath.row].images
+                print("arrImages: ",arrImages)
+                
+                
+                if arrImages.count == 0{
+//
+                }
+                
+                for item in arrImages {
+                    let source_url = item
+                    print(source_url)
+                    cell.strURl = source_url
+                    cell.displayWebView()
+
+
+                }
+                cell.btnClick.isHidden = true
                 break
             default:
                 break
@@ -1856,6 +1877,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
     func getMentionPost(){
         
         let username = self.usernamemention
+        print("username: ",username)
 //            let type = arrFeed[sender.tag].type
 //            let group_Type = arrFeed[sender.tag].groups_type
 //            let status_group = arrFeed[sender.tag].groups_status
@@ -1866,7 +1888,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
 //            let member_privacy = arrFeed[sender.tag].member_privacy
 //            let is_guest = arrFeed[sender.tag].is_guest
             let myprofile = loggdenUser.value(forKey: USERNAME)as! String
-            
+            print(myprofile)
             
 //            if type == "user" {
                 if myprofile == username {
@@ -1874,18 +1896,25 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
                     
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
     //                loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                    loggdenUser.set(username, forKey: USERNAME)
     //                obj.strUserName = username
                     //self.navigationController?.pushViewController(obj, animated: false)
                     obj.modalPresentationStyle = .fullScreen
                     self.present(obj, animated: false, completion: nil)
                 }
                 else {
-                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
-                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
-                    loggdenUser.set(username, forKey: UNAME)
-                    obj.strUserName = username
-//                    self.navigationController?.pushViewController(obj, animated: false)
+//                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
+//                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+//                    loggdenUser.set(username, forKey: UNAME)
+//                    obj.strUserName = username
+////                    self.navigationController?.pushViewController(obj, animated: false)
+//                    obj.modalPresentationStyle = .fullScreen
+//                    self.present(obj, animated: false, completion: nil)
+                    
+                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+                    obj.strUser = username
+//                    self.navigationController?.pushViewController(obj, animated: true)
                     obj.modalPresentationStyle = .fullScreen
                     self.present(obj, animated: false, completion: nil)
                 }
@@ -1974,9 +2003,27 @@ extension HomeVC{
             cellfeed.lblDetails.sizeToFit()
             cellfeed.btnmore.isHidden = true
         }
+        
+
     }
     
-    
+    @IBAction func btnReadMoreAction(_ sender: UIButton) {
+        let arrImages = arrFeed[sender.tag].images
+        print("arrImages: ",arrImages)
+        
+        
+  
+        for item in arrImages {
+            let source_url = item
+            print(source_url)
+           
+            if let url = URL(string: source_url) {
+                UIApplication.shared.open(url)
+            }
+
+        }
+       
+    }
     @IBAction func btnLikeAction(_ sender: UIButton) {
             
         if let indexPath = self.mainTableView.indexPathForView(sender) {
@@ -2287,6 +2334,7 @@ extension HomeVC{
     //                currentTabBar?.setIndex(4)
                     
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+                    loggdenUser.set(username, forKey: USERNAME)
     //                loggdenUser.set(username, forKey: FRIENDSUSERNAME)
     //                obj.strUserName = username
                     //self.navigationController?.pushViewController(obj, animated: false)
@@ -2294,14 +2342,7 @@ extension HomeVC{
                     self.present(obj, animated: false, completion: nil)
                 }
                 else {
-//                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
-//                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-//                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
-//                    loggdenUser.set(username, forKey: UNAME)
-//                    obj.strUserName = username
-////                    self.navigationController?.pushViewController(obj, animated: false)
-//                    obj.modalPresentationStyle = .fullScreen
-//                    self.present(obj, animated: false, completion: nil)
+
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
                     obj.strUser = username
 //                    self.navigationController?.pushViewController(obj, animated: true)
@@ -2631,3 +2672,171 @@ extension String {
         self = self.capitalizingFirstLetter()
     }
 }
+
+
+//MARK: Badge Button
+class MFBadgeButton : UIButton {
+    
+    var badgeValue : String! = "" {
+        didSet {
+            self.layoutSubviews()
+        }
+    }
+
+    override init(frame :CGRect)  {
+        // Initialize the UIView
+        super.init(frame : frame)
+        
+        self.awakeFromNib()
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        self.awakeFromNib()
+    }
+    
+    
+    override func awakeFromNib()
+    {
+        self.drawBadgeLayer()
+    }
+
+    var badgeLayer :CAShapeLayer!
+    func drawBadgeLayer() {
+        
+        if self.badgeLayer != nil {
+            self.badgeLayer.removeFromSuperlayer()
+        }
+        
+        // Omit layer if text is nil
+        if self.badgeValue == nil || self.badgeValue.characters.count == 0 {
+            return
+        }
+        
+        //! Initial label text layer
+        let labelText = CATextLayer()
+        labelText.contentsScale = UIScreen.main.scale
+        labelText.string = self.badgeValue.uppercased()
+        labelText.fontSize = 9.0
+        labelText.font = UIFont.systemFont(ofSize: 9)
+        labelText.alignmentMode = CATextLayerAlignmentMode.center
+        labelText.foregroundColor = UIColor.white.cgColor
+        let labelString = self.badgeValue.uppercased() as String!
+        let labelFont = UIFont.systemFont(ofSize: 9) as UIFont!
+        let attributes = [NSAttributedString.Key.font : labelFont]
+        let w = self.frame.size.width
+        let h = CGFloat(10.0)  // fixed height
+        let labelWidth = min(w * 0.8, 10.0)    // Starting point
+        let rect = labelString!.boundingRect(with: CGSize(width: labelWidth, height: h), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let textWidth = round(rect.width * UIScreen.main.scale)
+        labelText.frame = CGRect(x: 0, y: 8, width: textWidth, height: h)
+
+        //! Initialize outline, set frame and color
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.contentsScale = UIScreen.main.scale
+        let frame : CGRect = labelText.frame
+        let cornerRadius = CGFloat(5.0)
+        let borderInset = CGFloat(-1.0)
+        let aPath = UIBezierPath(roundedRect: frame.insetBy(dx: borderInset, dy: borderInset), cornerRadius: cornerRadius)
+        
+        shapeLayer.path = aPath.cgPath
+        shapeLayer.fillColor = UIColor.red.cgColor
+        shapeLayer.strokeColor = UIColor.red.cgColor
+        shapeLayer.lineWidth = 0.5
+
+        shapeLayer.insertSublayer(labelText, at: 0)
+
+        shapeLayer.frame = shapeLayer.frame.offsetBy(dx: w*0.5, dy: 0.0)
+        
+        self.layer.insertSublayer(shapeLayer, at: 999)
+        self.layer.masksToBounds = false
+        self.badgeLayer = shapeLayer
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.drawBadgeLayer()
+        self.setNeedsDisplay()
+    }
+
+}
+//class SSBadgeButton: UIButton {
+//
+//    var badgeLabel = UILabel()
+//
+//    var badge: String? {
+//        didSet {
+//            addBadgeToButon(badge: badge)
+//        }
+//    }
+//
+//    public var badgeBackgroundColor = UIColor.red {
+//        didSet {
+//            badgeLabel.backgroundColor = badgeBackgroundColor
+//        }
+//    }
+//
+//    public var badgeTextColor = UIColor.white {
+//        didSet {
+//            badgeLabel.textColor = badgeTextColor
+//        }
+//    }
+//
+//    public var badgeFont = UIFont.systemFont(ofSize: 12.0) {
+//        didSet {
+//            badgeLabel.font = badgeFont
+//        }
+//    }
+//
+//    public var badgeEdgeInsets: UIEdgeInsets? {
+//        didSet {
+//            addBadgeToButon(badge: badge)
+//        }
+//    }
+//
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        addBadgeToButon(badge: nil)
+//    }
+//
+//    func addBadgeToButon(badge: String?) {
+//        badgeLabel.text = badge
+//        badgeLabel.textColor = badgeTextColor
+//        badgeLabel.backgroundColor = badgeBackgroundColor
+//        badgeLabel.font = badgeFont
+//        badgeLabel.sizeToFit()
+//        badgeLabel.textAlignment = .center
+//        let badgeSize = badgeLabel.frame.size
+//
+//        let height = max(18, Double(badgeSize.height) + 5.0)
+//        let width = max(height, Double(badgeSize.width) + 10.0)
+//
+//        var vertical: Double?, horizontal: Double?
+//        if let badgeInset = self.badgeEdgeInsets {
+//            vertical = Double(badgeInset.top) - Double(badgeInset.bottom)
+//            horizontal = Double(badgeInset.left) - Double(badgeInset.right)
+//
+//            let x = (Double(bounds.size.width) - 10 + horizontal!)
+//            let y = -(Double(badgeSize.height) / 2) - 10 + vertical!
+//            badgeLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+//        } else {
+//            let x = self.frame.width - CGFloat((width / 2.0))
+//            let y = CGFloat(-(height / 2.0))
+//            badgeLabel.frame = CGRect(x: x, y: y, width: CGFloat(width), height: CGFloat(height))
+//        }
+//
+//        badgeLabel.layer.cornerRadius = badgeLabel.frame.height/2
+//        badgeLabel.layer.masksToBounds = true
+//        addSubview(badgeLabel)
+//        badgeLabel.isHidden = badge != nil ? false : true
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        self.addBadgeToButon(badge: nil)
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//}

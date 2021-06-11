@@ -81,6 +81,7 @@ class BrowseVC: UIViewController {
     
     var usernamemention = String()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //        setStatusBar1(backgroundColor: .black)
@@ -273,6 +274,7 @@ class BrowseVC: UIViewController {
         }
     }
     
+
     
     func GetSaveList(){
         var parameters = ["timeline_last_post_id": timeline_last_first_id,
@@ -992,6 +994,24 @@ class BrowseVC: UIViewController {
         }
     }
     
+    @IBAction func btnReadMoreAction(_ sender: UIButton) {
+        let arrImages = arrFeed[sender.tag].images
+        print("arrImages: ",arrImages)
+        
+        
+  
+        for item in arrImages {
+            let source_url = item
+            print(source_url)
+           
+            if let url = URL(string: source_url) {
+                UIApplication.shared.open(url)
+            }
+
+        }
+       
+    }
+    
 }
 
 extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching, TTTAttributedLabelDelegate{
@@ -1235,6 +1255,10 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
         else{
             cell.lblTimeLeading.constant = 10
         }
+        
+        
+        cell.btnReadMore.tag = indexPath.row
+        cell.btnReadMore.addTarget(self, action: #selector(btnReadMoreAction(_:)), for: UIControl.Event.touchUpInside)
         
         cell.btnChat.tag = indexPath.row
         cell.btnChat.addTarget(self, action: #selector(btnShowmoreComment(_:)), for: UIControl.Event.touchUpInside)
@@ -1506,6 +1530,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
         switch typeFeed {
         case "image":
             //
+            cell.configureCell(imageUrl: "", description: "", videoUrl:"")
             cell.btnClick.isHidden = false
             //                cell.btnclick.isHidden = false
             cell.countView.isHidden = true
@@ -1533,6 +1558,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
             break
             
         case "multi_image" :
+            cell.configureCell(imageUrl: "", description: "", videoUrl:"")
             cell.btnClick.isHidden = true
             
             cell.countView.isHidden = false
@@ -1586,6 +1612,40 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
                 //                    cell.configure(post: arrFeed[indexPath.row].video_poster)
             }
             
+            break
+            
+        case "custom_url":
+            cell.ViewCustomeUrl.isHidden = false
+            cell.configureCell(imageUrl: "", description: "", videoUrl:"")
+//                cell.btnclick.isHidden = false
+            cell.countView.isHidden = true
+//                cell.pagerView.isHidden = true
+//                cell.pageControl.isHidden = true
+            cell.imageview.isHidden = true
+            cell.imageviewBackground.isHidden = true
+            cell.shotImageView.isHidden = true
+//                cell.btn_play.isHidden = true
+//                cell.imageview.contentMode = .scaleAspectFit
+            cell.images = []
+            cell.pagerView.reloadData()
+            cell.pagerView.backgroundColor = .gray
+            let arrImages = arrFeed[indexPath.row].images
+            print("arrImages: ",arrImages)
+            
+            
+            if arrImages.count == 0{
+//
+            }
+            
+            for item in arrImages {
+                let source_url = item
+                print(source_url)
+                cell.strURl = source_url
+                cell.displayWebView()
+
+
+            }
+            cell.btnClick.isHidden = true
             break
         default:
             break

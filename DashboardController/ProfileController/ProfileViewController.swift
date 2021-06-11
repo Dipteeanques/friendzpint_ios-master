@@ -60,6 +60,7 @@ class ProfileViewController: MXSegmentedPagerController {
     }
     @IBOutlet weak var img_logo: UIImageView!
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     var url : URL?
     var ustCover : URL?
     var strUserType = String()
@@ -68,6 +69,7 @@ class ProfileViewController: MXSegmentedPagerController {
     var imageUpload = UIImage()
     var uploadProfilePhoto: UploadParameterMode! = nil
     var assets: [DKAsset]?
+    var passBackvala = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,7 +171,7 @@ class ProfileViewController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
-        
+        imgwidth.constant =  UIScreen.main.bounds.width
 //        if UIScreen.main.bounds.width == 320 {
 //            viewHeght.constant = 66
 //            segmentedPager.parallaxHeader.height = 410
@@ -193,6 +195,7 @@ class ProfileViewController: MXSegmentedPagerController {
         btnEditProfile.isHidden = false
         strUsername = loggdenUser.value(forKey: USERNAME)as! String
         let parameters = ["username":strUsername]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -444,8 +447,7 @@ class ProfileViewController: MXSegmentedPagerController {
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: false, completion: nil)
+       
 //        self.navigationController?.popViewController(animated: true)
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
 //        let pickerController = DKImagePickerController()
@@ -458,6 +460,23 @@ class ProfileViewController: MXSegmentedPagerController {
 //        pickerController.maxSelectableCount = 10
 //        self.present(pickerController, animated: true) {
 //        }
+        
+        if passBackvala == "passBackvala" {
+            self.backTwo()
+//            currentTabBar?.setIndex(0)
+            
+        }
+        else {
+//            self.navigationController?.popViewController(animated: true)
+//            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: false, completion: nil)
+        }
+    }
+    func backTwo() {
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     func updateAssets(assets: [DKAsset]) {
@@ -499,7 +518,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
         print(index)
-        return ["Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
+        return ["Bio data","Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
 
     }
     

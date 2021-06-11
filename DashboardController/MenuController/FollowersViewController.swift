@@ -89,10 +89,16 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
 //        searchBar.resignFirstResponder()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        self.searchBar.endEditing(true)
+    }
+    
     func getFriends() {
         let username = loggdenUser.value(forKey: USERNAME)as! String
         let parameters = ["username":username,
                           "search":strSearchTxt]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -206,6 +212,7 @@ class FollowersViewController: UIViewController,UISearchBarDelegate {
     
 
     @IBAction func btnbackAction(_ sender: UIButton) {
+        self.searchBar.endEditing(true)
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
     }
@@ -245,6 +252,14 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
         
        
 
+        let is_follow = arrFollow1[indexPath.row].isFollow
+        print("is_follow",is_follow)
+        if is_follow == 1 {
+            btnRemove.setTitle("Unfollow", for: .normal)
+        }
+        else if is_follow == 0{
+            btnRemove.setTitle("Follow", for: .normal)
+        }
         
         btnRemove.addTarget(self, action: #selector(self.btnfriendsRemoveAction), for: UIControl.Event.touchUpInside)
         return cell
@@ -283,10 +298,34 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
     }
     
     @objc func btnfriendsRemoveAction(_ sender: UIButton) {
-         if let indexPath = self.tblFreinds.indexPathForView(sender) {
+        
+        if let indexPath = self.tblFreinds.indexPathForView(sender) {
+            print(indexPath)
+            let cell = tblFreinds.cellForRow(at: indexPath)
+            let btnRemove = cell?.viewWithTag(102)as! UIButton
             let timeVala_id = arrFollow1[indexPath.row].timelineID
-            self.arrFollow1.remove(at: indexPath.row)
-            self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
+            print(timeVala_id)
+            
+            if  self.arrFollow1[indexPath.row].isFollow == 1{
+                btnRemove.setTitle("Follow", for: .normal)
+                for i in 0...(self.arrFollow1.count-1){
+                    if self.arrFollow1[i].timelineID == timeVala_id{
+                        self.arrFollow1[i].isFollow = 0
+                    }
+                }
+            }
+            else{
+                btnRemove.setTitle("Unfollow", for: .normal)//Unfollow
+                for i in 0...(self.arrFollow1.count-1){
+                    if self.arrFollow1[i].timelineID == timeVala_id{
+                        self.arrFollow1[i].isFollow = 1
+                    }
+                }
+            }
+            self.tblFreinds.beginUpdates()
+            self.tblFreinds.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            self.tblFreinds.endUpdates()
+
             let parameters = ["timeline_id" : timeVala_id]
             let token = loggdenUser.value(forKey: TOKEN)as! String
             let BEARERTOKEN = BEARER + token
@@ -294,15 +333,37 @@ extension FollowersViewController : UITableViewDelegate,UITableViewDataSource,UI
                                         "Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
             
-            wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
+            wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: FriendsResponsModel?) in
                 if sucess {
-                    let status = response?.status
-                    if status == "200" {
-                        print("sucess")
+                    let suc = response?.success
+                    if suc! {
+
                     }
                 }
             }
+            
         }
+        
+//         if let indexPath = self.tblFreinds.indexPathForView(sender) {
+//            let timeVala_id = arrFollow1[indexPath.row].timelineID
+//            self.arrFollow1.remove(at: indexPath.row)
+//            self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
+//            let parameters = ["timeline_id" : timeVala_id]
+//            let token = loggdenUser.value(forKey: TOKEN)as! String
+//            let BEARERTOKEN = BEARER + token
+//            let headers: HTTPHeaders = ["Xapi": XAPI,
+//                                        "Accept" : ACCEPT,
+//                                        "Authorization":BEARERTOKEN]
+//
+//            wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
+//                if sucess {
+//                    let status = response?.status
+//                    if status == "200" {
+//                        print("sucess")
+//                    }
+//                }
+//            }
+//        }
     }
 }
 

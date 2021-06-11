@@ -14,11 +14,17 @@ import DKImagePickerController
 import Alamofire
 
 class GroupProfileViewController: MXSegmentedPagerController {
-   
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
+    
     @IBOutlet weak var onlySettingView: UIView!
     
     @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var btnMenu: UIButton!{
+        didSet{
+            btnMenu.layer.cornerRadius = btnMenu.frame.height/2
+            btnMenu.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var viewReport: UIView!
     
     @IBOutlet weak var ViewJoin: UIView!
@@ -154,8 +160,8 @@ class GroupProfileViewController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
-        
-        gridentView.backgroundColor =  .white
+        imgwidth.constant = UIScreen.main.bounds.width
+        //gridentView.backgroundColor =  .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 370
@@ -284,11 +290,17 @@ class GroupProfileViewController: MXSegmentedPagerController {
     @IBAction func btnjoinedAction(_ sender: UIButton) {
     }
     @IBAction func btnSettingAction(_ sender: UIButton) {
-        let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
-        obj.username = strUserName
-        self.navigationController?.pushViewController(obj, animated: true)
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
+//        obj.username = strUserName
+//        self.navigationController?.pushViewController(obj, animated: true)
 //        let navController = UINavigationController(rootViewController: obj)
 //        self.present(navController, animated:true, completion: nil)
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
+        obj.username = strUserName
+        //self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
     }
     
     //MARK: - Btn Action

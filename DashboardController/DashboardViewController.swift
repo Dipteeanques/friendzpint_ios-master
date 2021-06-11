@@ -50,15 +50,15 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
         icons.append(#imageLiteral(resourceName: "Feed"))
         icons.append(#imageLiteral(resourceName: "Friend"))
         icons.append(#imageLiteral(resourceName: "Group"))
-        icons.append(#imageLiteral(resourceName: "notification"))
+        icons.append(#imageLiteral(resourceName: "Terms and Conditions"))
         icons.append(#imageLiteral(resourceName: "Profile"))
-//        icons.append(#imageLiteral(resourceName: "menu"))
+//        icons.append(#imageLiteral(resourceName: "Terms and Conditions"))
         
         var sIcons = [UIImage]()
         sIcons.append(#imageLiteral(resourceName: "SFeed"))
         sIcons.append(#imageLiteral(resourceName: "Friend"))
         sIcons.append(#imageLiteral(resourceName: "Group"))
-        sIcons.append(#imageLiteral(resourceName: "Snotification"))
+        sIcons.append(#imageLiteral(resourceName: "Terms and Conditions"))
         sIcons.append(#imageLiteral(resourceName: "SProfile"))
 //        sIcons.append(#imageLiteral(resourceName: "Smenu"))
         
@@ -67,7 +67,7 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
         tabController.setViewController(HomeVC.instance(), atIndex: 0)//HomeViewController
         tabController.setViewController(SearchViewController.instance(), atIndex: 1)
         tabController.setViewController(NewPostVC.instance(), atIndex: 2)
-        tabController.setViewController(NotificationController.instance(), atIndex: 3)//ChatViewController//MenuViewController
+        tabController.setViewController(ArticlesVC.instance(), atIndex: 3)//ChatViewController//MenuViewController
         tabController.setViewController(SettingVC.instance(), atIndex: 4)
         tabController.currentTab?.hidesBottomBarWhenPushed = true
 //        tabController.setViewController(ProfileViewController.instance(), atIndex: 4)
@@ -104,6 +104,7 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
             currentTabBar?.setIndex(1)
         }
         else if index == 2 {
+            Flag = 0
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Group"), object: nil)
             currentTabBar?.setIndex(2)
         }

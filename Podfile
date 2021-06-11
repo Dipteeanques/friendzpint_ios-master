@@ -36,4 +36,7 @@ target 'FriendzPoint' do
  pod 'YPImagePicker'
  pod 'MBProgressHUD'
  pod "KWVerificationCodeView"
+ pod 'iOSDropDown'
+ pod 'ProgressHUD'
+ pod "RichEditorView"
 end

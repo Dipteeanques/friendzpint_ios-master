@@ -228,6 +228,7 @@ extension PagelikedViewController: UITableViewDelegate,UITableViewDataSource,UIS
         if pageAdmin == 0 {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendPageProfileController")as! FriendPageProfileController
             obj.strUserName = username
+            loggdenUser.set(username, forKey: UNAME)
 //            self.navigationController?.pushViewController(obj, animated: false)
             obj.modalPresentationStyle = .fullScreen
             //self.navigationController?.pushViewController(obj, animated: true)

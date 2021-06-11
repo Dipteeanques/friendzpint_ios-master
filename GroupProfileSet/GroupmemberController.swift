@@ -44,6 +44,7 @@ class GroupmemberController: UIViewController {
     }
 
     func getMember() {
+        arrAdmin.removeAll()
         let group_id = loggdenUser.value(forKey: GROUPID)as? Int
         let username = loggdenUser.value(forKey: GROUPUSERNAME)as? String
         let parameters = ["group_id":group_id ?? 0,
@@ -203,11 +204,21 @@ extension GroupmemberController : UITableViewDataSource,UITableViewDelegate,UISc
         let selectedUsername = arrAdmin[indexPath.row].username
         if selectedUsername == username {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
-            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
-            obj.strUserName = selectedUsername
-            self.navigationController?.pushViewController(obj, animated: true)
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+//            obj.strUserName = selectedUsername
+//            self.navigationController?.pushViewController(obj, animated: true)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+            obj.strUser = selectedUsername
+    //                    self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
     }
     

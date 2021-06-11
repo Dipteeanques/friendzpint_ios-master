@@ -30,6 +30,7 @@ class CommentsViewControllers: UIViewController {
     var arrImage = [TKImageSource?]()
     var postId = Int()
     var arrCommented = [CommentList]()
+    var arrArticleComment = [ArticleCommentDatamain]()
     var arrParentComment = [ParentCommentList]()
     var parent_ID = Int()
     var wc = Webservice.init()
@@ -40,6 +41,9 @@ class CommentsViewControllers: UIViewController {
     var indexPath = IndexPath()
     var sendParent: CommentList?
     var getChaild: ParentCommentList?
+    var CHECKTYPE = String()
+    //MARK: For Article
+    var article_id = Int()
     
     
    // " A simple iOS Swift-4 project demonst how to implement collapsible table section jay hind bhayo gujarat india badha loko","How are you"
@@ -69,7 +73,14 @@ class CommentsViewControllers: UIViewController {
         let profile = loggdenUser.value(forKey: PROFILE)as! String
         url = URL(string: profile)
         imgProfile.sd_setImage(with: url, completed: nil)
-        getComment()
+        if CHECKTYPE == "ART"{
+            getArticleComment()
+        }
+        else{
+            getComment()
+        }
+        
+       
         pageCount = 1
 //        let gradientLayer = CAGradientLayer()
 //        gradientLayer.frame = self.headerview.bounds
@@ -117,6 +128,55 @@ class CommentsViewControllers: UIViewController {
                     let arr_dict = data?.data
                     self.arrCommented = arr_dict!
                     if self.arrCommented.count == 0 {
+                        self.foundView.isHidden = false
+                    }
+                    else {
+                        self.foundView.isHidden = true
+                        self.tbComment.reloadData()
+                    }
+                    
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+                else{
+                    self.foundView.isHidden = false
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+            }
+            else{
+                self.foundView.isHidden = false
+                self.loaderView.isHidden = true
+                self.activity.stopAnimating()
+            }
+//            if self.arrCommented.count == 0 {
+//                self.foundView.isHidden = false
+//            }
+//            else {
+//                self.foundView.isHidden = true
+//                self.tbComment.reloadData()
+//            }
+//            self.loaderView.isHidden = true
+//            self.activity.stopAnimating()
+        }
+    }
+    
+    
+    func getArticleComment() {
+        let parameters = ["article_id": postId] as [String : Any]
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        wc.callSimplewebservice(url: LISTARTICLECOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: ArticleCommentModel?) in
+            if sucess {
+                let sucessMy = response?.success
+                if sucessMy! {
+                    let data = response?.data
+                    let arr_dict = data?.data
+                    self.arrArticleComment = arr_dict!
+                    if self.arrArticleComment.count == 0 {
                         self.foundView.isHidden = false
                     }
                     else {
@@ -203,6 +263,26 @@ class CommentsViewControllers: UIViewController {
         }
     }
     
+    
+    func sendArticleComment(){
+        let parameters = ["article_id": postId,
+                          "comment": txtCommentBox.text!] as [String : Any]
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        wc.callSimplewebservice(url: ADDARTICLECOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: ArticleLikeModel?) in
+            if sucess {
+                let sucessRes = response?.success
+                if sucessRes! {
+                    self.getArticleComment()
+                }
+            }
+        }
+    }
+    
     func sendComment() {
         if replay == "replay" {
             let parameters = ["post_id": postId,
@@ -252,10 +332,15 @@ class CommentsViewControllers: UIViewController {
     }
 
     @IBAction func btnSEND(_ sender: UIButton) {
-        sendComment()
+        if CHECKTYPE == "ART"{
+            sendArticleComment()
+        }
+        else{
+            sendComment()
+        }
     }
     
-
+    
     @IBAction func btnBackAction(_ sender: UIButton) {
         if strCommentImage == "strCommentImage" {
             arrImage = dicImg.value(forKey: "arr") as! [TKImageSource?]
@@ -300,66 +385,115 @@ class CommentsViewControllers: UIViewController {
 extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return arrCommented.count
+        if CHECKTYPE == "ART"{
+            return 1
+        }
+        else{
+            return arrCommented.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let arrchaildComment = arrCommented[section].replyCommects {
-            self.arrParentComment = arrchaildComment
-            return arrchaildComment.count
+        
+        if CHECKTYPE == "ART"{
+            return arrArticleComment.count
         }
+        else{
+            if let arrchaildComment = arrCommented[section].replyCommects {
+                self.arrParentComment = arrchaildComment
+                return arrchaildComment.count
+            }
+        }
+        
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tbComment.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)as! commentCell
-        cell.imgreplyprofile.layer.cornerRadius = 15
-        cell.imgreplyprofile.clipsToBounds = true
-        let strComment = arrCommented[indexPath.section].replyCommects![indexPath.row].description
-        cell.lblReply.text = strComment
-        cell.lblreplyname.text = arrCommented[indexPath.section].replyCommects![indexPath.row].user_name
-        let strImage = arrCommented[indexPath.section].replyCommects![indexPath.row].user_avatar
-        url = URL(string: strImage)
-        cell.imgreplyprofile.sd_setImage(with: url, completed: nil)
-        return cell
+        
+        
+        if CHECKTYPE == "ART"{
+            print("Cell: ",arrArticleComment[indexPath.row].comment)
+            let cell = tbComment.dequeueReusableCell(withIdentifier: "commentCell")as! commentCell
+            cell.lblname.text = arrArticleComment[indexPath.row].created_by
+            cell.imgProfile.layer.cornerRadius = 15
+            cell.imgProfile.clipsToBounds = true
+            let strImage = arrArticleComment[indexPath.row].profile
+            url = URL(string: strImage)
+            cell.imgProfile.sd_setImage(with: url, completed: nil)
+            cell.lblComment.text = arrArticleComment[indexPath.row].comment
+            cell.btnReply.isHidden = true
+            cell.btnLike.isHidden = true
+            cell.lblTime.isHidden = true
+            cell.activity.isHidden = true
+            cell.lblTimeHeight.constant = 0
+            return cell
+        }
+        else{
+            let cell = tbComment.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)as! commentCell
+            cell.imgreplyprofile.layer.cornerRadius = 15
+            cell.imgreplyprofile.clipsToBounds = true
+            let strComment = arrCommented[indexPath.section].replyCommects![indexPath.row].description
+            cell.lblReply.text = strComment
+            cell.lblreplyname.text = arrCommented[indexPath.section].replyCommects![indexPath.row].user_name
+            let strImage = arrCommented[indexPath.section].replyCommects![indexPath.row].user_avatar
+            url = URL(string: strImage)
+            cell.imgreplyprofile.sd_setImage(with: url, completed: nil)
+            return cell
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let comment = arrCommented[section]
         let cell = tbComment.dequeueReusableCell(withIdentifier: "commentCell")as! commentCell
-        cell.imgProfile.layer.cornerRadius = 15
-        cell.imgProfile.clipsToBounds = true
-        cell.viewBack.layer.cornerRadius = 5
-        cell.viewBack.clipsToBounds = true
-        let strComment = comment.description
-        cell.lblComment.text = strComment
-        cell.lblname.text = comment.user_name
-        cell.btnReply.addTarget(self, action: #selector(CommentsViewControllers.btnreplayAction), for: UIControl.Event.touchUpInside)
-        cell.btnReply.isHidden = false
-        cell.btnLike.addTarget(self, action: #selector(CommentsViewControllers.btnLikeAction), for: UIControl.Event.touchUpInside)
-        cell.btnSeemore.addTarget(self, action: #selector(CommentsViewControllers.btnseemoreAction), for: UIControl.Event.touchUpInside)
-        let postDate = comment.created_at
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = dateFormatter.date(from: postDate)!
-        let datavala = Date().timeAgoSinceDate(date, numericDates: true)
-        cell.lblTime.text = datavala
-        let parent_comments_count = comment.parent_comments_count
-        cell.btnSeemore.isHidden = true
-        if parent_comments_count == 0 {
-            cell.btnSeemore.isHidden = true
-        }else {
-            cell.btnSeemore.isHidden = false
-            let total = String(parent_comments_count) + " See More"
-            cell.btnSeemore.setTitle(total, for: .normal)
+        if CHECKTYPE == "ART"{
+            //            print("Header: ",arrArticleComment[indexPath.row].comment)
+            cell.isHidden = true
+            cell.height = 0
+            cell.btnReply.isHidden = true
+            cell.btnLike.isHidden = true
+            cell.lblTime.isHidden = true
+            return cell
         }
-        let strImage = comment.user_avatar
-        url = URL(string: strImage)
-        cell.imgProfile.sd_setImage(with: url, completed: nil)
-        cell.btnSeemore.tag = section
-        cell.btnReply.tag = section
-        cell.activity.isHidden = true
-        return cell
+        else{
+            let comment = arrCommented[section]
+            let cell = tbComment.dequeueReusableCell(withIdentifier: "commentCell")as! commentCell
+            cell.imgProfile.layer.cornerRadius = 15
+            cell.imgProfile.clipsToBounds = true
+            cell.viewBack.layer.cornerRadius = 5
+            cell.viewBack.clipsToBounds = true
+            let strComment = comment.description
+            cell.lblComment.text = strComment
+            cell.lblname.text = comment.user_name
+            cell.btnReply.addTarget(self, action: #selector(CommentsViewControllers.btnreplayAction), for: UIControl.Event.touchUpInside)
+            cell.btnReply.isHidden = false
+            cell.btnLike.addTarget(self, action: #selector(CommentsViewControllers.btnLikeAction), for: UIControl.Event.touchUpInside)
+            cell.btnSeemore.addTarget(self, action: #selector(CommentsViewControllers.btnseemoreAction), for: UIControl.Event.touchUpInside)
+            let postDate = comment.created_at
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date = dateFormatter.date(from: postDate)!
+            let datavala = Date().timeAgoSinceDate(date, numericDates: true)
+            cell.lblTime.text = datavala
+            let parent_comments_count = comment.parent_comments_count
+            cell.btnSeemore.isHidden = true
+            if parent_comments_count == 0 {
+                cell.btnSeemore.isHidden = true
+            }else {
+                cell.btnSeemore.isHidden = false
+                let total = String(parent_comments_count) + " See More"
+                cell.btnSeemore.setTitle(total, for: .normal)
+            }
+            let strImage = comment.user_avatar
+            url = URL(string: strImage)
+            cell.imgProfile.sd_setImage(with: url, completed: nil)
+            cell.btnSeemore.tag = section
+            cell.btnReply.tag = section
+            cell.activity.isHidden = true
+            return cell
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
@@ -370,13 +504,27 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-   
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        if CHECKTYPE == "ART"{
+            if arrCommented.count == 0{
+                return 0
+            }
+            else{
+                return UITableView.automaticDimension
+            }
+            
+            
+        }
+        else{
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return UITableView.automaticDimension
+        
     }
     
     func reloadData(){
@@ -393,29 +541,29 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
         {
             if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
             {
-//                spinner = UIActivityIndicatorView(style: .gray)
-//                spinner.startAnimating()
-//                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tbComment.bounds.width, height: CGFloat(44))
+                //                spinner = UIActivityIndicatorView(style: .gray)
+                //                spinner.startAnimating()
+                //                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tbComment.bounds.width, height: CGFloat(44))
                 pageCount += 1
                 print(pageCount)
                 getComment(strPage: "\(pageCount)")
-//                self.tbComment.tableFooterView = spinner
-//                self.tbComment.tableFooterView?.isHidden = false
+                //                self.tbComment.tableFooterView = spinner
+                //                self.tbComment.tableFooterView?.isHidden = false
             }
         }
     }
     
-     @objc func btnseemoreAction(_ sender: UIButton) {
+    @objc func btnseemoreAction(_ sender: UIButton) {
         let tag = sender.tag
         indexPath = IndexPath(row: tag, section: 0)
-       // let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
-//        cellfeed.activity.isHidden = false
-//        cellfeed.activity.startAnimating()
+        // let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
+        //        cellfeed.activity.isHidden = false
+        //        cellfeed.activity.startAnimating()
         postId = arrCommented[indexPath.row].post_id
         parent_ID = arrCommented[indexPath.row].id
         chaildComment()
-//        cellfeed.activity.isHidden = true
-//        cellfeed.activity.stopAnimating()
+        //        cellfeed.activity.isHidden = true
+        //        cellfeed.activity.stopAnimating()
     }
     
     @objc func btnreplayAction(_ sender: UIButton) {
@@ -429,33 +577,33 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
     @objc func btnLikeAction(_ sender: UIButton) {
         let tag = sender.tag
         let indexPath = IndexPath(row: tag, section: 0)
-            parent_ID = arrCommented[indexPath.row].id
-//            let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
-            let parameters = ["comment_id": parent_ID] as [String : Any]
-            let token = loggdenUser.value(forKey: TOKEN)as! String
-            let BEARERTOKEN = BEARER + token
-            let headers: HTTPHeaders = ["Xapi": XAPI,
-                                       "Accept" : ACCEPT,
-                                       "Authorization":BEARERTOKEN]
-            
-            wc.callSimplewebservice(url: LIKECOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: commentLikeResponsModel?) in
-                if sucess {
-                    if response!.liked {
-                        let strLikeTotal = "Unlike"
-//                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
-                        sender.setTitle(strLikeTotal, for: .normal)
-                        self.tbComment.beginUpdates()
-                        self.tbComment.endUpdates()
+        parent_ID = arrCommented[indexPath.row].id
+        //            let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
+        let parameters = ["comment_id": parent_ID] as [String : Any]
+        let token = loggdenUser.value(forKey: TOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Xapi": XAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        wc.callSimplewebservice(url: LIKECOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: commentLikeResponsModel?) in
+            if sucess {
+                if response!.liked {
+                    let strLikeTotal = "Unlike"
+                    //                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+                    sender.setTitle(strLikeTotal, for: .normal)
+                    self.tbComment.beginUpdates()
+                    self.tbComment.endUpdates()
                 }
-                    else {
-                        let strLikeTotal = "Like"
-//                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
-                        sender.setTitle(strLikeTotal, for: .normal)
-                        self.tbComment.beginUpdates()
-                        self.tbComment.endUpdates()
-                    }
+                else {
+                    let strLikeTotal = "Like"
+                    //                        cellfeed.btnLike.setTitle(strLikeTotal, for: .normal)
+                    sender.setTitle(strLikeTotal, for: .normal)
+                    self.tbComment.beginUpdates()
+                    self.tbComment.endUpdates()
                 }
             }
+        }
     }
 }
 

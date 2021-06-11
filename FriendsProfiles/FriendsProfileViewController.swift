@@ -55,6 +55,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     @IBOutlet weak var btnaddfriends: UIButton!
     @IBOutlet weak var img_logo: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     
     var url : URL?
     var ustCover : URL?
@@ -146,7 +147,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
-        
+        imgwidth.constant = UIScreen.main.bounds.width
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 410
@@ -167,7 +168,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(NewsfeedViewController.BadgeCleare), name: NSNotification.Name(rawValue: "BadgeCleare"), object: nil)
         
-        btnMenu.layer.cornerRadius = 20
+        btnMenu.layer.cornerRadius = btnMenu.frame.height/2//20
         btnMenu.clipsToBounds = true
     }
     
@@ -589,7 +590,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
+        return ["Bio data","Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
         
     }
     

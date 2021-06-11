@@ -130,6 +130,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
     var pianoSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "blop", ofType: "mp3")!)
     var audioPlayer = AVAudioPlayer()
     var gtime_id = Int()
+    var maingId = Int()
     let textView = UITextView(frame: CGRect.zero)
     var nameTag = [String]()
     var userTag = [String]()
@@ -189,9 +190,11 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(PageTimelineController.GroupView), name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: nil)
         
-//        GETDATA()
+        //btnFloat.isHidden = false
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupView(_:)), name: NSNotification.Name(rawValue: "PageprofileTimeline"), object: nil)
+        
+        GETDATA()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         tblFeed.isHidden = true
         strUserName = loggdenUser.value(forKey: UNAME)as! String
@@ -313,8 +316,8 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         
         print("parameters: ",parameters)
         print("headers: ",headers)
-        print("BROWSE: ",BROWSE)
-        wc.callSimplewebservice(url: MYTIMELINELIST+"?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: AllTimelineResponseModel1?) in
+        print("BROWSE: ",MYTIMELINELIST+"?type=ios")
+        wc.callSimplewebservice(url: MYTIMELINELIST+"?type=ios", parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: AllTimelineResponseModel1?) in
             //            print("response:",response.re)
             if sucess {
                 let sucessMy = response?.success
@@ -1026,49 +1029,49 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         let headers: HTTPHeaders = ["Xapi": XAPI,
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
-        wc.callSimplewebservice(url: PAGE_GENERAL, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: pageProfileResponsModel?) in
+        wc.callSimplewebservice(url: GROUP_SETTINGS_GENERAL, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: groupsettingGetresponsModel?) in
             if sucess {
                 let res = response?.data
                 self.gtime_id = res!.timeline_id
-                let Mygroup = res!.is_page_admin
+                self.maingId =  res!.timeline_id
+                print("mg",self.maingId)
+                let Mygroup = res!.is_group_admin
                 if Mygroup == 1 {
                     self.btnFloat.isHidden = false
                 }
                 else {
                     self.btnFloat.isHidden = true
                 }
-                //["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
+//                ["id": self.groupTimeline_id, "Gusername": self.strUserName,"group_request":self.is_page_admin]
             }
         }
     }
     
     
     func GETDATA() {
-        let object = loggdenUser.object(forKey: OBJECT)// as? [String: Any]
+        let object = loggdenUser.object(forKey: OBJECT) as? [String: Any]
         print(object)
         
-        
-        
-//        if let id = object?["id"] as? Int {
-//            gtime_id = id
-//            print(gtime_id)
-//        }
-//        if let email = object?["Gusername"] as? String {
-//            strUserName = email
-//            print(strUserName)
-//        }
-//        if let Mygroup = object?["group_request"] as? Int {
-//            if Mygroup == 1 {
-//                btnFloat.isHidden = false
-//            }
-//            else {
-//                btnFloat.isHidden = true
-//            }
-//        }
-//        loaderView.isHidden = false
-//        activity.startAnimating()
-////        setDefault()
-//        pageCount = 1
+        if let id = object?["id"] as? Int {
+            gtime_id = id
+            print(gtime_id)
+        }
+        if let email = object?["Gusername"] as? String {
+            strUserName = email
+            print(strUserName)
+        }
+        if let Mygroup = object?["group_request"] as? Int {
+            if Mygroup == 1 {
+                btnFloat.isHidden = false
+            }
+            else {
+                btnFloat.isHidden = true
+            }
+        }
+        loaderView.isHidden = false
+        activity.startAnimating()
+//        setDefault()
+        pageCount = 1
     }
     
     @objc func GroupView(_ notification: NSNotification) {
@@ -1318,8 +1321,10 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
         let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
         Flag = 0
-        obj.GroupTimeline_Id = gtime_id
+        print("maingId: ",self.maingId)
+        obj.GroupTimeline_Id = self.maingId
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
+        naviget.modalPresentationStyle = .fullScreen
         self.present(naviget, animated: true, completion: nil)
     }
     
@@ -9542,11 +9547,14 @@ extension GroupTimelineSetController: UICollectionViewDelegate,UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GroupCollCell
         
         let typeFeed = arrFeed[indexPath.row].type
+        print("typeFeed : ", typeFeed)
         switch typeFeed {
         case "image":
+            let arrImages = arrFeed[indexPath.row].images
             for item in arrImages {
                 let source_url = item
                // url = URL(string: source_url)
+                print("source_url",source_url)
                 cell.imgProfile.kf.setImage(with: URL(string: source_url),placeholder:UIImage(named: "Placeholder"))
                 
             }
@@ -9560,7 +9568,12 @@ extension GroupTimelineSetController: UICollectionViewDelegate,UICollectionViewD
             cell.imgProfile.kf.setImage(with: URL(string: arrFeed[indexPath.row].video_poster),placeholder:UIImage(named: "Placeholder"))
             break
             
+        case "custom_url":
+            cell.imgProfile.image = UIImage(named: "customeurl")
+            break
+            
         default:
+            cell.imgProfile.image = UIImage(named: "Placeholder")
             break
         }
         return cell
@@ -9583,10 +9596,28 @@ extension GroupTimelineSetController: UICollectionViewDelegate,UICollectionViewD
         self.present(obj, animated: false, completion: nil)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat =  1
-        let collectionViewSize = collectionView.frame.size.width - padding
-        return CGSize(width: collectionViewSize/3, height: collectionViewSize/3)
+//        let padding: CGFloat =  1
+//        let collectionViewSize = collectionView.frame.size.width - padding
+//        return CGSize(width: collectionViewSize/3, height: collectionViewSize/3)
+        
+        let yourWidth = Collection.bounds.width/3.0
+        let yourHeight = yourWidth
+
+        return CGSize(width: yourWidth, height: yourHeight)
     }
     
 }

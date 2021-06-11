@@ -202,7 +202,8 @@ class CreateAlbumViewcontroller: UIViewController {
                         self.btnDone.isHidden = false
                         self.activity.isHidden = true
                         self.activity.stopAnimating()
-                        self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: false, completion: nil)
+                        //self.navigationController?.popViewController(animated: true)
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
                     }
                     else {
@@ -298,7 +299,7 @@ class CreateAlbumViewcontroller: UIViewController {
     
     
     @IBAction func btnBackAction(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+       // self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
     }
     

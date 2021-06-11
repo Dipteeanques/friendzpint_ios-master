@@ -51,6 +51,11 @@
 		8F5B67FD25AD91BC00C16326 /* VideoCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B67FC25AD91BC00C16326 /* VideoCacheManager.swift */; };
 		8F5B680225AD921300C16326 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B680125AD921300C16326 /* URL.swift */; };
 		8F5B680725AD927E00C16326 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B680625AD927D00C16326 /* String.swift */; };
+		8F607761265E303D00F456AD /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60775F265E303D00F456AD /* ArticleCell.swift */; };
+		8F607762265E303D00F456AD /* ArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F607760265E303D00F456AD /* ArticleCell.xib */; };
+		8F607767265E40F400F456AD /* CreateArticlesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F607766265E40F400F456AD /* CreateArticlesVC.swift */; };
+		8F60776C265E45EF00F456AD /* ArticlesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60776B265E45EF00F456AD /* ArticlesVC.swift */; };
+		8F6CC9CE265FA7D8002122FA /* ArticleWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6CC9CD265FA7D8002122FA /* ArticleWebViewVC.swift */; };
 		8F7281D725A9A07E008B0ECB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281D625A9A07E008B0ECB /* Colors.swift */; };
 		8F7281DE25A9A42F008B0ECB /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7281DC25A9A42F008B0ECB /* HomeTableViewCell.swift */; };
 		8F7281DF25A9A42F008B0ECB /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7281DD25A9A42F008B0ECB /* HomeTableViewCell.xib */; };
@@ -330,6 +335,11 @@
 		8F5B67FC25AD91BC00C16326 /* VideoCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCacheManager.swift; sourceTree = "<group>"; };
 		8F5B680125AD921300C16326 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		8F5B680625AD927D00C16326 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		8F60775F265E303D00F456AD /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
+		8F607760265E303D00F456AD /* ArticleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticleCell.xib; sourceTree = "<group>"; };
+		8F607766265E40F400F456AD /* CreateArticlesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateArticlesVC.swift; sourceTree = "<group>"; };
+		8F60776B265E45EF00F456AD /* ArticlesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesVC.swift; sourceTree = "<group>"; };
+		8F6CC9CD265FA7D8002122FA /* ArticleWebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewVC.swift; sourceTree = "<group>"; };
 		8F7281D625A9A07E008B0ECB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8F7281DC25A9A42F008B0ECB /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		8F7281DD25A9A42F008B0ECB /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -619,6 +629,17 @@
 			path = Indicators;
 			sourceTree = "<group>";
 		};
+		8F607756265E2F3600F456AD /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				8F60775F265E303D00F456AD /* ArticleCell.swift */,
+				8F607760265E303D00F456AD /* ArticleCell.xib */,
+				8F607766265E40F400F456AD /* CreateArticlesVC.swift */,
+				8F60776B265E45EF00F456AD /* ArticlesVC.swift */,
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
 		8F7281D525A9A061008B0ECB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,6 +704,7 @@
 				8FFF0B5725F9F0E700C4AADE /* MoneyVC.swift */,
 				8F1DF49D2603698E003DF6FF /* DiscoverEventVC.swift */,
 				8F1DF4A2260369E1003DF6FF /* DiscoverEventCell.swift */,
+				8F6CC9CD265FA7D8002122FA /* ArticleWebViewVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -716,6 +738,7 @@
 		DA021A6922855A5500D4BEDE = {
 			isa = PBXGroup;
 			children = (
+				8F607756265E2F3600F456AD /* Article */,
 				8F5955BF25E8C7E6002A75A6 /* Button */,
 				8F0EEDAB25D652350090AFF5 /* Font */,
 				8F7281EC25A9A5AC008B0ECB /* Home */,
@@ -1256,6 +1279,7 @@
 				DAE91FB722C4A1F6003E676E /* blop.mp3 in Resources */,
 				8F1B0D912590B12400F7A756 /* ImgCellTimeline1.xib in Resources */,
 				DA70054022EC1F0C0002A685 /* VideocellTimeline.xib in Resources */,
+				8F607762265E303D00F456AD /* ArticleCell.xib in Resources */,
 				DAEA47F4229FFC8000D5CFD3 /* SWComboxView.xib in Resources */,
 				DA120EF322EB1BE2000F0EB2 /* ImgcellTimeline.xib in Resources */,
 				DAEC28A0230BD207000B9870 /* PlayerView.xib in Resources */,
@@ -1407,6 +1431,7 @@
 				DAE9E3EC22FD773400A4E7D0 /* tblcellPageaddmembercontroller.swift in Sources */,
 				DAE811F522F946BA007788A0 /* PhotosAlbumViewcontroller.swift in Sources */,
 				DA70053B22EC17E50002A685 /* TxtcellTimeline.swift in Sources */,
+				8F607767265E40F400F456AD /* CreateArticlesVC.swift in Sources */,
 				DA021AAE228579A100D4BEDE /* LoginViewController.swift in Sources */,
 				DAEBDFDD22D895230069984A /* FriendsTimelineController.swift in Sources */,
 				DA5A3CA122AFCC850069E23C /* MultipleImageCollectionController.swift in Sources */,
@@ -1468,6 +1493,7 @@
 				DAEBCCF623043144008B904A /* EventMemberController.swift in Sources */,
 				DAEBDFE722D8960C0069984A /* tblFriendsTimelineCell.swift in Sources */,
 				DAE811F722F98301007788A0 /* userImageListController.swift in Sources */,
+				8F6CC9CE265FA7D8002122FA /* ArticleWebViewVC.swift in Sources */,
 				8F8429A825C12A6F0065A795 /* NewPostCell.swift in Sources */,
 				DAEEF150230D5278001ED1E1 /* TimezoneController.swift in Sources */,
 				8F0EEDC825D669640090AFF5 /* HomeVC.swift in Sources */,
@@ -1497,6 +1523,7 @@
 				DAF6F2D1228947CF00431097 /* ProfileViewController.swift in Sources */,
 				DAEBDFD522D857FC0069984A /* LikedPageviewController.swift in Sources */,
 				DAE61336229519CC00BFB474 /* tblGroupListCell.swift in Sources */,
+				8F60776C265E45EF00F456AD /* ArticlesVC.swift in Sources */,
 				DAE77EEA22FC279400479E1B /* tblcellCreateAlbum.swift in Sources */,
 				DAE7EBDB22B0DC64009C6DAA /* tblMultiCellphoto.swift in Sources */,
 				8F0DD80A25EDFAF700B63E24 /* FollowersCell.swift in Sources */,
@@ -1535,6 +1562,7 @@
 				DAE7D7B122DC594D00B3E3EA /* GeneralResponseModel.swift in Sources */,
 				8F7281D725A9A07E008B0ECB /* Colors.swift in Sources */,
 				8F5955D225E8CA0B002A75A6 /* IndicatorProtocol.swift in Sources */,
+				8F607761265E303D00F456AD /* ArticleCell.swift in Sources */,
 				DAEF59E0230FB80800C43E39 /* MygroupsViewControllerList.swift in Sources */,
 				DAEDAD7D2293C26C004443A2 /* GrouptblCell.swift in Sources */,
 				DAF13D942302C6F60052215D /* EventlistControllerview.swift in Sources */,
@@ -1784,7 +1812,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1792,7 +1820,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1809,7 +1837,7 @@
 				CODE_SIGN_ENTITLEMENTS = FriendzPoint/FriendzPoint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = DCFAK3LXLP;
 				INFOPLIST_FILE = FriendzPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1817,7 +1845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendzpoint.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

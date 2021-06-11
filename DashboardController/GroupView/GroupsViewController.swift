@@ -122,12 +122,12 @@ class GroupsViewController: UIViewController {
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
-            if count == 0{
-                currentTabBar!.setBadgeText(nil, atIndex: 3)
-            }
-            else{
-                currentTabBar!.setBadgeText(String(count), atIndex: 3)
-            }
+//            if count == 0{
+//                currentTabBar!.setBadgeText(nil, atIndex: 3)
+//            }
+//            else{
+//                currentTabBar!.setBadgeText(String(count), atIndex: 3)
+//            }
         }
         
         if UIScreen.main.bounds.width == 320 {

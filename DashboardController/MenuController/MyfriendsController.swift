@@ -69,6 +69,11 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
 //        searchbar.endEditing(true)
 //    }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        self.searchBar.endEditing(true)
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         arrFollow1.removeAll()
         if let searchText = searchBar.text, !searchText.isEmpty {
@@ -206,6 +211,7 @@ class MyfriendsController: UIViewController,UISearchBarDelegate {
     
 
     @IBAction func btnbackAction(_ sender: UIButton) {
+        self.searchBar.endEditing(true)
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
     }
@@ -247,6 +253,17 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
 //        img.sd_setImage(with: url, completed: nil)//user
         img.sd_setImage(with: url, placeholderImage: UIImage(named: "user"), options: [], completed: nil)
         lblname.text = arrFollow1[indexPath.row].name
+        
+        
+        let is_follow = arrFollow1[indexPath.row].is_follow
+        print("is_follow",is_follow)
+        if is_follow == 1 {
+            btnRemove.setTitle("Following", for: .normal)
+        }
+        else if is_follow == 0{
+            btnRemove.setTitle("Follow", for: .normal)
+        }
+        
         btnRemove.addTarget(self, action: #selector(MyfriendsController.btnfriendsRemoveAction), for: UIControl.Event.touchUpInside)
         return cell
     }
@@ -283,11 +300,58 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
         }
     }
     
+//    @objc func btnfriendsRemoveAction(_ sender: UIButton) {
+//         if let indexPath = self.tblFreinds.indexPathForView(sender) {
+//            let timeVala_id = arrFollow1[indexPath.row].timeline_id
+//            self.arrFollow1.remove(at: indexPath.row)
+//            self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
+//            let parameters = ["timeline_id" : timeVala_id]
+//            let token = loggdenUser.value(forKey: TOKEN)as! String
+//            let BEARERTOKEN = BEARER + token
+//            let headers: HTTPHeaders = ["Xapi": XAPI,
+//                                        "Accept" : ACCEPT,
+//                                        "Authorization":BEARERTOKEN]
+//
+//            wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
+//                if sucess {
+//                    let status = response?.status
+//                    if status == "200" {
+//                        print("sucess")
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
     @objc func btnfriendsRemoveAction(_ sender: UIButton) {
-         if let indexPath = self.tblFreinds.indexPathForView(sender) {
+        
+        if let indexPath = self.tblFreinds.indexPathForView(sender) {
+            print(indexPath)
+            let cell = tblFreinds.cellForRow(at: indexPath)
+            let btnRemove = cell?.viewWithTag(102)as! UIButton
             let timeVala_id = arrFollow1[indexPath.row].timeline_id
-            self.arrFollow1.remove(at: indexPath.row)
-            self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
+            print(timeVala_id)
+            
+            if  self.arrFollow1[indexPath.row].is_follow == 1{
+                btnRemove.setTitle("Follow", for: .normal)
+                for i in 0...(self.arrFollow1.count-1){
+                    if self.arrFollow1[i].timeline_id == timeVala_id{
+                        self.arrFollow1[i].is_follow = 0
+                    }
+                }
+            }
+            else{
+                btnRemove.setTitle("Following", for: .normal)//Unfollow
+                for i in 0...(self.arrFollow1.count-1){
+                    if self.arrFollow1[i].timeline_id == timeVala_id{
+                        self.arrFollow1[i].is_follow = 1
+                    }
+                }
+            }
+            self.tblFreinds.beginUpdates()
+            self.tblFreinds.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            self.tblFreinds.endUpdates()
+
             let parameters = ["timeline_id" : timeVala_id]
             let token = loggdenUser.value(forKey: TOKEN)as! String
             let BEARERTOKEN = BEARER + token
@@ -295,14 +359,36 @@ extension MyfriendsController : UITableViewDelegate,UITableViewDataSource,UIScro
                                         "Accept" : ACCEPT,
                                         "Authorization":BEARERTOKEN]
             
-            wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
+            wc.callSimplewebservice(url: FOLLOW, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: FriendsResponsModel?) in
                 if sucess {
-                    let status = response?.status
-                    if status == "200" {
-                        print("sucess")
+                    let suc = response?.success
+                    if suc! {
+
                     }
                 }
             }
+            
         }
+        
+//         if let indexPath = self.tblFreinds.indexPathForView(sender) {
+//            let timeVala_id = arrFollow1[indexPath.row].timelineID
+//            self.arrFollow1.remove(at: indexPath.row)
+//            self.tblFreinds.deleteRows(at: [indexPath], with: .fade)
+//            let parameters = ["timeline_id" : timeVala_id]
+//            let token = loggdenUser.value(forKey: TOKEN)as! String
+//            let BEARERTOKEN = BEARER + token
+//            let headers: HTTPHeaders = ["Xapi": XAPI,
+//                                        "Accept" : ACCEPT,
+//                                        "Authorization":BEARERTOKEN]
+//
+//            wc.callSimplewebservice(url: REMOVEFRIENDS, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: RemoveFriendsResponseModel?) in
+//                if sucess {
+//                    let status = response?.status
+//                    if status == "200" {
+//                        print("sucess")
+//                    }
+//                }
+//            }
+//        }
     }
 }

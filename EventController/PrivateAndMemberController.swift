@@ -44,8 +44,16 @@ class PrivateAndMemberController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
+    @IBOutlet weak var lblTitle: UILabel!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -135,7 +143,7 @@ class PrivateAndMemberController: MXSegmentedPagerController {
 //        }
         
 //        gridentView.backgroundColor = .white
-        
+        imgwidth.constant =  UIScreen.main.bounds.width
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
             segmentedPager.parallaxHeader.height = 310
@@ -179,6 +187,7 @@ class PrivateAndMemberController: MXSegmentedPagerController {
                 let res = response?.data
                 let Name = res?.name
                 self.lblName.text = Name
+                self.lblTitle.text = Name
                 self.strUserName = res!.username
                 self.lblDateView.text = res?.date_dis
                 let strcour = res!.cover_url

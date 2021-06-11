@@ -34,7 +34,7 @@ class Webservice: NSObject {
         header = headers
         AF.request(url, method: .post, parameters: mutable as? Parameters, encoding: URLEncoding.default, headers: header).responseDecodable { (response: DataResponse<T>) in
 
-            print("R1: ",response)
+           // print("R1: ",response)
             if isLoading {
                 DispatchQueue.main.async {
                     activityIndicator.stopAnimating()
@@ -56,7 +56,7 @@ class Webservice: NSObject {
         
         let activityIndicator = UIActivityIndicatorView()
         if isLoading {
-            activityIndicator.style = .whiteLarge
+            activityIndicator.style = .gray//.whiteLarge
             activityIndicator.center = fromView.center
             activityIndicator.hidesWhenStopped = true
             activityIndicator.startAnimating()

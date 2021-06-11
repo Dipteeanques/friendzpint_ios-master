@@ -35,6 +35,9 @@ class ChatConversionController: UIViewController,PusherDelegate {
     }
     
     @IBAction func onSendClicked(_ sender: Any) {
+        let obj = MessageReponse(thread_id: 0, user_id: 0, body: textEntry.text!.encodeEmoji, created_at: "", updated_at: "")
+        self.arrMSGrespons.append(obj)
+        self.reloadData()
         sendMessage()
     }
     
@@ -202,6 +205,7 @@ class ChatConversionController: UIViewController,PusherDelegate {
         
         AF.request(POST_MESSAGE + "/" + String(Id), method: .post, parameters: ["message":strMessage], encoding: JSONEncoding.default,headers: headers)
             .responseJSON { response in
+                print(response)
             let json = response.value as! NSDictionary
             let message = json.value(forKey: "data")as! NSDictionary
             let body = message.value(forKey: "body")as! String
@@ -209,8 +213,8 @@ class ChatConversionController: UIViewController,PusherDelegate {
             let thread_id = message.value(forKey: "thread_id")as! Int
             let updated_at = message.value(forKey: "updated_at")as! String
             let user_id = message.value(forKey: "user_id")as! Int
-            let obj = MessageReponse(thread_id: thread_id, user_id: user_id, body: body, created_at: created_at, updated_at: updated_at)
-            self.arrMSGrespons.append(obj)
+//            let obj = MessageReponse(thread_id: thread_id, user_id: user_id, body: body, created_at: created_at, updated_at: updated_at)
+//            self.arrMSGrespons.append(obj)
             self.reloadData()
             self.textEntry.text = nil
         }
@@ -364,7 +368,7 @@ extension ChatConversionController: UITableViewDelegate,UITableViewDataSource {
             cell.lblSender.text = strLatmessage.decodeEmoji
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let date = dateFormatter.date(from: created_at)!
+            let date = dateFormatter.date(from: created_at) ?? Date()
             let datavala = Date().timeAgoSinceDate(date, numericDates: true)
             cell.lblsendertxtTime.text = datavala
             return cell

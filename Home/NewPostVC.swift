@@ -60,7 +60,9 @@ class NewPostVC: UIViewController,UITextViewDelegate {
     
     @IBOutlet weak var CollLocation: UICollectionView!
     
+    @IBOutlet weak var collHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     //MARK: LOCATION
     var locationBool = true
     var strLocation = String()
@@ -212,11 +214,15 @@ class NewPostVC: UIViewController,UITextViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        edgesForExtendedLayout = []
-        
-        
-    
-         
+        //        edgesForExtendedLayout = []
+        if arrLocation.count == 0{
+            self.collHeight.constant = 0
+            self.viewHeight.constant = 55
+        }
+        else{
+            self.collHeight.constant = 50
+            self.viewHeight.constant = 105
+        }
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -418,6 +424,8 @@ extension NewPostVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     func createPost() {
+        print("GroupTimeline_Id:",GroupTimeline_Id)
+        
         if GroupTimeline_Id == 0 {
             TimelineAll = loggdenUser.value(forKey: TimeLine_id)as! Int
         }
@@ -452,6 +460,7 @@ extension NewPostVC: UITableViewDelegate,UITableViewDataSource{
                           "user_tags":strTage_id,
                           "soundcloud_title": "",
                           "post_video_upload":""]as [String:Any]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,
@@ -704,6 +713,7 @@ extension NewPostVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         strLocation = arrLocation[indexPath.row]
+        lblAddLocation.text = strLocation
     }
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -849,7 +859,7 @@ extension NewPostVC: YPImagePickerDelegate{
         picker.didFinishPicking { [unowned picker] items, cancelled in
 
             if cancelled {
-                Flag = 0
+               // Flag = 0
                 print("Picker was canceled")
                 picker.dismiss(animated: false, completion: nil)
                 
@@ -858,12 +868,14 @@ extension NewPostVC: YPImagePickerDelegate{
                    
 //                }
                 
-                Flag = 0
+                //Flag = 0
                 
                 //self.appDel.gotoDashboardController()
+                //
                 self.currentTabBar?.setIndex(0)
                 self.navigationController?.popViewController(animated: true)
                 self.dismiss(animated: false, completion: nil)
+                self.navigationController?.dismiss(animated: false, completion: nil)
                 return
             }
             _ = items.map { print("🧀 \($0)") }

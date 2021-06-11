@@ -52,6 +52,7 @@ class ChatFriendsSearchview: UIViewController,UISearchBarDelegate {
         let username = loggdenUser.value(forKey: USERNAME)as! String
         let parameters = ["username":username,
                           "search":strSearchTxt]
+        print(parameters)
         let token = loggdenUser.value(forKey: TOKEN)as! String
         let BEARERTOKEN = BEARER + token
         let headers: HTTPHeaders = ["Xapi": XAPI,

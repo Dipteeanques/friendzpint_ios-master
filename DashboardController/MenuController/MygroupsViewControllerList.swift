@@ -114,10 +114,10 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
                     for i in 0..<arr_dict!.count
                     {
                         self.arrMypage.insert(arr_dict![i], at: 0)
-                        self.tblPages.beginUpdates()
-                        self.tblPages.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
-                        self.tblPages.endUpdates()
-                        self.spinner.stopAnimating()
+//                        self.tblPages.beginUpdates()
+//                        self.tblPages.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+//                        self.tblPages.endUpdates()
+//                        self.spinner.stopAnimating()
                         self.tblPages.tableFooterView?.isHidden = true
                         self.loaderView.isHidden = true
                         self.activity.stopAnimating()
@@ -128,6 +128,7 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
 //                            self.foundView.isHidden = true
                         }
                     }
+                    self.tblPages.reloadData()
                 }
                 else {
                     self.spinner.stopAnimating()
@@ -160,7 +161,9 @@ class MygroupsViewControllerList: UIViewController,UISearchBarDelegate {
     
     @IBAction func btnPageCreateAction(_ sender: UIButton) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateGroupViewController")as! CreateGroupViewController
-        self.navigationController?.pushViewController(obj, animated: true)
+        //self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
     }
     
     @IBAction func btnbackAction(_ sender: UIButton) {
@@ -197,24 +200,35 @@ extension MygroupsViewControllerList: UITableViewDelegate,UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+//        obj.strUser = arrMypage[indexPath.row].username
+////                    self.navigationController?.pushViewController(obj, animated: true)
+//        obj.modalPresentationStyle = .fullScreen
+//        self.present(obj, animated: false, completion: nil)
         let strGroup_type = arrMypage[indexPath.row].type_group
         let post_privacy = arrMypage[indexPath.row].post_privacy
         let member_privacy = arrMypage[indexPath.row].member_privacy
         if strGroup_type == "closed" {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "GroupProfileViewController")as! GroupProfileViewController
+            loggdenUser.set(arrMypage[indexPath.row].username, forKey: UNAME)
             obj.strUserName = arrMypage[indexPath.row].username
             obj.groupTimeline_id = arrMypage[indexPath.row].timeline_id
             obj.onlyPost = post_privacy
             obj.onlyInvaite = member_privacy
-            self.navigationController?.pushViewController(obj, animated: true)
+           // self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "openAndSecretGroupController")as! openAndSecretGroupController
+            loggdenUser.set(arrMypage[indexPath.row].username, forKey: UNAME)
             obj.strUserName = arrMypage[indexPath.row].username
             obj.groupTimeline_id = arrMypage[indexPath.row].timeline_id
             obj.onlyPost = post_privacy
             obj.onlyInvaite = member_privacy
-            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            self.present(obj, animated: false, completion: nil)
+            //self.navigationController?.pushViewController(obj, animated: true)
         }
     }
     
@@ -300,15 +314,21 @@ extension MygroupsViewControllerList: UICollectionViewDelegate,UICollectionViewD
 //        let is_page_admin = (suggested as AnyObject).value(forKey: "is_page_admin")as? String//arrSugestgroup[indexPath.row].is_page_admin
         let post_privacy = (suggested as AnyObject).value(forKey: "post_privacy")as? String//arrSugestgroup[indexPath.row].post_privacy
         let member_privacy = (suggested as AnyObject).value(forKey: "member_privacy")as? String//arrSugestgroup[indexPath.row].member_privacy
-           // if is_page_admin == 0 {
-        let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
-        obj.strUserName = username ?? ""
-        obj.onlyPost = post_privacy ?? ""
-        obj.onlyInvaite = member_privacy ?? ""
-        obj.modalPresentationStyle = .fullScreen
-        //self.navigationController?.pushViewController(obj, animated: true)
-        self.present(obj, animated: false, completion: nil)
+//           // if is_page_admin == 0 {
+//        let obj = self.storyboard?.instantiateViewController(withIdentifier: "openNewuserGroupController")as! openNewuserGroupController
+//        obj.strUserName = username ?? ""
+//        obj.onlyPost = post_privacy ?? ""
+//        obj.onlyInvaite = member_privacy ?? ""
+//        obj.modalPresentationStyle = .fullScreen
+//        //self.navigationController?.pushViewController(obj, animated: true)
+//        self.present(obj, animated: false, completion: nil)
 
+        
+        let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+        obj.strUser = username ?? ""
+//                    self.navigationController?.pushViewController(obj, animated: true)
+        obj.modalPresentationStyle = .fullScreen
+        self.present(obj, animated: false, completion: nil)
         
     }
     

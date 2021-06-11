@@ -71,27 +71,65 @@ class navigationLoaderpageredirection: UIViewController {
         let BEARERTOKEN = BEARER + token
         
         let parameters = ["search":strUser]
+        print("Loadparameters: ",parameters)
         let headers: HTTPHeaders = ["Xapi": XAPI,
                                     "Accept" : ACCEPT,
                                     "Authorization":BEARERTOKEN]
         wc.callSimplewebservice(url: USERNAMEWISESEARCH, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: HomesearchResponseModel?) in
             if sucess {
                 self.arrResults = response!.data
-                let username = self.arrResults[0].username
-                let type = self.arrResults[0].type
-                let group_Type = self.arrResults[0].groups_type
-                let status_group = self.arrResults[0].groups_status
-                let pageAdmin = self.arrResults[0].is_page_admin
-                let event_type = self.arrResults[0].event_type
-                let invite_privacy = self.arrResults[0].invite_privacy
-                let post_privacy = self.arrResults[0].post_privacy
-                let member_privacy = self.arrResults[0].member_privacy
-                let is_guest = self.arrResults[0].is_guest
+                var username = String()
+                var type = String()
+                var group_Type = String()
+                var status_group = String()
+                var pageAdmin = Int()
+                var event_type = String()
+                var invite_privacy = String()
+                var post_privacy = String()
+                var member_privacy = String()
+                var is_guest = Int()
+                
+                
+                if self.arrResults.count > 0{
+                    username = self.arrResults[0].username
+                    type = self.arrResults[0].type
+                    group_Type = self.arrResults[0].groups_type
+                    status_group = self.arrResults[0].groups_status
+                    pageAdmin = self.arrResults[0].is_page_admin
+                    event_type = self.arrResults[0].event_type
+                    invite_privacy = self.arrResults[0].invite_privacy
+                    post_privacy = self.arrResults[0].post_privacy
+                    member_privacy = self.arrResults[0].member_privacy
+                    is_guest = self.arrResults[0].is_guest
+                }
+                else{
+                    loggdenUser.removeObject(forKey: FRIENDSUSERNAME)
+                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController
+                    loggdenUser.set(username, forKey: FRIENDSUSERNAME)
+                    loggdenUser.set(username, forKey: UNAME)
+                    obj.strUserName = username
+                    obj.passBackvala = "passBackvala"
+//                    self.navigationController?.pushViewController(obj, animated: false)
+                    obj.modalPresentationStyle = .fullScreen
+                    self.present(obj, animated: false, completion: nil)
+                }
+
+                print("group_Type: ",group_Type)
+                print("status_group: ",status_group)
+                print("post_privacy: ",post_privacy)
+                print("member_privacy: ",member_privacy)
+                
                 let myprofile = loggdenUser.value(forKey: USERNAME)as! String
                 
                 if type == "user" {
                     if myprofile == username {
                         self.currentTabBar?.setIndex(4)
+                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+            //            self.navigationController?.pushViewController(obj, animated: true)
+                        obj.modalPresentationStyle = .fullScreen
+                        obj.passBackvala = "passBackvala"
+                        //self.navigationController?.pushViewController(obj, animated: true)
+                        self.present(obj, animated: false, completion: nil)
                     }
                     else {
                         loggdenUser.removeObject(forKey: FRIENDSUSERNAME)

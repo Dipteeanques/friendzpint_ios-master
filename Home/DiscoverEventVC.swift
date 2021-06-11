@@ -97,144 +97,149 @@ extension DiscoverEventVC : UITableViewDelegate, UITableViewDataSource{
         
         let username = arrMyEvent?.data[indexPath.row].username ?? ""
         let type = arrMyEvent?.data[indexPath.row].type
-//        let group_Type = arrMyEvent?.data[indexPath.row].groups_type
-//        let status_group = arrMyEvent?.data[indexPath.row].groups_status
+////        let group_Type = arrMyEvent?.data[indexPath.row].groups_type
+////        let status_group = arrMyEvent?.data[indexPath.row].groups_status
         let pageAdmin = arrMyEvent?.data[indexPath.row].is_hosting ?? 0
-        let event_type = arrMyEvent?.data[indexPath.row].event_type ?? ""
-        let invite_privacy = arrMyEvent?.data[indexPath.row].invite_privacy ?? ""
-        let post_privacy = arrMyEvent?.data[indexPath.row].timeline_post_privacy ?? ""
-       // let member_privacy = arrMyEvent?.data[indexPath.row].invite_privacy ?? ""
-        let is_guest = arrMyEvent?.data[indexPath.row].is_guest
+//        let event_type = arrMyEvent?.data[indexPath.row].event_type ?? ""
+//        let invite_privacy = arrMyEvent?.data[indexPath.row].invite_privacy ?? ""
+//        let post_privacy = arrMyEvent?.data[indexPath.row].timeline_post_privacy ?? ""
+//       // let member_privacy = arrMyEvent?.data[indexPath.row].invite_privacy ?? ""
+//        let is_guest = arrMyEvent?.data[indexPath.row].is_guest
         //let myprofile = loggdenUser.value(forKey: USERNAME)as! String
-        
+
         if type == "event" {
             if pageAdmin == 0 {
-                if event_type == "public" {
-                    if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
-                        obj.strUserName = username
-                        obj.onlyPost = post_privacy
-                        obj.onlyInvaite = invite_privacy
-                        obj.is_page_admin = pageAdmin
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
-                    else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
-                        obj.strUserName = username
-                        obj.onlyPost = post_privacy
-                        obj.onlyInvaite = invite_privacy
-                        obj.is_page_admin = pageAdmin
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
-                    else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
-                        obj.strUserName = username
-                        obj.onlyPost = post_privacy
-                        obj.onlyInvaite = invite_privacy
-                        obj.is_page_admin = pageAdmin
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
-                    else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
-                        obj.strUserName = username
-                        obj.onlyPost = post_privacy
-                        obj.onlyInvaite = invite_privacy
-                        obj.is_page_admin = pageAdmin
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
-                    else {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
-                        obj.strUserName = username
-                        obj.onlyPost = post_privacy
-                        obj.onlyInvaite = invite_privacy
-                        obj.is_page_admin = pageAdmin
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
+                
+                let obj = self.storyboard?.instantiateViewController(withIdentifier: "navigationLoaderpageredirection")as! navigationLoaderpageredirection
+                obj.strUser = username
+        //                    self.navigationController?.pushViewController(obj, animated: true)
+                obj.modalPresentationStyle = .fullScreen
+                self.present(obj, animated: false, completion: nil)
+//                if event_type == "public" {
+//                    if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
+//                        obj.strUserName = username
+//                        obj.onlyPost = post_privacy
+//                        obj.onlyInvaite = invite_privacy
+//                        obj.is_page_admin = pageAdmin
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                    else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
+//                        obj.strUserName = username
+//                        obj.onlyPost = post_privacy
+//                        obj.onlyInvaite = invite_privacy
+//                        obj.is_page_admin = pageAdmin
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                    else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
+//                        obj.strUserName = username
+//                        obj.onlyPost = post_privacy
+//                        obj.onlyInvaite = invite_privacy
+//                        obj.is_page_admin = pageAdmin
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                    else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "publicAndGuestProfileViewController")as! publicAndGuestProfileViewController
+//                        obj.strUserName = username
+//                        obj.onlyPost = post_privacy
+//                        obj.onlyInvaite = invite_privacy
+//                        obj.is_page_admin = pageAdmin
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                    else {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PublicEventProfileController")as! PublicEventProfileController
+//                        obj.strUserName = username
+//                        obj.onlyPost = post_privacy
+//                        obj.onlyInvaite = invite_privacy
+//                        obj.is_page_admin = pageAdmin
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
+//                }
+//                else {
+//                    if is_guest == 1 {
+//                        if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
+//                            obj.strUserName = username
+//                            obj.onlyPost = post_privacy
+//                            obj.onlyInvaite = invite_privacy
+//                            obj.is_page_admin = pageAdmin
+//                            loggdenUser.set(username, forKey: UNAME)
+////                            self.navigationController?.pushViewController(obj, animated: false)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
+//                            obj.strUserName = username
+//                            obj.onlyPost = post_privacy
+//                            obj.onlyInvaite = invite_privacy
+//                            obj.is_page_admin = pageAdmin
+//                            loggdenUser.set(username, forKey: UNAME)
+////                            self.navigationController?.pushViewController(obj, animated: false)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
+//                            obj.strUserName = username
+//                            obj.onlyPost = post_privacy
+//                            obj.onlyInvaite = invite_privacy
+//                            obj.is_page_admin = pageAdmin
+//                            loggdenUser.set(username, forKey: UNAME)
+////                            self.navigationController?.pushViewController(obj, animated: false)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
+//                            obj.strUserName = username
+//                            obj.onlyPost = post_privacy
+//                            obj.onlyInvaite = invite_privacy
+//                            obj.is_page_admin = pageAdmin
+//                            loggdenUser.set(username, forKey: UNAME)
+////                            self.navigationController?.pushViewController(obj, animated: false)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                        else {
+//                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
+//                            obj.strUserName = username
+//                            obj.onlyPost = post_privacy
+//                            obj.onlyInvaite = invite_privacy
+//                            obj.is_page_admin = pageAdmin
+//                            loggdenUser.set(username, forKey: UNAME)
+////                            self.navigationController?.pushViewController(obj, animated: false)
+//                            obj.modalPresentationStyle = .fullScreen
+//                            self.present(obj, animated: false, completion: nil)
+//                        }
+//                    }
+//                    else {
+//                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateEventController")as! PrivateEventController
+//                        obj.strUserName = username
+//                        obj.onlyPrivet = "onlyPrivet"
+//                        loggdenUser.set(username, forKey: UNAME)
+////                        self.navigationController?.pushViewController(obj, animated: false)
+//                        obj.modalPresentationStyle = .fullScreen
+//                        self.present(obj, animated: false, completion: nil)
+//                    }
                 }
-                else {
-                    if is_guest == 1 {
-                        if invite_privacy == "only_admins" && post_privacy == "only_admins"  {
-                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
-                            obj.strUserName = username
-                            obj.onlyPost = post_privacy
-                            obj.onlyInvaite = invite_privacy
-                            obj.is_page_admin = pageAdmin
-                            loggdenUser.set(username, forKey: UNAME)
-//                            self.navigationController?.pushViewController(obj, animated: false)
-                            obj.modalPresentationStyle = .fullScreen
-                            self.present(obj, animated: false, completion: nil)
-                        }
-                        else if invite_privacy == "only_guests" && post_privacy == "only_guests"  {
-                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
-                            obj.strUserName = username
-                            obj.onlyPost = post_privacy
-                            obj.onlyInvaite = invite_privacy
-                            obj.is_page_admin = pageAdmin
-                            loggdenUser.set(username, forKey: UNAME)
-//                            self.navigationController?.pushViewController(obj, animated: false)
-                            obj.modalPresentationStyle = .fullScreen
-                            self.present(obj, animated: false, completion: nil)
-                        }
-                        else if invite_privacy == "only_admins" && post_privacy == "only_guests"  {
-                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
-                            obj.strUserName = username
-                            obj.onlyPost = post_privacy
-                            obj.onlyInvaite = invite_privacy
-                            obj.is_page_admin = pageAdmin
-                            loggdenUser.set(username, forKey: UNAME)
-//                            self.navigationController?.pushViewController(obj, animated: false)
-                            obj.modalPresentationStyle = .fullScreen
-                            self.present(obj, animated: false, completion: nil)
-                        }
-                        else if invite_privacy == "only_guests" && post_privacy == "only_admins" {
-                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
-                            obj.strUserName = username
-                            obj.onlyPost = post_privacy
-                            obj.onlyInvaite = invite_privacy
-                            obj.is_page_admin = pageAdmin
-                            loggdenUser.set(username, forKey: UNAME)
-//                            self.navigationController?.pushViewController(obj, animated: false)
-                            obj.modalPresentationStyle = .fullScreen
-                            self.present(obj, animated: false, completion: nil)
-                        }
-                        else {
-                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateAndMemberController")as! PrivateAndMemberController
-                            obj.strUserName = username
-                            obj.onlyPost = post_privacy
-                            obj.onlyInvaite = invite_privacy
-                            obj.is_page_admin = pageAdmin
-                            loggdenUser.set(username, forKey: UNAME)
-//                            self.navigationController?.pushViewController(obj, animated: false)
-                            obj.modalPresentationStyle = .fullScreen
-                            self.present(obj, animated: false, completion: nil)
-                        }
-                    }
-                    else {
-                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "PrivateEventController")as! PrivateEventController
-                        obj.strUserName = username
-                        obj.onlyPrivet = "onlyPrivet"
-                        loggdenUser.set(username, forKey: UNAME)
-//                        self.navigationController?.pushViewController(obj, animated: false)
-                        obj.modalPresentationStyle = .fullScreen
-                        self.present(obj, animated: false, completion: nil)
-                    }
-                }
-            }
             else {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "EventProfileController")as! EventProfileController
                 obj.strUserName = username
@@ -244,7 +249,9 @@ extension DiscoverEventVC : UITableViewDelegate, UITableViewDataSource{
                 obj.modalPresentationStyle = .fullScreen
                 self.present(obj, animated: false, completion: nil)
             }
-        }
+            }
+
+//        }
     }
     
     func convertDateFormater(_ date: String) -> String

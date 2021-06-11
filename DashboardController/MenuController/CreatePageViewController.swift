@@ -46,11 +46,13 @@ class CreatePageViewController: UIViewController {
     var membersPost = String()
     var strPageName = String()
     var url: URL?
-    
+    var selectedimage = UIImage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        activity.style = .medium     //Just change the indicator Style
+       // activity.color = .black
         setDeafult()
     }
     
@@ -129,7 +131,12 @@ class CreatePageViewController: UIViewController {
         txtAbout.textColor = UIColor.lightGray
         txtAbout.delegate = self
         
+        //self.activity.color = .blue
         
+        //DispatchQueue.main.async {
+        self.imageProfile.image = UIImage(named: "PlaceholderGroupimg")
+        selectedimage = self.imageProfile.image!
+       // }
     }
     
     @objc func SelectedCategory(_ notification: NSNotification) {
@@ -159,6 +166,7 @@ class CreatePageViewController: UIViewController {
                 let strAvatar = res?.avatar_url
                 self.url = URL(string: strAvatar!)
                 self.imageProfile.sd_setImage(with: self.url, completed: nil)
+                self.selectedimage = self.imageProfile.image!
                 self.txtCategory.text = res?.category_name
                 self.selected_id = res!.category_id
                 self.txtName.text = res?.name
@@ -204,6 +212,7 @@ class CreatePageViewController: UIViewController {
             activity.isHidden = false
             activity.startAnimating()
             btnCreatePage.isHidden = true
+           // btnCreatePage.isEnabled = false
             let Username = txtuserName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let parameters = ["name": txtName.text!,
                               "username": Username,
@@ -237,9 +246,13 @@ class CreatePageViewController: UIViewController {
                             })
                         }
                     }
-                    let image = self.imageProfile.image!.resizeWithWidth(width: 800)
-                    let imageData:Data = image?.jpegData(compressionQuality: 0.2)! ?? Data()
-                    multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
+                    
+                   // DispatchQueue.main.async {
+                    let image = self.selectedimage//self.imageProfile.image!//.resizeWithWidth(width: 800)
+                    let imageData:Data = image.jpegData(compressionQuality: 0.2)! //?? Data()
+                        multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
+                   // }
+                    
             },
                 usingThreshold: UInt64.init(),to: CREATE_PAGE, method: .post , headers: headers)
                 .responseJSON(completionHandler: { (response) in
@@ -251,8 +264,10 @@ class CreatePageViewController: UIViewController {
                         self.activity.isHidden = true
                         self.activity.stopAnimating()
                         self.btnCreatePage.isHidden = false
+                       // self.btnCreatePage.isEnabled = true
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
                         self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: false, completion: nil)
                     }
                     else {
                         let uiAlert = UIAlertController(title: "FriendzPoint", message: message, preferredStyle: UIAlertController.Style.alert)
@@ -261,6 +276,7 @@ class CreatePageViewController: UIViewController {
                             self.activity.isHidden = true
                             self.activity.stopAnimating()
                             self.btnCreatePage.isHidden = false
+                           // self.btnCreatePage.isEnabled = true
                             self.dismiss(animated: true, completion: nil)
                         }))
                     }
@@ -271,6 +287,7 @@ class CreatePageViewController: UIViewController {
             activity.isHidden = false
             activity.startAnimating()
             btnCreatePage.isHidden = true
+          //  btnCreatePage.isEnabled = false
             let Username = txtuserName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let parameters = ["name": txtName.text!,
                               "username": Username,
@@ -309,7 +326,7 @@ class CreatePageViewController: UIViewController {
                             })
                         }
                     }
-                    let image = self.imageProfile.image!.resizeWithWidth(width: 800)!
+                    let image = self.selectedimage//self.imageProfile.image//!.resizeWithWidth(width: 800)!
                     let imageData:Data = image.jpegData(compressionQuality: 0.2)!
                     multiPart.append(imageData, withName: "change_avatar", fileName: "image.png", mimeType: "image/png")
             },
@@ -323,8 +340,10 @@ class CreatePageViewController: UIViewController {
                         self.activity.isHidden = true
                         self.activity.stopAnimating()
                         self.btnCreatePage.isHidden = false
+                       // self.btnCreatePage.isEnabled = true
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PageCreat"), object: nil)
                         self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: false, completion: nil)
                     }
                     else {
                         let uiAlert = UIAlertController(title: "FriendzPoint", message: message, preferredStyle: UIAlertController.Style.alert)
@@ -333,6 +352,7 @@ class CreatePageViewController: UIViewController {
                             self.activity.isHidden = true
                             self.activity.stopAnimating()
                             self.btnCreatePage.isHidden = false
+                           // self.btnCreatePage.isEnabled = true
                             self.dismiss(animated: true, completion: nil)
                         }))
                     }
@@ -345,6 +365,7 @@ class CreatePageViewController: UIViewController {
     //MARK: - Btn Action
     @IBAction func btnbackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
     @IBAction func btncreatepageAction(_ sender: UIButton) {
         if txtCategory.text!.isEmpty{
@@ -377,7 +398,12 @@ class CreatePageViewController: UIViewController {
             
             let asset = assets[0]
             asset.fetchOriginalImage(completeBlock: { (image, info) in
-                self.imageProfile.image = image
+                DispatchQueue.main.async {
+                    // UIView usage
+                    self.imageProfile.image = image
+                    self.selectedimage = image ?? UIImage(named: "PlaceholderGroupimg")!
+                }
+                
                 self.hidenView.isHidden = true
                 self.indicator.stopAnimating()
             })

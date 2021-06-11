@@ -17,7 +17,12 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
     
     @IBOutlet weak var onlySettingView: UIView!
     
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var btnMenu: UIButton!{
+        didSet{
+            btnMenu.layer.cornerRadius = btnMenu.frame.height/2
+            btnMenu.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var viewReport: UIView!
     
     @IBOutlet weak var ViewJoin: UIView!
@@ -49,8 +54,16 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var gridentView: UIView!
-    @IBOutlet weak var btncamera: UIButton!
+    @IBOutlet weak var btncamera: UIButton!{
+        didSet{
+            let image = UIImage(named: "back")?.withRenderingMode(.alwaysTemplate)
+            btncamera.setImage(image, for: .normal)
+            btncamera.tintColor = UIColor.white
+        }
+    }
+    @IBOutlet weak var lblTitle: UILabel!
     
+    @IBOutlet weak var imgwidth: NSLayoutConstraint!
     var strUserName = String()
     var strUserType = String()
     var url : URL?
@@ -150,7 +163,7 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
 //                currentTabBar!.setBadgeText(String(count), atIndex: 3)
 //            }
 //        }
-        
+        imgwidth.constant = UIScreen.main.bounds.width
        // gridentView.backgroundColor = .white
         if UIScreen.main.bounds.width == 320 {
             viewHeght.constant = 66
@@ -201,6 +214,7 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
                 self.imgCover.sd_setImage(with: self.ustCover, completed: nil)
                 self.strUserType = res!.type
                 self.lblName.text = Name!
+                self.lblTitle.text = Name!
                 self.groupTimeline_id = res!.timeline_id
                 let groupId = res?.id
                 self.group = res!.group_request
@@ -470,7 +484,7 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Timeline","Members","Admins"][index]
+        return ["Timeline","Members"][index]//,"Admins"
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -491,9 +505,9 @@ class NewUserJoinGroupController: MXSegmentedPagerController {
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Members"), object: nil)
         }
-        else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
-        }
+//        else if index == 2 {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Admins"), object: nil)
+//        }
     }
     
     /*

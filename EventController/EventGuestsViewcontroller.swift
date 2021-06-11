@@ -26,6 +26,7 @@ class EventGuestsViewcontroller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(EventGuestsViewcontroller.Guestevents), name: NSNotification.Name(rawValue: "Guestevents"), object: nil)
+        getEvent()
     }
     
     @objc func Guestevents(_ notification: NSNotification) {
@@ -188,6 +189,11 @@ extension EventGuestsViewcontroller : UITableViewDelegate,UITableViewDataSource,
         let username = arrFollow[indexPath.row].username
         if usernameUser == username {
             currentTabBar?.setIndex(4)
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+//            self.navigationController?.pushViewController(obj, animated: true)
+            obj.modalPresentationStyle = .fullScreen
+            //self.navigationController?.pushViewController(obj, animated: true)
+            self.present(obj, animated: false, completion: nil)
         }
         else {
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FriendsProfileViewController")as! FriendsProfileViewController

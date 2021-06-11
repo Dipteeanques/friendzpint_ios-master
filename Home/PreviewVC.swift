@@ -273,7 +273,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
             sliderplay.minimumValue = 0
                     
                     
-            let duration : CMTime = (videoLayer.player?.currentItem?.asset.duration)!
+            let duration : CMTime = (videoLayer.player?.currentItem?.asset.duration ?? CMTime())
             let seconds1 : Float64 = CMTimeGetSeconds(duration)
                     
             sliderplay.maximumValue = Float(seconds1)

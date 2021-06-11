@@ -26,6 +26,7 @@ class ProfileGuestEventController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileGuestEventController.Guestevents), name: NSNotification.Name(rawValue: "Guestevents"), object: nil)
+        getEvent()
     }
     
     @objc func Guestevents(_ notification: NSNotification) {
