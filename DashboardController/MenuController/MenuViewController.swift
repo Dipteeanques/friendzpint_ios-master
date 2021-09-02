@@ -53,6 +53,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         setDefault()
 //        NotificationCenter.default.addObserver(self, selector: #selector(MenuViewController.ProfileImageChange), name: NSNotification.Name(rawValue: "ProfileImage"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(MenuViewController.Menu), name: NSNotification.Name(rawValue: "Menu"), object: nil)
@@ -135,6 +136,7 @@ class MenuViewController: UIViewController {
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseAllButton"), object: nil)
+        
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
         
@@ -624,6 +626,37 @@ extension UIViewController{
             segmentController.segmentSelectedTitleColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
             segmentController.selectedSegmentViewColor = UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
             navigationController?.pushViewController(segmentController, animated: true)
+        }
+    }
+    
+    func NavigateReels()  {
+        if let storyboard = self.storyboard {
+
+            let headerViewController = storyboard
+                .instantiateViewController(withIdentifier: "ReelsProfileVC")
+            
+    
+            let firstViewController = storyboard
+                .instantiateViewController(withIdentifier: "FeelitVideosVC")
+            firstViewController.title = "About"
+
+            let secondViewController = storyboard
+                .instantiateViewController(withIdentifier: "FeelitVideosVC")
+            secondViewController.title = "Feelit"
+
+            let segmentController = SJSegmentedViewController()
+            segmentController.headerViewController = headerViewController
+            segmentController.segmentControllers = [firstViewController,
+                                                    secondViewController]
+            segmentController.headerViewHeight = 450
+            segmentController.headerViewOffsetHeight = 31.0
+            segmentController.selectedSegmentViewHeight = 1.5
+            segmentController.segmentTitleColor = .lightGray
+            segmentController.segmentSelectedTitleColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)//.black
+            segmentController.selectedSegmentViewColor = UIColor.black//UIColor(red: 0.00, green: 0.37, blue: 1.00, alpha: 1.00)
+            segmentController.segmentTitleFont = UIFont(name: "SFUIText-Medium", size: 15)!
+            segmentController.modalPresentationStyle = .fullScreen
+            present(segmentController, animated: false, completion: nil)//pushViewController(segmentController, animated: true)
         }
     }
 }

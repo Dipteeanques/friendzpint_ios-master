@@ -117,6 +117,7 @@ class tblTimelineCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
     override func awakeFromNib() {
         super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(tblTimelineCell.Videopause), name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     @objc func Videopause(_ notification: NSNotification) {

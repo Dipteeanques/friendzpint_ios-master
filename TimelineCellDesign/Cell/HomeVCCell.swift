@@ -314,6 +314,7 @@ class HomeVCCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
 //        videoLayer.player?.pause()
         
         ASVideoPlayerController.sharedVideoPlayer.pauseVideo(forLayer: videoLayer, url: self.videoURL ?? "")
+        print("HomeScreenVideoPause")
     }
     
     override func layoutSubviews() {

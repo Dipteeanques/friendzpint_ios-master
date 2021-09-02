@@ -91,7 +91,7 @@ class HomeVC: UIViewController {
         
      //   btnNotification.badge = "4"
        // btnNotification.badge(text: "4")
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         
         if (loggdenUser.value(forKey: BADGECOUNT) != nil) {
             let count = loggdenUser.value(forKey: BADGECOUNT)as! Int
@@ -104,7 +104,9 @@ class HomeVC: UIViewController {
                 btnNotification.badgeValue = String(count)
             }
         }
-        
+        else{
+            btnNotification.badgeValue = ""
+        }
         timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.GetNewPost), userInfo: nil, repeats: true)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotificationVideo(notification:)), name: Notification.Name("Videopause"), object: nil)
@@ -173,6 +175,7 @@ class HomeVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         mainTableView.beginUpdates()
         currentTabBar?.setBar(hidden: false, animated: false)
         mainTableView.endUpdates()
@@ -188,6 +191,9 @@ class HomeVC: UIViewController {
                 btnNotification.badgeValue = String(count)
             }
         }
+        else{
+            btnNotification.badgeValue = ""
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -202,12 +208,12 @@ class HomeVC: UIViewController {
     
     @IBAction func btnNotificationAction(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)
     }
     
     @IBAction func btnCameraAction(_ sender: Any) {
-        Flag = 0
+//        Flag = 0
 //        showPicker()
 //        let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
 //        let obj = launchStoryBoard.instantiateViewController(withIdentifier: "NewPostVC") as! NewPostVC
@@ -216,7 +222,14 @@ class HomeVC: UIViewController {
 //        self.navigationController?.present(obj, animated: false, completion: nil)
 //        self.navigationController?.pushViewController(obj, animated: false)
         
-        currentTabBar?.setIndex(2)
+//        currentTabBar?.setIndex(2)
+        
+        let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
+        Flag = 0
+//        obj.GroupTimeline_Id = gtime_id
+        let naviget: UINavigationController = UINavigationController(rootViewController: obj)
+        naviget.modalPresentationStyle = .fullScreen
+        self.present(naviget, animated: true, completion: nil)
 //        NewPostVC.instance()
     }
     
@@ -564,6 +577,7 @@ class HomeVC: UIViewController {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -1155,6 +1169,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
         let arrImages = arrFeed[sender.tag].images
         pausePlayeVideos()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PreviewVC")as! PreviewVC
       
         obj.modalPresentationStyle = .fullScreen
@@ -1924,11 +1939,13 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSourc
     
     func getHashtagPost(){
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
 //        obj.hashtagpost = hashtagpost
 //        self.navigationController?.pushViewController(obj, animated: false)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowseVC")as! BrowseVC
         obj.hashtagpost = hashtagpost
         obj.strUrlType = "#"
@@ -1944,6 +1961,7 @@ extension HomeVC{
 
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers")as! CommentsViewControllers
             obj.postId = self.post_Id
@@ -1961,6 +1979,7 @@ extension HomeVC{
         print("Please Help!")
         let launchStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = launchStoryBoard.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
         obj.post_id = arrFeed[sender.tag].id
         obj.modalPresentationStyle = .fullScreen
@@ -1971,6 +1990,7 @@ extension HomeVC{
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DislikeViewController") as! DislikeViewController
             obj.post_id = post_Id
 //            self.navigationController?.pushViewController(obj, animated: false)

@@ -33,6 +33,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
         //navigationController?.setStatusBar(backgroundColor: .black)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         
         self.navigationController?.navigationBar.isHidden = true
         searchBar.delegate = self

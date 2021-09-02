@@ -196,6 +196,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
         
         GETDATA()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         tblFeed.isHidden = true
         strUserName = loggdenUser.value(forKey: UNAME)as! String
         setupView()
@@ -506,6 +507,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -575,6 +577,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
                     obj.usernamepost = usernamepost
@@ -759,6 +762,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
                     }
                     let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -973,6 +977,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
                     
                     let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -1319,6 +1324,7 @@ class GroupTimelineSetController: UIViewController,TTTAttributedLabelDelegate {
 //    }
     @IBAction func btnPageFloatingAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
         Flag = 0
         print("maingId: ",self.maingId)
@@ -4725,6 +4731,7 @@ extension GroupTimelineSetController: UITableViewDelegate, UITableViewDataSource
 
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -5029,6 +5036,7 @@ extension GroupTimelineSetController: UITableViewDelegate, UITableViewDataSource
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)

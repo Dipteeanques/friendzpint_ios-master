@@ -115,6 +115,7 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         loaderView.isHidden = false
         activity.startAnimating()
         
@@ -257,12 +258,14 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
     }
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -270,6 +273,7 @@ class HashtagSearchTimelineController: UIViewController,TTTAttributedLabelDelega
     
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -1547,6 +1551,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DislikeViewController") as! DislikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -1562,6 +1567,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -1571,6 +1577,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommentAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -1584,6 +1591,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommentPostAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -1695,6 +1703,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnshareImgAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! ImgcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2261,6 +2270,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2270,6 +2280,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnAllCommenttxtCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2283,6 +2294,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommenttxtCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2393,6 +2405,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnshareTxtAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! TxtcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2444,6 +2457,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2453,6 +2467,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnAllCommentMultiCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2466,6 +2481,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommentMultiCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2575,6 +2591,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnshareMultiAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! MultiImgcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2626,6 +2643,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2635,6 +2653,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnAllCommentVideoCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2648,6 +2667,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommentVideoCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2757,6 +2777,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnsharevideoAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! YoutubeVideoPlaycell
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2808,6 +2829,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2817,6 +2839,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnAllCommentMetaCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2830,6 +2853,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnCommentMetaCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -2939,6 +2963,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnsharemetaAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! MetacellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2990,6 +3015,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
     @objc func btnMetaAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let Metas = arrFeed[indexPath.row].description
             guard let url = URL(string: Metas) else { return }
             UIApplication.shared.open(url)
@@ -3076,6 +3102,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -3145,6 +3172,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
                     obj.usernamepost = usernamepost
@@ -3329,6 +3357,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
                     }
                     let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -3542,6 +3571,7 @@ extension HashtagSearchTimelineController: UITableViewDelegate,UITableViewDataSo
                     
                     let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost

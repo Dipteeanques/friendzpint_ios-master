@@ -101,6 +101,7 @@ class ProfileViewController: MXSegmentedPagerController {
         let cover = loggdenUser.value(forKey: COVER)as! String
         ustCover = URL(string: cover)
         imgCover.sd_setImage(with: ustCover, completed: nil)
+        imgCover.backgroundColor = .black
         self.navigationController?.navigationBar.isHidden = true
         segmentedPager.backgroundColor = .white
         
@@ -122,6 +123,10 @@ class ProfileViewController: MXSegmentedPagerController {
        // segmentedPager.segmentedControl.sel
         segmentedPager.segmentedControl.indicatorColor = UIColor(red: 6/255, green: 111/255, blue: 243/255, alpha: 1)
         segmentedPager.segmentedControl.indicatorHeight = 1.5
+        
+//        segmentedPager.segmentedControl.select(index: 2, animated: (0 != 0))
+//        segmentedPager.showPage(at: 2, animated: false)
+       // segmentedPager.segmentedControl.selectedSegmentIndex = 2
         
         viewImgRound.layer.cornerRadius = 60
         viewImgRound.clipsToBounds = true
@@ -303,6 +308,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
         
@@ -506,6 +512,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -518,7 +525,7 @@ class ProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
         print(index)
-        return ["Bio data","Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
+        return ["Bio data","Timeline", "Feelit", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
 
     }
     
@@ -528,10 +535,12 @@ class ProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelect view: UIView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
 
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelectViewAt index: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        if index == 0 {
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: nil)
 //        }
@@ -541,13 +550,16 @@ class ProfileViewController: MXSegmentedPagerController {
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Likedpages"), object: nil)
         }
-        else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
+        else if index == 2{
+            
         }
         else if index == 3 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
         }
         else if index == 4 {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
+        }
+        else if index == 5 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Friends"), object: nil)
         }
 //        else if index == 6 {

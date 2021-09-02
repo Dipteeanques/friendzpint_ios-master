@@ -166,6 +166,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
         super.viewDidLoad()
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         tblFeed.sectionHeaderHeight = UITableView.automaticDimension;
         tblFeed.estimatedSectionHeaderHeight = 100;
         currentTabBar?.setBar(hidden: true, animated: false)
@@ -336,6 +337,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     
     func getHashtagPost(){
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
         obj.hashtagpost = hashtagpost
         self.navigationController?.pushViewController(obj, animated: false)
@@ -346,6 +348,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
     }
@@ -368,6 +371,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -375,6 +379,7 @@ class DetailsPostandComment: UIViewController,UIPopoverPresentationControllerDel
     
     @IBAction func btnfloatAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = storyboard?.instantiateViewController(withIdentifier: "PostViewController")as! PostViewController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -1840,6 +1845,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DislikeViewController") as! DislikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -1855,6 +1861,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -1864,6 +1871,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommentAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -1875,6 +1883,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommentPostAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -1984,6 +1993,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnshareImgAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! ImgcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2550,6 +2560,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2559,6 +2570,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnAllCommenttxtCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -2570,6 +2582,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommenttxtCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -2678,6 +2691,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnshareTxtAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! TxtcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2729,6 +2743,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2738,6 +2753,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnAllCommentMultiCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -2749,6 +2765,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommentMultiCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -2856,6 +2873,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnshareMultiAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! MultiImgcellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -2907,6 +2925,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -2916,6 +2935,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnAllCommentVideoCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -2927,6 +2947,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommentVideoCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -3034,6 +3055,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnsharevideoAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! VideocellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -3085,6 +3107,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)
@@ -3094,6 +3117,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnAllCommentMetaCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -3105,6 +3129,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnCommentMetaCellAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers") as! CommentsViewControllers
             obj.postId = post_Id
@@ -3212,6 +3237,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnsharemetaAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let cellfeed = tblFeed.cellForRow(at: indexPath) as! MetacellTimeline
             post_Id = arrFeed[indexPath.row].id
             let userType = arrFeed[indexPath.row].users_type
@@ -3263,6 +3289,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
     @objc func btnMetaAction(_ sender: UIButton) {
         if let indexPath = self.tblFeed.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let Metas = arrFeed[indexPath.row].description
             guard let url = URL(string: Metas) else { return }
             UIApplication.shared.open(url)
@@ -3349,6 +3376,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
                    let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                        
                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                        obj.postid = self.post_Id
                        obj.strdescription = editdescription
@@ -3418,6 +3446,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
                    }
                    let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                        obj.postDetail_id = self.post_Id
                        obj.usernamepost = usernamepost
@@ -3602,6 +3631,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
                        }
                        let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                            obj.postDetail_id = self.post_Id
                            obj.usernamepost = usernamepost
@@ -3815,6 +3845,7 @@ extension DetailsPostandComment: UITableViewDelegate,UITableViewDataSource,UIScr
                        
                        let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                            let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                            obj.postDetail_id = self.post_Id
                            obj.usernamepost = usernamepost

@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
         setPaddingWithImage(image: #imageLiteral(resourceName: "Email"), textField: txtEmail)
         setPaddingWithImage(image: #imageLiteral(resourceName: "Password"), textField: txtPassword)
         setPaddingWithImage(image: #imageLiteral(resourceName: "emailSignup"), textField: forgotEmailtxt)
-        btnLogin.layer.cornerRadius = 5
+        btnLogin.layer.cornerRadius = btnLogin.frame.height/2//5
         btnLogin.clipsToBounds = true
         txtEmail.keyboardType = UIKeyboardType.emailAddress
         forgotEmailtxt.keyboardType = UIKeyboardType.emailAddress
@@ -160,6 +160,7 @@ class LoginViewController: UIViewController {
                                 DispatchQueue.main.async {
                                     let data = dic.value(forKey: "data")as! NSDictionary
                                     let token = data.value(forKey: "token")as! String
+                                    let short_token = data.value(forKey: "short_token")as! String
                                     let name = data.value(forKey: "name")as! String
                                     let username = data.value(forKey: "username")as! String
                                     let timeline_id = data.value(forKey: "id")as! Int
@@ -170,6 +171,7 @@ class LoginViewController: UIViewController {
                                     
                                     loggdenUser.set(name, forKey: NAMELOgin)
                                     loggdenUser.set(token, forKey: TOKEN)
+                                    loggdenUser.set(short_token, forKey: SHORTTOKEN)
                                     loggdenUser.set(true, forKey: Islogin)
                                     loggdenUser.set(timeline_id, forKey: TimeLine_id)
                                     loggdenUser.set(username, forKey: USERNAME)

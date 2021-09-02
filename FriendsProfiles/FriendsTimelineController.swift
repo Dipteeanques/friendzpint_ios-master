@@ -158,6 +158,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(FriendsTimelineController.profileTimeline), name: NSNotification.Name(rawValue: "FriendsprofileTimeline"), object: nil)
         
         strUserName = loggdenUser.value(forKey: UNAME)as? String ?? ""
@@ -459,6 +460,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -528,6 +530,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
                     obj.usernamepost = usernamepost
@@ -712,6 +715,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
                     }
                     let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -926,6 +930,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
                     
                     let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -1186,6 +1191,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
     
     func getHashtagPost() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
         obj.hashtagpost = hashtagpost
         self.navigationController?.pushViewController(obj, animated: false)
@@ -4584,6 +4590,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
 
             if let indexPath = self.mainTableView.indexPathForView(sender) {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                 post_Id = arrFeed[indexPath.row].id
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                 obj.postDetail_id = self.post_Id
@@ -4889,6 +4896,7 @@ class FriendsTimelineController: UIViewController,TTTAttributedLabelDelegate {
             if let indexPath = self.mainTableView.indexPathForView(sender) {
                 post_Id = arrFeed[indexPath.row].id
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
                 obj.post_id = post_Id
                 self.navigationController?.pushViewController(obj, animated: false)

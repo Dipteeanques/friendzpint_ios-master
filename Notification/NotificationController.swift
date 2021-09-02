@@ -39,6 +39,7 @@ class NotificationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         
         //navigationController?.setStatusBar(backgroundColor: .black)
         loaderView.isHidden = false

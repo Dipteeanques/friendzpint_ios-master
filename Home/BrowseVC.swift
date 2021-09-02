@@ -97,6 +97,7 @@ class BrowseVC: UIViewController {
     
     @IBAction func btnBack(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false, completion: nil)
     }
@@ -505,6 +506,7 @@ class BrowseVC: UIViewController {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -574,6 +576,7 @@ class BrowseVC: UIViewController {
                 }
                 //                let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                 //                    let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                 //                    obj.postDetail_id = self.post_Id
                 //                    obj.usernamepost = usernamepost
@@ -758,6 +761,7 @@ class BrowseVC: UIViewController {
                     }
                     //                    let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     //                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     //                        obj.postDetail_id = self.post_Id
                     //                        obj.usernamepost = usernamepost
@@ -972,6 +976,7 @@ class BrowseVC: UIViewController {
                     
                     //                    let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     //                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     //                        obj.postDetail_id = self.post_Id
                     //                        obj.usernamepost = usernamepost
@@ -1027,6 +1032,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
         print("Image click...")
         let arrImages = arrFeed[sender.tag].images
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "PreviewVC")as! PreviewVC
         
@@ -1042,7 +1048,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
                 obj.source_url = source_url
             }
             //            self.navigationController?.pushViewController(obj, animated: true)
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
             break
             
@@ -1050,7 +1056,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
             obj.images = arrFeed[sender.tag].images
             obj.type = typeFeed
             // self.navigationController?.pushViewController(obj, animated: true)
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
             break
             
@@ -1062,7 +1068,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
             }
             obj.video_poster = arrFeed[sender.tag].video_poster
             //            self.navigationController?.pushViewController(obj, animated: true)
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
             break
         default:
@@ -1724,7 +1730,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
     //                loggdenUser.set(username, forKey: FRIENDSUSERNAME)
     //                obj.strUserName = username
                     //self.navigationController?.pushViewController(obj, animated: false)
-                    obj.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .overFullScreen
                     self.present(obj, animated: false, completion: nil)
                 }
                 else {
@@ -1734,7 +1740,7 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
                     loggdenUser.set(username, forKey: UNAME)
                     obj.strUserName = username
 //                    self.navigationController?.pushViewController(obj, animated: false)
-                    obj.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .overFullScreen
                     self.present(obj, animated: false, completion: nil)
                 }
 //            }
@@ -1743,15 +1749,17 @@ extension BrowseVC: UITableViewDelegate,UITableViewDataSource,UITableViewDataSou
     
     func getHashtagPost(){
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
 //        obj.hashtagpost = hashtagpost
 //        self.navigationController?.pushViewController(obj, animated: false)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "BrowseVC")as! BrowseVC
         obj.hashtagpost = hashtagpost
         obj.strUrlType = "#"
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)//pushViewController(obj, animated: false)
     }
     
@@ -1812,6 +1820,7 @@ extension BrowseVC{
         
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "CommentsViewControllers")as! CommentsViewControllers
             obj.postId = self.post_Id
@@ -1819,7 +1828,9 @@ extension BrowseVC{
             let naviget: UINavigationController = UINavigationController(rootViewController: obj)
             //            obj.passappDel = "passappDel"
             // self.present(naviget, animated: true, completion: nil)
-            self.navigationController?.pushViewController(obj, animated: false)
+//            self.navigationController?.pushViewController(obj, animated: false)
+            obj.modalPresentationStyle = .overFullScreen
+            self.present(naviget, animated: false, completion: nil)
         }
     }
     

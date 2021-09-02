@@ -160,6 +160,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        setDefault()
 //        NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewCiontroller.profileTimeline), name: NSNotification.Name(rawValue: "profileTimeline"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewCiontroller.GetCreatedPost), name: NSNotification.Name(rawValue: "PostCreat"), object: nil)
@@ -467,6 +468,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -536,6 +538,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
                     obj.usernamepost = usernamepost
@@ -720,6 +723,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
                     }
                     let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -934,6 +938,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
                     
                     let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -1201,6 +1206,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
 //
     func getHashtagPost() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "HashtagSearchTimelineController")as! HashtagSearchTimelineController
         obj.hashtagpost = hashtagpost
         self.navigationController?.pushViewController(obj, animated: false)
@@ -1214,6 +1220,7 @@ class TimelineViewCiontroller: UIViewController,TTTAttributedLabelDelegate {
 //        self.present(naviget, animated: true, completion: nil)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = storyboard?.instantiateViewController(withIdentifier: "NewPostVC")as! NewPostVC
         Flag = 0
 //        obj.GroupTimeline_Id = gtime_id
@@ -4610,6 +4617,7 @@ extension TimelineViewCiontroller: UITableViewDelegate, UITableViewDataSource, U
 
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -4915,6 +4923,7 @@ extension TimelineViewCiontroller: UITableViewDelegate, UITableViewDataSource, U
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)

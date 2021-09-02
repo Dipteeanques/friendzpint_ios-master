@@ -127,7 +127,7 @@ class HomeTableViewCell: UITableViewCell {
     
     var bottomViewHeight = CGFloat()
     
-    var playerView: VideoPlayerView!
+    var playerView: VideoPlayerViewS!
     var imageview = UIImageView()
     var imageviewBackground = UIImageView()
     @IBOutlet weak var countView: UIView!{
@@ -186,7 +186,7 @@ class HomeTableViewCell: UITableViewCell {
         
         pageControl.isHidden = true
         viewHeight.constant = ((80 * 10) + 50)//self.tblComment.contentSize.height
-        playerView = VideoPlayerView(frame: self.contentView.frame)
+        playerView = VideoPlayerViewS(frame: self.contentView.frame)
         imageview.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
         imageviewBackground.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height - 280)
         imageview.contentMode = .scaleAspectFit

@@ -100,7 +100,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
     
     @IBAction func btnCreateAction(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "CreateArticlesVC")as! CreateArticlesVC
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)
     }
     
@@ -128,7 +128,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
                 else{
                     obj.strURl = self.arrArticle[swipedIndexPath.row].video_link
                 }
-                obj.modalPresentationStyle = .fullScreen
+                obj.modalPresentationStyle = .overFullScreen
                 self.present(obj, animated: false, completion: nil)
             }
 //            switch swipeGesture.direction {
@@ -159,7 +159,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
         obj.Description = data.description
         obj.strimage = data.articleimages.full_url
         obj.CHECK = "Edit"
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)
     }
     
@@ -258,7 +258,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
             }
         }
 
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)
     }
     
@@ -668,7 +668,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
         obj.strURl = self.arrArticle[sender.tag].article_web_link
         obj.strTitle = self.arrArticle[sender.tag].title
 //                self.navigationController?.pushViewController(obj, animated: false)
-        obj.modalPresentationStyle = .fullScreen
+        obj.modalPresentationStyle = .overFullScreen
         self.present(obj, animated: false, completion: nil)
     }
     
@@ -678,6 +678,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
 
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             if CheckVC == "MY"{
                 post_Id = myarrArticle[indexPath.row].id
             }
@@ -693,7 +694,7 @@ class ArticlesVC: UIViewController,UITableViewDataSourcePrefetching {
 //            obj.passappDel = "passappDel"
            // self.present(naviget, animated: true, completion: nil)
 //            self.navigationController?.pushViewController(obj, animated: false)
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(naviget, animated: false, completion: nil)
         }
     }

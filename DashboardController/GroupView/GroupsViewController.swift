@@ -75,6 +75,7 @@ class GroupsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(GroupsViewController.Group), name: NSNotification.Name(rawValue: "Group"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GroupsViewController.GetCreatedGroup), name: NSNotification.Name(rawValue: "GroupCreat"), object: nil)
         self.loaderView.isHidden = false
@@ -209,6 +210,7 @@ class GroupsViewController: UIViewController {
     
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
         
@@ -216,6 +218,7 @@ class GroupsViewController: UIViewController {
     
     @IBAction func btnCameraAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let pickerController = DKImagePickerController()
         pickerController.didSelectAssets = { (assets: [DKAsset]) in
             print("didSelectAssets")
@@ -250,6 +253,7 @@ class GroupsViewController: UIViewController {
     
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)

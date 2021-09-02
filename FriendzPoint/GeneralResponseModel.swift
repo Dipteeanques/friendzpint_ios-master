@@ -2120,3 +2120,837 @@ struct MyArticleArticleimages: Codable {
     let full_url: String
 
 }
+
+//MARK: Reels Related Videos
+struct ReelsShowRelatedVideosResponseModel: Codable {
+
+    var code: Int
+    var msg: [ReelsMsg]
+
+}
+
+struct ReelsMsg: Codable {
+
+    var Video: ReelsVideo
+    var User: ReelsUser
+    var Sound: ReelsSound
+
+}
+
+struct ReelsVideo: Codable {
+
+    var id: String
+    var user_id: String
+    var fb_id: String
+    var description: String
+    var video: String
+    var thum: String
+    var gif: String
+    var view: String
+    var section: String
+    var sound_id: String
+    var privacy_type: String
+    var allow_comments: String
+    var allow_duet: String
+    var block: String
+    var duet_video_id: String
+    var old_video_id: String
+    var duration: String
+    var created: String
+    var like: Int
+    var favourite: Int
+    var comment_count: Int
+    var like_count: Int
+
+}
+
+struct ReelsUser : Codable{//: Decodable
+
+    var id: String
+    var timeline_id: String
+    var email: String
+    var contactno: String
+    var wallet_token: String
+    var verification_code: String
+    var verified: Bool
+   // let email_verified: String
+    var remember_token: String
+    var username: String
+    var password: String
+    var balance: String
+    var birthday: String
+    var city: String
+    var country: String
+    var designation: String
+    var hobbies: String
+    var interests: String
+    var custom_option1: String
+    var custom_option2: String
+    var custom_option3: String
+    var custom_option4: String
+    var gender: String
+    var active: Bool
+    var last_logged: String
+    var timezone: String
+    var affiliate_id: String
+    var language: String
+    var facebook_link: String
+    var twitter_link: String
+    var dribbble_link: String
+    var instagram_link: String
+    var youtube_link: String
+    var linkedin_link: String
+    var created_at: String
+    var updated_at: String
+    var deleted_at: String
+    var profile_pic: String
+//    let PushNotification: [String]
+//    let PrivacySetting: [String]
+    var button: String
+
+}
+
+struct ReelsSound: Codable {
+
+    var id: String
+    var audio: String
+    var duration: String
+    var name: String
+    var description: String
+    var thum: String
+    var sound_section_id: String
+    var uploaded_by: String
+    var publish: String
+    var created: String
+    var deleted_at: String
+
+}
+
+
+//MARK: For show sound
+
+struct ShowSoundResponseModel: Codable {
+
+    var code: Int
+    var msg: [Msg]
+
+}
+
+struct Msg: Codable {
+
+    var SoundSection: SoundSection
+    var Sound: [Sound]
+
+}
+
+struct SoundSection: Codable {
+
+    var id: String
+    var name: String
+
+}
+
+struct Sound: Codable {
+
+    var id: String
+    var audio: String
+    var duration: String
+    var name: String
+    var description: String
+    var thum: String
+    var sound_section_id: String
+    var uploaded_by: String
+    var publish: String
+    var created: String
+    var deleted_at: String
+    var favourite: Int
+
+}
+
+
+//MARK: Favorite Sound
+struct FavoriteSoundResponseModel: Codable {
+
+    let code: Int
+    let msg: [FMsg]
+
+}
+
+struct FMsg: Codable {
+
+    let SoundFavourite: SoundFavourite
+    let Sound: FSound
+    let User: FUser
+
+}
+
+struct SoundFavourite: Codable {
+
+    let id: String
+    let user_id: String
+    let sound_id: String
+    let created: String
+
+}
+
+struct FSound: Codable {
+
+    let id: String
+    let audio: String
+    let duration: String
+    let name: String
+    let description: String
+    let thum: String
+    let sound_section_id: String
+    let uploaded_by: String
+    let publish: String
+    let created: String
+    let deleted_at: String
+
+}
+
+struct FUser: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+//    let email_verified: Bool
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let custom_option1: String
+    let custom_option2: String
+    let custom_option3: String
+    let custom_option4: String
+    let gender: String
+    let active: Bool
+    let last_logged: String
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+
+//MARK: show section
+
+struct ShowSectionResponseModel: Codable {
+
+    let code: Int
+    let msg: [ShowSectionMsg]
+
+}
+
+struct ShowSectionMsg: Codable {
+
+    let Sound: ShowSectionSound
+
+}
+
+struct ShowSectionSound: Codable {
+
+    let id: String
+    let audio: String
+    let duration: String
+    let name: String
+    let description: String
+    let thum: String
+    let sound_section_id: String
+    let uploaded_by: String
+    let publish: String
+    let created: String
+    let deleted_at: String
+    let favourite: Int
+
+}
+
+
+//MARK: show comment
+struct ShowCommentResponseModel: Codable {
+
+    let code: Int
+    let msg: [SMsg]
+
+}
+
+struct SMsg: Codable {
+
+    let VideoComment: VideoComment
+    let Video: Video
+    let User: User
+    let VideoCommentReply: [VideoCommentReply]
+
+}
+
+struct VideoComment: Codable {
+
+    let id: String
+    let user_id: String
+    let video_id: String
+    let comment: String
+    let created: String
+    let like: Int
+    let like_count: Int
+
+}
+
+struct Video: Codable {
+
+    let id: String
+    let user_id: String
+    let fb_id: String
+    let description: String
+    let video: String
+    let thum: String
+    let gif: String
+    let view: String
+    let section: String
+    let sound_id: String
+    let privacy_type: String
+    let allow_comments: String
+    let allow_duet: String
+    let block: String
+    let duet_video_id: String
+    let old_video_id: String
+    let duration: String
+    let created: String
+
+}
+
+struct User: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+    let email_verified: String
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let custom_option1: String
+    let custom_option2: String
+    let custom_option3: String
+    let custom_option4: String
+    let gender: String
+    let active: Bool
+    let last_logged: String
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+struct VideoCommentReply: Codable {
+
+    let id: String
+    let user_id: String
+    let comment_id: String
+    let comment: String
+    let created: String
+    let User: Usercomment
+    let like: Int
+    let like_count: Int
+
+}
+
+struct Usercomment: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+    let email_verified: Bool
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let custom_option1: String
+    let custom_option2: String
+    let custom_option3: String
+    let custom_option4: String
+    let gender: String
+    let active: Bool
+    let last_logged: String
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+
+
+
+struct LikeVideoResponseModel: Codable {
+
+    let code: Int
+    let msg: LikeVideoMsg
+
+}
+
+struct LikeVideoMsg: Codable {
+
+    let VideoLike: VideoLike
+    let Video: LikeVideoVideo
+    let User: LikeVideoUser
+
+}
+
+struct VideoLike: Codable {
+
+    let id: String
+    let user_id: String
+    let video_id: String
+    let created: String
+    let message: String
+
+}
+
+struct LikeVideoVideo: Codable {
+
+    let id: String
+    let user_id: String
+    let fb_id: String
+    let description: String
+    let video: String
+    let thum: String
+    let gif: String
+    let view: String
+    let section: String
+    let sound_id: String
+    let privacy_type: String
+    let allow_comments: String
+    let allow_duet: String
+    let block: String
+    let duet_video_id: String
+    let old_video_id: String
+    let duration: String
+    let created: String
+
+}
+
+struct LikeVideoUser: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+    let email_verified: String
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let custom_option1: String
+    let custom_option2: String
+    let custom_option3: String
+    let custom_option4: String
+    let gender: String
+    let active: Bool
+    let last_logged: String
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+
+//MARK: Reels Video comment
+struct ReelsCommentResponseModel: Codable {
+
+    let code: Int
+    let msg: [ReelsCommentMsg]
+
+}
+
+struct ReelsCommentMsg: Codable {
+
+    let VideoComment: ReelsCommentVideoComment
+    let Video: ReelsCommentVideo
+    let User: ReelsCommentUser
+    let VideoCommentReply: [ReelsCommentVideoCommentReply]
+
+}
+
+struct ReelsCommentVideoComment: Codable {
+
+    let id: String
+    let user_id: String
+    let video_id: String
+    let comment: String
+    let created: String
+    let like: Int
+    let like_count: Int
+
+}
+
+struct ReelsCommentVideo: Codable {
+
+    let id: String
+    let user_id: String
+    let fb_id: String
+    let description: String
+    let video: String
+    let thum: String
+    let gif: String
+    let view: String
+    let section: String
+    let sound_id: String
+    let privacy_type: String
+    let allow_comments: String
+    let allow_duet: String
+    let block: String
+    let duet_video_id: String
+    let old_video_id: String
+    let duration: String
+    let created: String
+
+}
+
+struct ReelsCommentUser: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+//    let email_verified: String
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let custom_option1: String
+    let custom_option2: String
+    let custom_option3: String
+    let custom_option4: String
+    let gender: String
+    let active: Bool
+    let last_logged: String
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+struct ReelsCommentVideoCommentReply: Codable {
+
+    let id: String
+    let user_id: String
+    let comment_id: String
+    let comment: String
+    let created: String
+    let User: ReelsCommentUser
+    let like: Int
+    let like_count: Int
+
+}
+
+//MARK: Send Comment
+struct SendReelsCommentResponseModel: Codable {
+
+    let code: Int
+//    let msg: ReelsCommentMsg
+
+}
+
+//MARK: Discovry Module
+struct userMVC {
+    
+    let userID:String
+    let first_name:String
+    let last_name:String
+    let gender:String
+    let bio:String
+    let website:String
+    let dob:String
+    let social_id:String
+    let userEmail:String
+    let userPhone:String
+    let password:String
+    let userProfile_pic:String
+    let role:String
+    let username:String
+    let social:String
+    let device_token:String
+    let videoCount:String
+    let likesCount:String
+    let followers:String
+    let following:String
+    let followBtn:String
+}
+
+
+struct videoMainMVC {
+//    video
+    let videoID:String
+    let videoUserID:String
+    let fb_id:String
+    let description:String
+    let videoURL:String
+    let videoTHUM:String
+    let videoGIF:String
+    let view:String
+    let section:String
+    let sound_id:String
+    let privacy_type:String
+    let allow_comments:String
+    let allow_duet:String
+    let block:String
+    let duet_video_id:String
+    let old_video_id:String
+    let created:String
+    let like:String
+    let favourite:String
+    let comment_count:String
+    let like_count:String
+    let followBtn:String
+    let duetVideoID:String
+    
+//    user
+    let userID:String
+    let first_name:String
+    let last_name:String
+    let gender:String
+    let bio:String
+    let website:String
+    let dob:String
+    let social_id:String
+    let userEmail:String
+    let userPhone:String
+    let password:String
+    let userProfile_pic:String
+    let role:String
+    let username:String
+    let social:String
+    let device_token:String
+    let videoCount:String
+    let verified:String
+
+    
+//    sound
+    let soundName:String
+
+
+}
+
+struct hashTagMVC {
+    let id:String
+    let name:String
+    let views:String
+    let favourite:String
+}
+
+struct soundsMVC {
+    let id:String
+    let audioURL:String
+    let duration:String
+    let name:String
+    let description:String
+    let thum:String
+    let section:String
+    let uploaded_by:String
+    let created:String
+    let favourite:String
+    let publish:String
+    
+    
+}
+
+
+
+//MARK: Sound Response Model
+struct SoundResponseModel: Codable {
+
+    let code: Int
+    let msg: [SoundMsg]
+
+}
+
+struct SoundMsg: Codable {
+
+    let Video: SoundVideo
+    let User: SoundUser
+    let Sound: SSound
+
+}
+
+struct SoundVideo: Codable {
+
+    let id: String
+    let user_id: String
+    let fb_id: String
+    let description: String
+    let video: String
+    let thum: String
+    let gif: String
+    let view: String
+    let section: String
+    let sound_id: String
+    let privacy_type: String
+    let allow_comments: String
+    let allow_duet: String
+    let block: String
+    let duet_video_id: String
+    let old_video_id: String
+    let duration: String
+    let created: String
+    let like: Int
+    let favourite: Int
+    let comment_count: Int
+    let like_count: Int
+
+}
+
+struct SoundUser: Codable {
+
+    let id: String
+    let timeline_id: String
+    let email: String
+    let contactno: String
+    let wallet_token: String
+    let verification_code: String
+    let verified: Bool
+    let remember_token: String
+    let password: String
+    let balance: String
+    let birthday: String
+    let city: String
+    let country: String
+    let designation: String
+    let hobbies: String
+    let interests: String
+    let gender: String
+    let active: Bool
+    let timezone: String
+    let affiliate_id: String
+    let language: String
+    let facebook_link: String
+    let twitter_link: String
+    let dribbble_link: String
+    let instagram_link: String
+    let youtube_link: String
+    let linkedin_link: String
+    let created_at: String
+    let updated_at: String
+    let deleted_at: String
+    let name: String
+    let username: String
+    let profile_pic: String
+
+}
+
+struct SSound: Codable {
+
+    let id: String
+    let audio: String
+    let duration: String
+    let name: String
+    let description: String
+    let thum: String
+    let sound_section_id: String
+    let uploaded_by: String
+    let publish: String
+    let created: String
+    let deleted_at: String
+
+}

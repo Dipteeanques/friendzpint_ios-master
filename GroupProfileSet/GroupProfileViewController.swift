@@ -80,6 +80,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         setDefault()
     }
     
@@ -334,6 +335,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
     }
     @IBAction func btnSearchAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
         self.navigationController?.pushViewController(obj, animated: false)
     }
@@ -474,6 +476,7 @@ class GroupProfileViewController: MXSegmentedPagerController {
     }
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -500,10 +503,12 @@ class GroupProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelect view: UIView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelectViewAt index: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         if index == 0 {
              let object: [String: Any] = ["id": self.groupTimeline_id, "Gusername": self.strUserName,"onlyPost":self.onlyPost,"onlyInvaite":self.onlyInvaite,"group_request": self.group]
             NotificationCenter.default.post(name: Notification.Name("GroupprofileTimeline"),

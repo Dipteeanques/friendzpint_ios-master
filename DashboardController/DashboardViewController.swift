@@ -49,16 +49,16 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
         var icons = [UIImage]()
         icons.append(#imageLiteral(resourceName: "Feed"))
         icons.append(#imageLiteral(resourceName: "Friend"))
-        icons.append(#imageLiteral(resourceName: "Group"))
-        icons.append(#imageLiteral(resourceName: "Terms and Conditions"))
+        icons.append(#imageLiteral(resourceName: "Video"))
+        icons.append(#imageLiteral(resourceName: "article"))
         icons.append(#imageLiteral(resourceName: "Profile"))
 //        icons.append(#imageLiteral(resourceName: "Terms and Conditions"))
         
         var sIcons = [UIImage]()
         sIcons.append(#imageLiteral(resourceName: "SFeed"))
-        sIcons.append(#imageLiteral(resourceName: "Friend"))
-        sIcons.append(#imageLiteral(resourceName: "Group"))
-        sIcons.append(#imageLiteral(resourceName: "Terms and Conditions"))
+        sIcons.append(#imageLiteral(resourceName: "SFriend"))
+        sIcons.append(#imageLiteral(resourceName: "Svideo"))
+        sIcons.append(#imageLiteral(resourceName: "Sarticle"))
         sIcons.append(#imageLiteral(resourceName: "SProfile"))
 //        sIcons.append(#imageLiteral(resourceName: "Smenu"))
         
@@ -66,10 +66,13 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
         tabController.delegate = self
         tabController.setViewController(HomeVC.instance(), atIndex: 0)//HomeViewController
         tabController.setViewController(SearchViewController.instance(), atIndex: 1)
-        tabController.setViewController(NewPostVC.instance(), atIndex: 2)
+       // tabController.setViewController(NewPostVC.instance(), atIndex: 2)
+        tabController.setViewController(ReelsVC.instance(), atIndex: 2)
         tabController.setViewController(ArticlesVC.instance(), atIndex: 3)//ChatViewController//MenuViewController
         tabController.setViewController(SettingVC.instance(), atIndex: 4)
         tabController.currentTab?.hidesBottomBarWhenPushed = true
+        tabController.selectedColor = .black
+        tabController.separatorLineColor = .black
 //        tabController.setViewController(ProfileViewController.instance(), atIndex: 4)
 //        tabController.setViewController(MenuViewController.instance(), atIndex: 5)
         
@@ -90,11 +93,13 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
     func tabBar(_ tabBar: AZTabBarController, didMoveToTabAtIndex index: Int) {
         print("didMoveToTabAtIndex \(index)")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     func tabBar(_ tabBar: AZTabBarController, didSelectTabAtIndex index: Int) {
         print("didSelectTabAtIndex \(index)")
          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         if index == 0 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Timeline"), object: nil)
             currentTabBar?.setIndex(0)
@@ -125,6 +130,7 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
     func tabBar(_ tabBar: AZTabBarController, willMoveToTabAtIndex index: Int) {
         print("willMoveToTabAtIndex \(index)")
          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         if index == 0 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Timeline"), object: nil)
             currentTabBar?.setIndex(0)
@@ -154,11 +160,13 @@ class DashboardViewController: UIViewController,AZTabBarDelegate {
     func tabBar(_ tabBar: AZTabBarController, didLongClickTabAtIndex index: Int) {
         print("didLongClickTabAtIndex \(index)")
          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     
     func tabBar(_ tabBar: AZTabBarController, systemSoundIdForButtonAtIndex index: Int) -> SystemSoundID? {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         return tabBar.selectedIndex == index ? nil : audioId
     }
     

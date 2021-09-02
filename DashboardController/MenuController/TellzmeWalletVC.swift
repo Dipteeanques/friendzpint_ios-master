@@ -46,6 +46,7 @@ class TellzmeWalletVC: MXSegmentedPagerController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         Getwallet()
         setDefault()
     }
@@ -154,5 +155,6 @@ class TellzmeWalletVC: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelect view: UIView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
 }

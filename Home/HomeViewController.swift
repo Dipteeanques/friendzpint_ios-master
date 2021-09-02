@@ -391,6 +391,7 @@ class HomeViewController: UIViewController {
                 let secondAction: UIAlertAction = UIAlertAction(title: "Edit", style: .default) { action -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "postEditViewController")as! postEditViewController
                     obj.postid = self.post_Id
                     obj.strdescription = editdescription
@@ -460,6 +461,7 @@ class HomeViewController: UIViewController {
                 }
                 let four: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                     
                     let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                     obj.postDetail_id = self.post_Id
@@ -645,6 +647,7 @@ class HomeViewController: UIViewController {
                     }
                     let five: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -859,6 +862,7 @@ class HomeViewController: UIViewController {
                     
                     let six: UIAlertAction = UIAlertAction(title: "View post", style: .default) { action -> Void in
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
                         obj.postDetail_id = self.post_Id
                         obj.usernamepost = usernamepost
@@ -897,6 +901,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UITabl
 
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             post_Id = arrFeed[indexPath.row].id
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "DetailsPostandComment")as! DetailsPostandComment
             obj.postDetail_id = self.post_Id
@@ -1267,6 +1272,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UITabl
         if let indexPath = self.mainTableView.indexPathForView(sender) {
             post_Id = arrFeed[indexPath.row].id
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
             obj.post_id = post_Id
             self.navigationController?.pushViewController(obj, animated: false)

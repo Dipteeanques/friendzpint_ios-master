@@ -225,7 +225,7 @@ class PostVC: UIViewController {
                         }
                         
                     }
-                    obj.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .overFullScreen
                     self.present(obj, animated: false, completion: nil)
 //                    self.show(obj, sender: self)
 //                    self.navigationController?.pushViewController(obj, animated: true)
@@ -242,7 +242,7 @@ class PostVC: UIViewController {
                     obj.videoUrlPath = video.url.path
                     
 //                    self.navigationController?.pushViewController(obj, animated: false)
-                    obj.modalPresentationStyle = .fullScreen
+                    obj.modalPresentationStyle = .overFullScreen
                     self.present(obj, animated: false, completion: nil)
 
                     picker.dismiss(animated: false, completion: { [weak self] in

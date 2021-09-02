@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class VideoPlayerView: UIView {
+class VideoPlayerViewS: UIView {
     
     // MARK: - Variables
     var videoURL: URL?
@@ -150,7 +150,7 @@ class VideoPlayerView: UIView {
 }
 
 // MARK: - KVO
-extension VideoPlayerView {
+extension VideoPlayerViewS {
     func removeObserver() {
         if let observer = observer {
             observer.invalidate()
@@ -180,7 +180,7 @@ extension VideoPlayerView {
 }
 
 // MARK: - URL Session Delegate
-extension VideoPlayerView: URLSessionTaskDelegate, URLSessionDataDelegate {
+extension VideoPlayerViewS: URLSessionTaskDelegate, URLSessionDataDelegate {
     // Get Responses From URL Request
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         self.infoResponse = response
@@ -255,7 +255,7 @@ extension VideoPlayerView: URLSessionTaskDelegate, URLSessionDataDelegate {
 }
 
 // MARK: - AVAssetResourceLoader Delegate
-extension VideoPlayerView: AVAssetResourceLoaderDelegate {
+extension VideoPlayerViewS: AVAssetResourceLoaderDelegate {
     func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         if task == nil, let url = originalURL {
             let request = URLRequest.init(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)

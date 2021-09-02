@@ -48,7 +48,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
-
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         loaderView.isHidden = false
         activity.startAnimating()
         setDefault()
@@ -164,6 +164,7 @@ class ChatViewController: UIViewController {
 //        let obj = self.storyboard?.instantiateViewController(withIdentifier: "ChatFriendsSearchview")as! ChatFriendsSearchview
 //        self.navigationController?.pushViewController(obj, animated: false)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController")as! SearchViewController
        // self.navigationController?.pushViewController(obj, animated: false)
         self.present(obj, animated: false, completion: nil)

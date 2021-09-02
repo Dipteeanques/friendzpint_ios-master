@@ -49,6 +49,7 @@ class TellzmeWalletViewController: MXSegmentedPagerController,UITextFieldDelegat
 
         // Do any additional setup after loading the view.
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         setDefault()
     }
     
@@ -165,6 +166,7 @@ class TellzmeWalletViewController: MXSegmentedPagerController,UITextFieldDelegat
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelect view: UIView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     override func viewSafeAreaInsetsDidChange() {

@@ -92,7 +92,7 @@ class SignupViewController: UIViewController {
         txtMobile.delegate = self
         txtPwd.delegate = self
         txtUsername.delegate = self
-        btnSignup.layer.cornerRadius = 5
+        btnSignup.layer.cornerRadius = btnSignup.frame.height/2
         btnSignup.clipsToBounds = true
         txtEmail.keyboardType = UIKeyboardType.emailAddress
         txtPwd.isSecureTextEntry = true

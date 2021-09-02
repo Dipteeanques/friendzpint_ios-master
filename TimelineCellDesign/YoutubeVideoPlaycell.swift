@@ -48,6 +48,7 @@ class YoutubeVideoPlaycell: UITableViewCell {
         super.awakeFromNib()
         playerView.delegate = self
          NotificationCenter.default.addObserver(self, selector: #selector(YoutubeVideoPlaycell.Videopause), name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
     }
     
     @objc func Videopause(_ notification: NSNotification) {

@@ -75,6 +75,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         currentTabBar?.setBar(hidden: true, animated: false)
         setDefault()
 //        setStatusBar1(backgroundColor: .black)
@@ -364,6 +365,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
                 let id = dataDic.value(forKey: "id")as! Int
                 let user_id = dataDic.value(forKey: "user_id")as! Int
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "ChatConversionController")as! ChatConversionController
                 obj.Id = id
                 obj.user_id = user_id
@@ -516,6 +518,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     }
     @IBAction func btnNotificationAction(_ sender: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
         let naviget: UINavigationController = UINavigationController(rootViewController: obj)
         self.present(naviget, animated: true, completion: nil)
@@ -590,12 +593,13 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Bio data","Timeline", "Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
+        return ["Bio data","Timeline", "Feelit" ,"Liked pages","Joined groups","Gallery"][index]//,"Friendz"//"Bio data",
         
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelectViewAt index: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        if index == 0 {
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Biodata"), object: nil)
 //        }
@@ -605,10 +609,13 @@ class FriendsProfileViewController: MXSegmentedPagerController {
         else if index == 1 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Likedpages"), object: nil)
         }
-        else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
+        else if index == 2{
+            
         }
         else if index == 3 {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Joinedgroups"), object: nil)
+        }
+        else if index == 4 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Photos"), object: nil)
         }
 //        else if index == 5 {
@@ -625,6 +632,7 @@ class FriendsProfileViewController: MXSegmentedPagerController {
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didSelect view: UIView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
        
     }
     

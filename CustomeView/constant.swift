@@ -11,6 +11,7 @@ import Foundation
 
 
 let Domain                      =             "https://www.friendzpoint.com/api/v1"
+let ReelsDomain                 =             "https://feelit.friendzpoint.com/api"
 //let Domain                      =             "http://164.68.113.35/~beta/frp/api/v1"
 //let Domain                      =             "192.168.0.70/friendzpoint_web/login"
 
@@ -22,6 +23,7 @@ let tellWallet = "https://wallet.bizzbrains.com/api"
 
 
 let XAPI                        =             "jwZryAdcrffggf867DnjhjhfRvsfhjs5667"
+let ReelsXAPI                   =             "156c4675-9608-4591-1111-00000"
 
 let ACCEPT                      =             "application/json"
 
@@ -195,6 +197,26 @@ let DELETEARTICLE               =             Domain + "/DeleteArticle"
 let EDITARTICLE                 =             Domain + "/EditArticle"
 
 
+
+//MARK: - Reels
+let SHOWRELATEDVIDEOS          =             ReelsDomain + "/showRelatedVideos"
+let LIKEVIDEO                  =             ReelsDomain + "/likeVideo"
+let SHOWSOUND                  =             ReelsDomain + "/showSounds"
+let SHOWFAVORITESOUND          =             ReelsDomain + "/showFavouriteSounds"
+let SHOWSECTION                =             ReelsDomain + "/showSoundsAgainstSection"
+let SHOWVIDEOCOMMENT           =             ReelsDomain + "/showVideoComments"
+let SENDREELSCOMMENT           =             ReelsDomain + "/postCommentOnVideo"
+let DOWNLOADVIDEO              =             ReelsDomain + "/downloadVideo"
+let SHOWREPORTREASONS          =             ReelsDomain + "/showReportReasons"
+let REPORTVIDEO                =             ReelsDomain + "/reportVideo"
+let DISCOVERYSEARCH            =             ReelsDomain + "/search"
+let ADDFAVORITESOUND           =             ReelsDomain + "/addSoundFavourite"
+let SHOWDISCOVERYSECTION       =             ReelsDomain + "/showDiscoverySections"
+let SHOWAPPSLIDER              =             ReelsDomain + "/showAppSlider"
+let POSTVIDEO                  =             ReelsDomain + "/postVideo"
+let SHOWVIDEOAGAINSTSOUND      =             ReelsDomain + "/showVideosAgainstSound"
+
+
 let tellZLogin  = tellWallet + "/login"
 let tellzverify_otp = tellWallet + "/verify_otp"
 let mywallet = tellWallet + "/mywallet"
@@ -215,6 +237,7 @@ let rupee = "\u{20B9}"
 let loggdenUser = UserDefaults.standard
 
 let TOKEN              =           "TOKEN"
+let SHORTTOKEN         =           "short_token"
 let Islogin            =           "Islogin"
 let USERNAME           =           "USERNAME"
 let NAMELOgin          =           "NAMELOgin"

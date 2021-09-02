@@ -52,6 +52,7 @@ class FriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FriendsViewController.FriendsRequest), name: NSNotification.Name(rawValue: "FriendsRequest"), object: nil)
         setDefault()
     }

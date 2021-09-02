@@ -39,4 +39,22 @@ target 'FriendzPoint' do
  pod 'iOSDropDown'
  pod 'ProgressHUD'
  pod "RichEditorView"
+ pod 'GSPlayer'
+ pod 'MarqueeLabel'
+ pod 'lottie-ios'
+ pod "NextLevel"
+ pod 'SnapKit', '~> 5.0.0'
+ pod 'GTProgressBar'
+ pod 'EFInternetIndicator'
+ pod "KYShutterButton"
+ pod 'CoreAnimator', '~> 2.1.4'
+ # pod "SwiftyCam"
+ pod 'SwiftMessages'
+ pod "Player"
+ pod 'DSGradientProgressView'
+ pod 'FullMaterialLoader'
+ pod 'PhoneNumberKit'
+ pod 'NVActivityIndicatorView'
+ pod 'ContentLoader'
+ pod 'FBSDKShareKit'
 end

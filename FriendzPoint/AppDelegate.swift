@@ -18,6 +18,8 @@ import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
 
+let NextLevelAlbumTitle = "NextLevel"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -29,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var likepageencodeData = [Data]()
     var joingroupencodeData = [Data]()
     var bioencodeData = [Data]()
-    
+   
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        let gradientLayer = CAGradientLayer()

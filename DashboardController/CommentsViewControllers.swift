@@ -31,6 +31,7 @@ class CommentsViewControllers: UIViewController {
     var postId = Int()
     var arrCommented = [CommentList]()
     var arrArticleComment = [ArticleCommentDatamain]()
+    var arrReelsComment = [ReelsCommentMsg]()
     var arrParentComment = [ParentCommentList]()
     var parent_ID = Int()
     var wc = Webservice.init()
@@ -44,6 +45,7 @@ class CommentsViewControllers: UIViewController {
     var CHECKTYPE = String()
     //MARK: For Article
     var article_id = Int()
+    var flagCmt = 0
     
     
    // " A simple iOS Swift-4 project demonst how to implement collapsible table section jay hind bhayo gujarat india badha loko","How are you"
@@ -75,6 +77,9 @@ class CommentsViewControllers: UIViewController {
         imgProfile.sd_setImage(with: url, completed: nil)
         if CHECKTYPE == "ART"{
             getArticleComment()
+        }
+        else if CHECKTYPE == "Reel"{
+            getReelsComment()
         }
         else{
             getComment()
@@ -161,6 +166,56 @@ class CommentsViewControllers: UIViewController {
         }
     }
     
+    func getReelsComment() {
+        let userID = UserDefaults.standard.string(forKey: "TimeLine_id")
+        let parameters = ["video_id": postId, "user_id":userID ?? "0"] as [String : Any]
+        let token = loggdenUser.value(forKey: SHORTTOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Api-Key": ReelsXAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        wc.callSimplewebservice(url: SHOWVIDEOCOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: false) { (sucess, response: ReelsCommentResponseModel?) in
+            if sucess {
+                let sucessMy = response?.code
+                print("sucessMy:  ",sucessMy)
+                print("Reelcomment: ",response)
+                if sucessMy == 200 {
+                    let data = response?.msg
+                    let arr_dict = data
+                    self.arrReelsComment = arr_dict!
+                    if self.arrReelsComment.count == 0 {
+                        self.foundView.isHidden = false
+                    }
+                    else {
+                        self.foundView.isHidden = true
+                        self.tbComment.reloadData()
+                    }
+                    
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+                else{
+                    self.foundView.isHidden = false
+                    self.loaderView.isHidden = true
+                    self.activity.stopAnimating()
+                }
+            }
+            else{
+                self.foundView.isHidden = false
+                self.loaderView.isHidden = true
+                self.activity.stopAnimating()
+            }
+//            if self.arrCommented.count == 0 {
+//                self.foundView.isHidden = false
+//            }
+//            else {
+//                self.foundView.isHidden = true
+//                self.tbComment.reloadData()
+//            }
+//            self.loaderView.isHidden = true
+//            self.activity.stopAnimating()
+        }
+    }
     
     func getArticleComment() {
         let parameters = ["article_id": postId] as [String : Any]
@@ -264,6 +319,29 @@ class CommentsViewControllers: UIViewController {
     }
     
     
+    func sendReelsComment(){
+        let userID = UserDefaults.standard.string(forKey: "TimeLine_id")
+        let parameters = ["video_id": postId,
+                          "user_id":userID ?? "0",
+                          "comment": txtCommentBox.text!] as [String : Any]
+        let token = loggdenUser.value(forKey: SHORTTOKEN)as! String
+        let BEARERTOKEN = BEARER + token
+        let headers: HTTPHeaders = ["Api-Key": ReelsXAPI,
+                                    "Accept" : ACCEPT,
+                                    "Authorization":BEARERTOKEN]
+        
+        wc.callSimplewebservice(url: SENDREELSCOMMENT, parameters: parameters, headers: headers, fromView: self.view, isLoading: true) { (sucess, response: SendReelsCommentResponseModel?) in
+            if sucess {
+                let sucessRes = response?.code
+                if sucessRes == 200 {
+                    self.flagCmt = 0
+                    self.txtCommentBox.text = ""
+                    self.getReelsComment()
+                }
+            }
+        }
+    }
+    
     func sendArticleComment(){
         let parameters = ["article_id": postId,
                           "comment": txtCommentBox.text!] as [String : Any]
@@ -332,8 +410,12 @@ class CommentsViewControllers: UIViewController {
     }
 
     @IBAction func btnSEND(_ sender: UIButton) {
+        view.endEditing(true)
         if CHECKTYPE == "ART"{
             sendArticleComment()
+        }
+        else if CHECKTYPE == "Reel"{
+            sendReelsComment()
         }
         else{
             sendComment()
@@ -388,6 +470,9 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
         if CHECKTYPE == "ART"{
             return 1
         }
+        else if CHECKTYPE == "Reel"{
+            return self.arrReelsComment.count
+        }
         else{
             return arrCommented.count
         }
@@ -398,6 +483,27 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
         
         if CHECKTYPE == "ART"{
             return arrArticleComment.count
+        }
+        else if CHECKTYPE == "Reel"{
+            if self.arrReelsComment[section].VideoCommentReply.count > 0{
+                if flagCmt == 0{
+                    if self.arrReelsComment[section].VideoCommentReply.count > 2{
+                        return 2
+                    }
+                    else{
+                        return self.arrReelsComment[section].VideoCommentReply.count
+                    }
+                }
+                else{
+                    return self.arrReelsComment[section].VideoCommentReply.count
+                }
+                
+            }
+            return self.arrReelsComment[section].VideoCommentReply.count
+            //            if let arrchaildComment = self.arrReelsComment[section].VideoCommentReply. {
+            //              //  self.arrParentComment = arrchaildComment
+            //                return arrchaildComment.count
+            //            }
         }
         else{
             if let arrchaildComment = arrCommented[section].replyCommects {
@@ -429,6 +535,18 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
             cell.lblTimeHeight.constant = 0
             return cell
         }
+        else if CHECKTYPE == "Reel"{
+            let cell = tbComment.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)as! commentCell
+            cell.imgreplyprofile.layer.cornerRadius = 15
+            cell.imgreplyprofile.clipsToBounds = true
+            let strComment = self.arrReelsComment[indexPath.section].VideoCommentReply[indexPath.row].comment//.[indexPath.section]//.replyCommects![indexPath.row].description
+            cell.lblReply.text = strComment
+            cell.lblreplyname.text = self.arrReelsComment[indexPath.section].VideoCommentReply[indexPath.row].User.username
+            let strImage = self.arrReelsComment[indexPath.section].VideoCommentReply[indexPath.row].User.profile_pic
+            url = URL(string: strImage)
+            cell.imgreplyprofile.sd_setImage(with: url, completed: nil)
+            return cell
+        }
         else{
             let cell = tbComment.dequeueReusableCell(withIdentifier: "replyCell", for: indexPath)as! commentCell
             cell.imgreplyprofile.layer.cornerRadius = 15
@@ -450,6 +568,46 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
             //            print("Header: ",arrArticleComment[indexPath.row].comment)
             cell.isHidden = true
             cell.height = 0
+            cell.btnReply.isHidden = true
+            cell.btnLike.isHidden = true
+            cell.lblTime.isHidden = true
+            return cell
+        }
+        else if CHECKTYPE == "Reel"{
+            let comment = self.arrReelsComment[section]
+            let cell = tbComment.dequeueReusableCell(withIdentifier: "commentCell")as! commentCell
+            cell.imgProfile.layer.cornerRadius = 15
+            cell.imgProfile.clipsToBounds = true
+            cell.viewBack.layer.cornerRadius = 5
+            cell.viewBack.clipsToBounds = true
+            let strComment = comment.VideoComment.comment
+            cell.lblComment.text = strComment
+            cell.lblname.text = comment.User.username
+            cell.btnReply.addTarget(self, action: #selector(CommentsViewControllers.btnreplayAction), for: UIControl.Event.touchUpInside)
+            cell.btnReply.isHidden = false
+            cell.btnLike.addTarget(self, action: #selector(CommentsViewControllers.btnLikeAction), for: UIControl.Event.touchUpInside)
+            cell.btnSeemore.addTarget(self, action: #selector(CommentsViewControllers.btnseemoreAction), for: UIControl.Event.touchUpInside)
+            let postDate = comment.VideoComment.created
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date = dateFormatter.date(from: postDate)!
+            let datavala = Date().timeAgoSinceDate(date, numericDates: true)
+            cell.lblTime.text = datavala
+            let parent_comments_count = comment.VideoCommentReply.count
+            cell.btnSeemore.isHidden = true
+            if parent_comments_count == 0 {
+                cell.btnSeemore.isHidden = true
+            }else {
+                cell.btnSeemore.isHidden = false
+                let total = String(parent_comments_count) + " See More"
+                cell.btnSeemore.setTitle(total, for: .normal)
+            }
+            let strImage = comment.User.profile_pic
+            url = URL(string: strImage)
+            cell.imgProfile.sd_setImage(with: url, completed: nil)
+            cell.btnSeemore.tag = section
+            cell.btnReply.tag = section
+            cell.activity.isHidden = true
             cell.btnReply.isHidden = true
             cell.btnLike.isHidden = true
             cell.lblTime.isHidden = true
@@ -556,14 +714,18 @@ extension CommentsViewControllers: UITableViewDelegate,UITableViewDataSource {
     @objc func btnseemoreAction(_ sender: UIButton) {
         let tag = sender.tag
         indexPath = IndexPath(row: tag, section: 0)
-        // let cellfeed = tbComment.cellForRow(at: indexPath)as! commentCell
-        //        cellfeed.activity.isHidden = false
-        //        cellfeed.activity.startAnimating()
-        postId = arrCommented[indexPath.row].post_id
-        parent_ID = arrCommented[indexPath.row].id
-        chaildComment()
-        //        cellfeed.activity.isHidden = true
-        //        cellfeed.activity.stopAnimating()
+
+      
+        
+        if CHECKTYPE == "Reel"{
+            flagCmt = 1
+            tbComment.reloadData()
+        }
+        else{
+            postId = arrCommented[indexPath.row].post_id
+            parent_ID = arrCommented[indexPath.row].id
+            chaildComment()
+        }
     }
     
     @objc func btnreplayAction(_ sender: UIButton) {

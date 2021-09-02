@@ -37,14 +37,14 @@ class SettingVC: UIViewController {
     }
     @IBOutlet weak var lblName: UILabel!
     
-    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post","Notification", "My Article"]//,"Articals"
+    let arrMenuList = ["Pages","Groups","Events","Browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post","Notification", "My Article", "Discovery"]//,"Articals"
     
-    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post", "Snotification", "Articals"]//,"Articals"
+    let arrMenuImage = ["Pages","Groups","Events","browse","Followers","Following","Tellzme Wallet","Business Profile","Save Post", "Snotification", "Articals", "Searching"]//,"Articals"
     
     let arrSettingList = ["General Setting","Privacy Setting","Privacy Policy","Change Password","Terms and Conditions"]//,"Deactivate Account","Logout"
     
-    let arrtopcolor = [UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.97, green: 0.03, blue: 0.35, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00)]
-    let arrbottomcolor = [UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.74, green: 0.31, blue: 0.61, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00)]
+    let arrtopcolor = [UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.04, green: 0.93, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.51, blue: 0.69, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.97, green: 0.03, blue: 0.35, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.07, green: 0.60, blue: 0.56, alpha: 1.00),UIColor(red: 0.12, green: 0.64, blue: 1.00, alpha: 1.00)]
+    let arrbottomcolor = [UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.28, green: 0.66, blue: 1.00, alpha: 1.00),UIColor(red: 0.00, green: 0.71, blue: 0.86, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.74, green: 0.31, blue: 0.61, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.22, green: 0.94, blue: 0.49, alpha: 1.00),UIColor(red: 0.07, green: 0.85, blue: 0.98, alpha: 1.00)]
     
     @IBOutlet weak var collectionMenu: UICollectionView!
     
@@ -66,6 +66,7 @@ class SettingVC: UIViewController {
         super.viewDidLoad()
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
         //navigationController?.setStatusBar(backgroundColor: .white)
@@ -139,6 +140,9 @@ class SettingVC: UIViewController {
     
     @IBAction func btnVIewProfile(_ sender: Any) {
         let obj = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController")as! ProfileViewController
+       let user_id = UserDefaults.standard.value(forKey: "TimeLine_id")
+        let struser = String(describing: user_id)
+        Fuser_id = struser
         self.navigationController?.pushViewController(obj, animated: true)
     }
     
@@ -378,7 +382,7 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
 //            let vc = BrowseVC()
             if #available(iOS 13.0, *) {
 //                obj.isModalInPresentation = true
-                obj.modalPresentationStyle = .fullScreen
+                obj.modalPresentationStyle = .overFullScreen
 //                obj.modalTransitionStyle = .partialCurl
             } else {
                 // Fallback on earlier versions
@@ -387,13 +391,13 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
         }
         else if indexPath.row == 4{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController")as! FollowersViewController
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             present(obj, animated: false)//pushViewController(obj, animated: true)
         }
         else if indexPath.row == 5{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "MyfriendsController")as! MyfriendsController
           //  self.navigationController?.pushViewController(obj, animated: true)
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             present(obj, animated: false)//pushViewController(obj, animated: true)
         }
         else if indexPath.row == 6{
@@ -410,12 +414,13 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
             }
             else {
                 let obj = self.storyboard?.instantiateViewController(withIdentifier: "MobileVC")as! MobileVC//TellzmeWalletViewController
-                obj.modalPresentationStyle = .fullScreen
+                obj.modalPresentationStyle = .overFullScreen
                 present(obj, animated: false, completion: nil)//pushViewController(obj, animated: true)//self.navigationController?
             }
         }
         else if indexPath.row == 7{
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //           let obj = storyboard?.instantiateViewController(withIdentifier: "PostViewController")as! PostViewController
 //           let naviget: UINavigationController = UINavigationController(rootViewController: obj)
 //           self.present(naviget, animated: true, completion: nil)
@@ -431,18 +436,23 @@ extension SettingVC: UICollisionBehaviorDelegate,UICollectionViewDataSource,UICo
         else if indexPath.row == 8{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "SavePostListVC")as! SavePostListVC//TellzmeWalletViewController
             obj.strUrlType = "Save"
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
         }
         else if indexPath.row == 9{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "NotificationController")as! NotificationController
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
         }
         else if indexPath.row == 10{
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "ArticlesVC")as! ArticlesVC
             obj.CheckVC = "MY"
-            obj.modalPresentationStyle = .fullScreen
+            obj.modalPresentationStyle = .overFullScreen
+            self.present(obj, animated: false, completion: nil)
+        }
+        else if indexPath.row == 11{
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "DiscoverVC")as! newDiscoverViewController
+            obj.modalPresentationStyle = .overFullScreen
             self.present(obj, animated: false, completion: nil)
         }
     }

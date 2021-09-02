@@ -76,6 +76,7 @@ class PreviewVC: UIViewController,ASAutoPlayVideoLayerContainer,UIScrollViewDele
         super.viewDidLoad()
 //
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
 //        scrollView.removeFromSuperview()
 //        imageview.removeFromSuperview()
 //        navigationController?.setStatusBar(backgroundColor: .black)'

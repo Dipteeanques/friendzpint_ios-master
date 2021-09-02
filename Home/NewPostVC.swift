@@ -85,6 +85,7 @@ class NewPostVC: UIViewController,UITextViewDelegate {
 //        mainVIew.isHidden = true
 //        showPicker()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
        let arrLocation1 = loggdenUser.object(forKey: "AL")
         if arrLocation1 != nil{
             arrLocation = arrLocation1! as! [String]

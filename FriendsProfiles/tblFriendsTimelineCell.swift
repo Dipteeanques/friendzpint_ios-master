@@ -118,6 +118,7 @@ class tblFriendsTimelineCell: UITableViewCell,ASAutoPlayVideoLayerContainer {
         super.awakeFromNib()
         
         NotificationCenter.default.addObserver(self, selector: #selector(tblTimelineCell.Videopause), name: NSNotification.Name(rawValue: "Videopause"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VideopauseReels"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Videopause"), object: nil)
     }
     
